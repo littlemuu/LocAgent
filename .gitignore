@@ -183,3 +183,7 @@ sft/
 config.toml
 unsloth_compiled_cache/
 wandb/
+
+# Local experiment outputs and download metadata
+/outputs/
+*:Zone.Identifier

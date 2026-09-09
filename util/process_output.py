@@ -350,6 +350,8 @@ def get_module_from_line_number(line, file_path, searcher):
     for nid in searcher.G.nodes():
         # if not nid.startswith(file_path) or ':' not in nid:
         #     continue
+        if nid.split(":", 1)[0] != file_path:
+            continue
         node = searcher.G.nodes[nid]
         if node['type'] != NODE_TYPE_FUNCTION: continue
         if 'start_line' in node and 'end_line' in node:

@@ -1,5 +1,11 @@
 import argparse
 import os
+# 沿用已验证的直连方式，只影响当前 Python 进程。
+for proxy_name in (
+    "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY",
+    "http_proxy", "https_proxy", "all_proxy",
+):
+    os.environ.pop(proxy_name, None)
 import json
 import logging
 import logging.handlers
@@ -9,7 +15,7 @@ from queue import Empty
 from typing import List
 from tqdm import tqdm
 from copy import deepcopy
-from datasets import load_dataset
+from datasets import Dataset,load_dataset
 
 from util.runtime.execute_ipython import execute_ipython
 from util.runtime import function_calling
@@ -50,6 +56,18 @@ from util.runtime.fn_call_converter import (
 # litellm.set_verbose=True
 # os.environ['LITELLM_LOG'] = 'DEBUG
 
+def request_model(**kwargs):
+    if kwargs["model"] == "openai/deepseek-v4-flash":
+        kwargs.update(
+            api_base="https://api.deepseek.com",
+            api_key=os.environ["DEEPSEEK_API_KEY"],
+            extra_body={"thinking": {"type": "disabled"}},
+            max_tokens=1200,
+            timeout=60,
+            num_retries=0,
+        )
+
+    return litellm.completion(**kwargs)
 
 def filter_dataset(dataset, filter_column: str, used_list: str):
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.toml')
@@ -116,7 +134,7 @@ def auto_search_process(result_queue,
                         tools = None,
                         traj_data=None,
                         temp=1.0,
-                        max_iteration_num=20,
+                        max_iteration_num=6,
                         use_function_calling=True):
     if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower() 
     #             #   or model_name=='azure/gpt-4o' 
@@ -144,7 +162,8 @@ def auto_search_process(result_queue,
     cur_interation_num = 0
     last_message = None
     finish = False
-    while not finish:
+    final_output = ""
+    while not finish and cur_interation_num < max_iteration_num:
         cur_interation_num += 1
         if cur_interation_num == max_iteration_num:
             messages.append({
@@ -160,14 +179,14 @@ def auto_search_process(result_queue,
             # new conversation
             if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower()):
                 messages = convert_fncall_messages_to_non_fncall_messages(messages, tools, add_in_context_learning_example=False)
-                response = litellm.completion(
+                response = request_model(
                     model=model_name,
                     temperature=temp, top_p=0.8, repetition_penalty=1.05, 
                     messages=messages,
                     stop=NON_FNCALL_STOP_WORDS
                 )
             elif tools:
-                response = litellm.completion(
+                response = request_model(
                     model=model_name,
                     tools=tools,
                     messages=messages,
@@ -175,7 +194,7 @@ def auto_search_process(result_queue,
                     # stop=['</execute_ipython>'], #</finish>',
                 )
             else:
-                response = litellm.completion(
+                response = request_model(
                     model=model_name,
                     messages=messages,
                     temperature=temp,
@@ -185,8 +204,14 @@ def auto_search_process(result_queue,
             # If there's an error, send the error info back to the parent process
             result_queue.put({'error': str(e), 'type': 'BadRequestError'})
             return
-        
-        if last_message and response.choices[0].message.content == last_message:
+
+        prompt_tokens += response.usage.prompt_tokens
+        completion_tokens += response.usage.completion_tokens
+        if (
+            last_message
+            and not response.choices[0].message.tool_calls
+            and response.choices[0].message.content == last_message
+        ):
             messages.append({
                 "role": "user",
                 "content": "OBSERVATION:\n" + "Don't repeat your response.\n" + fake_user_msg,
@@ -199,9 +224,16 @@ def auto_search_process(result_queue,
         
         raw_response = deepcopy(response)
         # logging.info('response.choices[0].message')
-        if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower()
-                      or 'deepseek' in model_name
-                      ):
+        if (
+            tools
+            and model_name != "openai/deepseek-v4-flash"
+            and not response.choices[0].message.tool_calls
+            and (
+                'hosted_vllm' in model_name
+                or 'qwen' in model_name.lower()
+                or 'deepseek' in model_name
+            )
+        ):
             try:
                 non_fncall_response_message = response.choices[0].message
                 fn_call_messages_with_response = (
@@ -223,8 +255,6 @@ def auto_search_process(result_queue,
         print(response.choices[0].message)
         messages.append(convert_to_json(raw_response.choices[0].message))
         traj_msgs.append(convert_to_json(raw_response.choices[0].message))
-        prompt_tokens += response.usage.prompt_tokens
-        completion_tokens += response.usage.completion_tokens  
             
         actions = parser.parse(response)
         if not isinstance(actions, List):
@@ -284,6 +314,8 @@ def auto_search_process(result_queue,
     traj_data = {
         'messages': traj_msgs,
         'tools': tools,
+        'termination_reason': 'finished' if finish else 'iteration_limit',
+        'iterations': cur_interation_num,
         'usage': {
             'prompt_tokens': prompt_tokens,
             'completion_tokens': completion_tokens
@@ -327,9 +359,11 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
             logger.info("=" * 60)
             logger.info(f"==== rank {rank} begin localizing {instance_id} ====")
             max_attempt_num = args.max_attempt_num
-            while max_attempt_num:
+            while max_attempt_num > 0:
                 logger.info("=" * 60)
                 logger.info(f"==== {instance_id} Count down: attempt {max_attempt_num} ====")
+                max_attempt_num -= 1
+                process = None
                 loc_start_time = time.time()
                 try:
                     """
@@ -389,32 +423,53 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
                         raise TimeoutError
                     
                     # loc_result, messages, traj_data = result_queue.get()
-                    result = result_queue.get()
+                    result = result_queue.get(timeout=5)
                     if isinstance(result, dict) and 'error' in result and result['type'] == 'BadRequestError':
                         raise litellm.BadRequestError(result['error'], args.model, args.model.split('/')[0])
                         # print(f"Error occurred in subprocess: {result['error']}")
                     else:
                         loc_result, messages, traj_data = result
                         
-                except litellm.BadRequestError as e:
-                    logger.warning(f'{e}. Try again.')
-                    continue
-                except APITimeoutError:
-                    logger.warning(f"APITimeoutError. Try again.")
-                    sleep(10)
-                    continue
-                except TimeoutError:
-                    logger.warning(f"Processing time exceeded 15 minutes. Try again.")
-                    max_attempt_num = max_attempt_num - 1
-                    continue
-                except litellm.exceptions.ContextWindowExceededError as e:
-                    logger.warning(f'{e}. Try again.')
-                    max_attempt_num = max_attempt_num - 1
+                except Exception as exc:
+                    failure = {
+                        "instance_id": instance_id,
+                        "error_type": type(exc).__name__,
+                        "child_exitcode": getattr(process, "exitcode", None),
+                        "attempts_remaining": max_attempt_num,
+                        "elapsed_seconds": round(
+                            time.time() - loc_start_time, 3
+                        ),
+                    }
+                    logger.warning("Attempt failed: %s", failure)
+
+                    with traj_file_lock:
+                        append_to_jsonl(
+                            failure,
+                            os.path.join(
+                                args.output_folder,
+                                "failed_attempts.jsonl",
+                            ),
+                        )
                     continue
 
                 loc_end_time = time.time()
                 if not loc_result:
-                    continue # empty result
+                    logger.warning(
+                        "No final localization output; reason=%s",
+                        traj_data.get("termination_reason", "unknown"),
+                    )
+                    with traj_file_lock:
+                        append_to_jsonl(
+                            {
+                                "instance_id": instance_id,
+                                "traj_data": traj_data,
+                            },
+                            os.path.join(
+                                args.output_folder,
+                                "incomplete_trajs.jsonl",
+                            ),
+                        )
+                    break
 
                 total_prompt_tokens += traj_data['usage']['prompt_tokens']
                 total_completion_tokens += traj_data['usage']['completion_tokens']
@@ -438,7 +493,6 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
                         'repo': bug['repo'],
                         'base_commit': bug['base_commit'],
                         'problem_statement': bug['problem_statement'],
-                        'patch': bug['patch'],
                         # 'gt_file_changes': gt_file_changes
                     }
                 }
@@ -463,7 +517,6 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
                     'repo': bug['repo'],
                     'base_commit': bug['base_commit'],
                     'problem_statement': bug['problem_statement'],
-                    'patch': bug['patch'],
                     # 'gt_file_changes': gt_file_changes
                 }
             }
@@ -471,9 +524,25 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
             with output_file_lock:
                 append_to_jsonl(loc_res, args.output_file)
 
-            cost = calc_cost(args.model, total_prompt_tokens, total_completion_tokens)
-            loc_res['usage'] = {'cost($)': f'{round(cost, 5)}', 'prompt_tokens': total_prompt_tokens,
-                                'completion_tokens': total_completion_tokens}
+            if args.model == "openai/deepseek-v4-flash":
+                cost = None
+            else:
+                cost = calc_cost(
+                    args.model,
+                    total_prompt_tokens,
+                    total_completion_tokens,
+                )
+
+            loc_res["usage"] = {
+                "cost($)": None if cost is None else round(cost, 5),
+                "cost_status": (
+                    "not_calculated"
+                    if cost is None
+                    else "estimated_from_static_table"
+                ),
+                "prompt_tokens": total_prompt_tokens,
+                "completion_tokens": total_completion_tokens,
+            }
             loc_res['loc_trajs'] = loc_trajs
             traj_file = os.path.join(args.output_folder, 'loc_trajs.jsonl')
             with traj_file_lock:
@@ -483,8 +552,28 @@ def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_l
 
 
 def localize(args):
-    bench_data = load_dataset(args.dataset, split=args.split)
-    bench_tests = filter_dataset(bench_data, 'instance_id', args.used_list)
+    if args.task_file:
+        with open(args.task_file, encoding="utf-8") as file:
+            task = json.load(file)
+
+        required = (
+            "instance_id",
+            "repo",
+            "base_commit",
+            "problem_statement",
+        )
+        for field in required:
+            if not isinstance(task.get(field), str) or not task[field].strip():
+                raise ValueError(f"Invalid task field: {field}")
+
+        bench_tests = Dataset.from_list([
+            {field: task[field] for field in required}
+        ])
+    else:
+        bench_data = load_dataset(args.dataset, split=args.split)
+        bench_tests = filter_dataset(
+            bench_data, "instance_id", args.used_list
+        )
     if args.eval_n_limit:
         eval_n_limit = min(args.eval_n_limit, len(bench_tests))
         bench_tests = bench_tests.select(range(0, eval_n_limit))
@@ -584,6 +673,12 @@ def main():
                         choices=['mrr', 'majority'])
     
     parser.add_argument("--dataset", type=str, default="princeton-nlp/SWE-bench_Lite")
+    parser.add_argument(
+        "--task_file",
+        type=str,
+        default=None,
+        help="Load one local task instead of downloading the dataset.",
+    )
     parser.add_argument("--split", type=str, default="test")
     parser.add_argument("--eval_n_limit", type=int, default=0)
     parser.add_argument("--used_list", type=str, default='selected_ids')
@@ -596,6 +691,7 @@ def main():
         "--model", type=str,
         default="openai/gpt-4o-2024-05-13",
         choices=["gpt-4o", 
+                 "openai/deepseek-v4-flash",
                  "azure/gpt-4o", "openai/gpt-4o-2024-05-13",
                  "deepseek/deepseek-chat", "deepseek-ai/DeepSeek-R1",
                  "litellm_proxy/claude-3-5-sonnet-20241022", "litellm_proxy/gpt-4o-2024-05-13", "litellm_proxy/o3-mini-2025-01-31",
