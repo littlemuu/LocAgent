@@ -155,10 +155,11 @@ def auto_search_process(result_queue,
         completion_tokens = 0
     else:
         # continue from last traj
-        traj_msgs = traj_data['messages']
+        traj_msgs = deepcopy(traj_data['messages'])
         prompt_tokens = traj_data['usage']['prompt_tokens']
         completion_tokens = traj_data['usage']['completion_tokens']
 
+    # traj_data 是传进来的旧运行记录
     if traj_data:
         return_records = deepcopy(traj_data.get("return_records", {}))
     else:
