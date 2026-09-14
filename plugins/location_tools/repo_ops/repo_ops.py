@@ -38,6 +38,8 @@ from plugins.location_tools.utils.util import (
 from util.benchmark.setup_repo import setup_repo
 import subprocess
 import logging
+from util.return_trace import record_return
+
 logger = logging.getLogger(__name__)
 
 CURRENT_ISSUE_ID: str | None = None
@@ -486,11 +488,25 @@ def rank_and_aggr_query_results(query_results, fixed_query_info_list):
     
     return organized_dict
         
+def _format_and_record(qr, searcher, records):
+    content = qr.format_output(searcher)
+
+    if records is not None:
+        entity_id = qr.nid
+        if entity_id is None:
+            entity_id = (
+                f"{qr.file_path}:lines:{qr.start_line}-{qr.end_line}"
+            )
+        record_return(records, entity_id, content, qr.format_mode)
+
+    return content
 
 def search_code_snippets(
         search_terms: Optional[List[str]] = None,
         line_nums: Optional[List] = None,
         file_path_or_pattern: Optional[str] = "**/*.py",
+        *,
+        _return_records: Optional[dict] = None,
 ) -> str:
     """Searches the codebase to retrieve relevant code snippets based on given queries(terms or line numbers).
     
@@ -631,7 +647,9 @@ def search_code_snippets(
                         cur_result += "Source: " + cur_retrieve_src + '\n\n'
                         cur_retrieve_src = qr.retrieve_src
                         
-                    cur_result += qr.format_output(searcher)
+                    cur_result += _format_and_record(
+                        qr, searcher, _return_records
+                    )
                     
                 cur_result += "Source: " + cur_retrieve_src + '\n'
                 if len(query_results) > 1:
@@ -639,10 +657,12 @@ def search_code_snippets(
                 else:
                     cur_result += f'Hint: Search `{query_results[0].nid}` for the full content if needed.\n'
                 cur_result += '\n'
-                
+
             elif format_mode == 'complete':
                 for qr in query_results:
-                    cur_result += qr.format_output(searcher)
+                    cur_result += _format_and_record(
+                        qr, searcher, _return_records
+                    )
                     cur_result += '\n'
 
             elif format_mode == 'preview':
@@ -668,12 +688,16 @@ def search_code_snippets(
                 
                 # filtered_results = query_results
                 for qr in filtered_results:
-                    cur_result += qr.format_output(searcher)
+                    cur_result += _format_and_record(
+                        qr, searcher, _return_records
+                    )
                     cur_result += '\n'
             
             elif format_mode == 'code_snippet':
                 for qr in query_results:
-                    cur_result += qr.format_output(searcher)
+                    cur_result += _format_and_record(
+                        qr, searcher, _return_records
+                    )
                     cur_result += '\n'
             
         cur_result += '\n\n'
@@ -686,7 +710,10 @@ def search_code_snippets(
     return result.strip()
 
 
-def get_entity_contents(entity_names: List[str]):
+def get_entity_contents(entity_names: List[str],
+                        *,
+                        _return_records: Optional[dict] = None
+                        ):
     searcher = get_graph_entity_searcher()
     
     result = ''
@@ -702,7 +729,9 @@ def get_entity_contents(entity_names: List[str]):
             query_result = QueryResult(query_info=query_info, format_mode='complete', nid=name,
                                     retrieve_src=f"Exact match found for entity name `{name}`."
                                     )
-            result += query_result.format_output(searcher)
+            result += _format_and_record(
+                query_result, searcher, _return_records
+            )
             result += '\n\n'
         else:
             result += 'Invalid name. \nHint: Valid entity name should be formatted as "file_path:QualifiedName" or just "file_path".'

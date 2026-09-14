@@ -9,14 +9,21 @@ from plugins.location_tools.repo_ops.repo_ops import (
 from IPython.utils.capture import capture_output
 from IPython.terminal.interactiveshell import TerminalInteractiveShell
 
+from functools import partial
 
-def execute_ipython(code_to_execute):
+def execute_ipython(code_to_execute, *, return_records=None):
     # Manually initialize an IPython shell
     ipython_shell = TerminalInteractiveShell.instance()
 
     # Inject the function into the IPython environment
-    ipython_shell.user_ns['search_code_snippets'] = search_code_snippets
-    ipython_shell.user_ns['get_entity_contents'] = get_entity_contents
+    ipython_shell.user_ns['search_code_snippets'] = partial(
+        search_code_snippets,
+        _return_records=return_records,
+    )
+    ipython_shell.user_ns['get_entity_contents'] = partial(
+        get_entity_contents,
+        _return_records=return_records,
+    )
     ipython_shell.user_ns['explore_graph_structure'] = explore_graph_structure
     ipython_shell.user_ns['explore_tree_structure'] = explore_tree_structure
     # ipython_shell.user_ns['explore_repo_structure'] = explore_repo_structure

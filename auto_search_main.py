@@ -158,7 +158,12 @@ def auto_search_process(result_queue,
         traj_msgs = traj_data['messages']
         prompt_tokens = traj_data['usage']['prompt_tokens']
         completion_tokens = traj_data['usage']['completion_tokens']
-        
+
+    if traj_data:
+        return_records = deepcopy(traj_data.get("return_records", {}))
+    else:
+        return_records = {}
+
     cur_interation_num = 0
     last_message = None
     finish = False
@@ -275,7 +280,9 @@ def auto_search_process(result_queue,
             elif action.action_type == ActionType.RUN_IPYTHON:
                 ipython_code = action.code.strip('`')
                 logging.info(f"Executing code:\n```\n{ipython_code}\n```")
-                function_response = execute_ipython(ipython_code)
+                function_response = execute_ipython(
+                    ipython_code, return_records=return_records
+                )
                 try:
                     function_response = eval(function_response)
                 except SyntaxError:
@@ -319,7 +326,8 @@ def auto_search_process(result_queue,
         'usage': {
             'prompt_tokens': prompt_tokens,
             'completion_tokens': completion_tokens
-        }
+        },
+        'return_records': return_records,
     }
     # return final_output, messages, traj_data
     result_queue.put((final_output, messages, traj_data))
