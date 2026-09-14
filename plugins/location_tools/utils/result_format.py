@@ -95,14 +95,15 @@ class QueryResult:
         self.query_info_list.append(query_info)
     
     
-    def format_output(self, searcher):
+    def format_output(self, searcher, *, include_source=True):
         cur_result = ''
         
         if self.format_mode == 'complete':
             node_data = searcher.get_node_data([self.nid], return_code_content=True)[0]
             ntype = node_data['type']
             cur_result += f'Found {ntype} `{self.nid}`.\n'
-            cur_result += "Source: " + self.retrieve_src + '\n'
+            if include_source:
+                cur_result += "Source: " + self.retrieve_src + '\n'
             if 'code_content' in node_data:
                 cur_result += node_data['code_content'] + '\n'
             
@@ -110,7 +111,8 @@ class QueryResult:
             node_data = searcher.get_node_data([self.nid], return_code_content=True)[0]
             ntype = node_data['type']
             cur_result += f'Found {ntype} `{self.nid}`.\n'
-            cur_result += "Source: " + self.retrieve_src + '\n'
+            if include_source:
+                cur_result += "Source: " + self.retrieve_src + '\n'
             if ntype == NODE_TYPE_FUNCTION:
                 cur_result += node_data['code_content'] + '\n'
             
@@ -149,7 +151,8 @@ class QueryResult:
                 cur_result += self.desc + '\n'
             else:
                 cur_result += f"Found code snippet in file `{self.file_path}`.\n"
-            cur_result += "Source: " + self.retrieve_src + '\n'
+            if include_source:
+                cur_result += "Source: " + self.retrieve_src + '\n'
             # content = get_file_content_(qr.file_path, return_str=True)
             # result_content = line_wrap_content(content, [(, )])
             node_data = searcher.get_node_data([self.file_path], return_code_content=True)[0]

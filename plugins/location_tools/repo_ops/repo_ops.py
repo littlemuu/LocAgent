@@ -492,12 +492,23 @@ def _format_and_record(qr, searcher, records):
     content = qr.format_output(searcher)
 
     if records is not None:
+        comparison_content = qr.format_output(
+            searcher, include_source=False
+        )
+
         entity_id = qr.nid
         if entity_id is None:
             entity_id = (
                 f"{qr.file_path}:lines:{qr.start_line}-{qr.end_line}"
             )
-        record_return(records, entity_id, content, qr.format_mode)
+
+        record_return(
+            records,
+            entity_id,
+            content,
+            qr.format_mode,
+            comparison_content=comparison_content,
+        )
 
     return content
 
