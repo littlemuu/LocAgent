@@ -11,7 +11,7 @@ from IPython.terminal.interactiveshell import TerminalInteractiveShell
 
 from functools import partial
 
-def execute_ipython(code_to_execute, *, return_records=None):
+def execute_ipython(code_to_execute, *, return_records=None, suppress_repeats=False):
     # Manually initialize an IPython shell
     ipython_shell = TerminalInteractiveShell.instance()
 
@@ -19,10 +19,12 @@ def execute_ipython(code_to_execute, *, return_records=None):
     ipython_shell.user_ns['search_code_snippets'] = partial(
         search_code_snippets,
         _return_records=return_records,
+        _suppress_repeats=suppress_repeats
     )
     ipython_shell.user_ns['get_entity_contents'] = partial(
         get_entity_contents,
         _return_records=return_records,
+        _suppress_repeats=suppress_repeats
     )
     ipython_shell.user_ns['explore_graph_structure'] = explore_graph_structure
     ipython_shell.user_ns['explore_tree_structure'] = explore_tree_structure

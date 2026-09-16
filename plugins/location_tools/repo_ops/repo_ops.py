@@ -488,7 +488,7 @@ def rank_and_aggr_query_results(query_results, fixed_query_info_list):
     
     return organized_dict
         
-def _format_and_record(qr, searcher, records):
+def _format_and_record(qr, searcher, records, *, suppress_repeats=False):
     content = qr.format_output(searcher)
 
     if records is not None:
@@ -502,13 +502,30 @@ def _format_and_record(qr, searcher, records):
                 f"{qr.file_path}:lines:{qr.start_line}-{qr.end_line}"
             )
 
-        record_return(
+        entry = record_return(
             records,
             entity_id,
             content,
             qr.format_mode,
             comparison_content=comparison_content,
         )
+        output_content = entry["content"]
+
+        if (
+            suppress_repeats
+            and entry["previously_in_context"]
+            and qr.format_mode != "fold"
+        ):
+            notice = (
+                f"Repeated content for `{entity_id}` "
+                f"(display mode: {qr.format_mode}) omitted. "
+                "Refer to the identical content in an earlier tool response."
+            )
+            if len(notice) < len(output_content):
+                output_content = notice
+
+        entry["output_content"] = output_content
+        return output_content
 
     return content
 
@@ -518,6 +535,7 @@ def search_code_snippets(
         file_path_or_pattern: Optional[str] = "**/*.py",
         *,
         _return_records: Optional[dict] = None,
+        _suppress_repeats: bool = False,
 ) -> str:
     """Searches the codebase to retrieve relevant code snippets based on given queries(terms or line numbers).
     
@@ -659,7 +677,8 @@ def search_code_snippets(
                         cur_retrieve_src = qr.retrieve_src
                         
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records
+                        qr, searcher, _return_records,
+                        suppress_repeats=_suppress_repeats
                     )
                     
                 cur_result += "Source: " + cur_retrieve_src + '\n'
@@ -672,7 +691,8 @@ def search_code_snippets(
             elif format_mode == 'complete':
                 for qr in query_results:
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records
+                        qr, searcher, _return_records,
+                        suppress_repeats=_suppress_repeats
                     )
                     cur_result += '\n'
 
@@ -700,14 +720,14 @@ def search_code_snippets(
                 # filtered_results = query_results
                 for qr in filtered_results:
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records
+                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats
                     )
                     cur_result += '\n'
             
             elif format_mode == 'code_snippet':
                 for qr in query_results:
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records
+                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats
                     )
                     cur_result += '\n'
             
@@ -723,7 +743,8 @@ def search_code_snippets(
 
 def get_entity_contents(entity_names: List[str],
                         *,
-                        _return_records: Optional[dict] = None
+                        _return_records: Optional[dict] = None,
+                        _suppress_repeats: bool = False
                         ):
     searcher = get_graph_entity_searcher()
     
@@ -741,7 +762,8 @@ def get_entity_contents(entity_names: List[str],
                                     retrieve_src=f"Exact match found for entity name `{name}`."
                                     )
             result += _format_and_record(
-                query_result, searcher, _return_records
+                query_result, searcher, _return_records,
+                suppress_repeats=_suppress_repeats
             )
             result += '\n\n'
         else:

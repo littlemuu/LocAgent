@@ -17,6 +17,7 @@ from tqdm import tqdm
 from copy import deepcopy
 from datasets import Dataset,load_dataset
 
+from util.return_trace import mark_returns_in_context,refresh_returns_in_context
 from util.runtime.execute_ipython import execute_ipython
 from util.runtime import function_calling
 from util.actions.action_parser import ResponseParser
@@ -135,7 +136,9 @@ def auto_search_process(result_queue,
                         traj_data=None,
                         temp=1.0,
                         max_iteration_num=6,
-                        use_function_calling=True):
+                        use_function_calling=True,
+                        suppress_repeats=False
+                        ):
     if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower() 
     #             #   or model_name=='azure/gpt-4o' 
     #             #   or model_name == 'litellm_proxy/o3-mini-2025-01-31'
@@ -162,6 +165,7 @@ def auto_search_process(result_queue,
     # traj_data 是传进来的旧运行记录
     if traj_data:
         return_records = deepcopy(traj_data.get("return_records", {}))
+        refresh_returns_in_context(return_records, messages)
     else:
         return_records = {}
 
@@ -282,7 +286,7 @@ def auto_search_process(result_queue,
                 ipython_code = action.code.strip('`')
                 logging.info(f"Executing code:\n```\n{ipython_code}\n```")
                 function_response = execute_ipython(
-                    ipython_code, return_records=return_records
+                    ipython_code, return_records=return_records, suppress_repeats=suppress_repeats
                 )
                 try:
                     function_response = eval(function_response)
@@ -314,6 +318,10 @@ def auto_search_process(result_queue,
                         "name": action.function_name,
                         "content": "OBSERVATION:\n" + function_response,
                     })
+
+                mark_returns_in_context(
+                    return_records, messages[-1]["content"]
+                )
             else:
                 logging.warning('Error Action!')
                 # return
