@@ -59,10 +59,14 @@ def parse_raw_loc_output(raw_output, valid_files):
 
 
 def get_loc_results_from_raw_outputs(instance_id, raw_outputs, include_variable=False):
-    G = pickle.load(
-            open(f"{GRAPH_INDEX_DIR}/{instance_id}.pkl", "rb")
-        )
-    searcher = RepoEntitySearcher(G)
+    with open(f"{GRAPH_INDEX_DIR}/{instance_id}.pkl", "rb") as stream:
+        graph = pickle.load(stream)
+    return get_loc_results_from_graph(graph, raw_outputs, include_variable)
+
+
+def get_loc_results_from_graph(graph, raw_outputs, include_variable=False):
+    """Parse against the supplied graph without loading an index or global state."""
+    searcher = RepoEntitySearcher(graph)
     all_files = searcher.get_all_nodes_by_type(NODE_TYPE_FILE)
     valid_files = [file['name'] for file in all_files]
     
@@ -121,6 +125,10 @@ def extract_python_file_path(line, valid_folders):
 
     if match:
         matched_fp = match.group(0)
+        # Root files have no folder/ prefix. Accept only a complete known name;
+        # never strip a slash, drive prefix or traversal into a root filename.
+        if '/' not in matched_fp and line == matched_fp and matched_fp in valid_folders:
+            return matched_fp
         start_index = len(matched_fp)
         for folder in valid_folders:
             if f'{folder}/' in matched_fp:

@@ -18,6 +18,7 @@ from copy import deepcopy
 from datasets import Dataset,load_dataset
 
 from util.return_trace import mark_returns_in_context,refresh_returns_in_context
+from util.localization_engine import run_search
 from util.runtime.execute_ipython import execute_ipython
 from util.runtime import function_calling
 from util.actions.action_parser import ResponseParser
@@ -139,207 +140,19 @@ def auto_search_process(result_queue,
                         use_function_calling=True,
                         suppress_repeats=False
                         ):
-    if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower() 
-    #             #   or model_name=='azure/gpt-4o' 
-    #             #   or model_name == 'litellm_proxy/o3-mini-2025-01-31'
-                ):
-        use_function_calling = False
-        
-    # for LLM which do not support function calling
-    if not use_function_calling:
-        # 转换message
-        messages = convert_fncall_messages_to_non_fncall_messages(messages, tools, add_in_context_learning_example=False)
-            
-    # code_history = []
-    parser = ResponseParser()
-    if not traj_data:
-        traj_msgs = messages.copy()
-        prompt_tokens = 0
-        completion_tokens = 0
-    else:
-        # continue from last traj
-        traj_msgs = deepcopy(traj_data['messages'])
-        prompt_tokens = traj_data['usage']['prompt_tokens']
-        completion_tokens = traj_data['usage']['completion_tokens']
-
-    # traj_data 是传进来的旧运行记录
-    if traj_data:
-        return_records = deepcopy(traj_data.get("return_records", {}))
-        refresh_returns_in_context(return_records, messages)
-    else:
-        return_records = {}
-
-    cur_interation_num = 0
-    last_message = None
-    finish = False
-    final_output = ""
-    while not finish and cur_interation_num < max_iteration_num:
-        cur_interation_num += 1
-        if cur_interation_num == max_iteration_num:
-            messages.append({
-                'role': 'user',
-                'content': 'The Maximum number of interation has been reached, please generate your final output with required format and use <finish></finish> to exit.'
-            })
-            traj_msgs.append({
-                'role': 'user',
-                'content': 'The Maximum number of interation has been reached, please generate your final output with required format and use <finish></finish> to exit.'
-            })
-
-        try:
-            # new conversation
-            if tools and ('hosted_vllm' in model_name or 'qwen' in model_name.lower()):
-                messages = convert_fncall_messages_to_non_fncall_messages(messages, tools, add_in_context_learning_example=False)
-                response = request_model(
-                    model=model_name,
-                    temperature=temp, top_p=0.8, repetition_penalty=1.05, 
-                    messages=messages,
-                    stop=NON_FNCALL_STOP_WORDS
-                )
-            elif tools:
-                response = request_model(
-                    model=model_name,
-                    tools=tools,
-                    messages=messages,
-                    temperature=temp,
-                    # stop=['</execute_ipython>'], #</finish>',
-                )
-            else:
-                response = request_model(
-                    model=model_name,
-                    messages=messages,
-                    temperature=temp,
-                    stop=['</execute_ipython>'], #</finish>',
-                )
-        except litellm.BadRequestError as e:
-            # If there's an error, send the error info back to the parent process
-            result_queue.put({'error': str(e), 'type': 'BadRequestError'})
-            return
-
-        prompt_tokens += response.usage.prompt_tokens
-        completion_tokens += response.usage.completion_tokens
-        if (
-            last_message
-            and not response.choices[0].message.tool_calls
-            and response.choices[0].message.content == last_message
-        ):
-            messages.append({
-                "role": "user",
-                "content": "OBSERVATION:\n" + "Don't repeat your response.\n" + fake_user_msg,
-            })
-            traj_msgs.append({
-                "role": "user",
-                "content": "OBSERVATION:\n" + "Don't repeat your response.\n" + fake_user_msg,
-            })
-            continue
-        
-        raw_response = deepcopy(response)
-        # logging.info('response.choices[0].message')
-        if (
-            tools
-            and model_name != "openai/deepseek-v4-flash"
-            and not response.choices[0].message.tool_calls
-            and (
-                'hosted_vllm' in model_name
-                or 'qwen' in model_name.lower()
-                or 'deepseek' in model_name
-            )
-        ):
-            try:
-                non_fncall_response_message = response.choices[0].message
-                fn_call_messages_with_response = (
-                    convert_non_fncall_messages_to_fncall_messages(
-                        [non_fncall_response_message], tools # messages + 
-                    )
-                )
-                fn_call_response_message = fn_call_messages_with_response[-1]
-                if not isinstance(fn_call_response_message, LiteLLMMessage):
-                    fn_call_response_message = LiteLLMMessage(
-                        **fn_call_response_message
-                    )
-                response.choices[0].message = fn_call_response_message
-            except:
-                logging.info('convert none fncall messages failed.')
-                continue 
-                
-        last_message = response.choices[0].message.content
-        print(response.choices[0].message)
-        messages.append(convert_to_json(raw_response.choices[0].message))
-        traj_msgs.append(convert_to_json(raw_response.choices[0].message))
-            
-        actions = parser.parse(response)
-        if not isinstance(actions, List):
-            actions = [actions]
-        for action in actions:
-            logging.debug(action.action_type)
-            if action.action_type == ActionType.FINISH:
-                final_output = action.thought
-                logging.info('='*15)
-                logging.info("\nFinal Response:=\n" + final_output)
-                finish = True # break
-            elif action.action_type == ActionType.MESSAGE:
-                logging.debug("thought:\n" + action.content)
-                # check if enough
-                messages.append({"role": "user", "content": fake_user_msg})
-                traj_msgs.append({"role": "user", "content": fake_user_msg})
-                # continue
-            elif action.action_type == ActionType.RUN_IPYTHON:
-                ipython_code = action.code.strip('`')
-                logging.info(f"Executing code:\n```\n{ipython_code}\n```")
-                function_response = execute_ipython(
-                    ipython_code, return_records=return_records, suppress_repeats=suppress_repeats
-                )
-                try:
-                    function_response = eval(function_response)
-                except SyntaxError:
-                    function_response = function_response
-                if not isinstance(function_response, str):
-                    function_response = str(function_response)
-                
-                logging.info("OBSERVATION:\n" + function_response)
-                if not tools:
-                    messages.append({
-                        "role": "user",
-                        "content": "OBSERVATION:\n" + function_response,
-                    })
-                    traj_msgs.append({
-                        "role": "user",
-                        "content": "OBSERVATION:\n" + function_response,
-                    })
-                else:
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": action.tool_call_id,
-                        "name": action.function_name,
-                        "content": "OBSERVATION:\n" + function_response,
-                    })
-                    traj_msgs.append({
-                        "role": "tool",
-                        "tool_call_id": action.tool_call_id,
-                        "name": action.function_name,
-                        "content": "OBSERVATION:\n" + function_response,
-                    })
-
-                mark_returns_in_context(
-                    return_records, messages[-1]["content"]
-                )
-            else:
-                logging.warning('Error Action!')
-                # return
-
-    # save traj
-    traj_data = {
-        'messages': traj_msgs,
-        'tools': tools,
-        'termination_reason': 'finished' if finish else 'iteration_limit',
-        'iterations': cur_interation_num,
-        'usage': {
-            'prompt_tokens': prompt_tokens,
-            'completion_tokens': completion_tokens
-        },
-        'return_records': return_records,
-    }
-    # return final_output, messages, traj_data
-    result_queue.put((final_output, messages, traj_data))
+    # Keep the legacy CLI queue protocol and exception handling.
+    try:
+        run = run_search(
+            model_name, messages, fake_user_msg, tools=tools, traj_data=traj_data,
+            temp=temp, max_iteration_num=max_iteration_num,
+            use_function_calling=use_function_calling,
+            suppress_repeats=suppress_repeats,
+            provider=request_model, execute_tool=execute_ipython,
+        )
+    except litellm.BadRequestError as exc:
+        result_queue.put({'error': str(exc), 'type': 'BadRequestError'})
+        return
+    result_queue.put((run.raw_output, run.messages, run.trajectory))
 
 
 def run_localize(rank, args, bug_queue, log_queue, output_file_lock, traj_file_lock):
