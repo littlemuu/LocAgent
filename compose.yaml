@@ -1,0 +1,58 @@
+name: locagent
+x-app: &app
+  image: locagent-service:local
+  build: .
+  init: true
+  read_only: true
+  tmpfs:
+    - /tmp:size=128m,mode=1777
+  networks: [local]
+  environment:
+    LOCAGENT_DATABASE_URL: postgresql://locagent@postgres:5432/locagent
+    LOCAGENT_SCHEMA: locagent
+    LOCAGENT_ALLOW_PAID: "0"
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+services:
+  postgres:
+    image: postgres:16-bookworm
+    environment:
+      POSTGRES_USER: locagent
+      POSTGRES_DB: locagent
+      # Local isolated demo: no public DB port, credentials, or external network.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks: [local]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U locagent -d locagent"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  migrate:
+    <<: *app
+    command: [python, -m, locagent_service.db]
+    depends_on:
+      postgres: {condition: service_healthy}
+  api:
+    <<: *app
+    networks: [local, ingress]
+    command: [python, -m, locagent_service.api, --host, 0.0.0.0, --port, "8000"]
+    ports: ["127.0.0.1:18080:8000"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  worker:
+    <<: *app
+    command: [python, -m, locagent_service.worker, --lease-seconds, "5"]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+volumes:
+  pgdata:
+networks:
+  local:
+    internal: true
+  ingress: {}

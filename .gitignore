@@ -187,3 +187,6 @@ wandb/
 # Local experiment outputs and download metadata
 /outputs/
 *:Zone.Identifier
+
+.env.*
+!.env.example

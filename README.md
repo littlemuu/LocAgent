@@ -32,6 +32,59 @@ By parsing codebases into directed heterogeneous graphs, LocAgent creates a ligh
    pip install -r requirements.txt
    ```
 
+## Local asynchronous service (Stages 2–5)
+
+FastAPI + PostgreSQL + isolated worker processes provide durable task submission,
+idempotency, expiring leases, cancellation, bounded safe retries and fenced writes.
+The default demo uses a scripted provider inside the real LocAgent tool loop;
+it makes no paid calls.
+
+~~~sh
+docker compose up --build -d --wait
+curl --noproxy '*' http://127.0.0.1:18080/health
+curl --noproxy '*' -X POST http://127.0.0.1:18080/tasks \
+  -H 'Content-Type: application/json' -H 'Idempotency-Key: demo-001' \
+  -d '{"problem_statement":"Locate render."}'
+# Poll /tasks/<id>; inspect /tasks/<id>/attempts.
+# Stop services but KEEP the database volume:
+docker compose down
+~~~
+
+Open http://127.0.0.1:18080/docs. Compose creates its own project-scoped volume
+and leaves the historical Stage 2 volume untouched. It is a local-only profile,
+with PostgreSQL isolated on an internal network and paid providers disabled.
+
+The existing WSL demo remains available:
+python -m locagent_service.demo up|run|down (API port 8000, retained Stage 2 DB).
+The up command explicitly migrates schema v1 to v2; interrupted historical tasks
+become needs_review and are never automatically replayed.
+
+- [Stage 3 acceptance](STAGE3_ACCEPTANCE.md): leases, fencing, failure injection and limitations.
+- [Stage 4 acceptance](STAGE4_ACCEPTANCE.md): fixed commit/sample/index manifests,
+  paired evaluation, budget ledger, explicit local .env loading and the completed live pilot.
+- [Stage 5 acceptance](STAGE5_ACCEPTANCE.md): clean Compose startup, closure, crash recovery and reproduction.
+- [Architecture](ARCHITECTURE.md): process ownership, state transitions and billing boundaries.
+- [Stage 2 historical acceptance](STAGE2_ACCEPTANCE.md): original MVP and baseline evidence.
+
+~~~sh
+# No model/network calls; original tests plus service/evaluation regressions:
+sh scripts/check_local.sh
+# Requires the retained local PostgreSQL container, or LOCAGENT_DATABASE_URL:
+sh scripts/check_local.sh --postgres
+# Builds image and verifies a fresh isolated volume; retains all volumes:
+sh scripts/check_local.sh --compose
+~~~
+
+Do not interpret fixture message reduction as real quality or cost improvement.
+Real provider execution requires an existing locally configured key, an explicitly
+enabled paid run, a v2 six-call plan and a fresh plan-bound account pricing confirmation.
+The --live switch applies only to the process; it does not modify .env. Legacy plans
+are offline-only. The approved single-sample pilot completed six real calls; both arms
+ranked the target file/function first, and the enabled arm folded six repeated tool returns.
+This development sample does not establish general quality or cost improvements.
+The one-time approval is consumed and full reservations remain retained; do not replay it.
+Unknown paid outcomes halt for review; this service does not claim exactly-once model execution.
+
 ## 🚀 Launch LocAgent
 1. (Optional but recommended) Parse the codebase for each issue in the benchmark to generate graph indexes in batch.
    ```
