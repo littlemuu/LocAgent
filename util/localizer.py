@@ -90,7 +90,7 @@ def _graph_session(graph: Any, task: dict[str, str], bm25_root: Path | None,
         for node, data in graph.nodes(data=True):
             if data.get('type') not in VALID_NODE_TYPES:
                 raise ValueError('invalid graph node type')
-            if node == '.' and data['type'] == 'directory':
+            if node in ('.', '/') and data['type'] == 'directory':
                 continue
             safe_repo_path(node.partition(':')[0])
         searcher = RepoEntitySearcher(graph)
@@ -151,7 +151,7 @@ def _graph_session(graph: Any, task: dict[str, str], bm25_root: Path | None,
 
 
 def _execute_tool(ops: Any, code: str, *, return_records: dict[str, Any],
-                  suppress_repeats: bool) -> str:
+                  suppress_repeats: bool, submission_hints: bool = False) -> str:
     # Accept the print(tool(**literal_arguments)) form emitted by ResponseParser.
     # AST inspection and literal_eval never execute model-provided Python code.
     try:
@@ -188,6 +188,8 @@ def _execute_tool(ops: Any, code: str, *, return_records: dict[str, Any],
         ) from None
     if call.func.id in ('search_code_snippets', 'get_entity_contents'):
         kwargs.update(_return_records=return_records, _suppress_repeats=suppress_repeats)
+    if submission_hints:
+        kwargs['_submission_hints'] = True
     try:
         return str(function(*args, **kwargs)) + '\n'
     except LocalizationError:
@@ -196,7 +198,7 @@ def _execute_tool(ops: Any, code: str, *, return_records: dict[str, Any],
         raise LocalizationError(ErrorCode.EXECUTION_ERROR, 'Graph tool execution failed') from None
 
 
-def _checked_provider(provider: CompletionProvider) -> CompletionProvider:
+def _checked_provider(provider: CompletionProvider, *, bounded=False) -> CompletionProvider:
     from litellm import Timeout as ProviderTimeout
     from openai import APITimeoutError
 
@@ -216,10 +218,15 @@ def _checked_provider(provider: CompletionProvider) -> CompletionProvider:
             ):
                 raise ValueError('invalid assistant message')
             TokenUsage(response.usage.prompt_tokens, response.usage.completion_tokens)
+            if bounded and response.choices[0].finish_reason == 'length':
+                return response  # Preserve the partial raw message; never parse/execute it.
             if message.tool_calls:
                 for call in message.tool_calls:
-                    if call.function.name not in (*_TOOLS, 'finish'):
+                    allowed = (*_TOOLS, 'finish', 'read_tool_output') if bounded else (*_TOOLS, 'finish')
+                    if call.function.name not in allowed:
                         raise ValueError('unknown tool')
+                    if bounded and call.function.name == 'finish':
+                        continue  # The strict protocol records malformed finish as invalid_finish.
                     arguments = json.loads(call.function.arguments)
                     if not isinstance(arguments, dict):
                         raise ValueError('tool arguments must be an object')
@@ -323,18 +330,33 @@ class GraphLocalizer:
                 'required': ['thought'],
                 'additionalProperties': False,
             }
-            run = run_search(
-                model_name=self.model_name, messages=messages,
-                fake_user_msg=prompt.FAKE_USER_MSG_FOR_LOC, tools=tools,
-                max_iteration_num=self.options.max_iterations,
-                suppress_repeats=self.options.suppress_repeats,
-                provider=_checked_provider(self.provider),
-                execute_tool=lambda code, **kw: _execute_tool(ops, code, **kw),
-            )
+            bounded = self.options.search_protocol == 'bounded-v1'
+            if bounded:
+                from util.localization_protocol import run_bounded_search, validate_locations
+                run = run_bounded_search(
+                    model_name=self.model_name, messages=messages, tools=tools,
+                    max_iteration_num=self.options.max_iterations,
+                    suppress_repeats=self.options.suppress_repeats,
+                    provider=_checked_provider(self.provider, bounded=True),
+                    execute_tool=lambda code, **kw: _execute_tool(ops, code, submission_hints=True, **kw),
+                    validate_finish=lambda value: validate_locations(value, graph),
+                )
+            else:
+                run = run_search(
+                    model_name=self.model_name, messages=messages,
+                    fake_user_msg=prompt.FAKE_USER_MSG_FOR_LOC, tools=tools,
+                    max_iteration_num=self.options.max_iterations,
+                    suppress_repeats=self.options.suppress_repeats,
+                    provider=_checked_provider(self.provider),
+                    execute_tool=lambda code, **kw: _execute_tool(ops, code, **kw),
+                )
             trajectory = run.trajectory
-            if trajectory['termination_reason'] == 'iteration_limit':
+            if trajectory['termination_reason'] != 'finished':
                 status = ResultStatus.ITERATION_LIMIT
                 files, modules, entities = [], [], []
+            elif bounded:
+                files, modules, entities = trajectory['locations']
+                status = ResultStatus.SUCCESS if files else ResultStatus.EMPTY
             else:
                 try:
                     all_files, all_modules, all_entities = get_loc_results_from_graph(
@@ -354,6 +376,7 @@ class GraphLocalizer:
                 iterations=trajectory['iterations'], usage=TokenUsage(**trajectory['usage']),
                 raw_output=run.raw_output, return_records=deepcopy(trajectory['return_records']),
                 messages=deepcopy(run.messages),
+                diagnostics=deepcopy(trajectory.get('diagnostics')),
             )
 
 

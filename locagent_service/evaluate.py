@@ -49,12 +49,16 @@ def make_plan(sources, labels, output):
     return plan
 
 
-def scripted_provider():
+def scripted_provider(search_protocol='legacy'):
     from litellm import ModelResponse
+    final = ({'files': ['requests/models.py'],
+              'entities': ['requests/models.py:Response.iter_content']}
+             if search_protocol == 'bounded-v1' else
+             {'thought': 'requests/models.py\nclass: Response\nfunction: Response.iter_content'})
     steps=iter([
         ('search_code_snippets',{'search_terms':['requests/models.py:Response.iter_content']}),
         ('get_entity_contents',{'entity_names':['requests/models.py:Response.iter_content']}),
-        ('finish',{'thought':'requests/models.py\nclass: Response\nfunction: Response.iter_content'})])
+        ('finish',final)])
     def provider(**kwargs):
         name,args=next(steps)
         return ModelResponse(model='offline-scripted',choices=[{'index':0,'message':{
@@ -77,7 +81,7 @@ def execute_one(source, suppress, mode, output):
             from locagent_service.offline import offline_engine
             with offline_engine(),redirect_stdout(io.StringIO()):
                 from locagent_service.sources import localize_prepared
-                result=localize_prepared(req,scripted_provider())
+                result=localize_prepared(req,scripted_provider(manifest['config'].get('search_protocol','legacy')))
         else:
             from locagent_service.sources import localize
             with redirect_stdout(io.StringIO()):
@@ -192,6 +196,9 @@ def summarize(plan,records,answers):
 
 def load_live_pricing(plan, pricing_path):
     """Complete non-secret live preflight, also used BEFORE env-file loading."""
+    if plan.get('version') == 3:
+        from locagent_service.followup import load_live_pricing as followup_pricing
+        return followup_pricing(plan, pricing_path)
     validate_live_plan(plan)
     validate_authorized_plan(plan)
     if pricing_path is None:
@@ -212,7 +219,12 @@ def run(plan_path,labels,out,live=False,pricing_confirmation=None,recover_zero_u
         or any(load_manifest(source)[0]['config'] != plan['config'] for source in plan['sources'])
         or plan['max_calls'] != len(plan['sources'])*2*plan['config']['max_calls']):
         raise ValueError('Plan does not match fixed sources and pilot limits')
-    if plan.get('version',1)==2:
+    if plan.get('version') == 3:
+        from locagent_service.followup import validate_plan
+        validate_plan(plan)
+        if recover_zero_use_from:
+            raise ValueError('Follow-up cannot migrate or reuse the first-pilot authorization')
+    elif plan.get('version',1)==2:
         if live or digest(canonical(plan)) != RECOVERABLE_PLAN_HASH:
             validate_live_plan(plan)
     elif live or plan.get('version',1)!=1 or not 0 < plan['budget_cny'] <= 2:
@@ -229,11 +241,15 @@ def run(plan_path,labels,out,live=False,pricing_confirmation=None,recover_zero_u
     if live:
         if recover_zero_use_from:
             recover_zero_use_ledger(recover_zero_use_from,out/'budget.json',plan,confirmation)
+        elif plan.get('version') == 3:
+            from locagent_service.followup import initialize_ledger as initialize_followup
+            initialize_followup(out/'budget.json',plan,confirmation)
         else:
             initialize_ledger(out/'budget.json',plan,confirmation)
     records=[]
     for index,source in enumerate(plan['sources']):
-        for arm in plan['arms']:
+        order = plan['samples'][index]['arm_order'] if plan.get('version') == 3 else plan['arms']
+        for arm in order:
             dest=out/f'{index}-{str(arm).lower()}.json'
             env={**os.environ,'LITELLM_LOCAL_MODEL_COST_MAP':'True',
                  'HF_HUB_OFFLINE':'1','HF_DATASETS_OFFLINE':'1'}
@@ -267,8 +283,8 @@ def run(plan_path,labels,out,live=False,pricing_confirmation=None,recover_zero_u
             calls=[c for c in billing['calls'] if c.get('arm')==arm]
             metrics['prompt_tokens']=sum(c.get('prompt_tokens',0) for c in calls)
             metrics['completion_tokens']=sum(c.get('completion_tokens',0) for c in calls)
-            metrics['unknown_call_count']=sum(c['status'] in ('reserved','outcome_unknown') for c in calls)
-            metrics['cost_upper_cny']=str(sum((Decimal(c.get('cost_upper_cny',c['reservation_cny']))
+            metrics['unknown_call_count']=sum(c['status'] in ('reserved','raw_received','outcome_unknown') for c in calls)
+            metrics['cost_upper_cny']=str(sum((Decimal(c['cost_upper_cny'] if c['status'] in ('settled','response_received') and 'cost_upper_cny' in c else c['reservation_cny'])
                                                    for c in calls),Decimal(0)))
             metrics['cost_note']='Peak-rate conservative CNY estimate; unknown calls use full reservation; not invoice'
     write_json_atomic(out/'summary.json',summary)
@@ -281,6 +297,7 @@ def main():
     sub=p.add_subparsers(dest='command',required=True)
     plan=sub.add_parser('plan')
     plan.add_argument('--source',action='append',required=True)
+    plan.add_argument('--followup5',action='store_true')
     plan.add_argument('--labels',required=True);plan.add_argument('--output',required=True)
     runp=sub.add_parser('run')
     runp.add_argument('--env-file')
@@ -292,7 +309,11 @@ def main():
     one.add_argument('--source',required=True);one.add_argument('--suppress',choices=('true','false'),required=True)
     one.add_argument('--mode',choices=('offline','live'),required=True);one.add_argument('--output',required=True)
     args=p.parse_args()
-    if args.command=='plan':make_plan(args.source,args.labels,args.output)
+    if args.command=='plan':
+        planner = make_plan
+        if args.followup5:
+            from locagent_service.followup import make_plan as planner
+        planner(args.source,args.labels,args.output)
     elif args.command=='run':
         if args.recover_zero_use_from and not args.live:
             p.error('--recover-zero-use-from requires --live')

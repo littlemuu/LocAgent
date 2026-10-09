@@ -358,7 +358,7 @@ def traverse_graph_structure(G, roots, direction='downstream', hops=2,
 
 def traverse_tree_structure(G, root, direction='downstream', hops=2,
                             node_type_filter: Optional[List[str]] = None,
-                            edge_type_filter: Optional[List[str]] = None):
+                            edge_type_filter: Optional[List[str]] = None, *, node_label=None):
     if hops == -1:
         hops = 20
 
@@ -371,13 +371,14 @@ def traverse_tree_structure(G, root, direction='downstream', hops=2,
             return
 
         if node == root and level == 0:
-            rtn_str.append(f"{node}")
+            rtn_str.append(node_label(node) if node_label else f"{node}")
             new_prefix = ''
             edirection = direction
         else:
             connector = '└── ' if is_last else '├── '
             connector += f"{edge_type} ── "
-            rtn_str.append(f"{prefix}{connector}{node}")
+            label = node_label(node) if node_label else str(node)
+            rtn_str.append(f"{prefix}{connector}{label}")
             new_prefix = prefix + (' ' if is_last else '│') + ' ' * (len(connector) - 1)
 
         if node in traversed_nodes:

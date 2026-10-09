@@ -63,6 +63,14 @@ become needs_review and are never automatically replayed.
 - [Stage 4 acceptance](STAGE4_ACCEPTANCE.md): fixed commit/sample/index manifests,
   paired evaluation, budget ledger, explicit local .env loading and the completed live pilot.
 - [Stage 5 acceptance](STAGE5_ACCEPTANCE.md): clean Compose startup, closure, crash recovery and reproduction.
+- [Five-sample follow-up](FOLLOWUP5_ACCEPTANCE.md): frozen sources, raw-response settlement,
+  offline evidence and the stopped live run; no automatic replay of its consumed approval.
+- [Offline repair acceptance](OFFLINE_REPAIR_ACCEPTANCE.md): exact root aliases,
+  opt-in structured finish and bounded tool output; saved-response regression only.
+- [Bounded five-sample live round](BOUNDED5_ACCEPTANCE.md): 30 calls, six valid finishes,
+  four invalid submissions, actual fold evidence and consumed one-time authorization.
+- [Entity submission guidance repair](ENTITY_GUIDANCE_ACCEPTANCE.md): graph-backed IDs/types,
+  portable regressions for four saved invalid finishes; offline evidence only.
 - [Architecture](ARCHITECTURE.md): process ownership, state transitions and billing boundaries.
 - [Stage 2 historical acceptance](STAGE2_ACCEPTANCE.md): original MVP and baseline evidence.
 
@@ -84,6 +92,25 @@ ranked the target file/function first, and the enabled arm folded six repeated t
 This development sample does not establish general quality or cost improvements.
 The one-time approval is consumed and full reservations remain retained; do not replay it.
 Unknown paid outcomes halt for review; this service does not claim exactly-once model execution.
+
+### Opt-in bounded localization protocol
+
+New prepared sources can select `--search-protocol bounded-v1` in
+`python -m locagent_service.prepare --repo ... --sample ...`.
+The immutable source configuration selects the protocol; old manifests are never
+edited. Direct adapters may use `LocalizationOptions(search_protocol="bounded-v1")`.
+The default remains `legacy`. Bounded tool results display valid finish targets using
+actual graph node IDs and types. Variables/aliases use files only; constructors
+without separate graph nodes use the owning class ID. One invalid item still
+rejects the entire submission. Engine changes require fresh manifests/plans and
+independent approval before any new paid evaluation.
+
+`bounded-v1` requires an exact `finish` tool payload containing ranked `files` and
+`entities`; the last round offers only this tool. It keeps failed/truncated prose
+as diagnostics without awarding locations. Tool output uses byte-bounded previews
+with a local `read_tool_output` continuation, preserving full raw diagnostics and
+marking only fully visible returns as in context. The existing input gate is unchanged.
+See the acceptance document for limits, reproduction and remaining live validation.
 
 ## 🚀 Launch LocAgent
 1. (Optional but recommended) Parse the codebase for each issue in the benchmark to generate graph indexes in batch.

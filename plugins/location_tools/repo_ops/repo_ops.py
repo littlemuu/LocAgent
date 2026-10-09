@@ -286,8 +286,23 @@ def search_entity_in_global_dict(term: str, include_files: Optional[List[str]] =
     return found_entities_filter_dict
 
 
+def _root_alias(value):
+    # Only the two exact root spellings are aliases. Do not normalize other paths.
+    if value in ('/', '.'):
+        graph = get_graph()
+        for root in (value, '.' if value == '/' else '/'):
+            if root in graph and graph.nodes[root].get('type') == NODE_TYPE_DIRECTORY:
+                return root
+    return value
+
+
+def _entity_input(value):
+    value = value.strip()
+    return _root_alias(value) if value in ('/', '.') else value.strip('.')
+
+
 def search_entity(query_info, include_files: List[str] = None):
-    term = query_info.term
+    term = _root_alias(query_info.term)
     searcher = get_graph_entity_searcher()
     # cur_result = ''
     continue_search = True
@@ -488,13 +503,40 @@ def rank_and_aggr_query_results(query_results, fixed_query_info_list):
     
     return organized_dict
         
-def _format_and_record(qr, searcher, records, *, suppress_repeats=False):
+def _submission_hint(graph, node_id):
+    """Graph-backed finish metadata; never infer an ID from source text."""
+    if node_id not in graph:
+        return ''
+    kind = graph.nodes[node_id]['type']
+    file_id = node_id.partition(':')[0]
+    if kind in ('function', 'class') and file_id in graph and graph.nodes[file_id]['type'] == 'file':
+        payload = {'files': [file_id], 'entities': [node_id]}
+        hint = f'Finish target (type={kind}): ' + json.dumps(payload, ensure_ascii=False) + '.'
+        if kind == 'class' and node_id + '.__init__' not in graph:
+            hint += (' Constructor: no separate __init__ node; use this class ID for '
+                     'any constructor source shown inside the class.')
+        return hint
+    if kind == 'file':
+        return ('Finish target (type=file): ' + json.dumps({'files': [node_id], 'entities': []}, ensure_ascii=False)
+                + '. File IDs and variable/assignment aliases are not entities; localize variables to this file only.')
+    return f'Navigation only (type={kind}); not a valid finish target.'
+
+
+def _format_and_record(qr, searcher, records, *, suppress_repeats=False, submission_hints=False):
     content = qr.format_output(searcher)
+    hint = _submission_hint(searcher.G, qr.nid or qr.file_path) if submission_hints else ''
+    if hint:
+        first, separator, rest = content.partition('\n')
+        content = first + '\n' + hint + '\n' + rest
 
     if records is not None:
         comparison_content = qr.format_output(
             searcher, include_source=False
         )
+
+        if hint:
+            first, separator, rest = comparison_content.partition('\n')
+            comparison_content = first + '\n' + hint + '\n' + rest
 
         entity_id = qr.nid
         if entity_id is None:
@@ -536,6 +578,7 @@ def search_code_snippets(
         *,
         _return_records: Optional[dict] = None,
         _suppress_repeats: bool = False,
+        _submission_hints: bool = False,
 ) -> str:
     """Searches the codebase to retrieve relevant code snippets based on given queries(terms or line numbers).
     
@@ -614,7 +657,7 @@ def search_code_snippets(
             filter_terms.append(' '.join(filter_terms))
         
         for i, term in enumerate(filter_terms):
-            term = term.strip().strip('.')
+            term = _entity_input(term)
             if not term: continue
                 
             query_info = QueryInfo(term=term)
@@ -678,7 +721,7 @@ def search_code_snippets(
                         
                     cur_result += _format_and_record(
                         qr, searcher, _return_records,
-                        suppress_repeats=_suppress_repeats
+                        suppress_repeats=_suppress_repeats, submission_hints=_submission_hints
                     )
                     
                 cur_result += "Source: " + cur_retrieve_src + '\n'
@@ -692,7 +735,7 @@ def search_code_snippets(
                 for qr in query_results:
                     cur_result += _format_and_record(
                         qr, searcher, _return_records,
-                        suppress_repeats=_suppress_repeats
+                        suppress_repeats=_suppress_repeats, submission_hints=_submission_hints
                     )
                     cur_result += '\n'
 
@@ -720,14 +763,14 @@ def search_code_snippets(
                 # filtered_results = query_results
                 for qr in filtered_results:
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats
+                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats, submission_hints=_submission_hints
                     )
                     cur_result += '\n'
             
             elif format_mode == 'code_snippet':
                 for qr in query_results:
                     cur_result += _format_and_record(
-                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats
+                        qr, searcher, _return_records, suppress_repeats=_suppress_repeats, submission_hints=_submission_hints
                     )
                     cur_result += '\n'
             
@@ -744,13 +787,14 @@ def search_code_snippets(
 def get_entity_contents(entity_names: List[str],
                         *,
                         _return_records: Optional[dict] = None,
-                        _suppress_repeats: bool = False
+                        _suppress_repeats: bool = False,
+                        _submission_hints: bool = False
                         ):
     searcher = get_graph_entity_searcher()
     
     result = ''
     for name in entity_names:
-        name = name.strip().strip('.')
+        name = _entity_input(name)
         if not name: continue
         
         result += f'##Searching for entity `{name}`...\n'
@@ -763,11 +807,21 @@ def get_entity_contents(entity_names: List[str],
                                     )
             result += _format_and_record(
                 query_result, searcher, _return_records,
-                suppress_repeats=_suppress_repeats
+                suppress_repeats=_suppress_repeats, submission_hints=_submission_hints
             )
             result += '\n\n'
+        elif (_submission_hints and name.endswith('.__init__')
+              and name[:-len('.__init__')] in searcher.G
+              and searcher.G.nodes[name[:-len('.__init__')]]['type'] == NODE_TYPE_CLASS):
+            owner = name[:-len('.__init__')]
+            result += 'No separate constructor entity exists. ' + _submission_hint(searcher.G, owner)
+            result += '\nRead the owning class with get_entity_contents to see its constructor source.\n\n'
         else:
             result += 'Invalid name. \nHint: Valid entity name should be formatted as "file_path:QualifiedName" or just "file_path".'
+            if _submission_hints:
+                file_id = name.partition(':')[0]
+                if file_id in searcher.G and searcher.G.nodes[file_id]['type'] == NODE_TYPE_FILE:
+                    result += '\n' + _submission_hint(searcher.G, file_id)
             result += '\n\n'
     return result.strip()
 
@@ -965,7 +1019,8 @@ def _validate_graph_explorer_inputs(
     hints = ''
     valid_entities = []
     for i, root in enumerate(start_entities):
-        # process node name
+        # Exact root aliases apply before legacy non-root normalization.
+        root = _root_alias(root)
         if root != '/':
             root = root.strip('/')
         if root.endswith('.__init__'):
@@ -1034,6 +1089,8 @@ def explore_tree_structure(
         traversal_depth: int = 2,
         entity_type_filter: Optional[List[str]] = None,
         dependency_type_filter: Optional[List[str]] = None,
+        *,
+        _submission_hints: bool = False,
 ):
     """Analyzes and displays the dependency structure around specified entities in a code graph.
 
@@ -1118,7 +1175,9 @@ def explore_tree_structure(
         rtn_str = json.dumps(rtns)
     else:
         rtns = [traverse_tree_structure(G, node, direction, traversal_depth, entity_type_filter,
-                                        dependency_type_filter)
+                                        dependency_type_filter,
+                                        node_label=(lambda nid: nid + ' | ' + _submission_hint(G, nid))
+                                        if _submission_hints else None)
                 for node in start_entities]
         rtn_str = "\n\n".join(rtns)
         

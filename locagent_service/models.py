@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Any, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer
 
 
 class DemoScenario(str, Enum):
@@ -66,6 +66,14 @@ class LocalizationResultView(BaseModel):
     raw_output: str
     return_records: dict[str, Any]
     messages: list[dict[str, Any]]
+    diagnostics: dict[str, Any] | None = None
+
+    @model_serializer(mode='wrap')
+    def serialize_result(self, handler):
+        value = handler(self)
+        if self.diagnostics is None:
+            value.pop('diagnostics', None)
+        return value
 
 
 class TaskView(BaseModel):

@@ -71,7 +71,8 @@ def localize_prepared(request, provider):
         entity_searcher=RepoEntitySearcher(graph),similarity_top_k=manifest['config']['top_k'])
     engine=GraphLocalizer.from_graph(graph,provider=provider,
         model_name=manifest['config']['model'],
-        options=LocalizationOptions(**request.options.model_dump()),
+        options=LocalizationOptions(**request.options.model_dump(),
+            search_protocol=manifest["config"].get("search_protocol", "legacy")),
         bm25_index_dir=bundle/'bm25',module_retriever=retriever)
     return engine.localize(LocalizationRequest(**manifest['task']))
 
@@ -82,5 +83,9 @@ def localize(request):
         return localize_demo(request)
     from locagent_service.budget import BudgetProvider
     manifest,_=load_manifest(request.source_id)
-    return localize_prepared(request,BudgetProvider.from_env(request.source_id,manifest['config'],
+    provider_class = BudgetProvider
+    if manifest['config'].get('budget_policy') == 'locagent-followup5-v1':
+        from locagent_service.followup import SettlingBudgetProvider
+        provider_class = SettlingBudgetProvider
+    return localize_prepared(request,provider_class.from_env(request.source_id,manifest['config'],
         arm=request.options.suppress_repeats))

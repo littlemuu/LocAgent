@@ -15,7 +15,9 @@ from locagent_service.offline import offline_engine
 from util.localization_contract import LocalizationRequest
 
 
-def prepare(repo, sample):
+def prepare(repo, sample, *, followup5=False, search_protocol="legacy"):
+    if search_protocol not in ("legacy", "bounded-v1"):
+        raise ValueError("Unsupported search protocol")
     raw=json.loads(Path(sample).read_text())
     task=LocalizationRequest(**{key:raw[key] for key in (
         'instance_id','repo','base_commit','problem_statement')}).as_task()
@@ -35,6 +37,11 @@ def prepare(repo, sample):
     config={**LIVE_CONFIG, 'top_k':5,'global_import':True,'fuzzy_search':True,
             'chunk_size':500,'min_chunk_size':100,'max_chunk_size':2000,
             'hard_token_limit':2000,'max_chunks':200}
+    if search_protocol != 'legacy':
+        config['search_protocol'] = search_protocol
+    if followup5:
+        from locagent_service.followup import POLICY
+        config['budget_policy'] = POLICY
     with offline_engine():
         import networkx as nx
         from dependency_graph.build_graph import build_graph
@@ -48,7 +55,9 @@ def prepare(repo, sample):
     base=Path(__file__).resolve().parents[1]
     names=['util/localizer.py','util/localization_engine.py','util/return_trace.py',
            'dependency_graph/build_graph.py','plugins/location_tools/repo_ops/repo_ops.py',
-           'util/prompts/pipelines/auto_search_prompt.py']
+           'util/prompts/pipelines/auto_search_prompt.py',
+           'util/localization_protocol.py','util/localization_contract.py',
+           'dependency_graph/traverse_graph.py']
     (bundle/'environment.txt').write_bytes(subprocess.check_output(
         [str(base/'.venv/bin/python'),'-m','pip','freeze']))
     manifest={'version':2,'bundle':bundle.name,'task':task,'config':config,
@@ -87,10 +96,13 @@ if __name__=='__main__':
     group.add_argument('--repo')
     group.add_argument('--from-source')
     parser.add_argument('--sample')
+    parser.add_argument('--followup5', action='store_true')
+    parser.add_argument('--search-protocol', choices=['legacy','bounded-v1'], default='legacy')
     args=parser.parse_args()
     if args.from_source:
-        if args.sample:parser.error('--sample only applies to --repo')
+        if args.sample or args.followup5 or args.search_protocol != 'legacy':
+            parser.error('--sample/--followup5/--search-protocol only apply to --repo')
         derive_source(args.from_source)
     else:
         if not args.sample:parser.error('--repo requires --sample')
-        prepare(args.repo,args.sample)
+        prepare(args.repo,args.sample,followup5=args.followup5,search_protocol=args.search_protocol)

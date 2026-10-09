@@ -104,10 +104,13 @@ class LocalizationRequest:
 class LocalizationOptions:
     max_iterations: int = 6
     suppress_repeats: bool = False
+    search_protocol: str = "legacy"
 
     def __post_init__(self):
         if type(self.max_iterations) is not int or not 1 <= self.max_iterations <= 100:
             raise InvalidRequestError('max_iterations must be an integer from 1 to 100')
+        if self.search_protocol not in ('legacy', 'bounded-v1'):
+            raise InvalidRequestError('unsupported search_protocol')
         if type(self.suppress_repeats) is not bool:
             raise InvalidRequestError('suppress_repeats must be a boolean')
 
@@ -141,6 +144,7 @@ class LocalizationResult:
     raw_output: str = ''
     return_records: dict[str, Any] = field(default_factory=dict)
     messages: list[dict[str, Any]] = field(default_factory=list)
+    diagnostics: dict[str, Any] | None = None
 
     def __post_init__(self):
         if safe_instance_id(self.instance_id) != self.instance_id:
@@ -169,4 +173,6 @@ class LocalizationResult:
         self.__post_init__()
         result = asdict(self)
         result['status'] = self.status.value
+        if self.diagnostics is None:
+            result.pop('diagnostics')  # Preserve legacy serialized results.
         return result

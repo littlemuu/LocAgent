@@ -113,3 +113,28 @@ the prior marker/ledger in an audit record and binds the replacement plan and le
 Known or unknown calls, mismatched provenance and interrupted audit persistence fail
 closed. This migration was used once for the local input-gate failure; it does not
 authorize replay of the subsequently completed six-call pilot.
+
+## Explicit bounded search protocol
+
+The isolated `GraphLocalizer` owns graph globals under the same per-process lock.
+A source manifest may explicitly select `bounded-v1`; absent that setting the
+legacy loop/parser remains active. This changes no worker, lease, fencing, retry
+or payment ownership rules.
+
+The bounded loop validates exact structured locations against its graph, restricts
+the last provider request to the finish tool, and fails closed on truncated or
+missing submission. A per-run output cache paginates tool returns by actual JSON
+message bytes; full raw returns are kept only in diagnostics. The context ledger
+is updated from delivered messages, never from withheld tails. Continuations
+reference only this in-memory cache and cannot read arbitrary files. Current caps
+are 8 KiB per tool message, 24 KiB cumulative tool messages and the unchanged
+65,536-byte request estimate gate (including 4 KiB reserve). These are model-input
+bounds, not a CPU, memory or stored-diagnostic size quota.
+
+Bounded tool display annotates graph-backed file/function/class IDs with valid
+finish payloads. Variable aliases are file-level targets; a class with no separate
+constructor node points to the class while retaining its source. These hints do
+not normalize, filter or salvage submitted locations: exact all-or-nothing
+validation is unchanged. Internal display flags cannot be supplied by the model.
+Legacy tools omit this metadata. The traversal formatter is included in newly
+prepared source engine hashes; old manifests/indexes remain untouched.

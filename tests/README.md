@@ -6,7 +6,8 @@ Run from the LocAgent repository root with the existing CPU virtual environment:
 LITELLM_LOCAL_MODEL_COST_MAP=True HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 .venv/bin/python -B -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The combined suite currently has 132 unittest methods. The Stage 2 baseline
+The combined suite currently has 196 unittest methods (the previous 180 plus
+16 graph submission guidance and saved-invalid-finish regressions). The Stage 2 baseline
 had 61: the original 48 (10 return-trace, 4 request-contract and 34 Stage 1 tests)
 plus 13 Stage 2 contract, fixture and HTTP boundary tests. Install `requirements-service.txt` for Stage 2.
 The pure suite needs no PostgreSQL, pytest or credentials.
@@ -102,3 +103,50 @@ Fourteen exact-zero recovery/gate regressions cover consumed/unknown rejection,
 eight-process competition, interrupted audit persistence, worker-lock contention,
 aliases, the 64KiB boundary and integration with the paired evaluator. Real authority
 is not migrated by these tests; all budgets and providers are temporary/offline.
+
+The five-sample follow-up uses separate temporary authorization in all tests.
+Missing original HTTP usage, settlement persistence failures and process death keep
+full reservations and prohibit replay. See [follow-up acceptance](../FOLLOWUP5_ACCEPTANCE.md).
+
+## Offline repair of five-sample failures
+
+`test_bounded_protocol.py` covers actual graph root aliases, strict final-only
+submission, length/missing-finish/iteration-limit diagnostics, exact graph IDs,
+per-run continuation, UTF-8/JSON byte bounds, original-output retention,
+unseen-tail suppression safety and legacy result serialization.
+
+With the retained local benchmark artifacts, these additional runners make no
+model/network calls and require a **new** output directory on each execution:
+
+```sh
+.venv/bin/python -B tests/run_offline_repair_acceptance.py --output outputs/stage4/repair-forensic-new
+.venv/bin/python -B tests/run_prepared_protocol_smoke.py --output outputs/stage4/repair-prepared-new
+```
+
+The forensic runner verifies historical artifact hashes and reuses already-settled
+HTTP responses. Its synthetic final response is deliberately empty; it does not
+rescore old results. The preparation runner builds a new manifest/index in its own
+registry from the exact local Git commit and uses only a synthetic provider.
+See [offline repair acceptance](../OFFLINE_REPAIR_ACCEPTANCE.md).
+
+The independently reviewed bounded five-sample round completed 30 real calls; its one-time authorization and every group quota are consumed. Temporary-ledger tests never consume real authorization. See BOUNDED5_ACCEPTANCE.md for actual results and retained evidence.
+
+## Entity submission guidance repair
+
+`test_submission_guidance.py` constructs a tiny graph using the real source
+analyzer, exercises actual search/read/tree tools and the bounded loop, and
+verifies displayed exact IDs/types against the unchanged strict finish validator.
+Variable/file/directory entities remain invalid. Constructor source stays in its
+class even though there is no separate `__init__` node. Legacy display, repeat
+suppression and unread-tail safety are covered.
+
+`fixtures/invalid_finish_cases.json` contains only the original finish argument
+strings, commit IDs, source response hashes and minimal graph node/type facts
+from four historical failures. Each portable regression mixes a known-valid
+target with an invalid entity and verifies rejection, empty locations and zero
+score. It needs no saved indexes, raw responses, credentials or model calls.
+These are mechanical regression fixtures, not new quality measurements.
+
+See [entity guidance acceptance](../ENTITY_GUIDANCE_ACCEPTANCE.md) for the 196
+offline tests, separate real PostgreSQL/process tests, preserved historical
+results and the candidate commit boundary.
