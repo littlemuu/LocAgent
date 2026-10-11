@@ -90,6 +90,7 @@ def execute_one(source, suppress, mode, output):
     except Exception as exc:
         record.update(status='failed',error_type=type(exc).__name__)
     record['elapsed_seconds']=time.monotonic()-started
+    record['attempt_elapsed_seconds']=record['elapsed_seconds']
     write_json_atomic(output,record)
     return record
 
@@ -125,6 +126,11 @@ def collect_child_record(path, source, arm, mode, *, returncode=None, failure_re
             if (type(elapsed) not in (int,float) or not math.isfinite(elapsed) or elapsed<0):
                 raise ValueError('Invalid duration')
             record['elapsed_seconds']=elapsed
+            attempt=row.get('attempt_elapsed_seconds')
+            if attempt is not None:
+                if type(attempt) not in (int,float) or not math.isfinite(attempt) or attempt<0:
+                    raise ValueError('Invalid attempt duration')
+                record['attempt_elapsed_seconds']=attempt
             if row['status']=='completed':
                 result=LocalizationResultView.model_validate(row.get('result'),strict=True).model_dump()
                 if any(not isinstance(msg.get('role'),str)
@@ -156,8 +162,44 @@ def completed_result(row):
     return result if row.get('status')=='completed' and isinstance(result,dict) else {}
 
 
-def summarize(plan,records,answers):
+
+def valid_finish(row):
+    """True/False when termination is known; None when a completed record is ambiguous.
+
+    GraphLocalizer emits legacy success/empty only after a finished trajectory and
+    successful location parsing. Bounded diagnostics take precedence; absence of
+    both diagnostics and a recognized result status is not evidence of failure.
+    """
+    if row.get('status') != 'completed':
+        return False  # Failed/missing tasks retain their fixed-denominator zero.
+    result = completed_result(row)
+    status = result.get('status')
+    if status == 'iteration_limit':
+        return False
+    diagnostics = result.get('diagnostics')
+    if diagnostics is not None:
+        reason = diagnostics.get('termination_reason') if isinstance(diagnostics, dict) else None
+        return reason == 'finished' if isinstance(reason, str) and reason else None
+    if status in ('success', 'empty'):
+        return True
+    return None
+
+
+def summarize(plan,records,answers, *, execution_mode=None, experiment_complete=False):
     expected={(s,arm) for s in plan['sources'] for arm in plan['arms']}
+    if len(set(plan['sources'])) != len(plan['sources']) or set(answers) != set(plan['sources']):
+        raise ValueError('Exactly one label record per fixed source required')
+    for answer in answers.values():
+        if (not isinstance(answer, dict) or any(
+                not isinstance(answer.get(label), list)
+                or any(not isinstance(x, str) or not x for x in answer[label])
+                or len(set(answer[label])) != len(answer[label])
+                for label in ('files', 'entities')) or not answer['files']):
+            raise ValueError('Unique nonempty file labels and an explicit function list required')
+    applicable = [source for source in plan['sources'] if answers[source]['entities']]
+    declared = plan.get('function_applicable_sources')
+    if declared is not None and declared != applicable:
+        raise ValueError('Function applicability differs from the predeclared cohort')
     by_key={}
     for row in records:
         key=(row['source_id'],row['suppress_repeats'])
@@ -166,29 +208,86 @@ def summarize(plan,records,answers):
         by_key[key]=row
     modes={r['mode'] for r in records}
     if len(modes)>1:raise ValueError('Cannot combine fixture and real results')
-    real=modes=={'live'}
-    summary={'mode':'live' if real else 'offline',
-             'quality_claim_allowed':real,'denominator_per_arm':len(plan['sources']),'arms':{}}
+    if execution_mode is None:
+        execution_mode = 'live' if modes == {'live'} else 'offline'
+    if execution_mode not in ('live', 'offline', 'simulation'):
+        raise ValueError('Unknown execution mode')
+    expected_record_mode = 'live' if execution_mode == 'live' else 'offline'
+    if modes and modes != {expected_record_mode}:
+        raise ValueError('Record mode differs from execution mode')
+    if type(experiment_complete) is not bool:
+        raise ValueError('Experiment completion must be explicit')
+    real = execution_mode == 'live'
+    def terminal(row):
+        return row['status']=='completed' or (
+            plan.get('policy')=='locagent-phased-v3'
+            and plan.get('arm_failure_policy')=='settled-json-arguments-with-reaped-executor-v1'
+            and row['status']=='failed' and row.get('terminal_failure_verified') is True)
+    all_terminal = len(by_key)==len(expected) and all(terminal(r) for r in records)
+    quality_allowed = real and experiment_complete and all_terminal
+    summary={'mode':execution_mode, 'quality_claim_allowed':quality_allowed,
+             'metrics_scope':'completed_experiment' if quality_allowed else 'progress' if real else 'offline',
+             'experiment_complete':experiment_complete and all_terminal,
+             'denominator_per_arm':len(plan['sources']),'arms':{},
+             'paired_outcomes':{
+                 'planned_pairs':len(plan['sources']),
+                 'terminal_pairs':sum(all((s,a) in by_key and terminal(by_key[(s,a)])
+                     for a in plan['arms']) for s in plan['sources']),
+                 'both_completed_pairs':sum(all(by_key.get((s,a),{}).get('status')=='completed'
+                     for a in plan['arms']) for s in plan['sources'])}}
     for arm in plan['arms']:
         rows=[by_key.get((source,arm),{'status':'missing'}) for source in plan['sources']]
         metrics={}
+        coverage_adjusted={}
         for field,label in (('found_files','files'),('found_entities','entities')):
+            eligible = plan['sources'] if label == 'files' else applicable
             for k in (1,3):
                 score=0
                 for source,row in zip(plan['sources'],rows):
                     truth=set(answers[source][label])
+                    if not truth:
+                        continue  # Explicitly not applicable, not a successful empty answer.
                     predicted=set(completed_result(row).get(field,[])[:k])
                     score+=len(truth & predicted)/len(truth)
-                metrics[label+'_recall_at_'+str(k)]=score/len(rows) if real else None
+                metrics[label+'_recall_at_'+str(k)]=(score/len(eligible)
+                    if real and eligible else None)
+                if label == 'entities':
+                    coverage_adjusted['function_recall_at_'+str(k)+'_full_cohort']=(
+                        score/len(rows) if real and rows else None)
+        outcomes = [valid_finish(row) for row in rows]
+        unknown_finishes = sum(value is None for value in outcomes)
+        valid = sum(value is True for value in outcomes)
+        completed_times=[r.get('elapsed_seconds') for r in rows if r['status']=='completed']
+        completed_seconds=(sum(completed_times) if all(v is not None for v in completed_times) else None)
         summary['arms'][str(arm).lower()]={
             'completed':sum(r['status']=='completed' for r in rows),
             'failed_or_missing':sum(r['status']!='completed' for r in rows),
             'prompt_tokens':sum(completed_result(r).get('usage',{}).get('prompt_tokens',0) for r in rows) if real else None,
             'completion_tokens':sum(completed_result(r).get('usage',{}).get('completion_tokens',0) for r in rows) if real else None,
-            'elapsed_seconds':sum(r.get('elapsed_seconds',0) for r in rows),
+            # Compatibility alias: completed-result time only, never total run wall time.
+            'elapsed_seconds':completed_seconds,
+            'completed_result_seconds':completed_seconds,
+            'recorded_attempt_seconds':sum(r.get('attempt_elapsed_seconds') or 0 for r in rows),
+            'attempt_duration_unknown_count':sum(r['status'] not in ('missing','pending')
+                and r.get('attempt_elapsed_seconds') is None for r in rows),
+            'failed':sum(r['status']=='failed' for r in rows),
+            'terminal':sum(terminal(r) for r in rows),
+            'completion_rate':sum(r['status']=='completed' for r in rows)/len(rows) if real and rows else None,
+            'failure_rate':sum(r['status']=='failed' for r in rows)/len(rows) if real and rows else None,
+            'terminal_rate':sum(terminal(r) for r in rows)/len(rows) if real and rows else None,
+            'blocked':sum(r['status']=='blocked' for r in rows),
+            'running':sum(r['status']=='running' for r in rows),
+            'not_started':sum(r['status'] in ('missing','pending') for r in rows),
             'tool_message_characters':sum(len(msg.get('content') or '')
                 for r in rows for msg in completed_result(r).get('messages',[]) if msg['role']=='tool'),
             'metrics':metrics,
+            'metric_denominators':{'files':len(rows),'functions':len(applicable)},
+            'function_not_applicable':len(rows)-len(applicable),
+            'function_applicable_sources':applicable.copy(),
+            'coverage_adjusted_metrics':coverage_adjusted,
+            'valid_finish_count':valid if real and not unknown_finishes else None,
+            'valid_finish_unknown_count':unknown_finishes if real else None,
+            'valid_finish_rate':valid/len(rows) if real and rows and not unknown_finishes else None,
             'cost_cny':None,
             'cost_note':'Use budget ledger for all calls including failed attempts; upper bound, not invoice'}
     return summary
@@ -274,7 +373,8 @@ def run(plan_path,labels,out,live=False,pricing_confirmation=None,recover_zero_u
             # report unexecuted arms as missing rather than silently retrying or excluding.
             if live and row['status']!='completed':break
         if live and records[-1]['status']!='completed':break
-    summary=summarize(plan,records,json.loads(Path(labels).read_text()))
+    summary=summarize(plan,records,json.loads(Path(labels).read_text()),
+                      execution_mode=mode,experiment_complete=True)
     if live:
         from decimal import Decimal
         billing=json.loads((out/'budget.json').read_text())

@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Any, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_serializer, model_validator, ValidationInfo
 
 
 class DemoScenario(str, Enum):
@@ -28,10 +28,11 @@ class TaskOptions(BaseModel):
     suppress_repeats: bool = Field(default=True, strict=True)
 
 
-class CreateTask(BaseModel):
+class TaskRequest(BaseModel):
+    """Bounded wire/storage shape; new HTTP sources are admitted inside store.create."""
     model_config = ConfigDict(extra='forbid')
     source_id: str = Field(default='demo-v1', pattern=r'^(demo-v1|prepared-[a-f0-9]{64})$')
-    problem_statement: str = Field(strict=True, min_length=1, max_length=8000)
+    problem_statement: str = Field(strict=True, min_length=1, max_length=32768)
     demo_scenario: DemoScenario = DemoScenario.SUCCESS
     options: TaskOptions = Field(default_factory=TaskOptions)
     timeout_seconds: int = Field(default=90, strict=True, ge=1, le=900)
@@ -39,10 +40,25 @@ class CreateTask(BaseModel):
 
     @field_validator('problem_statement')
     @classmethod
-    def nonblank(cls, value: str) -> str:
+    def nonblank(cls, value: str, info: ValidationInfo) -> str:
         if not value.strip():
             raise ValueError('problem_statement must contain text')
+        if len(value) > 8000 and info.data.get('source_id') == 'demo-v1':
+            raise ValueError('Ordinary requests are limited to 8000 characters')
         return value
+
+
+class CreateTask(TaskRequest):
+    @model_validator(mode='after')
+    def verified_long_source(self, info: ValidationInfo):
+        # Only database deserialization supplies this internal context; HTTP JSON cannot.
+        if len(self.problem_statement) > 8000 and not (info.context or {}).get('persisted_task'):
+            from locagent_service.sources import validate_source
+            try:
+                validate_source(self)
+            except (OSError, ValueError, KeyError, TypeError) as exc:
+                raise ValueError('Long input requires a verified exact prepared source') from exc
+        return self
 
 
 class PublicError(BaseModel):

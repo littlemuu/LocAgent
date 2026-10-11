@@ -1,12 +1,10 @@
 """Build immutable graph/BM25 artifacts from a local exact Git commit, offline."""
 import argparse
 from copy import deepcopy
-import io
 import json
 from pathlib import Path
 import pickle
 import subprocess
-import tarfile
 from uuid import uuid4
 
 from locagent_service.sources import registry,canonical,digest,file_hashes,load_manifest
@@ -15,7 +13,8 @@ from locagent_service.offline import offline_engine
 from util.localization_contract import LocalizationRequest
 
 
-def prepare(repo, sample, *, followup5=False, search_protocol="legacy"):
+def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
+            exclude_verified_image_links=False):
     if search_protocol not in ("legacy", "bounded-v1"):
         raise ValueError("Unsupported search protocol")
     raw=json.loads(Path(sample).read_text())
@@ -28,12 +27,14 @@ def prepare(repo, sample, *, followup5=False, search_protocol="legacy"):
     bundle=registry()/('bundle-'+uuid4().hex)
     snapshot=bundle/'repo'
     snapshot.mkdir(parents=True)
-    archive=subprocess.check_output(['git','-C',str(repo),'archive','--format=tar',commit])
-    with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
-        for member in tar.getmembers():
-            if not (member.isfile() or member.isdir()):
-                raise ValueError('Only ordinary repository files/directories are supported')
-        tar.extractall(snapshot,filter='data')
+    archive=subprocess.check_output(['git','-C',str(repo),'archive','--format=tar',commit+'^{tree}'])
+    from locagent_service.source_archive import extract_snapshot, inspect_git_tree
+    python_blobs = inspect_git_tree(subprocess.check_output(
+        ['git','-C',str(repo),'ls-tree','-r','-z','--full-tree',commit]))
+    audit = extract_snapshot(archive, snapshot,
+        exclude_verified_image_links=exclude_verified_image_links,
+        expected_python_blobs=python_blobs)
+    (bundle/'archive-audit.json').write_bytes(canonical(audit))
     config={**LIVE_CONFIG, 'top_k':5,'global_import':True,'fuzzy_search':True,
             'chunk_size':500,'min_chunk_size':100,'max_chunk_size':2000,
             'hard_token_limit':2000,'max_chunks':200}
@@ -57,7 +58,8 @@ def prepare(repo, sample, *, followup5=False, search_protocol="legacy"):
            'dependency_graph/build_graph.py','plugins/location_tools/repo_ops/repo_ops.py',
            'util/prompts/pipelines/auto_search_prompt.py',
            'util/localization_protocol.py','util/localization_contract.py',
-           'dependency_graph/traverse_graph.py']
+           'dependency_graph/traverse_graph.py', 'locagent_service/source_archive.py',
+           'locagent_service/prepare.py', 'locagent_service/sources.py', 'locagent_service/models.py']
     (bundle/'environment.txt').write_bytes(subprocess.check_output(
         [str(base/'.venv/bin/python'),'-m','pip','freeze']))
     manifest={'version':2,'bundle':bundle.name,'task':task,'config':config,
@@ -97,12 +99,14 @@ if __name__=='__main__':
     group.add_argument('--from-source')
     parser.add_argument('--sample')
     parser.add_argument('--followup5', action='store_true')
+    parser.add_argument('--exclude-verified-image-links', action='store_true')
     parser.add_argument('--search-protocol', choices=['legacy','bounded-v1'], default='legacy')
     args=parser.parse_args()
     if args.from_source:
-        if args.sample or args.followup5 or args.search_protocol != 'legacy':
+        if args.sample or args.followup5 or args.exclude_verified_image_links or args.search_protocol != 'legacy':
             parser.error('--sample/--followup5/--search-protocol only apply to --repo')
         derive_source(args.from_source)
     else:
         if not args.sample:parser.error('--repo requires --sample')
-        prepare(args.repo,args.sample,followup5=args.followup5,search_protocol=args.search_protocol)
+        prepare(args.repo,args.sample,followup5=args.followup5,search_protocol=args.search_protocol,
+                exclude_verified_image_links=args.exclude_verified_image_links)

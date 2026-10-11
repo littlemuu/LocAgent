@@ -150,6 +150,44 @@ def _graph_session(graph: Any, task: dict[str, str], bm25_root: Path | None,
             setattr(ops, name, value)
 
 
+
+class GraphToolCause(RuntimeError):
+    """Safe projection of an internal cause: type and stack coordinates only.
+
+    Never retain exception messages, notes, locals, source lines or original
+    exception objects in the published chain; those may contain credentials.
+    """
+    def __init__(self, error: Exception):
+        self.original_type = type(error).__module__ + '.' + type(error).__qualname__
+        frames = []
+        tb = error.__traceback__
+        while tb is not None:
+            code = tb.tb_frame.f_code
+            frames.append((Path(code.co_filename).name, tb.tb_lineno, code.co_name))
+            tb = tb.tb_next
+        self.frames = tuple(frames)
+        locations = ' -> '.join(f'{file}:{line}:{name}' for file, line, name in frames)
+        super().__init__(f'{self.original_type} (message and locals omitted); {locations}')
+
+
+def _tool_cause_chain(error: Exception) -> Exception:
+    seen = set()
+    head = tail = None
+    while error is not None and id(error) not in seen and len(seen) < 32:
+        seen.add(id(error))
+        safe = GraphToolCause(error)
+        if tail is None:
+            head = safe
+        else:
+            tail.__cause__ = safe
+        tail = safe
+        cause = error.__cause__
+        error = cause if cause is not None else (None if error.__suppress_context__ else error.__context__)
+    if error is not None:
+        tail.__cause__ = RuntimeError('Further internal cause chain omitted (cycle or depth limit)')
+    return head
+
+
 def _execute_tool(ops: Any, code: str, *, return_records: dict[str, Any],
                   suppress_repeats: bool, submission_hints: bool = False) -> str:
     # Accept the print(tool(**literal_arguments)) form emitted by ResponseParser.
@@ -194,8 +232,10 @@ def _execute_tool(ops: Any, code: str, *, return_records: dict[str, Any],
         return str(function(*args, **kwargs)) + '\n'
     except LocalizationError:
         raise
-    except Exception:
-        raise LocalizationError(ErrorCode.EXECUTION_ERROR, 'Graph tool execution failed') from None
+    except Exception as exc:
+        cause = _tool_cause_chain(exc)
+    # Raise outside the handler so __context__ cannot retain the unsafe original.
+    raise LocalizationError(ErrorCode.EXECUTION_ERROR, 'Graph tool execution failed') from cause
 
 
 def _checked_provider(provider: CompletionProvider, *, bounded=False) -> CompletionProvider:
@@ -227,9 +267,15 @@ def _checked_provider(provider: CompletionProvider, *, bounded=False) -> Complet
                         raise ValueError('unknown tool')
                     if bounded and call.function.name == 'finish':
                         continue  # The strict protocol records malformed finish as invalid_finish.
-                    arguments = json.loads(call.function.arguments)
-                    if not isinstance(arguments, dict):
-                        raise ValueError('tool arguments must be an object')
+                    try:
+                        arguments = json.loads(call.function.arguments)
+                        if not isinstance(arguments, dict):
+                            raise ValueError('tool arguments must be an object')
+                    except (TypeError, ValueError):
+                        raise LocalizationError(
+                            ErrorCode.INVALID_RESPONSE,
+                            'Tool arguments must be a valid JSON object',
+                        ) from None
                     if call.function.name == 'finish' and (
                         set(arguments) != {'thought'}
                         or not isinstance(arguments['thought'], str)

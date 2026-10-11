@@ -23,6 +23,7 @@ from plugins.location_tools.retriever.bm25_retriever import (
     build_code_retriever_from_repo as build_code_retriever,
     build_module_retriever_from_graph as build_module_retriever,
     build_retriever_from_persist_dir as load_retriever,
+    has_bm25_tokens, retrieve_nonempty,
 )
 from plugins.location_tools.retriever.fuzzy_retriever import (
     fuzzy_retrieve_from_graph_nodes as fuzzy_retrieve
@@ -391,6 +392,11 @@ def search_entity(query_info, include_files: List[str] = None):
                         continue_search = True
                                    
         
+    # Exact entity/file matches above remain valid even for a stopword name.
+    # A tokenless fragment cannot support BM25 or meaningful fuzzy ranking.
+    if continue_search and not has_bm25_tokens(term):
+        return (cur_query_results, False)
+
     # third: bm25 search (entity + content)
     if continue_search:
         module_nids = []
@@ -781,7 +787,7 @@ def search_code_snippets(
         else:
             result += 'No locations found.\n\n'
         
-    return result.strip()
+    return result.strip() or 'No locations found.'
 
 
 def get_entity_contents(entity_names: List[str],
@@ -837,11 +843,7 @@ def bm25_module_retrieve(
     retriever = build_module_retriever(entity_searcher=get_graph_entity_searcher(),
                                        search_scope=search_scope,
                                        similarity_top_k=similarity_top_k)
-    try:
-        retrieved_nodes = retriever.retrieve(query)
-    except IndexError as e:
-        logging.warning(f'{e}. Probably because the query `{query}` is too short.')
-        return []
+    retrieved_nodes = retrieve_nonempty(retriever, query)
 
     filter_nodes = []
     all_nodes = []
@@ -894,7 +896,7 @@ def bm25_content_retrieve(
 
     # similarity: {score}
     cur_query_results = []
-    retrieved_nodes = retriever.retrieve(query)
+    retrieved_nodes = retrieve_nonempty(retriever, query)
     for node in retrieved_nodes:
         file = node.metadata['file_path']
         # print(node.metadata)

@@ -80,9 +80,9 @@ class TaskStore:
                 existing = c.execute(sql.SQL('SELECT * FROM {} WHERE idempotency_key=%s').format(
                     self.table), (idempotency_key,)).fetchone()
                 if existing is not None:
-                    if CreateTask.model_validate(existing['request']).model_dump(mode='json') != payload:
+                    if CreateTask.model_validate(existing['request'], context={'persisted_task': True}).model_dump(mode='json') != payload:
                         raise IdempotencyConflict('Idempotency key belongs to another request')
-                    return TaskView.model_validate(existing)
+                    return TaskView.model_validate(existing, context={'persisted_task': True})
             if validate_new is not None:
                 validate_new(request)
             row = c.execute(sql.SQL("""
@@ -92,15 +92,15 @@ class TaskStore:
             if row is None:
                 row = c.execute(sql.SQL('SELECT * FROM {} WHERE idempotency_key=%s').format(
                     self.table), (idempotency_key,)).fetchone()
-                if CreateTask.model_validate(row['request']).model_dump(mode='json') != payload:
+                if CreateTask.model_validate(row['request'], context={'persisted_task': True}).model_dump(mode='json') != payload:
                     raise IdempotencyConflict('Idempotency key belongs to another request')
-        return TaskView.model_validate(row)
+        return TaskView.model_validate(row, context={'persisted_task': True})
 
     def get(self, task_id: UUID) -> TaskView | None:
         with self.connect() as c:
             row = c.execute(sql.SQL('SELECT * FROM {} WHERE id=%s').format(
                 self.table), (task_id,)).fetchone()
-        return TaskView.model_validate(row) if row else None
+        return TaskView.model_validate(row, context={'persisted_task': True}) if row else None
 
     def history(self, task_id):
         with self.connect() as c:
@@ -230,7 +230,7 @@ class TaskStore:
                     UPDATE {} SET status='cancelled',finished_at=clock_timestamp(),
                      lease_until=NULL WHERE id=%s RETURNING *
                 """).format(self.table),(task_id,)).fetchone()
-        return TaskView.model_validate(row)
+        return TaskView.model_validate(row, context={'persisted_task': True})
 
     def retry(self, task_id):
         with self.connect() as c:

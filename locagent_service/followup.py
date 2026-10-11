@@ -245,25 +245,10 @@ def request_raw(**kwargs):
     """Official HTTPS only, no redirects, no retries; preserve HTTP bytes before SDK conversion."""
     if os.environ.get('LOCAGENT_ALLOW_PAID') != '1' or not os.environ.get('DEEPSEEK_API_KEY'):
         raise RuntimeError('Explicit paid execution and existing key required')
-    import httpx
-    payload = {k: kwargs[k] for k in ('messages', 'tools', 'tool_choice', 'stop') if k in kwargs}
-    # GraphLocalizer retains LiteLLM's legacy function_call=None and tool names.
-    # Send only documented message fields; keep the original content/tool call IDs.
-    allowed = {
-        'system': {'role', 'content', 'name'}, 'user': {'role', 'content', 'name'},
-        'assistant': {'role', 'content', 'name', 'tool_calls'},
-        'tool': {'role', 'content', 'tool_call_id'},
-    }
-    payload['messages'] = [
-        {k: v for k, v in message.items() if k in allowed[message['role']]
-         and (v is not None or k == 'content')}
-        for message in payload.get('messages', [])
-    ]
-    payload.update(model='deepseek-v4-flash', temperature=0, max_tokens=512,
-                   thinking={'type': 'disabled'}, stream=False)
-    with httpx.Client(transport=httpx.HTTPTransport(retries=0), follow_redirects=False,
-                      timeout=60, trust_env=False) as client:
-        response = client.post('https://api.deepseek.com/chat/completions',
+    from locagent_service import deepseek_http
+    payload = deepseek_http.payload(**kwargs)
+    with deepseek_http.client() as client:
+        response = client.post(deepseek_http.ENDPOINT,
                                headers={'Authorization': 'Bearer ' + os.environ['DEEPSEEK_API_KEY']},
                                json=payload)
         if response.status_code != 200:

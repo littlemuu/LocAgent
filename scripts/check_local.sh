@@ -9,6 +9,7 @@ case "${1:-}" in
   "") ;;
   --postgres)
     "$PYTHON" -B tests/run_stage2_acceptance.py --pattern stage3_postgres_acceptance.py
+    "$PYTHON" -B tests/run_stage2_acceptance.py --pattern stage4_compatibility_postgres_acceptance.py
     ;;
   --compose)
     docker compose build

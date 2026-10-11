@@ -190,3 +190,8 @@ wandb/
 
 .env.*
 !.env.example
+
+# Local reviewed cohort bindings and original provider-response fixtures
+/locagent_service/phased_cohorts.json
+/tests/fixtures/settled_protocol_failure/
+!tests/test_*.py

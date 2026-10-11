@@ -59,6 +59,9 @@ python -m locagent_service.demo up|run|down (API port 8000, retained Stage 2 DB)
 The up command explicitly migrates schema v1 to v2; interrupted historical tasks
 become needs_review and are never automatically replayed.
 
+- [Checkpoint quality gate](QUALITY_CHECKPOINT_ACCEPTANCE.md): completed results require completed checkpoints before quality claims; interrupted scores remain progress only.
+- [Offline failure terminal repair](OFFLINE_FAILURE_TERMINAL_ACCEPTANCE.md): structured argument failures, conservative interruption audit and explicit live/timing summaries; no paid resumption.
+
 - [Stage 3 acceptance](STAGE3_ACCEPTANCE.md): leases, fencing, failure injection and limitations.
 - [Stage 4 acceptance](STAGE4_ACCEPTANCE.md): fixed commit/sample/index manifests,
   paired evaluation, budget ledger, explicit local .env loading and the completed live pilot.
@@ -71,6 +74,10 @@ become needs_review and are never automatically replayed.
   four invalid submissions, actual fold evidence and consumed one-time authorization.
 - [Entity submission guidance repair](ENTITY_GUIDANCE_ACCEPTANCE.md): graph-backed IDs/types,
   portable regressions for four saved invalid finishes; offline evidence only.
+- [Expanded 20 compatibility acceptance](EXPANDED20_COMPATIBILITY_ACCEPTANCE.md): audited image-link omission,
+  exact long prepared input and predeclared function applicability; offline evidence only.
+- [Finish metric compatibility](FINISH_COMPATIBILITY_ACCEPTANCE.md): legacy success/empty termination,
+  explicit unknown/NA reporting and bounded failure regressions; no historical rescoring.
 - [Architecture](ARCHITECTURE.md): process ownership, state transitions and billing boundaries.
 - [Stage 2 historical acceptance](STAGE2_ACCEPTANCE.md): original MVP and baseline evidence.
 
@@ -111,6 +118,58 @@ as diagnostics without awarding locations. Tool output uses byte-bounded preview
 with a local `read_tool_output` continuation, preserving full raw diagnostics and
 marking only fully visible returns as in context. The existing input gate is unchanged.
 See the acceptance document for limits, reproduction and remaining live validation.
+
+### Frozen preparation and phased evaluation
+
+Preparation archives the exact Git tree, verifies ordinary Python blobs and
+rejects links by default. Explicit image-link omission audits only direct,
+in-repository, non-executable image targets. Verified prepared inputs allow
+32,768 characters; ordinary requests retain 8,000. Scoring labels stay outside
+model inputs and indexes.
+
+The phased runner isolates every GraphLocalizer arm in a subprocess. Its two
+stages share quotas and durable accounting. Sources, labels, runtime and dependencies
+are hash-bound; checkpoints and owner fencing prevent mixing changed runs.
+Unknown paid outcomes stop for review and are never automatically resent.
+See [architecture](ARCHITECTURE.md), [phased execution](PHASED_ENTRY_ACCEPTANCE.md)
+and [response storage](PHASED_RESPONSE_STORAGE_ACCEPTANCE.md).
+
+#### Local configuration and portable tests
+
+The operational locagent_service/phased_cohorts.json is intentionally untracked.
+phased_cohorts.example.json is an unbound, zero-budget shape: empty samples,
+no source/label/environment bindings and no authorization. It cannot run an
+evaluation as supplied. Populate a local copy from independently reviewed prepared
+sources, ordered samples, scoring labels, behavior hashes and dependency inventory
+before planning. Never overwrite existing local configuration or reset an owner.
+
+~~~sh
+python -m locagent_service.phased --help
+# Synthetic regressions: no saved outputs, operational cohort or key required.
+LOCAGENT_ALLOW_PAID=0 sh scripts/check_local.sh
+~~~
+
+Tests generate synthetic cohorts, HTTP bodies and temporary stores. Historical
+responses, real bindings, approvals, budget/control records, databases and outputs
+are excluded from Git and retained separately. Live execution additionally needs
+a fresh exact-plan approval, confirmed pricing, explicit switch and one-use claim.
+CLI proposals are invalid drafts; committed examples/source grant no authority.
+Mock HTTP simulation cannot be promoted to live. See [admission](PHASED_HTTP_ADMISSION_ACCEPTANCE.md)
+and [safe failure isolation](SETTLED_ARM_ISOLATION_ACCEPTANCE.md).
+
+#### Repeat-suppression defaults and measured results
+
+Defaults differ by entry point and are unchanged: core LocalizationOptions uses
+suppress_repeats=False; the HTTP service's existing TaskOptions uses True.
+Set the flag explicitly for comparisons. Paired evaluation runs both values.
+Bounded localization itself remains opt-in (legacy default).
+
+The independently reviewed [20-task real evaluation](NEW20_REAL_EVALUATION.md)
+completed 40 arms / 120 requests / two checkpoints. Enabling suppression reduced
+input tokens by 2.53% and the conservative cost bound by 2.60%, while file Recall@3
+fell from 90% to 80% and function Recall@3 from 68.52% to 62.04%. Attempt time
+increased slightly. This single run does not establish overall improvement,
+causality or live fault-recovery efficacy.
 
 ## 🚀 Launch LocAgent
 1. (Optional but recommended) Parse the codebase for each issue in the benchmark to generate graph indexes in batch.

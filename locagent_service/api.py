@@ -10,7 +10,7 @@ import psycopg
 import uvicorn
 
 from locagent_service.config import Settings
-from locagent_service.models import CreateTask, ErrorResponse, TaskView
+from locagent_service.models import TaskRequest, ErrorResponse, TaskView
 from locagent_service.store import TaskStore, StateConflict, IdempotencyConflict
 
 
@@ -49,10 +49,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.post('/tasks', response_model=TaskView, status_code=202,
               responses={422: {'model': ErrorResponse}, 503: {'model': ErrorResponse}})
-    def submit(request: CreateTask, response: Response,
+    def submit(request: TaskRequest, response: Response,
                idempotency_key: str | None = Header(default=None, pattern=r'^[A-Za-z0-9_.:-]{1,128}$')):
         from locagent_service.sources import validate_source
         try:
+            # Validate new prepared requests under the idempotency lock. Replays
+            # of the exact persisted payload stay readable if artifacts move.
             if request.source_id != 'demo-v1':
                 task = store.create(request, idempotency_key, validate_new=validate_source)
             else:

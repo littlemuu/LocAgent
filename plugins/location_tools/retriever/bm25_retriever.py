@@ -1,6 +1,7 @@
 import os
 import pickle
 import Stemmer
+import bm25s
 import fnmatch
 import mimetypes
 from typing import Dict, List, Optional
@@ -30,6 +31,20 @@ NTYPES = [
     NODE_TYPE_FUNCTION,
     NODE_TYPE_CLASS,
 ]
+
+
+
+def has_bm25_tokens(query: str, *, stemmer=None) -> bool:
+    """Use the installed retriever's query tokenizer; empty queries are not searches."""
+    return any(bm25s.tokenize(query, stemmer=stemmer, show_progress=False).ids)
+
+
+def retrieve_nonempty(retriever, query: str):
+    # BM25Retriever._retrieve uses this tokenizer with its configured stemmer.
+    # Do not catch retrieval errors: an index/backend failure must remain visible.
+    if not has_bm25_tokens(query, stemmer=retriever.stemmer):
+        return []
+    return retriever.retrieve(query)
 
 
 def build_code_retriever_from_repo(repo_path,

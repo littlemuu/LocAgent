@@ -62,6 +62,11 @@ search_code_snippets(search_terms=["MyClass"])
 
 # Search for context around specific lines (10 and 15) within a file
 search_code_snippets(line_nums=[10, 15], file_path_or_pattern='src/example.py')
+
+** JSON tool arguments (not Python call syntax):
+{"line_nums": [10, 15], "file_path_or_pattern": "src/example.py"}
+{"search_terms": ["order", "bill"], "file_path_or_pattern": "src/example.py"}
+line_nums must be a JSON array of integers, including both [ and ]; even one line is [10].
 """
 
 SearchRepoTool = ChatCompletionToolParam(
@@ -82,7 +87,8 @@ SearchRepoTool = ChatCompletionToolParam(
                 'line_nums': {
                     'type': 'array',
                     'items': {'type': 'integer'},
-                    'description': 'Specific line numbers to locate code snippets within a specified file. '\
+                    'description': 'A JSON array of integers, for example [10, 15] or [10], never comma-separated scalar values. '\
+                                    'Specific line numbers to locate code snippets within a specified file. '\
                                     'Must be used alongside a valid `file_path_or_pattern`. '\
                                     'Either `line_nums` or `search_terms` must be provided to perform a search.',
                 },

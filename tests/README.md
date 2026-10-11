@@ -6,8 +6,7 @@ Run from the LocAgent repository root with the existing CPU virtual environment:
 LITELLM_LOCAL_MODEL_COST_MAP=True HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 .venv/bin/python -B -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The combined suite currently has 196 unittest methods (the previous 180 plus
-16 graph submission guidance and saved-invalid-finish regressions). The Stage 2 baseline
+The combined suite has 357 unittest methods. The Stage 2 baseline
 had 61: the original 48 (10 return-trace, 4 request-contract and 34 Stage 1 tests)
 plus 13 Stage 2 contract, fixture and HTTP boundary tests. Install `requirements-service.txt` for Stage 2.
 The pure suite needs no PostgreSQL, pytest or credentials.
@@ -69,7 +68,8 @@ See [Stage 2 acceptance](../STAGE2_ACCEPTANCE.md) for demonstration and limits.
 ## Stages 3–5
 
 sh scripts/check_local.sh runs all offline unit/HTTP/config/budget regressions.
-Add --postgres to run 32 distinct actual PostgreSQL/process tests, including
+Add --postgres to run 35 distinct actual PostgreSQL/process tests (32 existing plus
+3 exact prepared-input HTTP/worker/admission regressions), including
 the inherited Stage 2 regressions. Start the existing local demo PostgreSQL
 container first or set LOCAGENT_DATABASE_URL.
 Every database test owns and cleans only its unique temporary schema.
@@ -150,3 +150,88 @@ These are mechanical regression fixtures, not new quality measurements.
 See [entity guidance acceptance](../ENTITY_GUIDANCE_ACCEPTANCE.md) for the 196
 offline tests, separate real PostgreSQL/process tests, preserved historical
 results and the candidate commit boundary.
+
+## Frozen 20 compatibility repair
+
+`test_expanded_compatibility.py` rejects escaping/chained/cyclic/code/special links,
+submodules, missing or changed Git Python blobs, forged source IDs, changed manifests,
+artifacts and problem text. It checks 8,000/32,768 character boundaries, full 22,778
+character text, multi-target recall, explicit empty function truth, failed/missing
+rows, constructor truth preservation and gold sentinels outside model/index inputs.
+
+`stage4_compatibility_postgres_acceptance.py` runs real HTTP, PostgreSQL and a spawned
+worker. Its test-only `prepared_offline_worker.py` uses the actual prepared-source
+engine with scripted provider responses. It verifies input hashes and exact full
+problem text, and confirms historical reads/idempotent replay after source removal.
+Production worker behavior and paid authorization are not replaced by this helper.
+
+Historical 25-source / 50-arm compatibility results are summarized in
+[the acceptance report](../EXPANDED20_COMPATIBILITY_ACCEPTANCE.md).
+Scripted empty finishes establish compatibility only; their quality metrics are null.
+
+
+test_label_mapping.py fixes pure insertion attribution using the patched AST and
+exact base qualified names. Class properties inserted before a method do not mark
+the unchanged method; an indented insertion after a body's trailing blank still
+belongs to that function. Deleted functions remain truth and genuinely new
+functions are disclosed separately. The reviewed frozen cohort has 18 applicable
+tasks and 27 function targets; the unrepresentable constructor remains in truth.
+
+
+test_finish_compatibility.py runs the real offline GraphLocalizer loop for legacy
+success, valid empty, iteration exhaustion and bounded invalid/missing/truncated
+finish outcomes. A validated legacy success/empty status is terminal evidence;
+bounded diagnostics take precedence. Ambiguous completed records make the
+aggregate finish count/rate unavailable and expose an unknown count, while
+failed/missing tasks keep their fixed-denominator zero. Location validation and
+recall scoring are unchanged. These are scripted arithmetic tests, not live scores.
+
+
+## Phased offline runner
+
+test_phased.py uses temporary ledgers/owner markers and scripted original response
+bytes. It includes four-process initialization contention, competing phase starts,
+actual process exits at reservation/send/raw/settlement/result/checkpoint boundaries,
+owner-head torn writes, explicit blocked audits, rollback/corruption, wrong plans,
+per-arm quota, exhaustion before the next full reservation, replay request divergence,
+fixed first-five denominators and actual isolated-arm parent death.
+No test consumes an existing paid authorization. The separate retained full25
+acceptance runs all 50 arms through real fixed-source GraphLocalizer child processes;
+fake transport validates mechanics, not accuracy or token/cost improvements.
+
+
+test_engine_binding.py mutates isolated source copies across 19 behavior categories
+(execution, schemas/parsing, tool output, retrieval/index, prompt/query resources,
+package initializers, offline guard, scoring, source validation and accounting).
+It rejects content changes, new/deleted files, links and incomplete legacy source
+maps. A static import closure check catches newly introduced project dependencies
+outside the declared packages. Credentials, caches, tests and generated outputs
+are excluded and covered by a negative control.
+
+
+test_phased_http.py uses HTTPX MockTransport with the Python offline network guard.
+Synthetic approved records exist only in TemporaryDirectory fixtures; the paid switch
+stays 0 and the test replaces its gate locally, never creating a production approval.
+Cases include HTTP success/redirect/4xx/5xx, timeout/post-send disconnect, partial or
+invalid response/usage, request gating, reserve/raw/settlement disk failures, actual
+process exits after send/raw/settlement/checkpoints, concurrent one-time admission,
+duplicates, revoked/expired/wrong-scope approvals, and a complete 120-call shared
+two-stage ledger. Historical raw-adapter tests remain part of the full suite.
+
+
+test_response_storage.py reproduces a 6 MiB HTTP error and multiple valid 3 MiB
+responses. It checks single-body and cumulative overflow (including a valid JSON
+prefix that must not settle), full-store preflight, missing/hash-changed references,
+publication disk failure, actual death after body publication but before reference
+commit, ready-ledger evidence loss, path/link/overwrite rejection, and bounded JSON
+writes. All tests use temporary stores and synthetic HTTP responses.
+
+See [offline failure terminal acceptance](../OFFLINE_FAILURE_TERMINAL_ACCEPTANCE.md) for terminal failure, unverified-executor audit, historical response replay and explicit timing semantics. These tests use temporary owners and never resume historical paid ledgers.
+
+
+The phased v3 safe-failure suite is test_settled_arm_isolation.py. It uses handwritten synthetic response bodies, temporary approvals and owners, MockTransport, real local subprocess exits/crashes, and the independent 256-condition oracle. See SETTLED_ARM_ISOLATION_ACCEPTANCE.md; no paid calls or old-ledger recovery are part of these tests.
+
+
+## Portable phased fixtures
+
+phased_test_support.py constructs synthetic cohorts and malformed JSON bodies, never saved provider responses. Phase/HTTP/storage tests use those cohorts; binding tests write synthetic configuration into isolated source copies. The operational phased_cohorts.json, original response fixture directory and outputs are not required for unittest discovery. The 256-condition oracle is enumerated independently in the helper. Optional historical smoke runners require retained local data and are outside portable discovery. No test activates real authority or executes a benchmark repository. See [real-run summary](../NEW20_REAL_EVALUATION.md); synthetic metrics do not measure model efficacy.
