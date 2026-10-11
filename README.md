@@ -1,246 +1,181 @@
-# LocAgent: Graph-Guided LLM Agents for Code Localization
+# LocAgent：可审计的异步代码定位服务
 
-<p align="center">
-   📑&nbsp; <a href="https://arxiv.org/abs/2503.09089" target="_blank">Paper</a>
-   | 📊&nbsp; <a href="https://huggingface.co/datasets/czlll/Loc-Bench_V1" target="_blank">Loc-bench</a>
-   | 🤗&nbsp; <a href="https://huggingface.co/czlll/Qwen2.5-Coder-7B-CL" target="_blank">Qwen2.5-Coder-7B-CL</a>
-   | 🤗&nbsp; <a href="https://huggingface.co/czlll/Qwen2.5-Coder-32B-CL" target="_blank">Qwen2.5-Coder-32B-CL</a>
-</p>
+把自然语言问题定位到仓库中的文件和函数，并保存任务状态、检索轨迹和评估证据。**本分支基于开源 [LocAgent](https://github.com/gersteinlab/LocAgent) 改造**，重点是服务可靠性、任务专用执行约束与可复现评估；不是从零实现论文方法，也不自动修复代码。
 
-> [!NOTE]
-> [CodeNib](https://github.com/sysevol-ai/CodeNib) serves LocAgent's search and graph-navigation tools from reusable, manifest-backed symbol-graph and BM25 indexes, without building a separate LocAgent index. The CodeNib integration starts from a prepared `repo_manifest.json` and runs LocAgent's localization policy over these indexes; model training and the original reproduction pipeline remain in this repository.
->
-> [Documentation](https://docs.codenib.ai/agent_integrations/#locagent) · [Adapter](https://github.com/sysevol-ai/CodeNib/blob/main/codenib/clients/locagent_agent.py) · [Provider](https://github.com/sysevol-ai/CodeNib/blob/main/codenib/integrations/locagent.py)
+默认演示使用内存中的两节点图和脚本 provider，不需要模型 key。真实仓库需由操作端预先固定 commit、构建图/BM25 索引并生成可信清单；HTTP 不接受任意仓库路径、上传的 pickle 或即时克隆请求。当前面向本地开发与复现，不是生产部署方案。
 
+[快速演示](#快速演示无需模型-key) · [开发与测试](#开发与离线测试) · [真实评估](#真实评估入口与配置边界) · [实测结果](#实测结果与解释边界) · [上游论文与引用](docs/UPSTREAM_README.md)
 
-## ℹ️ Overview
-We introduce **LocAgent**, a framework that addresses code localization through graph-based representation.
-By parsing codebases into directed heterogeneous graphs, LocAgent creates a lightweight representation that captures code structures and their dependencies, enabling LLM agents to effectively search and locate relevant entities through powerful multi-hop reasoning.
- <!-- <div align="center">
-  <img src="./assets/overview.png" alt="Overview" width="800">
-</div> -->
-![MedAgents Benchmark Overview](assets/overview.png)
+## 改造了什么
 
-## ⚙️ Setup
-1. Follow these steps to set up your development environment:
-   ```
-   git clone git@github.com:gersteinlab/LocAgent.git
-   cd LocAgent
+技术栈：Python、FastAPI/Pydantic、PostgreSQL/psycopg、独立 worker 进程、Docker Compose；定位沿用上游的代码图、NetworkX、图检索工具、BM25 与模型适配层。
 
-   conda create -n locagent python=3.12
-   conda activate locagent
-   pip install -r requirements.txt
-   ```
+~~~mermaid
+flowchart LR
+  U[客户端] -->|提交任务| A[FastAPI]
+  A -->|持久化任务| D[(PostgreSQL)]
+  D -->|领取任务| W[worker监督进程]
+  W -->|每次attempt独立进程| G[GraphLocalizer]
+  G --> R[图与BM25检索 / 模型调用]
+  G -->|原子发布结果| W
+  W -->|校验lease与fencing后写回| D
+  U -->|查询状态、结果、attempts| A
+~~~
 
-## Local asynchronous service (Stages 2–5)
+- **可靠任务服务**：`Idempotency-Key` 支持同键同请求重放、不同请求返回409；`FOR UPDATE SKIP LOCKED` 支持多个 worker 领取任务。lease/heartbeat 与 owner、token、attempt、数据库时钟检查阻止过期执行者写回。
+- **取消、超时与受限重试**：监督进程回收子进程；仅安全的 `demo-v1` 允许限次恢复/重试。真实来源执行中断转为 `needs_review`，不自动重放；取消不保证远端请求未计费。
+- **代码检索增强**：结构图、实体读取和 BM25 提供代码证据；`suppress_repeats` 可折叠已经完整可见的重复返回，未读尾部不会冒充已读。这不是通用知识图谱问答或通用 GraphRAG 平台。
+- **任务专用执行流程（harness）**：隔离旧引擎的全局图状态，约束轮次、工具页、输入大小和最终提交；`bounded-v1` 使用严格的 `finish(files, entities)`。候选指导只整理可见的可信图ID，不替代检索或放宽校验。
+- **可复现评估**：固定仓库 commit、样本、模型参数、索引、运行时代码与标签口径；金标不进入模型输入或索引。配对比较、检查点、原始响应持久化和费用预留/结算用于审计；结果未知时保留完整预留并停止，不能声称模型调用 exactly-once。
 
-FastAPI + PostgreSQL + isolated worker processes provide durable task submission,
-idempotency, expiring leases, cancellation, bounded safe retries and fenced writes.
-The default demo uses a scripted provider inside the real LocAgent tool loop;
-it makes no paid calls.
+实现与状态图见[架构说明](ARCHITECTURE.md)。
 
-~~~sh
+## 快速演示（无需模型 key）
+
+前置条件：Linux 或 WSL2、已启动的 Docker Engine 与 Compose v2（支持 `--wait`）、Bash、curl、Python 3。在仓库根目录执行；首次构建需要下载镜像和依赖，但任务本身不访问模型服务。
+
+~~~bash
 docker compose up --build -d --wait
-curl --noproxy '*' http://127.0.0.1:18080/health
-curl --noproxy '*' -X POST http://127.0.0.1:18080/tasks \
-  -H 'Content-Type: application/json' -H 'Idempotency-Key: demo-001' \
-  -d '{"problem_statement":"Locate render."}'
-# Poll /tasks/<id>; inspect /tasks/<id>/attempts.
-# Stop services but KEEP the database volume:
+curl --noproxy '*' -fsS http://127.0.0.1:18080/health
+~~~
+
+健康响应包含 `status=ok`、`schema_version=2`。打开 [API 文档](http://127.0.0.1:18080/docs)，或在同一个 Bash 会话提交成功和失败演示：
+
+~~~bash
+api=http://127.0.0.1:18080
+run_id="$(date +%s)-$$"
+
+submit_demo() {
+  curl --noproxy '*' -fsS -X POST "$api/tasks" \
+    -H 'Content-Type: application/json' \
+    -H "Idempotency-Key: readme-$1-$run_id" \
+    -d "{\"problem_statement\":\"Locate render.\",\"demo_scenario\":\"$1\"}" |
+    python3 -c 'import json,sys; print(json.load(sys.stdin)["id"])'
+}
+ok_id="$(submit_demo success)"
+error_id="$(submit_demo provider_error)"
+printf 'success=%s\nprovider_error=%s\n' "$ok_id" "$error_id"
+
+# 每项最多轮询60次（约60秒，另加HTTP耗时）；超时不重新提交。
+# 子shell非零退出只结束本段轮询，不关闭当前交互shell。
+(
+for task_id in "$ok_id" "$error_id"; do
+  terminal=false
+  for attempt in $(seq 1 60); do
+    task="$(curl --noproxy '*' -fsS "$api/tasks/$task_id")"
+    state="$(printf '%s' "$task" |
+      python3 -c 'import json,sys; print(json.load(sys.stdin)["status"])')"
+    case "$state" in
+      completed|failed|cancelled|needs_review)
+        terminal=true
+        printf 'task=%s terminal=%s\n' "$task_id" "$state"
+        printf '%s\n' "$task" | python3 -m json.tool
+        break ;;
+    esac
+    sleep 1
+  done
+  if [ "$terminal" != true ]; then
+    printf '等待超时：task=%s，最后状态=%s；尚未完成，可继续GET查询。\n' \
+      "$task_id" "$state" >&2
+    exit 1
+  fi
+  curl --noproxy '*' -fsS "$api/tasks/$task_id/attempts"
+  printf '\n'
+done
+)
+~~~
+
+| 场景 | 预期任务终态 | 预期结果 |
+|---|---|---|
+| `success` | `completed` | `result.status=success`，实体 `demo.py:render` |
+| `provider_error` | `failed` | `error.code=model_error`，不泄露provider原始异常 |
+
+重复相同幂等键和请求会返回原任务。查询入口为 `GET /tasks/{id}` 和 `GET /tasks/{id}/attempts`；取消为 `POST /tasks/{id}/cancel`；`POST /tasks/{id}/retry` 仅接受次数未耗尽的失败demo任务。任务 `completed` 不等于定位命中，仍须检查结果的 `success`、`empty` 或 `iteration_limit`。
+
+**停止演示并保留数据库历史：**
+
+~~~bash
 docker compose down
 ~~~
 
-Open http://127.0.0.1:18080/docs. Compose creates its own project-scoped volume
-and leaves the historical Stage 2 volume untouched. It is a local-only profile,
-with PostgreSQL isolated on an internal network and paid providers disabled.
+不要添加 `--volumes` 或 `-v`。默认命名卷为 `locagent_pgdata`，再次启动会保留任务历史。API仅绑定本机 `127.0.0.1:18080`；PostgreSQL不发布主机端口，内部网络使用本地演示用的trust认证，不能直接用作公开部署。Compose将 `LOCAGENT_ALLOW_PAID` 固定为0，没有向容器挂载项目凭据文件。
 
-The existing WSL demo remains available:
-python -m locagent_service.demo up|run|down (API port 8000, retained Stage 2 DB).
-The up command explicitly migrates schema v1 to v2; interrupted historical tasks
-become needs_review and are never automatically replayed.
+## 开发与离线测试
 
-- [Checkpoint quality gate](QUALITY_CHECKPOINT_ACCEPTANCE.md): completed results require completed checkpoints before quality claims; interrupted scores remain progress only.
-- [Offline failure terminal repair](OFFLINE_FAILURE_TERMINAL_ACCEPTANCE.md): structured argument failures, conservative interruption audit and explicit live/timing summaries; no paid resumption.
+无需模型key或数据库即可运行单元/HTTP/合成评估测试。已有兼容环境可直接使用；新环境可按本地已验收的Python 3.12准备（Compose镜像使用Python 3.10）：
 
-- [Stage 3 acceptance](STAGE3_ACCEPTANCE.md): leases, fencing, failure injection and limitations.
-- [Stage 4 acceptance](STAGE4_ACCEPTANCE.md): fixed commit/sample/index manifests,
-  paired evaluation, budget ledger, explicit local .env loading and the completed live pilot.
-- [Stage 5 acceptance](STAGE5_ACCEPTANCE.md): clean Compose startup, closure, crash recovery and reproduction.
-- [Five-sample follow-up](FOLLOWUP5_ACCEPTANCE.md): frozen sources, raw-response settlement,
-  offline evidence and the stopped live run; no automatic replay of its consumed approval.
-- [Offline repair acceptance](OFFLINE_REPAIR_ACCEPTANCE.md): exact root aliases,
-  opt-in structured finish and bounded tool output; saved-response regression only.
-- [Bounded five-sample live round](BOUNDED5_ACCEPTANCE.md): 30 calls, six valid finishes,
-  four invalid submissions, actual fold evidence and consumed one-time authorization.
-- [Entity submission guidance repair](ENTITY_GUIDANCE_ACCEPTANCE.md): graph-backed IDs/types,
-  portable regressions for four saved invalid finishes; offline evidence only.
-- [Expanded 20 compatibility acceptance](EXPANDED20_COMPATIBILITY_ACCEPTANCE.md): audited image-link omission,
-  exact long prepared input and predeclared function applicability; offline evidence only.
-- [Finish metric compatibility](FINISH_COMPATIBILITY_ACCEPTANCE.md): legacy success/empty termination,
-  explicit unknown/NA reporting and bounded failure regressions; no historical rescoring.
-- [Architecture](ARCHITECTURE.md): process ownership, state transitions and billing boundaries.
-- [Stage 2 historical acceptance](STAGE2_ACCEPTANCE.md): original MVP and baseline evidence.
-
-~~~sh
-# No model/network calls; original tests plus service/evaluation regressions:
-sh scripts/check_local.sh
-# Requires the retained local PostgreSQL container, or LOCAGENT_DATABASE_URL:
-sh scripts/check_local.sh --postgres
-# Builds image and verifies a fresh isolated volume; retains all volumes:
-sh scripts/check_local.sh --compose
+~~~bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-runtime.txt -r requirements-service.txt
 ~~~
 
-Do not interpret fixture message reduction as real quality or cost improvement.
-Real provider execution requires an existing locally configured key, an explicitly
-enabled paid run, a v2 six-call plan and a fresh plan-bound account pricing confirmation.
-The --live switch applies only to the process; it does not modify .env. Legacy plans
-are offline-only. The approved single-sample pilot completed six real calls; both arms
-ranked the target file/function first, and the enabled arm folded six repeated tool returns.
-This development sample does not establish general quality or cost improvements.
-The one-time approval is consumed and full reservations remain retained; do not replay it.
-Unknown paid outcomes halt for review; this service does not claim exactly-once model execution.
+在无真实凭据的开发副本中运行：
 
-### Opt-in bounded localization protocol
-
-New prepared sources can select `--search-protocol bounded-v1` in
-`python -m locagent_service.prepare --repo ... --sample ...`.
-The immutable source configuration selects the protocol; old manifests are never
-edited. Direct adapters may use `LocalizationOptions(search_protocol="bounded-v1")`.
-The default remains `legacy`. Bounded tool results display valid finish targets using
-actual graph node IDs and types. Variables/aliases use files only; constructors
-without separate graph nodes use the owning class ID. One invalid item still
-rejects the entire submission. Engine changes require fresh manifests/plans and
-independent approval before any new paid evaluation.
-
-`bounded-v1` requires an exact `finish` tool payload containing ranked `files` and
-`entities`; the last round offers only this tool. It keeps failed/truncated prose
-as diagnostics without awarding locations. Tool output uses byte-bounded previews
-with a local `read_tool_output` continuation, preserving full raw diagnostics and
-marking only fully visible returns as in context. The existing input gate is unchanged.
-See the acceptance document for limits, reproduction and remaining live validation.
-
-### Frozen preparation and phased evaluation
-
-Preparation archives the exact Git tree, verifies ordinary Python blobs and
-rejects links by default. Explicit image-link omission audits only direct,
-in-repository, non-executable image targets. Verified prepared inputs allow
-32,768 characters; ordinary requests retain 8,000. Scoring labels stay outside
-model inputs and indexes.
-
-The phased runner isolates every GraphLocalizer arm in a subprocess. Its two
-stages share quotas and durable accounting. Sources, labels, runtime and dependencies
-are hash-bound; checkpoints and owner fencing prevent mixing changed runs.
-Unknown paid outcomes stop for review and are never automatically resent.
-See [architecture](ARCHITECTURE.md), [phased execution](PHASED_ENTRY_ACCEPTANCE.md)
-and [response storage](PHASED_RESPONSE_STORAGE_ACCEPTANCE.md).
-
-#### Local configuration and portable tests
-
-The operational locagent_service/phased_cohorts.json is intentionally untracked.
-phased_cohorts.example.json is an unbound, zero-budget shape: empty samples,
-no source/label/environment bindings and no authorization. It cannot run an
-evaluation as supplied. Populate a local copy from independently reviewed prepared
-sources, ordered samples, scoring labels, behavior hashes and dependency inventory
-before planning. Never overwrite existing local configuration or reset an owner.
-
-~~~sh
-python -m locagent_service.phased --help
-# Synthetic regressions: no saved outputs, operational cohort or key required.
+~~~bash
 LOCAGENT_ALLOW_PAID=0 sh scripts/check_local.sh
+
+# 仅预算耗尽收尾回归：
+LOCAGENT_ALLOW_PAID=0 LITELLM_LOCAL_MODEL_COST_MAP=True \
+  HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 \
+  .venv/bin/python -B -m unittest discover -s tests -p 'test_budget_finish.py' -v
 ~~~
 
-Tests generate synthetic cohorts, HTTP bodies and temporary stores. Historical
-responses, real bindings, approvals, budget/control records, databases and outputs
-are excluded from Git and retained separately. Live execution additionally needs
-a fresh exact-plan approval, confirmed pricing, explicit switch and one-use claim.
-CLI proposals are invalid drafts; committed examples/source grant no authority.
-Mock HTTP simulation cannot be promoted to live. See [admission](PHASED_HTTP_ADMISSION_ACCEPTANCE.md)
-and [safe failure isolation](SETTLED_ARM_ISOLATION_ACCEPTANCE.md).
+`check_local.sh` 调用 `unittest discover` 并检查diff；可通过 `PYTHON` 指定解释器。测试使用合成provider、MockTransport及临时账本，不是模型质量评测。`.gitignore` 只防止提交，**不能阻止SDK或进程读取 `.env`**，不要把“被忽略”当作凭据隔离。
 
-#### Repeat-suppression defaults and measured results
+更重的 `sh scripts/check_local.sh --postgres` 需要已配置的本地测试数据库；`--compose` 会构建镜像并新建独立验收volume，结束保留volume。它们不是默认离线测试的一部分。具体前置条件及测试分类见[测试说明](tests/README.md)。
 
-Defaults differ by entry point and are unchanged: core LocalizationOptions uses
-suppress_repeats=False; the HTTP service's existing TaskOptions uses True.
-Set the flag explicitly for comparisons. Paired evaluation runs both values.
-Bounded localization itself remains opt-in (legacy default).
+已有证据分层：数据库/进程故障注入与Compose闭环在此前阶段验收；有界finish实现后全套离线 **403项**通过，相关独立复核 **57项**通过，随后真实序列化夹具校准又通过 **12项**。三组有重叠，不相加；最后一次只重跑了受影响模块。本次README整理没有重跑全套或容器验收。
 
-The independently reviewed [20-task real evaluation](NEW20_REAL_EVALUATION.md)
-completed 40 arms / 120 requests / two checkpoints. Enabling suppression reduced
-input tokens by 2.53% and the conservative cost bound by 2.60%, while file Recall@3
-fell from 90% to 80% and function Recall@3 from 68.52% to 62.04%. Attempt time
-increased slightly. This single run does not establish overall improvement,
-causality or live fault-recovery efficacy.
+## 真实评估入口与配置边界
 
-## 🚀 Launch LocAgent
-1. (Optional but recommended) Parse the codebase for each issue in the benchmark to generate graph indexes in batch.
-   ```
-   python dependency_graph/batch_build_graph.py \
-         --dataset 'czlll/Loc-Bench_V1' \
-         --split 'test' \
-         --num_processes 50 \
-         --download_repo
-   ```
-   - `dataset`: select the benchmark (by default it will be `SWE-Bench_Lite`); you can choose from `['czlll/SWE-bench_Lite', 'czlll/Loc-Bench_V1']`(adapted for code localization) and SWE-bench series datasets like `['princeton-nlp/SWE-bench_Lite', 'princeton-nlp/SWE-bench_Verified', 'princeton-nlp/SWE-bench']`
-   - `repo_path`: the directory where you plan to pull or have already pulled the codebase
-   - `index_dir`: the base directory where the generated graph index will be saved
-   - `download_repo`: whether to download the codebase to `repo_path` before indexing
+操作入口是 `locagent_service.prepare`（固定Git来源与图/BM25清单）、`locagent_service.evaluate`（配对评估）及 `locagent_service.phased`（分阶段、共享限额及检查点）。可安全查看帮助：
 
-2. Export the directory of the graph indexes and the BM25 sparse index. If not generated in advance, the graph index will be generated during the localization process.
-   ```
-   export GRAPH_INDEX_DIR='{INDEX_DIR}/{DATASET_NAME}/graph_index_v2.3'
-   export BM25_INDEX_DIR='{INDEX_DIR}/{DATASET_NAME}/BM25_index'
-   ```
+~~~bash
+.venv/bin/python -m locagent_service.prepare --help
+.venv/bin/python -m locagent_service.evaluate --help
+.venv/bin/python -m locagent_service.phased --help
+.venv/bin/python -m locagent_service.configure --help
+~~~
 
-2. Run the script `scripts/run_lite.sh` to lauch LocAgent.
-   ```
-   python auto_search_main.py \
-      --dataset 'czlll/SWE-bench_Lite' \
-      --split 'test' \
-      --model 'azure/gpt-4o' \
-      --localize \
-      --merge \
-      --output_folder $result_path/location \
-      --eval_n_limit 300 \
-      --num_processes 50 \
-      --use_function_calling \
-      --simple_desc
-   ```
-   - `localize`: set to start the localization process
-   - `merge`: merge the result of multiple samples
-   - `use_function_calling`: enable function calling features of LLMs. If disabled, codeact will be used to support function calling
-   -  `simple_desc`: use simplified function descriptions due to certain LLM limitations. Set to False for better performance when using Claude.
+真实模型配置只示意变量名，默认保持付费关闭：
 
-3. Evaluation
-   After localization, the results will be saved in a JSONL file. You can evaluate them using `evaluation.eval_metric.evaluate_results`. Refer to `evaluation/run_evaluation.ipynb` for a demonstration.
+~~~dotenv
+DEEPSEEK_API_KEY=<由操作者在本地安全配置，不提交>
+LOCAGENT_ALLOW_PAID=0
+~~~
 
+支持显式 `--env-file` 的CLI要求普通本地文件、权限0600，仅允许上述两个变量；检查器只报告是否存在，不显示值。分阶段入口另走审批与环境准入，不能把其他CLI的参数照搬过来。不要读取、复制或提交现有凭据以“复现”他人的实验。
 
-## 📑 Cite Us
+操作型cohort配置默认不随Git分发；[示例](locagent_service/phased_cohorts.example.json)是空样本、零预算的结构，不能直接执行。新的真实评估必须重新核对来源/代码/依赖绑定、样本与标签、精确计划、有效价格与完整费用预留，经独立复核和明确预算授权后才能显式开启。CLI生成的proposal只是草稿，旧授权不可复用；mock模拟不能升级为live。出现未知付费结果须停止核查，不能自动重试。本README不提供默认付费运行命令。
 
-   ```
-@inproceedings{chen-etal-2025-locagent,
-    title = "{L}oc{A}gent: Graph-Guided {LLM} Agents for Code Localization",
-    author = "Chen, Zhaoling  and
-      Tang, Robert  and
-      Deng, Gangda  and
-      Wu, Fang  and
-      Wu, Jialong  and
-      Jiang, Zhiwei  and
-      Prasanna, Viktor  and
-      Cohan, Arman  and
-      Wang, Xingyao",
-    editor = "Che, Wanxiang  and
-      Nabende, Joyce  and
-      Shutova, Ekaterina  and
-      Pilehvar, Mohammad Taher",
-    booktitle = "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
-    month = jul,
-    year = "2025",
-    address = "Vienna, Austria",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2025.acl-long.426/",
-    doi = "10.18653/v1/2025.acl-long.426",
-    pages = "8697--8727",
-    ISBN = "979-8-89176-251-0",
-    abstract = "Code localization{--}identifying precisely where in a codebase changes need to be made{--}is a fundamental yet challenging task in software maintenance. Existing approaches struggle to efficiently navigate complex codebases when identifying relevant code snippets.The challenge lies in bridging natural language problem descriptions with the target code elements, often requiring reasoning across hierarchical structures and multiple dependencies.We introduce LocAgent, a framework that addresses code localization through a graph-guided agent.By parsing codebases into directed heterogeneous graphs, LocAgent creates a lightweight representation that captures code structures and their dependencies, enabling LLM agents to effectively search and locate relevant entities through powerful multi-hop reasoning.Experimental results on real-world benchmarks demonstrate that our approach significantly enhances accuracy in code localization.Notably, our method with the fine-tuned Qwen-2.5-Coder-Instruct-32B model achieves comparable results to SOTA proprietary models at greatly reduced cost (approximately 86{\%} reduction), reaching up to 92.7{\%} accuracy on file-level localization while improving downstream GitHub issue resolution success rates by 12{\%} for multiple attempts (Pass@10). Our code is available at \url{https://github.com/gersteinlab/LocAgent}."
-}
-   ```
+## 实测结果与解释边界
+
+| 实验（关 → 开） | 有效finish | 文件Recall@3 | 函数Recall@3 |
+|---|---:|---:|---:|
+| 固定20题，比较重复抑制 | 19/20 → 18/20 | 90% → 80% | 68.52% → 62.04%（18题适用） |
+| 新10题中的主评8题，比较候选指导 | 87.5% → 87.5% | 87.5% → 87.5% | 75% → 68.75%（8题） |
+
+20题比较完成40臂、120次请求。新10题按2题门槛与8题主评分开统计，固定 `suppress_repeats=False`，累计59次请求，费用**保守上界0.841358元，不是账单**。主评总token下降1.66%，但xarray指导开启臂因工具预算早退少调用一次，**不能包装成效率提升**。
+
+两轮都是小样本单次比较，不能称严格盲测，也未证明优化成功。候选指导默认关闭；详见[20题报告](NEW20_REAL_EVALUATION.md)和[10题候选指导报告](CANDIDATE_GUIDANCE10_EVALUATION.md)，两者不合并计算效果。
+
+评分按预先固定的适用任务宏平均Recall@3，不是“所有函数中命中几个”的总体比例。非法、失败或缺失答案按固定规则计零。20题函数口径为18题、27个目标，另外2题NA不冒充零分；无法用图实体表示的构造函数真值仍保留，不用类ID代替函数计分。
+
+## 已知限制与阅读路径
+
+- **图实体边界**：严格finish中，文件只能放在 `files`；`entities`只接受存在的函数/类ID并归属所提交文件。变量/赋值别名不能作为实体；没有独立 `__init__` 节点时提交所属类，但这不自动获得构造函数的函数召回分。一个非法项会拒绝整份提交。
+- **默认值有区别**：核心 `LocalizationOptions.suppress_repeats=False`，HTTP `TaskOptions` 默认True；比较时显式指定。`candidate_guidance=False`，仅支持 `bounded-v1`，未加入HTTP TaskOptions；核心搜索协议默认仍是legacy。
+- **有界finish修复有代价**：24 KiB总工具交付预算内始终预留4 KiB结束控制；候选开时另预留4 KiB指导。工具页关/开额度为 **20,480/16,384字节，含包装、元数据和转义**，两者均比修复前少4,096字节，可用正文更少，会更早截断。耗尽后在原额度内尝试一次仅finish收尾，严格校验不变；该修复未进行新的付费质量验证。
+- **未验证**：生产吞吐、公开部署安全、高可用SLA、模型权重不可变性及普遍质量/费用收益。数据库恢复证据与离线故障注入，不等于已验证真实模型的故障恢复。
+
+建议按以下顺序阅读：
+
+1. [架构](ARCHITECTURE.md) → [API](locagent_service/api.py)、[存储与状态机](locagent_service/store.py)、[worker隔离](locagent_service/worker.py)。
+2. [定位适配层](util/localizer.py)、[有界协议](util/localization_protocol.py)、[检索工具](plugins/location_tools/repo_ops/repo_ops.py) → [离线测试](tests/README.md)。
+3. [20题实测](NEW20_REAL_EVALUATION.md)、[10题实测](CANDIDATE_GUIDANCE10_EVALUATION.md) → [评估入口](locagent_service/phased.py)。
+
+## 上游、论文与许可证
+
+完整上游项目说明、CodeNib集成入口、论文原始复现步骤与BibTeX已保留在[上游README](docs/UPSTREAM_README.md)，包含原作者与研究贡献归属。论文结果不能作为本分支改造收益。
+
+本项目遵循仓库中的 [Apache-2.0 LICENSE](LICENSE)；原许可证及上游引用保持不变。

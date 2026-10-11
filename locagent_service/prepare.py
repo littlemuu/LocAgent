@@ -14,7 +14,7 @@ from util.localization_contract import LocalizationRequest
 
 
 def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
-            exclude_verified_image_links=False):
+            exclude_verified_image_links=False, complete_engine_binding=False):
     if search_protocol not in ("legacy", "bounded-v1"):
         raise ValueError("Unsupported search protocol")
     raw=json.loads(Path(sample).read_text())
@@ -66,6 +66,9 @@ def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
               'dataset':{k:raw.get(k) for k in ('dataset','dataset_revision','split','local_role')},
               'artifacts':file_hashes(bundle),
               'engine':{n:digest((base/n).read_bytes()) for n in names}}
+    if complete_engine_binding:
+        from locagent_service.engine_binding import behavior_hashes
+        manifest['engine'] = behavior_hashes(base)
     data=canonical(manifest)
     source_id='prepared-'+digest(data)
     target=registry()/(source_id+'.json')

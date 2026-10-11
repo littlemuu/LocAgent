@@ -511,6 +511,7 @@ def rank_and_aggr_query_results(query_results, fixed_query_info_list):
         
 def _submission_hint(graph, node_id):
     """Graph-backed finish metadata; never infer an ID from source text."""
+    from util.candidate_evidence import mark_target
     if node_id not in graph:
         return ''
     kind = graph.nodes[node_id]['type']
@@ -518,13 +519,16 @@ def _submission_hint(graph, node_id):
     if kind in ('function', 'class') and file_id in graph and graph.nodes[file_id]['type'] == 'file':
         payload = {'files': [file_id], 'entities': [node_id]}
         hint = f'Finish target (type={kind}): ' + json.dumps(payload, ensure_ascii=False) + '.'
+        hint = mark_target(hint, payload, kind)
         if kind == 'class' and node_id + '.__init__' not in graph:
             hint += (' Constructor: no separate __init__ node; use this class ID for '
                      'any constructor source shown inside the class.')
         return hint
     if kind == 'file':
-        return ('Finish target (type=file): ' + json.dumps({'files': [node_id], 'entities': []}, ensure_ascii=False)
-                + '. File IDs and variable/assignment aliases are not entities; localize variables to this file only.')
+        payload = {'files': [node_id], 'entities': []}
+        hint = 'Finish target (type=file): ' + json.dumps(payload, ensure_ascii=False) + '.'
+        return (mark_target(hint, payload, kind)
+                + ' File IDs and variable/assignment aliases are not entities; localize variables to this file only.')
     return f'Navigation only (type={kind}); not a valid finish target.'
 
 
@@ -536,6 +540,8 @@ def _format_and_record(qr, searcher, records, *, suppress_repeats=False, submiss
         content = first + '\n' + hint + '\n' + rest
 
     if records is not None:
+        from util.candidate_evidence import plain_evidence, mark_repeat
+        tagged_content, content = content, plain_evidence(content)
         comparison_content = qr.format_output(
             searcher, include_source=False
         )
@@ -544,6 +550,7 @@ def _format_and_record(qr, searcher, records, *, suppress_repeats=False, submiss
             first, separator, rest = comparison_content.partition('\n')
             comparison_content = first + '\n' + hint + '\n' + rest
 
+        comparison_content = plain_evidence(comparison_content)
         entity_id = qr.nid
         if entity_id is None:
             entity_id = (
@@ -573,7 +580,7 @@ def _format_and_record(qr, searcher, records, *, suppress_repeats=False, submiss
                 output_content = notice
 
         entry["output_content"] = output_content
-        return output_content
+        return tagged_content if output_content == content else mark_repeat(output_content, hint)
 
     return content
 

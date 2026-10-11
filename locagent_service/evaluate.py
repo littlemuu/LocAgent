@@ -185,7 +185,10 @@ def valid_finish(row):
     return None
 
 
-def summarize(plan,records,answers, *, execution_mode=None, experiment_complete=False):
+def summarize(plan,records,answers, *, execution_mode=None, experiment_complete=False, _scope=None):
+    from locagent_service.guidance_experiment import is_guidance, validate_fields
+    guidance_axis = is_guidance(plan)
+    axis = 'candidate_guidance' if guidance_axis else 'suppress_repeats'
     expected={(s,arm) for s in plan['sources'] for arm in plan['arms']}
     if len(set(plan['sources'])) != len(plan['sources']) or set(answers) != set(plan['sources']):
         raise ValueError('Exactly one label record per fixed source required')
@@ -202,7 +205,9 @@ def summarize(plan,records,answers, *, execution_mode=None, experiment_complete=
         raise ValueError('Function applicability differs from the predeclared cohort')
     by_key={}
     for row in records:
-        key=(row['source_id'],row['suppress_repeats'])
+        if type(row.get(axis)) is not bool:raise ValueError('Boolean experimental arm required')
+        if guidance_axis:validate_fields(plan,row,row[axis])
+        key=(row['source_id'],row[axis])
         if key not in expected or key in by_key:
             raise ValueError('Unexpected or duplicate evaluation record')
         by_key[key]=row
@@ -290,6 +295,26 @@ def summarize(plan,records,answers, *, execution_mode=None, experiment_complete=
             'valid_finish_rate':valid/len(rows) if real and rows and not unknown_finishes else None,
             'cost_cny':None,
             'cost_note':'Use budget ledger for all calls including failed attempts; upper bound, not invoice'}
+    if guidance_axis:
+        summary.update(comparison_axis=axis, fixed_options={'suppress_repeats':False})
+        if _scope is None:
+            summary['quality_claim_allowed'] = False
+            summary['metrics_scope'] = 'separate_connectivity_and_primary'
+            summary['scoring_groups'] = {}
+            for role in ('connectivity','primary'):
+                ids=[s['source_id'] for s in plan['samples'] if s['role']==role]
+                subset={**plan, 'sources':ids,
+                    'function_applicable_sources':[s for s in applicable if s in ids]}
+                summary['scoring_groups'][role]=summarize(subset,
+                    [r for r in records if r['source_id'] in ids],
+                    {s:answers[s] for s in ids},execution_mode=execution_mode,
+                    experiment_complete=experiment_complete,_scope=role)
+            for metrics in summary['arms'].values():
+                metrics['metrics'] = {k:None for k in metrics['metrics']}
+                metrics['coverage_adjusted_metrics'] = {k:None for k in metrics['coverage_adjusted_metrics']}
+        else:
+            summary['sample_role'] = _scope
+            if _scope == 'connectivity':summary['quality_claim_allowed'] = False
     return summary
 
 

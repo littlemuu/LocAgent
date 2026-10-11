@@ -16,6 +16,16 @@ TOOL_MESSAGE_BYTES = 8192
 TOTAL_TOOL_MESSAGE_BYTES = 24576
 REQUEST_ESTIMATE_GATE = 65536
 MAX_TOOL_CALLS = 16
+# Inside TOTAL_TOOL_MESSAGE_BYTES, alongside the unchanged guidance reservation.
+# Oversized tool-call metadata can still make a legal closing request impossible.
+CLOSING_CONTROL_BYTES = 4096
+FINISH_INSTRUCTION = {
+    'role': 'user', 'content':
+    'Submit now using only finish: exact existing files and verified function/class entity IDs. '
+    'Variables/file IDs are not entities; absent __init__ nodes use the owning class ID. '
+    'One invalid item rejects all results. No explanation or more retrieval.'}
+BUDGET_FEEDBACK = 'tool_budget_exhausted: no result delivered for this call. Retrieval stopped; finish using prior delivered evidence.'
+
 SEARCH_TOOLS = {'search_code_snippets', 'get_entity_contents', 'explore_tree_structure'}
 FINISH = {
     'type': 'function', 'function': {
@@ -94,15 +104,96 @@ def validate_locations(value, graph):
     return files.copy(), modules, functions
 
 
+CANDIDATE_LIMIT = 20
+CANDIDATE_MESSAGE_BYTES = 4096
+CANDIDATE_INSTRUCTION = (
+    'Candidate guidance v1 (recent visible graph evidence; not a ranking or whitelist). '
+    'Use exact IDs and types below: file IDs only in files, function/class IDs only in entities '
+    'with their file also in files. Variables/partial aliases and guessed paths are not entities. '
+    'Before finish, check every item: one invalid item rejects the whole answer; no repair is applied. '
+    'Visibility verifies an ID, not its relevance or that its whole source was read. '
+    'This bounded list may omit earlier or undiscovered targets. Continue retrieval while rounds '
+    'remain; any exact valid graph target may be submitted even if absent here. '
+    'Evidence offsets are character positions in the indicated tool output, not source lines.\n'
+)
+
+
+class CandidateGuidance:
+    """Per-attempt cache derived only from complete hints in delivered page slices.
+
+    Never inspect withheld raw tails, model arguments, gold labels or return_records.
+    A visible hint is only a suggestion: graph validation is repeated here, and the
+    original all-or-nothing finish validator remains the sole acceptance authority.
+    """
+    def __init__(self, graph):
+        self.graph = graph
+        self.entries = {}  # Insertion order; most recently observed targets last.
+
+    def message(self):
+        return {'role': 'user', 'content': CANDIDATE_INSTRUCTION + encoded({
+            'candidates': list(self.entries.values()),
+            'limit': CANDIDATE_LIMIT,
+        }).decode()}
+
+    @staticmethod
+    def prior_evidence(payload, kind, pages):
+        if pages is None:
+            return None
+        for delivered in reversed(pages.audit):
+            for original in pages.outputs[delivered['output_id']].get('candidate_spans', []):
+                if (not original.get('repeated') and original['payload'] == payload
+                        and original['type'] == kind
+                        and delivered['offset'] <= original['offset']
+                        and original['end_offset'] <= delivered['end_offset']):
+                    return {'output_id': delivered['output_id'],
+                            'offset': original['offset'], 'end_offset': original['end_offset']}
+        return None
+
+    def observe(self, spans, audit, pages=None):
+        for span in spans:
+            if not (audit['offset'] <= span['offset']
+                    and span['end_offset'] <= audit['end_offset']):
+                continue
+            payload, kind = span['payload'], span['type']
+            try:
+                validate_locations(payload, self.graph)
+                files, entities = payload['files'], payload['entities']
+                if len(files) != 1 or len(entities) != (0 if kind == 'file' else 1):
+                    continue
+                node = entities[0] if entities else files[0]
+                if self.graph.nodes[node].get('type') != kind:
+                    continue
+            except (ValueError, TypeError, KeyError):
+                continue
+            evidence = {'output_id': audit['output_id'],
+                        'offset': span['offset'], 'end_offset': span['end_offset']}
+            if span.get('repeated'):
+                evidence = self.prior_evidence(payload, kind, pages)
+                if evidence is None:
+                    continue  # Neither a notice nor another notice is source evidence.
+            for node in [*files, *entities]:
+                entry = {'id': node, 'type': self.graph.nodes[node]['type'],
+                         'evidence': evidence}
+                self.entries.pop(node, None)
+                self.entries[node] = entry
+                while (len(self.entries) > CANDIDATE_LIMIT
+                       or len(encoded(self.message())) > CANDIDATE_MESSAGE_BYTES):
+                    self.entries.pop(next(iter(self.entries)))
+
+
 class ToolPages:
-    def __init__(self):
+    def __init__(self, reserved_bytes=0):
         self.outputs = {}
         self.audit = []
         self.delivered_bytes = 0
+        self.reserved_bytes = reserved_bytes
 
     def add(self, raw, name, arguments):
         output_id = 'output-' + str(len(self.outputs) + 1)
-        self.outputs[output_id] = {'raw': raw, 'tool': name, 'arguments': deepcopy(arguments)}
+        from util.candidate_evidence import ToolEvidence
+        self.outputs[output_id] = {'raw': str(raw), 'tool': name, 'arguments': deepcopy(arguments)}
+        if isinstance(raw, ToolEvidence):
+            self.outputs[output_id]['candidate_spans'] = deepcopy(raw.candidate_spans)
         return output_id
 
     def page(self, output_id, offset, call_id, name):
@@ -110,7 +201,7 @@ class ToolPages:
                 or not 0 <= offset <= len(self.outputs[output_id]['raw'])):
             raise ValueError('invalid continuation')
         raw = self.outputs[output_id]['raw']
-        allowance = min(TOOL_MESSAGE_BYTES, TOTAL_TOOL_MESSAGE_BYTES - self.delivered_bytes)
+        allowance = min(TOOL_MESSAGE_BYTES, TOTAL_TOOL_MESSAGE_BYTES - self.reserved_bytes - self.delivered_bytes)
 
         def message(end):
             more = end < len(raw)
@@ -163,23 +254,32 @@ class ToolPages:
 
 
 def run_bounded_search(model_name, messages, *, provider, execute_tool, tools,
-                       max_iteration_num, suppress_repeats, validate_finish):
+                       max_iteration_num, suppress_repeats, validate_finish,
+                       candidate_graph=None):
     tools = [deepcopy(FINISH), *[deepcopy(t) for t in tools
              if t['function']['name'] != 'finish'], deepcopy(READ_PAGE)]
     messages = deepcopy(messages)
     messages[0]['content'] += '\n' + INSTRUCTION
-    records, pages = {}, ToolPages()
+    guidance = CandidateGuidance(candidate_graph) if candidate_graph is not None else None
+    records, pages = {}, ToolPages(
+        CLOSING_CONTROL_BYTES + (CANDIDATE_MESSAGE_BYTES if guidance is not None else 0))
+    closing, controls, exhaustion = False, [], None
+    guidance_message, guidance_requests = None, []
     usage = {'prompt_tokens': 0, 'completion_tokens': 0}
     finish_reasons, estimates = [], []
     reason, final, locations = 'iteration_limit', '', None
     iterations = 0
     for iteration in range(1, max_iteration_num + 1):
-        final_round = iteration == max_iteration_num
+        final_round = closing or iteration == max_iteration_num
+        if guidance_message is not None:
+            messages = [m for m in messages if m is not guidance_message]
         if final_round:
-            messages.append({'role': 'user', 'content':
-                'Submit now using only finish: exact existing files and verified function/class entity IDs. '
-                'Variables/file IDs are not entities; absent __init__ nodes use the owning class ID. '
-                'One invalid item rejects all results. No explanation or more retrieval.'})
+            messages.append(deepcopy(FINISH_INSTRUCTION))
+        if guidance is not None:
+            guidance_message = guidance.message()
+            messages.append(guidance_message)
+            guidance_requests.append({'iteration': iteration, 'message': deepcopy(guidance_message),
+                                      'message_json_bytes': len(encoded(guidance_message)), 'sent': False})
         kwargs = dict(model=model_name, temperature=0, messages=messages,
                       tools=[deepcopy(FINISH)] if final_round else tools)
         if final_round:
@@ -187,8 +287,12 @@ def run_bounded_search(model_name, messages, *, provider, execute_tool, tools,
         estimate = request_estimate(kwargs)
         estimates.append(estimate)
         if estimate > REQUEST_ESTIMATE_GATE:
-            reason = 'context_limit'
+            reason = 'tool_budget_exhausted' if closing else 'context_limit'
+            if closing:
+                exhaustion['closing_blocked_by'] = 'context_limit'
             break
+        if guidance is not None:
+            guidance_requests[-1]['sent'] = True
         response = provider(**kwargs)
         iterations += 1
         usage['prompt_tokens'] += response.usage.prompt_tokens
@@ -226,7 +330,7 @@ def run_bounded_search(model_name, messages, *, provider, execute_tool, tools,
             reason = 'invalid_tool_batch'
             break
         stopped = False
-        for call in calls:
+        for call_index, call in enumerate(calls):
             name = call.function.name
             arguments = json.loads(call.function.arguments)
             try:
@@ -240,25 +344,59 @@ def run_bounded_search(model_name, messages, *, provider, execute_tool, tools,
                     # Same AST-checked executor and graph tools as the legacy loop.
                     raw = execute_tool(f'print({name}(**{arguments!r}))',
                                        return_records=records, suppress_repeats=suppress_repeats)
-                    output_id, offset = pages.add(str(raw), name, arguments), 0
+                    output_id, offset = pages.add(raw, name, arguments), 0
                 else:
                     raise ValueError('unknown tool')
                 observation = pages.page(output_id, offset, call.id, name)
-            except (ValueError, BufferError) as error:
-                reason = 'tool_budget_exhausted' if isinstance(error, BufferError) else 'invalid_tool_arguments'
-                stopped = True
+            except BufferError:
+                reason = 'tool_budget_exhausted'
+                exhaustion = {'iteration': iteration, 'tool_call_id': call.id,
+                              'closing_blocked_by': None}
+                # Pair every unanswered call; none of these messages is source evidence.
+                pending = [{'role': 'tool', 'tool_call_id': c.id, 'name': c.function.name,
+                            'content': BUDGET_FEEDBACK} for c in calls[call_index:]]
+                sizes = [len(encoded(m)) for m in pending]
+                if (any(size > TOOL_MESSAGE_BYTES for size in sizes)
+                        or sum(sizes) + len(encoded(FINISH_INSTRUCTION)) > CLOSING_CONTROL_BYTES):
+                    exhaustion['closing_blocked_by'] = 'control_message_limit'
+                    stopped = True
+                else:
+                    controls = pending
+                    messages.extend(controls)
+                    closing = True
+                break
+            except ValueError:
+                reason, stopped = 'invalid_tool_arguments', True
                 break
             messages.append(observation)
+            if guidance is not None:
+                audit = pages.audit[-1]
+                guidance.observe(pages.outputs[output_id].get('candidate_spans', []), audit, pages)
             # Only complete content present in the delivered message can be seen.
             # Full raw diagnostics and withheld page tails never enter this ledger.
             mark_returns_in_context(records, observation['content'])
         if stopped:
             break
+    control_bytes = sum(len(encoded(m)) for m in controls)
     diagnostics = {'protocol': 'bounded-v1', 'termination_reason': reason,
                    'provider_finish_reasons': finish_reasons,
                    'request_byte_estimates': estimates, 'tool_outputs': pages.outputs,
                    'tool_messages': pages.audit,
-                   'total_tool_message_json_bytes': pages.delivered_bytes}
+                   'total_tool_message_json_bytes': pages.delivered_bytes + control_bytes}
+    if exhaustion is not None:
+        diagnostics['budget_exhaustion'] = {
+            **exhaustion, 'reserved_control_bytes': CLOSING_CONTROL_BYTES,
+            'tool_feedback': controls, 'tool_feedback_json_bytes': control_bytes,
+            'finish_instruction_json_bytes': len(encoded(FINISH_INSTRUCTION)) if closing else 0,
+        }
+    if guidance is not None:
+        diagnostics['candidate_guidance'] = {
+            'version': 1, 'requests': guidance_requests,
+            'reserved_message_bytes': CANDIDATE_MESSAGE_BYTES,
+            'combined_delivery_bytes': pages.delivered_bytes + control_bytes + (
+                len(encoded(FINISH_INSTRUCTION)) if closing else 0) + max(
+                (r['message_json_bytes'] for r in guidance_requests), default=0),
+            'candidates': list(guidance.entries.values())}
     trajectory = {'termination_reason': reason, 'iterations': iterations,
                   'usage': usage, 'return_records': records,
                   'locations': locations, 'diagnostics': diagnostics}

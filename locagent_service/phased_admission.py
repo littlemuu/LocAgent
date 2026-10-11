@@ -18,7 +18,10 @@ KIND = 'locagent-phased-live-approval-v1'
 
 
 def binding(plan):
-    return {'plan_hash':digest(canonical(plan)), 'cohort':plan['cohort'],
+    from locagent_service.guidance_experiment import is_guidance
+    extra = ({'comparison_axis':plan['comparison_axis'], 'fixed_options':plan['fixed_options'],
+              'phase_roles':[s['role'] for s in plan['samples']]} if is_guidance(plan) else {})
+    return {**extra, 'plan_hash':digest(canonical(plan)), 'cohort':plan['cohort'],
             'experiment_id':plan['experiment_id'], 'model':plan['config']['model'],
             'wire_model':deepseek_http.WIRE_MODEL, 'endpoint':deepseek_http.ENDPOINT,
             'config_sha256':digest(canonical(plan['config'])),

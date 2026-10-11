@@ -105,6 +105,7 @@ class LocalizationOptions:
     max_iterations: int = 6
     suppress_repeats: bool = False
     search_protocol: str = "legacy"
+    candidate_guidance: bool = False
 
     def __post_init__(self):
         if type(self.max_iterations) is not int or not 1 <= self.max_iterations <= 100:
@@ -113,6 +114,10 @@ class LocalizationOptions:
             raise InvalidRequestError('unsupported search_protocol')
         if type(self.suppress_repeats) is not bool:
             raise InvalidRequestError('suppress_repeats must be a boolean')
+        if type(self.candidate_guidance) is not bool:
+            raise InvalidRequestError('candidate_guidance must be a boolean')
+        if self.candidate_guidance and self.search_protocol != 'bounded-v1':
+            raise InvalidRequestError('candidate_guidance requires bounded-v1')
 
 
 class ResultStatus(str, Enum):

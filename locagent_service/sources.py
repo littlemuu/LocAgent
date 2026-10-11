@@ -58,7 +58,9 @@ def validate_source(request):
         raise ValueError('Prepared task must match its fixed manifest and single-attempt policy')
 
 
-def localize_prepared(request, provider):
+def localize_prepared(request, provider, *, candidate_guidance=False):
+    if type(candidate_guidance) is not bool:
+        raise ValueError('candidate_guidance must be boolean')
     import pickle
     from dependency_graph import RepoEntitySearcher
     from plugins.location_tools.retriever.bm25_retriever import build_module_retriever_from_graph
@@ -71,7 +73,7 @@ def localize_prepared(request, provider):
         entity_searcher=RepoEntitySearcher(graph),similarity_top_k=manifest['config']['top_k'])
     engine=GraphLocalizer.from_graph(graph,provider=provider,
         model_name=manifest['config']['model'],
-        options=LocalizationOptions(**request.options.model_dump(),
+        options=LocalizationOptions(**request.options.model_dump(), candidate_guidance=candidate_guidance,
             search_protocol=manifest["config"].get("search_protocol", "legacy")),
         bm25_index_dir=bundle/'bm25',module_retriever=retriever)
     return engine.localize(LocalizationRequest(**manifest['task']))

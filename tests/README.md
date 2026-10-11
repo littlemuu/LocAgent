@@ -6,7 +6,11 @@ Run from the LocAgent repository root with the existing CPU virtual environment:
 LITELLM_LOCAL_MODEL_COST_MAP=True HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 .venv/bin/python -B -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-The combined suite has 357 unittest methods. The Stage 2 baseline
+The combined suite contains 403 unittest methods (357 baseline, 24 candidate-guidance,
+10 experiment-axis and 12 bounded-finish regressions). The full 403-test run passed
+after the bounded-finish implementation; the later fixture precision correction reran
+only its 12 affected tests. The independently reviewed 57 related tests overlap this
+suite, so these counts must not be added together. The Stage 2 baseline
 had 61: the original 48 (10 return-trace, 4 request-contract and 34 Stage 1 tests)
 plus 13 Stage 2 contract, fixture and HTTP boundary tests. Install `requirements-service.txt` for Stage 2.
 The pure suite needs no PostgreSQL, pytest or credentials.
@@ -235,3 +239,22 @@ The phased v3 safe-failure suite is test_settled_arm_isolation.py. It uses handw
 ## Portable phased fixtures
 
 phased_test_support.py constructs synthetic cohorts and malformed JSON bodies, never saved provider responses. Phase/HTTP/storage tests use those cohorts; binding tests write synthetic configuration into isolated source copies. The operational phased_cohorts.json, original response fixture directory and outputs are not required for unittest discovery. The 256-condition oracle is enumerated independently in the helper. Optional historical smoke runners require retained local data and are outside portable discovery. No test activates real authority or executes a benchmark repository. See [real-run summary](../NEW20_REAL_EVALUATION.md); synthetic metrics do not measure model efficacy.
+
+## Optional candidate guidance
+
+See [candidate guidance acceptance](../CANDIDATE_GUIDANCE_ACCEPTANCE.md) for the default-off core option, trusted visible evidence, repeated-query recovery, budget tradeoffs and standalone offline commands. These regressions are synthetic boundary checks, not measured localization improvement.
+
+The ten test_guidance_experiment.py methods cover explicit plan/approval axis
+binding, suppression fixed off, balanced order, 2+8 scoring and function NA
+denominators, subprocess flag propagation, raw returned-model consistency,
+full-reservation budget stops, and unknown outcomes with no replay. They use
+synthetic data and no provider traffic.
+
+
+## Bounded budget closing
+
+See [bounded finish offline acceptance](../BOUNDED_FINISH_ACCEPTANCE.md). The twelve
+new test_budget_finish.py tests cover exhausted tool delivery, paired skipped calls,
+one finish-only remaining iteration, unchanged provider cost/quota gates, UTF-8 and
+request bounds, visibility isolation and strict terminal failures. They use scripted
+responses and temporary ledgers; they do not measure model efficacy.

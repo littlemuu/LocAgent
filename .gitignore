@@ -195,3 +195,6 @@ wandb/
 /locagent_service/phased_cohorts.json
 /tests/fixtures/settled_protocol_failure/
 !tests/test_*.py
+
+# Local fixed candidate-guidance cohort; contains prepared source identities.
+locagent_service/candidate_guidance_cohort.json

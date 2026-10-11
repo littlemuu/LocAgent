@@ -17,7 +17,7 @@ import sys
 import time
 from uuid import uuid4
 
-from locagent_service import budget, followup, response_store
+from locagent_service import budget, followup, response_store, guidance_experiment as guidance
 from locagent_service.sources import canonical, digest, load_manifest
 from locagent_service.models import CreateTask, LocalizationResultView
 
@@ -40,8 +40,8 @@ def runtime_hashes(spec):
     hashes = behavior_hashes(ROOT)
     # Cohort contains source IDs whose manifests already bind behavior_hashes.
     # Keep it at plan level to avoid a source/cohort content-addressing cycle.
-    hashes['locagent_service/phased_cohorts.json'] = digest(
-        (ROOT/'locagent_service/phased_cohorts.json').read_bytes())
+    name = guidance.CONFIG_NAME if guidance.is_guidance(spec) else 'locagent_service/phased_cohorts.json'
+    hashes[name] = digest((ROOT/name).read_bytes())
     return hashes
 
 
@@ -50,7 +50,7 @@ def expected_plan(cohort, experiment_id, mode='offline'):
         raise ValueError('Explicit safe experiment ID required')
     if mode not in ('offline','live'):raise ValueError('Unknown plan mode')
     from locagent_service import deepseek_http
-    spec = specs()[cohort]
+    spec = guidance.load_spec(ROOT) if cohort == guidance.COHORT else specs()[cohort]
     return {'version':3, 'policy':POLICY, 'arm_failure_policy':FAILURE_POLICY,
             'mode':mode, 'live_authorized':False,
             'transport':{'endpoint':deepseek_http.ENDPOINT,'wire_model':deepseek_http.WIRE_MODEL,
@@ -151,10 +151,12 @@ def record_for(path, state, index):
         raise RuntimeError('Result cannot be a symlink')
     record = read_json(target)
     identity = arms_for(state['plan'])[index]
+    if guidance.is_guidance(state['plan']):
+        guidance.validate_fields(state['plan'], record, identity['arm'])
     if (record.get('plan_hash') != state['plan_hash'] or record.get('arm_index') != index
         or record.get('source_id') != identity['source_id']
         or type(record.get('suppress_repeats')) is not bool
-        or record['suppress_repeats'] != identity['arm']
+        or record['suppress_repeats'] != guidance.axis_fields(state['plan'], identity['arm'])['suppress_repeats']
         or record.get('mode') != ('live' if state['mode']=='live' else 'offline') or record.get('status') != 'completed'
         or type(record.get('elapsed_seconds')) not in (int,float)
         or not math.isfinite(record['elapsed_seconds']) or record['elapsed_seconds']<0
@@ -271,6 +273,7 @@ def validate_state(path, state, *, allow_body_errors=False):
             or c.get('status') not in ('reserved','raw_received','settled','outcome_unknown')
             or not re.fullmatch('[0-9a-f]{64}',c.get('request_sha256',''))):
             raise RuntimeError('Invalid call identity/quota/order')
+        if guidance.is_guidance(plan):guidance.validate_fields(plan,c,identities[index]['arm'])
         counts[index]+=1; last=index
         body=None
         if 'raw_body_b64' in c:
@@ -290,7 +293,8 @@ def validate_state(path, state, *, allow_body_errors=False):
                 raise RuntimeError('Incomplete/failed HTTP cannot settle')
             if body is not None:
                 raw,usage,cost=followup.verify_raw_usage(body)
-                if any(c.get(k)!=v for k,v in usage.items()) or c.get('cost_upper_cny')!=str(cost):
+                if (any(c.get(k)!=v for k,v in usage.items()) or c.get('cost_upper_cny')!=str(cost)
+                    or (guidance.is_guidance(plan) and c.get('returned_model') != raw.get('model'))):
                     raise RuntimeError('Settlement differs from original usage')
             else:
                 # Preserve a previously owned settlement, but do not call it raw-
@@ -521,6 +525,7 @@ class Provider:
                   'source_id':identity['source_id'],'arm':identity['arm'],'status':'reserved',
                   'reservation_cny':str(followup.RESERVE),'request_sha256':request_hash,
                   'input_byte_estimate':estimate}
+            if guidance.is_guidance(plan):call.update(guidance.axis_fields(plan,identity['arm']))
             state['calls'].append(call);commit(self.path,state);self.hook('reserved')
             try:
                 if self.raw is not None:
@@ -583,7 +588,7 @@ def finish_arm(path,index,token,result,elapsed,hook=no_hook):
             or any(c['status']!='settled' for c in state['calls'])):
             raise RuntimeError('Result writer lost arm ownership')
         record={'plan_hash':state['plan_hash'],'arm_index':index,'source_id':identity['source_id'],
-                'suppress_repeats':identity['arm'],'mode':'live' if state['mode']=='live' else 'offline','status':'completed',
+                **guidance.axis_fields(state['plan'],identity['arm']),'mode':'live' if state['mode']=='live' else 'offline','status':'completed',
                 'result':result,'elapsed_seconds':elapsed,'calls_hash':call_hash(state,index)}
         target=result_path(path,index);target.parent.mkdir(exist_ok=True)
         if target.exists():raise RuntimeError('Existing result requires explicit audit, never overwrite')
@@ -605,11 +610,12 @@ def execute_arm(path,index,token,parent_pid):
         from locagent_service.sources import localize_prepared
         manifest,_=load_manifest(sample['source_id'])
         request=CreateTask(source_id=sample['source_id'],problem_statement=manifest['task']['problem_statement'],
-            options={'max_iterations':3,'suppress_repeats':sample['arm']},max_attempts=1,timeout_seconds=300)
+            options={'max_iterations':3,'suppress_repeats':guidance.axis_fields(state['plan'],sample['arm'])['suppress_repeats']},max_attempts=1,timeout_seconds=300)
         started=time.monotonic()
         from util.localization_contract import LocalizationError
         try:
-            result=localize_prepared(request,Provider(path,index,token))
+            kwargs = {'candidate_guidance': sample['arm']} if guidance.is_guidance(state['plan']) else {}
+            result=localize_prepared(request,Provider(path,index,token),**kwargs)
         except LocalizationError as exc:
             fail_localization(path,index,token,exc)
             raise
@@ -913,7 +919,7 @@ def summary(path,labels):
                 records.append(record)
             else:
                 identity=arms_for(state['plan'])[i]
-                records.append({'source_id':identity['source_id'],'suppress_repeats':identity['arm'],
+                records.append({'source_id':identity['source_id'],**guidance.axis_fields(state['plan'],identity['arm']),
                     'mode':'live' if state['mode']=='live' else 'offline','status':arm['status'],
                     'elapsed_seconds':arm.get('elapsed_seconds'),
                     'terminal_failure_verified':arm['status']=='failed' and 'protocol_failure' in arm,
@@ -953,12 +959,22 @@ def summary(path,labels):
                 unknown_call_count=sum(c['status']!='settled' for c in calls),
                 cost_upper_cny=str(sum((Decimal(c['cost_upper_cny']) if c['status']=='settled' else
                                        Decimal(c['reservation_cny']) for c in calls),Decimal(0))))
+    if guidance.is_guidance(state['plan']):
+        result['returned_models'] = sorted({c['returned_model'] for c in state['calls'] if c.get('returned_model')})
+        for scope, scoped in result['scoring_groups'].items():
+            ids={s['source_id'] for s in state['plan']['samples'] if s['role']==scope}
+            for arm, metrics in scoped['arms'].items():
+                calls=[c for c in state['calls'] if c['source_id'] in ids and str(c['arm']).lower()==arm]
+                metrics.update(call_count=len(calls), unknown_call_count=sum(c['status']!='settled' for c in calls),
+                    prompt_tokens=sum(c.get('prompt_tokens',0) for c in calls) if real else None,
+                    completion_tokens=sum(c.get('completion_tokens',0) for c in calls) if real else None,
+                    cost_upper_cny=str(sum((Decimal(c['cost_upper_cny']) if c['status']=='settled' else Decimal(c['reservation_cny']) for c in calls),Decimal(0))) if real else None)
     return result
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-    make=sub.add_parser('plan');make.add_argument('--cohort',choices=['new20','regression5'],required=True)
+    make=sub.add_parser('plan');make.add_argument('--cohort',choices=['new20','regression5',guidance.COHORT],required=True)
     make.add_argument('--mode',choices=['offline','live'],default='offline');make.add_argument('--experiment-id',required=True);make.add_argument('--labels',required=True);make.add_argument('--output',required=True)
     init=sub.add_parser('init');init.add_argument('--plan',required=True);init.add_argument('--ledger',required=True);init.add_argument('--labels',required=True);init.add_argument('--live',action='store_true');init.add_argument('--simulate-http',action='store_true');init.add_argument('--approval-id')
     draft=sub.add_parser('approval-proposal');draft.add_argument('--plan',required=True);draft.add_argument('--approval-id',required=True);draft.add_argument('--output',required=True)

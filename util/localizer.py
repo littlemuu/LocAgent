@@ -379,13 +379,21 @@ class GraphLocalizer:
             bounded = self.options.search_protocol == 'bounded-v1'
             if bounded:
                 from util.localization_protocol import run_bounded_search, validate_locations
+                def execute_bounded(code, **kw):
+                    if not self.options.candidate_guidance:
+                        return _execute_tool(ops, code, submission_hints=True, **kw)
+                    from util.candidate_evidence import capture_evidence
+                    with capture_evidence() as capture:
+                        raw = _execute_tool(ops, code, submission_hints=True, **kw)
+                    return capture.unwrap(raw)
                 run = run_bounded_search(
                     model_name=self.model_name, messages=messages, tools=tools,
                     max_iteration_num=self.options.max_iterations,
                     suppress_repeats=self.options.suppress_repeats,
                     provider=_checked_provider(self.provider, bounded=True),
-                    execute_tool=lambda code, **kw: _execute_tool(ops, code, submission_hints=True, **kw),
+                    execute_tool=execute_bounded,
                     validate_finish=lambda value: validate_locations(value, graph),
+                    candidate_graph=graph if self.options.candidate_guidance else None,
                 )
             else:
                 run = run_search(
