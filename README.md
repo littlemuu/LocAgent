@@ -2,7 +2,9 @@
 
 把自然语言问题定位到仓库中的文件和函数，并保存任务状态、检索轨迹和评估证据。**本分支基于开源 [LocAgent](https://github.com/gersteinlab/LocAgent) 改造**，重点是服务可靠性、任务专用执行约束与可复现评估；不是从零实现论文方法，也不自动修复代码。
 
-默认演示使用内存中的两节点图和脚本 provider，不需要模型 key。真实仓库需由操作端预先固定 commit、构建图/BM25 索引并生成可信清单；HTTP 不接受任意仓库路径、上传的 pickle 或即时克隆请求。当前面向本地开发与复现，不是生产部署方案。
+默认演示使用内存中的两节点图和脚本 provider，不需要模型 key。原 prepared 路径仍由操作端固定 commit、构建图/BM25 索引并生成可信清单。新增可选的 [公开 GitHub Python 仓库预览](docs/PUBLIC_REPOSITORY_PREVIEW.md)：提交仓库链接和问题，后台固定 commit、准备可复用索引并返回可查询结果；本轮仅运行 fake provider，不评价定位质量、不调用付费模型。新增 [单题操作员授权层](docs/PUBLIC_REPOSITORY_AUTHORIZATION.md) 默认关闭，仅以 stub 验证预算预留、结算和未知结果不重放；尚未验收真实模型。HTTP 仍不接受任意本地路径或上传的 pickle。当前面向隔离的本地开发与复现，不是生产部署方案。验收记录见 [公开仓库闭环验收](docs/PUBLIC_REPOSITORY_ACCEPTANCE.md)，[中文交付复核](docs/PUBLIC_REPOSITORY_REVIEW.md) 明确说明固定空结果的 fake-only 含义和测试计数。
+
+最新恢复验收与限流证据见 [2026-10-14 恢复报告](docs/PUBLIC_REPOSITORY_RESUME.md)。
 
 [快速演示](#快速演示无需模型-key) · [开发与测试](#开发与离线测试) · [真实评估](#真实评估入口与配置边界) · [实测结果](#实测结果与解释边界) · [上游论文与引用](docs/UPSTREAM_README.md)
 

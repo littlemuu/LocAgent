@@ -13,6 +13,7 @@ from uuid import uuid4
 
 from locagent_service.config import Settings
 from locagent_service.store import StateConflict, TaskStore
+from locagent_service.models import replay_safe
 
 
 
@@ -20,9 +21,16 @@ class ResultMailbox:
     """Child writes privately, fsyncs, then atomically publishes a bounded JSON result."""
     MAX_BYTES=16*1024*1024
 
-    def __init__(self,directory):
+    def __init__(self,directory, settings=None, claim=None):
+        self.settings=settings
+        self.claim=claim
+        self.progress=dict(claim.progress or {}) if claim else {}
         self.directory=Path(directory)
         self.ready=self.directory/'ready.json'
+
+    def report(self, values):
+        TaskStore(self.settings).set_progress(self.claim, values)
+        self.progress.update(values)
 
     def send(self,value):
         payload=json.dumps(value).encode()
@@ -55,6 +63,10 @@ def execute(request, channel, parent_pid):
         from locagent_service.sources import localize
         from util.localization_contract import LocalizationError
         request = CreateTask.model_validate(request)
+        if request.source_id == 'github-v1':
+            from locagent_service.public_pipeline import execute_pipeline
+            execute_pipeline(request, channel)
+            return
         result = localize(request)
         channel.send(('completed',result.to_dict()))
     except Exception as exc:
@@ -81,7 +93,7 @@ def run_one(store, worker_id, *, lease_seconds=15, stopping=None, executor=execu
         return False
     context = mp.get_context('spawn')
     directory=tempfile.TemporaryDirectory(prefix='locagent-attempt-')
-    mailbox=ResultMailbox(directory.name)
+    mailbox=ResultMailbox(directory.name,store.settings,claim)
     child = context.Process(target=executor,args=(claim.request,mailbox,os.getpid()),daemon=True)
     try:
         child.start()
@@ -99,7 +111,7 @@ def run_one(store, worker_id, *, lease_seconds=15, stopping=None, executor=execu
                     store._finish(claim,status,payload,None)
                 else:
                     # A real provider error can mean the remote operation completed.
-                    if claim.request.get('source_id','demo-v1') != 'demo-v1':
+                    if not replay_safe(claim.request):
                         store.interrupt(claim,'outcome_unknown')
                     else:
                         store._finish(claim,'failed',None,payload)

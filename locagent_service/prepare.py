@@ -5,12 +5,27 @@ import json
 from pathlib import Path
 import pickle
 import subprocess
+import sys
 from uuid import uuid4
 
 from locagent_service.sources import registry,canonical,digest,file_hashes,load_manifest
 from locagent_service.budget import LIVE_CONFIG
 from locagent_service.offline import offline_engine
 from util.localization_contract import LocalizationRequest
+
+
+def build_indexes(snapshot, bundle, instance_id, *, top_k=5):
+    with offline_engine():
+        import networkx as nx
+        from dependency_graph.build_graph import build_graph
+        from plugins.location_tools.retriever.bm25_retriever import build_code_retriever_from_repo
+        graph=build_graph(str(snapshot),global_import=True,fuzzy_search=True)
+        if '/' in graph:
+            graph=nx.relabel_nodes(graph,{'/':'.'})
+        (bundle/'graph.pkl').write_bytes(pickle.dumps(graph))
+        build_code_retriever_from_repo(str(snapshot),
+            persist_path=str(bundle/'bm25'/instance_id),similarity_top_k=top_k)
+    return graph
 
 
 def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
@@ -43,16 +58,7 @@ def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
     if followup5:
         from locagent_service.followup import POLICY
         config['budget_policy'] = POLICY
-    with offline_engine():
-        import networkx as nx
-        from dependency_graph.build_graph import build_graph
-        from plugins.location_tools.retriever.bm25_retriever import build_code_retriever_from_repo
-        graph=build_graph(str(snapshot),global_import=True,fuzzy_search=True)
-        if '/' in graph:
-            graph=nx.relabel_nodes(graph,{'/':'.'})
-        (bundle/'graph.pkl').write_bytes(pickle.dumps(graph))
-        build_code_retriever_from_repo(str(snapshot),
-            persist_path=str(bundle/'bm25'/task['instance_id']),similarity_top_k=5)
+    graph=build_indexes(snapshot,bundle,task['instance_id'])
     base=Path(__file__).resolve().parents[1]
     names=['util/localizer.py','util/localization_engine.py','util/return_trace.py',
            'dependency_graph/build_graph.py','plugins/location_tools/repo_ops/repo_ops.py',
@@ -61,7 +67,7 @@ def prepare(repo, sample, *, followup5=False, search_protocol="legacy",
            'dependency_graph/traverse_graph.py', 'locagent_service/source_archive.py',
            'locagent_service/prepare.py', 'locagent_service/sources.py', 'locagent_service/models.py']
     (bundle/'environment.txt').write_bytes(subprocess.check_output(
-        [str(base/'.venv/bin/python'),'-m','pip','freeze']))
+        [sys.executable,'-m','pip','freeze']))
     manifest={'version':2,'bundle':bundle.name,'task':task,'config':config,
               'dataset':{k:raw.get(k) for k in ('dataset','dataset_revision','split','local_role')},
               'artifacts':file_hashes(bundle),

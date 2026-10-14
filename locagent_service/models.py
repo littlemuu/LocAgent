@@ -31,12 +31,31 @@ class TaskOptions(BaseModel):
 class TaskRequest(BaseModel):
     """Bounded wire/storage shape; new HTTP sources are admitted inside store.create."""
     model_config = ConfigDict(extra='forbid')
-    source_id: str = Field(default='demo-v1', pattern=r'^(demo-v1|prepared-[a-f0-9]{64})$')
+    source_id: str = Field(default='demo-v1', pattern=r'^(demo-v1|github-v1|prepared-[a-f0-9]{64})$')
+    repository_url: str | None = None
+    ref: str | None = None
+    authorization_id: str | None = Field(default=None, pattern=r'^[a-f0-9]{64}$')
     problem_statement: str = Field(strict=True, min_length=1, max_length=32768)
     demo_scenario: DemoScenario = DemoScenario.SUCCESS
     options: TaskOptions = Field(default_factory=TaskOptions)
     timeout_seconds: int = Field(default=90, strict=True, ge=1, le=900)
     max_attempts: int = Field(default=3, strict=True, ge=1, le=5)
+
+    @model_validator(mode='after')
+    def public_repository(self):
+        if self.source_id == 'github-v1':
+            from locagent_service.public_repo import normalize_url, validate_ref
+            self.repository_url = normalize_url(self.repository_url)
+            self.ref = validate_ref(self.ref)
+            if len(self.problem_statement) > 8000 or self.demo_scenario != DemoScenario.SUCCESS:
+                raise ValueError('Invalid public preview request')
+            if self.authorization_id is not None:
+                import re
+                if not self.ref or not re.fullmatch('[a-f0-9]{40}', self.ref) or self.max_attempts != 1:
+                    raise ValueError('Authorized tasks require a fixed commit and one attempt')
+        elif self.repository_url is not None or self.ref is not None or self.authorization_id is not None:
+            raise ValueError('Repository fields require github-v1')
+        return self
 
     @field_validator('problem_statement')
     @classmethod
@@ -46,6 +65,11 @@ class TaskRequest(BaseModel):
         if len(value) > 8000 and info.data.get('source_id') == 'demo-v1':
             raise ValueError('Ordinary requests are limited to 8000 characters')
         return value
+
+
+def replay_safe(request):
+    source = request.get('source_id', 'demo-v1')
+    return source == 'demo-v1' or (source == 'github-v1' and request.get('authorization_id') is None)
 
 
 class CreateTask(TaskRequest):
@@ -105,6 +129,7 @@ class TaskView(BaseModel):
     attempt: int = 0
     lease_until: datetime | None = None
     deadline: datetime | None = None
+    progress: dict[str, Any] | None = None
 
 
 class ErrorResponse(BaseModel):

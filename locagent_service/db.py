@@ -8,7 +8,7 @@ def main():
         TaskStore(Settings.from_env()).initialize()
     except Exception:
         raise SystemExit('Database initialization failed; check local PostgreSQL and settings') from None
-    print('PostgreSQL schema version 2 ready')
+    print('PostgreSQL schema version 3 ready')
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
 from locagent_service.config import Settings
-from locagent_service.models import CreateTask, PublicError, TaskView
+from locagent_service.models import CreateTask, PublicError, TaskView, replay_safe
 
 
 class StateConflict(Exception):
@@ -28,6 +28,7 @@ class Claim:
     worker_id: str
     token: UUID
     attempt: int = 1
+    progress: dict | None = None
 
 
 class TaskStore:
@@ -56,15 +57,18 @@ class TaskStore:
             if versions == [{'version': 1}]:
                 c.execute(sql.SQL((migrations/'002_lifecycle.sql').read_text()).format(
                     schema=sql.Identifier(self.settings.schema)))
-            elif versions != [{'version': 2}]:
+            elif versions not in ([{'version': 2}], [{'version': 3}]):
                 raise RuntimeError('Unsupported database schema version')
+            if versions != [{'version': 3}]:
+                c.execute(sql.SQL((migrations/'003_public_pipeline.sql').read_text()).format(
+                    schema=sql.Identifier(self.settings.schema)))
         self.check_ready()
 
     def check_ready(self):
         with self.connect() as c:
             rows = c.execute(sql.SQL('SELECT version FROM {}').format(
                 sql.Identifier(self.settings.schema, 'schema_version'))).fetchall()
-        if rows != [{'version': 2}]:
+        if rows != [{'version': 3}]:
             raise RuntimeError('Run the explicit database migration first')
 
     def create(self, request: CreateTask, idempotency_key: str | None = None,
@@ -122,7 +126,7 @@ class TaskStore:
                 FOR UPDATE SKIP LOCKED
             """).format(self.table)).fetchall()
             for row in rows:
-                safe = row['request'].get('source_id', 'demo-v1') == 'demo-v1'
+                safe = replay_safe(row['request'])
                 retry = safe and row['attempt'] < row['request'].get('max_attempts', 3)
                 outcome = 'timeout' if row['timed_out'] else 'lease_expired'
                 error = {'code': outcome if safe else 'outcome_unknown',
@@ -168,7 +172,7 @@ class TaskStore:
                 c.execute(sql.SQL('INSERT INTO {} (task_id,attempt,token,worker_id) '
                                   'VALUES (%s,%s,%s,%s)').format(self.attempts),
                           (row['id'],row['attempt'],token,worker_id))
-        return Claim(row['id'],row['request'],worker_id,token,row['attempt']) if row else None
+        return Claim(row['id'],row['request'],worker_id,token,row['attempt'],row.get('progress')) if row else None
 
     def _lock_claim_row(self, c, claim):
         # Time-sensitive predicates must be evaluated AFTER any row-lock wait.
@@ -188,6 +192,17 @@ class TaskStore:
             """).format(self.table),
                 (lease_seconds,claim.id,claim.worker_id,claim.token,claim.attempt)).fetchone()
             if not row:
+                raise StateConflict('Task claim is no longer active')
+
+    def set_progress(self, claim, values):
+        with self.connect() as c:
+            self._lock_claim_row(c, claim)
+            cursor = c.execute(sql.SQL("""
+                UPDATE {} SET progress=COALESCE(progress,'{{}}'::jsonb) || %s
+                WHERE id=%s AND status='running' AND worker_id=%s AND claim_token=%s
+                AND attempt=%s AND lease_until>clock_timestamp() AND deadline>clock_timestamp()
+            """).format(self.table), (Jsonb(values),claim.id,claim.worker_id,claim.token,claim.attempt))
+            if cursor.rowcount != 1:
                 raise StateConflict('Task claim is no longer active')
 
     def complete(self, claim, result):
@@ -213,7 +228,7 @@ class TaskStore:
 
     def interrupt(self, claim, code):
         """Supervisor interruption before lease expires; paid outcomes are never replayed."""
-        safe = claim.request.get('source_id', 'demo-v1') == 'demo-v1'
+        safe = replay_safe(claim.request)
         error = PublicError(code=code if safe else 'outcome_unknown',
                             message='Execution interrupted; inspect attempt history')
         self._finish(claim,'failed' if safe else 'needs_review',None,error.model_dump())
@@ -225,11 +240,15 @@ class TaskStore:
             if row is None:
                 return None
             if row['status'] in ('queued','running'):
-                self._end_attempt(c,task_id,row['claim_token'],'cancelled')
+                unknown = (row['status'] == 'running' and row['request'].get('source_id') == 'github-v1'
+                           and not replay_safe(row['request']))
+                status = 'needs_review' if unknown else 'cancelled'
+                error = {'code': 'outcome_unknown', 'message': 'Cancelled execution requires outcome review'} if unknown else None
+                self._end_attempt(c,task_id,row['claim_token'],status,error)
                 row = c.execute(sql.SQL("""
-                    UPDATE {} SET status='cancelled',finished_at=clock_timestamp(),
+                    UPDATE {} SET status=%s,error=%s,finished_at=clock_timestamp(),
                      lease_until=NULL WHERE id=%s RETURNING *
-                """).format(self.table),(task_id,)).fetchone()
+                """).format(self.table),(status,Jsonb(error) if error else None,task_id)).fetchone()
         return TaskView.model_validate(row, context={'persisted_task': True})
 
     def retry(self, task_id):
@@ -238,7 +257,7 @@ class TaskStore:
                 self.table), (task_id,)).fetchone()
             if row is None:
                 return None
-            if (row['status'] != 'failed' or row['request'].get('source_id','demo-v1') != 'demo-v1'
+            if (row['status'] != 'failed' or not replay_safe(row['request'])
                     or row['attempt'] >= row['request'].get('max_attempts',3)):
                 raise StateConflict('Task is not eligible for safe bounded retry')
             self._requeue(c,task_id)

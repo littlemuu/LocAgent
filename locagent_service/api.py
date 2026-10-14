@@ -45,7 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get('/health')
     def health():
         store.check_ready()
-        return {'status': 'ok', 'schema_version': 2}
+        return {'status': 'ok', 'schema_version': 3}
 
     @app.post('/tasks', response_model=TaskView, status_code=202,
               responses={422: {'model': ErrorResponse}, 503: {'model': ErrorResponse}})
@@ -55,12 +55,20 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         try:
             # Validate new prepared requests under the idempotency lock. Replays
             # of the exact persisted payload stay readable if artifacts move.
-            if request.source_id != 'demo-v1':
+            if request.source_id == 'github-v1':
+                from locagent_service.public_pipeline import enabled
+                def validate_public(value):
+                    enabled(store.settings)
+                    if value.authorization_id is not None:
+                        from locagent_service.public_authorization import validate_request
+                        validate_request(value)
+                task = store.create(request, idempotency_key, validate_new=validate_public)
+            elif request.source_id != 'demo-v1':
                 task = store.create(request, idempotency_key, validate_new=validate_source)
             else:
                 task = store.create(request, idempotency_key) if idempotency_key is not None else store.create(request)
         except (ValueError, OSError):
-            return error_response(422, 'invalid_source', 'Prepared source is unavailable or mismatched')
+            return error_response(422, 'invalid_source', 'Source is unavailable, mismatched, or public preview is disabled')
         response.headers['Location'] = f'/tasks/{task.id}'
         return task
 
