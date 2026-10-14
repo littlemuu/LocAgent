@@ -1,8 +1,10 @@
 # Offline repair acceptance — 2026-10-08
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 ## Outcome and scope
 
-Implemented and verified in WSL `/home/lenovo/projects/LocAgent` on
+Implemented and verified in WSL the repository root on
 `work/locagent-baseline`, HEAD `54fcb660d4a886e7f0675ed419b3a4ed21aa3fb6`.
 No commit, push, paid call, authorization consumption/reset, credential creation or
 .env edit occurred. The previous eight uncommitted follow-up files were backed up
@@ -160,7 +162,7 @@ Independent review should inspect final-round enforcement, malformed/truncated
 argument handling, exact graph validation, UTF-8/JSON boundaries, cache isolation,
 suppression visibility, old result serialization and manifest opt-in wiring.
 The delivery includes a repair-only patch separating these edits from the earlier
-uncommitted five-sample support, plus the complete current worktree patch.
+five-sample support, plus the complete current worktree patch.
 
 Remaining live validation requires independent review, new fixed sources/plan,
 fresh pricing/budget authorization and a new ledger/approval marker. Old consumed

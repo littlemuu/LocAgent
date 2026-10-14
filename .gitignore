@@ -198,3 +198,22 @@ wandb/
 
 # Local fixed candidate-guidance cohort; contains prepared source identities.
 locagent_service/candidate_guidance_cohort.json
+
+# Local runtime state: exact root files and dedicated artifact directories only.
+/runtime.json
+/authorization.json
+/ledger.json
+/local.sqlite
+/local.sqlite-journal
+/local.sqlite-wal
+/local.sqlite-shm
+/local.db
+/local.db-journal
+/local.db-wal
+/local.db-shm
+/model.safetensors
+/model.pt
+/model.bin
+/runtime-local/
+/downloaded_repos/
+/model-weights/

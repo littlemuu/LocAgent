@@ -1,16 +1,16 @@
-# Candidate-guidance10 preparation and review handoff
+# Candidate-guidance10 experiment preparation
 
-This is preparation for the already agreed public ten-task DeepSeek Flash comparison.
-Live execution is paused until the parent forwards an independent-review pass.
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
+This records preparation for a public ten-task DeepSeek Flash comparison.
+Live execution requires a successful independent review and the admission checks below.
 No live approval, consumed receipt, credential or real provider call is created here.
 
 ## Scope and preservation
 
-Branch: work/locagent-baseline; HEAD: 0d5af3eeff0afb73a488c523d407b56e8fde7bda.
-Protected 50-file staged tree: 79148ecc013310e58d6780972feb94182b6b3a2d.
-All experiment changes remain unstaged. The prior candidate-guidance implementation
-is preserved. No commit, push, database mutation, credential/configuration change
-or public deployment occurred.
+Preparation baseline: `0d5af3eeff0afb73a488c523d407b56e8fde7bda`.
+Preserved source tree identity: `79148ecc013310e58d6780972feb94182b6b3a2d`.
+Preparation did not mutate databases, credentials or existing experiment evidence.
 
 Experiment files are under outputs/candidate-guidance10-preparation-20261010/.
 The new ignored locagent_service/candidate_guidance_cohort.json is a local frozen
@@ -102,7 +102,7 @@ credentials. Logs: full-offline.log, axis-tests.log. The initial compatibility
 run exposed an old-plan exception-type regression; it was repaired and the full
 suite passed. The original failed logs are retained.
 
-From /home/lenovo/projects/LocAgent:
+From the repository root:
 
     LOCAGENT_ALLOW_PAID=0 LITELLM_LOCAL_MODEL_COST_MAP=True HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 .venv/bin/python -B -m unittest discover -s tests -p 'test_*.py' -v
 
@@ -129,9 +129,10 @@ Read independent-review-checklist.json, frozen-identities.json, both plan files,
 label audit, test log, source-preservation report and HTTP simulation evidence.
 No live quality/token/cost improvement can be claimed from fixtures.
 
-After the parent forwards independent-review pass, the already agreed budget
-does not need to be asked again. Live execution still requires fresh account/all-in
-pricing confirmation and the existing exact-plan single-use admission mechanism.
+Independent review does not itself authorize paid execution. The recorded CNY 5
+budget applies only to its approved experiment; live execution requires valid
+budget/data authorization, fresh account/all-in pricing confirmation and the
+existing exact-plan single-use admission mechanism.
 Use existing credentials only for normal authentication, without copying them
 into artifacts or editing .env. Run connectivity first and inspect raw usage,
 actual returned models and the checkpoint before continuing primary with the
@@ -174,9 +175,9 @@ configuration and cannot run in live mode.
   response reported deepseek-flash. Zero ledger/model mismatches and zero new
   requests. This evidence is in historical-returned-model-audit.json.
 - 8,254 existing historical evidence entries and 197 source-snapshot files matched
-  their hashes. Protected index patch/tree and the prior candidate-guidance
-  implementation are unchanged. Current runtime and tests match the tested export.
-- No network or resource blocker remains. Real evaluation is intentionally pending
+  their hashes. The preserved source tree and prior candidate-guidance
+  implementation matched their hashes; runtime and tests matched the tested export.
+- At preparation time no network or resource blocker remained. Real evaluation required
   independent-review pass and the existing fresh paid-admission preflight.
 
 Evidence: full-offline.log, frozen-verification.json,

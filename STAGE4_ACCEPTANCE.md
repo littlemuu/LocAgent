@@ -1,5 +1,7 @@
 # 第四阶段：固定输入评估与保守预算
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 ## 当前验收结果（2026-10-08）
 
 真实 pilot 已完成，退出码 0：固定一个公开 requests 开发样本，suppress_repeats off/on 各三次模型调用，两组均正常完成且首位命中目标文件与函数。on 真实触发 6 次重复返回折叠，原始内容仍保留。完整 [真实 pilot 报告](outputs/stage4/live-pilot-recovered-20261008/LIVE_PILOT_REPORT.md) 给出逐次 usage、费用公式、轨迹和复现命令。
@@ -56,7 +58,7 @@ SHA-256：30826b12d1b2d4cd8027c416aa22bd3c85f2217f2e91ff12c3dfcf54c643e6c6。
 .env 仅经授权 CLI 正常加载，未显示/复制/修改。--env-file 要求0600普通文件，仅接受允许变量，不插值或执行shell；--live 只启用当前进程，未传时强制禁止付费。API/worker不自动加载.env；Compose不挂载模型密钥。
 
 ~~~sh
-cd /home/lenovo/projects/LocAgent
+cd "$(git rev-parse --show-toplevel)"
 sh scripts/check_local.sh
 # 使用尚不存在的新目录；不加载 .env，不调用真实模型。
 .venv/bin/python -B -m locagent_service.evaluate run \

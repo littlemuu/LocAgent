@@ -1,11 +1,11 @@
 # 公开仓库后端交付复核：设计、能力边界与验收
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 > 本文件保留 fake-only 阶段的历史复核。随后已增加默认关闭的操作员授权路径；
 > 最新能力与恢复边界以 `PUBLIC_REPOSITORY_AUTHORIZATION.md` 为准。真实模型仍未调用或验收。
 
-本次复核没有增加业务功能，没有调用付费模型，没有 commit、push 或部署。
-开发仍在 `/home/lenovo/projects/LocAgent-public-pipeline`，分支
-`work/public-repo-pipeline`；学习目录 `/home/lenovo/projects/LocAgent` 保持原基线。
+本记录描述 fake-only 阶段的复核结果，未进行真实模型或定位质量验收。
 
 ## 交付的实际能力
 
@@ -46,7 +46,7 @@
 接收方和模型；使用新的明确预算授权及调用前持久化预留；在远端结果不明时进入
 needs_review，禁止自动重放。当前 github-v1 自动恢复是因为它硬编码为 fake-only。
 不能只把 fake 函数换成模型调用，否则可能在崩溃恢复时重复付费。完成这层之后
-还需要经父对话确认的单题 smoke 和实际定位质量验收。本轮没有做这两项。
+还需要经操作员确认的单题 smoke 和实际定位质量验收。本轮没有做这两项。
 
 ## 设计与边界复核
 
@@ -72,7 +72,7 @@ needs_review，禁止自动重放。当前 github-v1 自动恢复是因为它硬
 
 ## 本轮发现与修复
 
-独立 reviewer 与主任务分别复现了两处问题，并在原范围内修复：
+独立审查与实现复核分别复现了两处问题，并在原范围内修复：
 
 1. Python `ipaddress.is_global` 对 `224.0.0.1` / IPv6 multicast 可为 true。
    原网络预检查会尝试建立 socket。现显式拒绝 `is_multicast`，测试要求在创建
@@ -83,7 +83,7 @@ needs_review，禁止自动重放。当前 github-v1 自动恢复是因为它硬
    registry 的关联完整性问题，不是公开仓库可直接修改 registry 的远程攻击。
 
 另修正文档：去掉“60 秒最多再加 10 秒”的过强承诺，明确真实 worker deadline
-保证。独立 reviewer 已只读确认上述修复和文档正确，未报告本轮范围内的遗留
+保证。独立审查者 已只读确认上述修复和文档正确，未报告本轮范围内的遗留
 可复现阻塞。
 
 ## 测试数字应如何读取
@@ -118,8 +118,8 @@ needs_review，禁止自动重放。当前 github-v1 自动恢复是因为它硬
 
 ## 学习 demo 是否受影响
 
-原 checkout 的 `git status --short` 在主任务和独立 reviewer 检查时均为空。
-原 `locagent-stage2-pg` 仍在 `127.0.0.1:55432`。本轮数据库测试明确连接另一个
+原 checkout 的 `git status --short` 在实现复核和独立审查 检查时均为空。
+当时原 `locagent-stage2-pg` 运行在 `127.0.0.1:55432`。本轮数据库测试明确连接另一个
 容器 `locagent-public-preview-pg` 的 `55439`，使用独立 schema；缓存位于新 worktree
 及唯一临时目录。没有读取 `.env`、完整 runtime.json、密钥或历史付费账本；
 没有停止、迁移、重配或清空学习 demo。复测仅临时重新启动本任务自己的数据库，
@@ -128,4 +128,4 @@ needs_review，禁止自动重放。当前 github-v1 自动恢复是因为它硬
 核心文件：`locagent_service/public_repo.py`、`public_pipeline.py`、`models.py`、
 `api.py`、`store.py`、`worker.py`、`prepare.py`、`migrations/003_public_pipeline.sql`。
 完整英文运行说明和首轮历史证据分别保留于 `PUBLIC_REPOSITORY_PREVIEW.md`、
-`PUBLIC_REPOSITORY_ACCEPTANCE.md`。本文件可直接复制到父对话，不依赖 C: 链接。
+`PUBLIC_REPOSITORY_ACCEPTANCE.md`。

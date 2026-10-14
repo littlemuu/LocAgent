@@ -1,5 +1,7 @@
 # Public GitHub repository preview
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 This is a local, opt-in backend preview that defaults to a **fake provider**. It proves acquisition,
 index preparation, persistence, supervision and queryability. It does **not**
 measure localization quality. Optional live execution requires a separate exact operator grant;
@@ -49,12 +51,12 @@ Linux/WSL only for this preview. Reuse the installed LocAgent Python environment
 do not run anything from the downloaded repository. Use a separate PostgreSQL
 instance or database and a schema starting with `public_preview_`.
 
-The development worktree is `/home/lenovo/projects/LocAgent-public-pipeline`.
-The original learning checkout is untouched. Example for the separate local
-test database already created during development (do not point at the demo):
+Run from an isolated project checkout. The following example requires an existing
+separate local test database (do not point it at the demo). Set PYTHON to an existing
+compatible interpreter if this checkout has no .venv:
 
 ```sh
-cd /home/lenovo/projects/LocAgent-public-pipeline
+cd "$(git rev-parse --show-toplevel)"
 export LOCAGENT_DATABASE_URL=postgresql://postgres@127.0.0.1:55439/public_preview
 export LOCAGENT_SCHEMA=public_preview_local
 export LOCAGENT_PUBLIC_PREVIEW=1
@@ -62,7 +64,7 @@ export LOCAGENT_PUBLIC_ROOT="$PWD/outputs/public-preview/sources"
 export LOCAGENT_SOURCE_ROOT="$LOCAGENT_PUBLIC_ROOT"
 export LOCAGENT_ALLOW_PAID=0
 export LOCAGENT_PUBLIC_LIVE=0
-PYTHON=/home/lenovo/projects/LocAgent/.venv/bin/python
+PYTHON="${PYTHON:-$PWD/.venv/bin/python}"
 "$PYTHON" -B -m locagent_service.db
 "$PYTHON" -B -m locagent_service.api --host 127.0.0.1 --port 18089
 # Another shell with the same environment:
@@ -166,7 +168,7 @@ Not implemented / limitations:
   may be rejected. No credentials are requested or read as a fallback.
 - Crash recovery is checkpoint/rebuild, not byte-level resumable downloads. A
   moving ref resolved by a different new task can legitimately produce a new SHA.
-- No real model evaluation or paid smoke has been run. Parent approval must first
+- No real model evaluation or paid smoke has been run. Explicit operator approval must first
   identify the single question, data recipient, model and budget.
 
 ## Verification commands

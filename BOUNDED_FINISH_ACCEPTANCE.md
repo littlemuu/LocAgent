@@ -1,5 +1,7 @@
 # Bounded finish 预算耗尽修复：离线验收
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 2026-10-10，work/locagent-baseline，HEAD 0d5af3eeff0afb73a488c523d407b56e8fde7bda。
 
 ## 实现与约束
@@ -99,7 +101,7 @@ xarray指导开旧结果仍按原规则失败计零。
 WSL仓库根目录运行相关测试：
 
 ~~~bash
-env -i HOME=/home/lenovo PATH=/usr/local/bin:/usr/bin:/bin LANG=C.UTF-8 \
+env -i HOME="$HOME" PATH=/usr/local/bin:/usr/bin:/bin LANG=C.UTF-8 \
   LOCAGENT_ALLOW_PAID=0 PYTHON_DOTENV_DISABLED=1 PYTHONDONTWRITEBYTECODE=1 \
   LITELLM_LOCAL_MODEL_COST_MAP=True HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 \
   PYTHONPATH="$PWD/outputs/bounded-finish-repair-20261010/offline-guard" \

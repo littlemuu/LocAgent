@@ -1,8 +1,10 @@
 # 2026-10-14 恢复验收
 
-从昨夜检查点继续。恢复时完整 tracked+untracked diff 与检查点逐字相同，SHA-256 为
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
+验证开始时完整 diff 与 2026-10-13 检查点逐字相同，SHA-256 为
 `a5f5f59c77222ee58b5d28df2ddf686e1e1b410213615cb52003345b0105751a`。
-未发现后续用户改动；本轮没有修改实现代码，没有重复开发已完成功能。
+本轮未修改实现代码。
 
 ## 当前完整测试结果
 
@@ -39,24 +41,24 @@ remaining=0 时应等 reset 后再请求。本轮等待至 03:22:02 UTC 才允�
 静态来源固定为公开仓库 `https://github.com/pallets/itsdangerous`，请求 ref `2.2.0`。
 历史成功静态验收的 commit 为 `096c8d42545d3b68ea21a4f890fb2b2d8979c0bd`；本轮若成功，以以上任务实际固定 SHA 为准。
 本轮静态任务使用独立 schema `public_preview_resume_20261014`，source/cache 根
-`/home/lenovo/projects/LocAgent-public-pipeline/outputs/public-preview/resume-sources`。
+`outputs/public-preview/resume-sources`。
 
 ## 能力边界与未运行项
 
 - fake-only 默认路径运行真实图/BM25和工具循环，但最终固定空文件/实体列表，不代表任意问题的语义定位质量。
 - 新真实 provider 入口默认关闭；本轮只用 stub 测试授权、预算、原始响应、并发、恢复、取消与未知结果不重放。
-- **未运行真实模型请求、供应商连通性 smoke、真实计费核对或模型定位质量验证。** 这些仍需父对话确认单题、接收方、模型和预算。
+- **未运行真实模型请求、供应商连通性 smoke、真实计费核对或模型定位质量验证。** 这些仍需操作员确认单题、接收方、模型和预算。
 - Python 子进程/RLIMIT/offline guard 不是完整沙箱；尚无OS/UID/namespace网络文件隔离、cgroup总资源限制、总缓存配额/淘汰、鉴权、入口admission或多机锁。
   native parser 漏洞和同UID文件访问风险仍存在，不适合安全公开部署。
 - 本轮未读取密钥、.env、完整runtime配置或旧paid账本，未真实授权、commit、push、PR或部署。
 
 ## 可复现命令
 
-只在独立 worktree 内运行；`$PYTHON` 指向既有 `/home/lenovo/projects/LocAgent/.venv/bin/python`，不修改它。
+从用于测试的独立项目 checkout 根目录运行；`PYTHON` 可预设为已有兼容解释器的绝对路径。
 
 ```sh
-cd /home/lenovo/projects/LocAgent-public-pipeline
-PYTHON=/home/lenovo/projects/LocAgent/.venv/bin/python
+cd "$(git rev-parse --show-toplevel)"
+PYTHON="${PYTHON:-$PWD/.venv/bin/python}"
 env -u ALL_PROXY -u all_proxy -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy \
   LITELLM_LOCAL_MODEL_COST_MAP=True LOCAGENT_PUBLIC_LIVE=0 LOCAGENT_ALLOW_PAID=0 \
   "$PYTHON" -B -m unittest discover -s tests -p 'test_*.py'
@@ -80,15 +82,8 @@ env -u ALL_PROXY -u all_proxy -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u http
   "$PYTHON" -B tests/run_public_static_smoke.py
 ```
 
-原学习 checkout 恢复时干净，原 demo 容器恢复时已经停止，未启动/重配它。
-仅本任务55439测试容器为验收启动；最终停止状态以收尾报告为准，数据保留。
-进展、限流等待与最终结果均应连同本文件保留，避免把环境失败记为代码缺陷或把历史通过当作本轮通过。
+## 验收隔离记录
 
-
-## 最终隔离检查
-
-收尾再次比较：实现和测试文件与昨夜检查点一致；本轮仅补充文档/证据。
-学习 checkout 仍干净。本任务55439容器已停止并保留数据，原学习demo仍保持恢复时的停止状态。
-没有留下本轮等待、unittest、acceptance 或 static-smoke 进程。
-期间发生一次工具输出连接中断；先核对旧等待进程及未请求状态，再恢复为持久日志输出，未因此重复请求GitHub。
-最终完整 tracked+untracked diff 已保存在 `outputs/public-preview/evidence/resume-final.diff`。
+验收仅启动独立 55439 测试容器，完成后停止并保留数据；原 demo 未启动或重配。
+实现与测试文件和 2026-10-13 检查点一致；完整历史 diff 位于 `outputs/public-preview/evidence/resume-final.diff`。
+限流诊断、失败和重试证据均保留，未因日志连接中断而重复请求 GitHub。

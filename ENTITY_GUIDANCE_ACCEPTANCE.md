@@ -1,10 +1,11 @@
 # Entity submission guidance acceptance — 2026-10-09
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 ## Result and boundary
 
-Implemented in `/home/lenovo/projects/LocAgent` on `work/locagent-baseline`,
-HEAD `54fcb660d4a886e7f0675ed419b3a4ed21aa3fb6`. The previous 20 uncommitted
-files were backed up before this repair. No applicable repository/ancestor
+Implemented in the repository root on `work/locagent-baseline`,
+HEAD `54fcb660d4a886e7f0675ed419b3a4ed21aa3fb6`. The prior 20-file change set was preserved before this repair. No applicable repository/ancestor
 AGENTS.md or .agents skill was found.
 
 This task made **zero paid calls** and rebuilt **no existing repository/index**.
@@ -138,9 +139,7 @@ The candidate intentionally excludes .env, raw HTTP responses, budgets,
 authorization markers, outputs, prepared indexes, credentials and database data.
 Only compact public invalid-argument/node-type regression fixtures are included.
 
-Suggested eventual commit subject:
-`Add bounded localization protocol and exact graph submission guidance`.
-Nothing has been staged or committed. Independent review should check strict
+Independent review covers strict
 mixed-payload rejection, displayed ID/type truth, constructor-source visibility,
 legacy compatibility, bounded-context accounting, protected evidence and the
 broader already-uncommitted follow-up/budget code. Do not infer review approval

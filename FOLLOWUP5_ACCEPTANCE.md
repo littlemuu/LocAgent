@@ -1,5 +1,7 @@
 ## 最新真实评估状态
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 审批和独立review已通过，指定plan已执行一次：13次真实调用，保守结算¥0.161684，未知调用0，无重试。四组iteration_limit，2317 off因输入门槛失败后停止，五组未执行；两组固定分母5，有效定位得分均为0。
 
 完整结果见 [LIVE_REPORT.md](outputs/stage4/followup5-live-20261008/LIVE_REPORT.md)。下方为原离线准备与审查请求的历史记录，其中待审查/待执行状态已被本节更新。真实授权已使用，不得自动续跑或重放。
@@ -93,7 +95,7 @@ outputs/stage4/authorizations/followup5-cny5.json。
 ## 复现
 
 ~~~sh
-cd /home/lenovo/projects/LocAgent
+cd "$(git rev-parse --show-toplevel)"
 sh scripts/check_local.sh
 
 # 新目录；不加载 .env，不需要费用

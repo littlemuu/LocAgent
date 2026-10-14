@@ -1,5 +1,7 @@
 # 第三阶段：可靠任务生命周期
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 基线：`work/locagent-baseline`，HEAD `1d1e0bf3a9c0a48d1fd280e5707c7ff56000cab8`。
 2026-10-08 现场确认原有 18 个未提交文件；修改前备份及 SHA-256 清单位于
 `outputs/stage3/baseline/`。原基线 61 项纯测试（14.002 秒）与 13 项
@@ -52,7 +54,7 @@ SIGKILL 时可能遗留 /tmp 文件，不代表任务成功，也不触发付费
 ## 验收与复现
 
 ```sh
-cd /home/lenovo/projects/LocAgent
+cd "$(git rev-parse --show-toplevel)"
 # 本机已有 stage2 容器/配置时重启它；不生成新凭据。
 docker start locagent-stage2-pg
 .venv/bin/python -B tests/run_stage2_acceptance.py --pattern stage3_postgres_acceptance.py

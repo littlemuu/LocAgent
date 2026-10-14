@@ -1,5 +1,7 @@
 # Bounded five-sample live acceptance — 2026-10-09
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 ## Actual outcome
 
 The single authorized round completed **30 real requests**, all with verified raw
@@ -117,8 +119,8 @@ all ten groups consumed their three-call quotas and the 30-call quota is exhaust
 The remaining monetary headroom does not authorize additional calls or another
 round. The marker/ledger remain retained and must not be reset or replayed.
 
-The exact plan was pinned only after the parent reported independent preflight
-PASS and supplied verified original user authorization evidence. The one permitted
+The exact plan was pinned only after independent preflight
+PASS and verification of the original user authorization evidence. The one permitted
 execution approval retry was accepted; one local evaluator launch occurred.
 Authorization transcripts were supplied solely in approval metadata, never shell
 code or model input.
@@ -148,7 +150,7 @@ preflight package and activation log are retained in
 To audit saved results locally without provider calls:
 
 ```sh
-cd /home/lenovo/projects/LocAgent
+cd "$(git rev-parse --show-toplevel)"
 .venv/bin/python -B outputs/stage4/bounded5-20261009/audit_live.py
 ```
 

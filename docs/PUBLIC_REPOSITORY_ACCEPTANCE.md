@@ -1,11 +1,13 @@
 # Public repository pipeline acceptance — 2026-10-13
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 ## Scope and isolation
 
 - Base: `5869343`, original `work/locagent-baseline` checkout at
-  `/home/lenovo/projects/LocAgent`, observed clean before and after development.
+  the repository root, observed clean before and after development.
 - Development branch: `work/public-repo-pipeline`; independent worktree:
-  `/home/lenovo/projects/LocAgent-public-pipeline`.
+  the isolated project checkout.
 - No AGENTS.md found in the project/ancestor paths inspected; no project
   `.agents` or `.codex` skills directory was present. Current files, not historical
   memory or runtime configuration, were the implementation source of truth.
@@ -37,8 +39,8 @@
 
 ## Results
 
-Commands use `/home/lenovo/projects/LocAgent/.venv/bin/python -B` from the new
-worktree. Legacy engine tests removed proxy variables only in the command's
+Commands use the existing compatible Python environment with `-B` from the test
+checkout; set `PYTHON` when its environment is outside that checkout. Legacy engine tests removed proxy variables only in the command's
 environment; global proxy settings were not changed.
 
 | Check | Result |
@@ -104,7 +106,7 @@ demo container remains running on 55432.
 
 The delivered endpoint is explicitly fake-only. It tests orchestration, not
 localization quality. Real model enablement remains a separate step requiring
-the parent conversation's specific single-question, recipient, model and budget
+the operator's explicit single-question, recipient, model and budget
 confirmation plus a recovery/ledger design for new public-repository jobs.
 
 There is no complete OS sandbox, cgroup aggregate limit, total-cache quota,
@@ -169,9 +171,9 @@ Review evidence: `outputs/public-preview/evidence/review-*.log`,
 `PUBLIC_REPOSITORY_REVIEW.md` for the user-facing Chinese design and review.
 
 
-## 2026-10-13 授权层完成与休息前检查点
+## 2026-10-13 授权层验收检查点
 
-用户要求立即收尾、不再启动长测试。本阶段实现已保存到独立 worktree，无 commit。
+此节记录 2026-10-13 授权层验收检查点；后续完整验收见 `PUBLIC_REPOSITORY_RESUME.md`。
 新增默认关闭的精确操作员授权、独立账本、发包前满额预留、原始响应后结算、未知结果不重放。
 详见 `PUBLIC_REPOSITORY_AUTHORIZATION.md`。独立审查发现的内部 Decimal 格式和 partial body 留存问题已修复并复核。
 
@@ -184,7 +186,7 @@ Review evidence: `outputs/public-preview/evidence/review-*.log`,
 | 原公开仓库 fake 流水线 | 4 项通过，26.074s | authorization-fake-regression.log |
 | 原 DB 生命周期 | 32 项通过，90.556s | authorization-lifecycle-regression.log |
 | 原 prepared 兼容 | 3 项通过，10.049s | authorization-prepared-regression.log |
-| 全量 test_*.py | 按休息指令中止，未完成，不能记为通过 | authorization-full-suite.log |
+| 全量 test_*.py | 中止，未完成，不能记为通过 | authorization-full-suite.log |
 | 最终版真实 GitHub 下载＋fake smoke | 失败：解析阶段 github_http_403，未继续下载 | authorization-static.log |
 | git diff --check | 通过 | 收尾命令退出 0 |
 | 真实模型/付费 smoke | 未运行；无凭据读取、无真实授权 | 不适用 |
@@ -196,7 +198,7 @@ HTTP 403 的原因未确认，不将其直接归因于匿名额度或代理。�
 所用命令（共同前缀移除代理仅作用于该命令；Python 是原有安装，不改学习目录）：
 
 ```sh
-PYTHON=/home/lenovo/projects/LocAgent/.venv/bin/python
+PYTHON="${PYTHON:-$PWD/.venv/bin/python}"
 # 所有 unittest 命令均以以下 env 前缀运行：
 env -u ALL_PROXY -u all_proxy -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy \
   LITELLM_LOCAL_MODEL_COST_MAP=True "$PYTHON" -B -m unittest discover -s tests -p test_public_authorization.py
@@ -211,18 +213,9 @@ env -u ALL_PROXY -u all_proxy -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u http
 `outputs/public-preview/auth-static-sources`，显式 `LOCAGENT_PUBLIC_LIVE=0`、`LOCAGENT_ALLOW_PAID=0`。
 测试自己的临时授权都指向 provider.example 和 synthetic 价格，transport 由 stub 注入；没有建立真实供应商授权。
 
-停止状态：本任务 `locagent-public-preview-pg` 已停止，数据保留；原 `locagent-stage2-pg`
-仍运行在 127.0.0.1:55432。学习 checkout `git status --short` 为空。
-已中止本任务剩余全量测试；进程检查未发现对应 unittest/acceptance/static-smoke 进程。
-没有 commit、push、PR、部署，没有改全局代理，没有访问旧 paid ledger。
+## 后续验证与隔离要求
 
-恢复步骤：
-
-1. 进入 `/home/lenovo/projects/LocAgent-public-pipeline`（分支 `work/public-repo-pipeline`），先读本记录及授权设计。
-2. 在用户愿意继续时重新跑 `unittest discover -s tests -p 'test_*.py'`；预计约 5–10 分钟，依主机负载，当前尚未完成。
-3. 如需重跑数据库项，仅 `docker start locagent-public-preview-pg`，使用 55439 和 public_preview_ 独立 schema。
-4. 查明/等待 GitHub HTTP 403 可用后，用新 schema 和新缓存根重跑真实静态 fake smoke；所需时间取决于外部访问，无法保证。
-5. 更新验收记录后再决定是否需要真实模型 smoke。真实 smoke 仍须父对话确认单题、接收方、模型和预算，不自动继续。
-
-建议后续人工拆分提交：①安全 acquisition；②后台任务/缓存/兼容；③默认关闭授权与预算；④测试和文档。
-当前只保存 diff，未执行任何提交。完整 tracked+untracked patch 位于 evidence/authorization-checkpoint.diff。
+该检查点的全量回归中止及静态下载 403 均保留为未通过证据；后续结果见 [2026-10-14 验收](PUBLIC_REPOSITORY_RESUME.md)。
+复测数据库仅使用独立测试容器、55439 端口和 public_preview_ schema；静态 smoke 使用新 schema 和新缓存根。
+真实模型 smoke 仍须操作员确认单题、接收方、模型和预算，不自动继续或重放旧付费账本。
+历史实现快照保存在 `outputs/public-preview/evidence/authorization-checkpoint.diff`。

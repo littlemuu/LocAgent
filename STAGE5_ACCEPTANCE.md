@@ -1,5 +1,7 @@
 # 第五阶段：统一启动与最终验收
 
+> Command examples run from the repository root. Shell examples require a configured environment; Examples using `$PYTHON` accept an existing compatible interpreter; direct `.venv/bin/python` commands require the project environment. Historical `outputs/` evidence and helper scripts are local artifacts, not included in a fresh clone.
+
 2026-10-08 在 WSL 的实际仓库开发和验收。未 commit、push、创建凭据或公开部署。
 
 ## 结果与证据
@@ -41,7 +43,7 @@
 ## 统一启动
 
 ```sh
-cd /home/lenovo/projects/LocAgent
+cd "$(git rev-parse --show-toplevel)"
 docker compose up --build -d --wait
 curl --noproxy '*' http://127.0.0.1:18080/health
 curl --noproxy '*' -X POST http://127.0.0.1:18080/tasks \
