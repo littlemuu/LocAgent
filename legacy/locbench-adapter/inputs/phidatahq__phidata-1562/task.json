@@ -1,0 +1,6 @@
+{
+  "instance_id": "phidatahq__phidata-1562",
+  "repo": "phidatahq/phidata",
+  "base_commit": "bd734bc8528aec12d1387064ab9cac571508fc7f",
+  "problem_statement": "ToolKit functions with no arguments cause an error when using Gemini models. \nphidata version: 2.7.2\r\n\r\n**To reproduce**: Use a Gemini model and provide a toolkit with a registered method that takes no arguments.\r\n**Expected behaviour**: Model can successfully use the tool.\r\n**Actual behaviour**: The gemini library returns this error:\r\n\r\n```\r\n400 * GenerateContentRequest.tools[0].function_declarations[11].parameters.properties: should be non-empty for OBJECT type\r\ngrpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:\r\n\tstatus = StatusCode.INVALID_ARGUMENT\r\n\tdetails = \"* GenerateContentRequest.tools[0].function_declarations[11].parameters.properties: should be non-empty for OBJECT type\r\n```\r\n**A minimal code to reproduce is attached** [reproduce.zip](https://github.com/user-attachments/files/18121422/reproduce.zip).\r\n\r\nWorkaround: Adding a dummy parameter to the method seems to fix the issue.\r\n\r\nCan this be fixed with ToolKit.register(), or where are the model.function_declarations being setup? In the former case, adding a dummy parameter would be easy, but feels messy.\r\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-5856",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "a83725fbedb15d6465bee076b8c8d740e677f8d1",
+  "problem_statement": "Prowler CSV Output no longer outputs Failed Critical Findings\n### Steps to Reproduce\r\n\r\nRunning prowler 4.5.3\r\nExecute prowler aws against an AWS account. \r\nCSV Outputs PASS critical findings but does output FAIL findings.\r\n\r\nProwler Dashboard does not display any cirtical findings\r\n\r\nIt was working with 4.3.5 but after I upgraded to 4.5.3 this now fails.\r\n\r\njson-ocsf files are fine. These do contain Critical Fail\r\n\r\n\r\n### Expected behavior\r\n\r\nFailed critical findings to be contained in CSV file to use with prowler dashboard\r\n\r\n### Actual Result with Screenshots or Logs\r\n\r\nprowler aws --output-bucket-no-assume prowler-output-bucket-XXXXXXXXXXXX --output-directory output --slack --role arn:aws:iam::XXXXXXXXXXXX:role/XXXXXXXXXXX --role-session-name XXXXX_XXXXXX\r\n\r\n### How did you install Prowler?\r\n\r\nFrom pip package (pip install prowler)\r\n\r\n### Environment Resource\r\n\r\n2. Fargate Task running python:alpine with python 3.12\r\n\r\n### OS used\r\n\r\n3. Alpine Linux\r\n\r\n### Prowler version\r\n\r\n4.5.3\r\n\r\n### Pip version\r\n\r\n3.12\r\n\r\n### Context\r\n\r\n_No response_\n"
+}

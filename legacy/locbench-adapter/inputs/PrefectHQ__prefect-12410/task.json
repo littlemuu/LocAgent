@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-12410",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "b2f209a88888f56406c2806f45dc901b12fe3fa3",
+  "problem_statement": "CLI: Update `prefect deploy` options to support a `--jv/job-variable` option \n### First check\n\n- [X] I am a contributor to the Prefect codebase\n\n### Description\n\nIn https://github.com/PrefectHQ/prefect/pull/12195/ we introduced a new option to `prefect deployment run` called `--jv/--job-variable` for providing job variables. This is out of sync with the `prefect`deploy` command's `--v/--variable` flag but the new flags are clearer to use. \r\n\r\n\n\n### Impact\n\nIf we migrate the command options on `prefect deploy` to use `--jv/--job-variable` we will remain consistent and improve the CLI interface's clarity. \n\n### Additional context\n\nN/A\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-6912",
+  "repo": "modin-project/modin",
+  "base_commit": "01c529cf06cfaf412b5725f41c81a5f914b44b95",
+  "problem_statement": "Remove unidist specific workaround in `.from_pandas()`\nSince unidist 0.6.0 (modin-project/unidist#409) it now always copy the input data, so the workaround can be removed\r\nhttps://github.com/modin-project/modin/blob/01c529cf06cfaf412b5725f41c81a5f914b44b95/modin/core/dataframe/pandas/partitioning/partition_manager.py#L872-L880\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "fortra__impacket-1636",
+  "repo": "fortra/impacket",
+  "base_commit": "33058eb2fde6976ea62e04bc7d6b629d64d44712",
+  "problem_statement": "SOCKS server listens on all interfaces by default\n### Configuration  \r\nimpacket version:  v0.10.1.dev1+20230207.182628.6cd68a05\r\nPython version:  3.9.2\r\nTarget OS:  NA\r\n \r\nBy default, the SOCKS server used by ntlmrelayx.py listens on all interfaces (0.0.0.0)1080, which is dangerous.\r\n\r\nPlease see:\r\nhttps://github.com/fortra/impacket/blob/6328a9b74a1df675fb47d8cc3a626bddc1f49b1d/impacket/examples/ntlmrelayx/servers/socksserver.py#L456\r\n\r\nAny malicious agent on the same network could take advantage of the listening SOCKS proxy.\r\nThis service should only be exposed on localhost by default, and a supplemental flag should be provided in order to make it listen \"publicly\".\n"
+}

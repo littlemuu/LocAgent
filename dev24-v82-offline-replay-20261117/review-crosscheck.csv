@@ -1,0 +1,56 @@
+id,instance_id,classification,v81_violation,v82_retained,v82_disclosed,audit_reason
+01-01,sympy__sympy-21379,误判,R4_citation_not_delivered:polytools.py:4399,False,False,该引用出现在最小验证的待观察 traceback 落点，不是已读事实断言；其完整路径 sympy/polys/polytools.py:4399 本来也已读。全文扫描和不识别用途导致回退。
+01-02,sympy__sympy-21379,边界,R1_body_incomplete_unmarked:sympy/polys/polytools.py:_parallel_dict_from_expr,False,False,原回答另写“未读 _parallel_dict_from_expr 函数头”，但未带路径；所写 polytools.py 限定名又可能指导入别名/错误模块。不能凭此确定该完整 ID 的正文边界，也不把纠正定位身份当成纯校验误判修复。
+02-01,astropy__astropy-14182,误判,R4_citation_not_delivered:astropy/io/ascii/fixedwidth.py:1-239,False,False,位于未核验点，明确说“未读 …:1-239”，没有冒充读过该范围；R4 不区分未读声明和证据引用。
+03-01,matplotlib__matplotlib-23314,边界,R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw,True,True,回答事实段写 _AxesBase.draw，候选/推断却写 AxesBase.draw；校验器按不存在或不匹配的完整 ID 检查。实际读取 3000-3060 也不能证明对应 draw 的全部边界。模型命名错误和未读标注问题交织。
+03-02,matplotlib__matplotlib-23314,边界,R1_body_incomplete_unmarked:lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw,False,False,检索元数据给 def 范围 389-444，C 已完整读取；校验器却报正文不完整。policy 把装饰器也纳入范围，检索器从 def 开始，但本地日志未保存原 AST span/388 行，无法确证具体缺口是否仅装饰器或重复定义。
+04-01,pytest-dev__pytest-7432,误判,R4_citation_not_delivered:testing/test_skipping.py:233,False,False,未核验点明确说“未读 testing/test_skipping.py:233…”；不应按伪造已读引用处理。
+05-01,scikit-learn__scikit-learn-13779,误判,R1_body_incomplete_unmarked:sklearn/ensemble/voting.py:_BaseVoting.fit,False,False,同一文件上下文明确写“_BaseVoting.fit 第94行之后…未读完，分页…未续读”；只是未在此行重复完整路径，R1 漏认。
+06-01,django__django-13033,误判,R1_cursor_unfinished_unmarked,False,False,已写“未读完：cursor=…未续读（实际完整行仅700-767）”；只因未含字面词“分页”而触发。cursor 使用错误确实存在，但已披露未续读。
+07-01,pylint-dev__pylint-7080,误判,R4_citation_not_delivered:pylint/lint/pylinter.py:1014,False,False,事实明确标为“搜索命中，未读正文”，所引1014行赋值原文确已由 search_text 返回；这里没有声称读完整函数。
+07-02,pylint-dev__pylint-7080,真违规,R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs,True,True,候选 _iterate_file_descrs 只收到760-770的签名尾部/docstring/实现；函数定义头不在已读区间。未核验点没有逐项说明该函数缺头，泛指两个分页且第二处范围描述有误，不能确定覆盖此缺口。
+07-03,pylint-dev__pylint-7080,误判,R1_cursor_unfinished_unmarked,False,False,明确写“两处分页未续读”并列出两个实际 pending cursor；仅缺“未读完”字样。范围描述不精确不等于未声明分页未读。
+08-01,sphinx-doc__sphinx-11445,误判,R4_citation_not_delivered:sphinx/parsers.py:85,False,False,"搜索确实返回 parsers.py:85 的 prepend_prolog(content,self.config.rst_prolog)；原文明确限定“搜索命中”。"
+08-02,sphinx-doc__sphinx-11445,误判,R4_citation_not_delivered:sphinx/config.py:128,False,False,"搜索确实返回 config.py:128 的 rst_prolog=(None,env,[str])；陈述只复述此行且标明搜索命中。"
+08-03,sphinx-doc__sphinx-11445,边界,R4_citation_not_delivered:sphinx/transforms/i18n.py:60-79,True,True,实际仅收到60、61、62、79等搜索行；临时清空/恢复的描述有支持，且标为搜索命中，但写成60-79连续范围违反字面上的不连缺口约束。
+08-04,sphinx-doc__sphinx-11445,误判,R4_citation_not_delivered:sphinx/util/rst.py:1-69,False,False,未核验点明确说1-69与100-110未读；R4 把未读范围当作事实证据引用。
+08-05,sphinx-doc__sphinx-11445,误判,R1_body_incomplete_unmarked:sphinx/util/rst.py:append_epilog,False,False,后文已说明同一文件100-110未读、append_epilog正文未核验；只有函数签名100行交付。R1要求完整ID与“未读完”同一行，漏认明确的上下文未读声明。
+09-01,pydata__xarray-4094,边界,R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055,True,True,只有3033/3040/3044/3048/3055等搜索行，存在相关测试的说法有依据并明确未读正文；但3033-3055不是连续读取。是否接受“搜索命中范围”需政策明确。
+09-02,pydata__xarray-4094,边界,R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135,True,True,只收到2132和2135搜索行；测试名称支持 ValueError 用例存在，原文承认未读正文，但引用2132-2135连续范围不满足字面覆盖规则。
+09-03,pydata__xarray-4094,边界,R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array,True,True,C读3370-3470，末尾仅到嵌套 ensure_stackable 定义，未提供外层函数未读标注；audit称不完整。但日志没有该实体完整AST范围或后续原源码，不能独立排除装饰器/边界口径原因；不据缺失元数据断言真违规。
+10-01,psf__requests-2317,误判,R4_citation_not_delivered:requests/compat.py:96,False,False,96行 builtin_str=str 确已在搜索结果中交付，原文明确“搜索命中（未读正文）”；没有声称已确认分支条件。
+10-02,psf__requests-2317,误判,R4_citation_not_delivered:requests/models.py:443,False,False,443/469/474行 builtin_str 处理Content-Length均由搜索交付，原文限制为搜索命中。
+10-03,psf__requests-2317,误判,R4_citation_not_delivered:requests/utils.py:663,False,False,"663行 isinstance(string,builtin_str) 判断由搜索交付，陈述只复述这段代码。"
+10-04,psf__requests-2317,误判,R1_body_incomplete_unmarked:requests/compat.py:builtin_str,False,False,builtin_str 是条件分支里的 str 别名赋值，不是此文件的 AST 函数/类定义；完整函数体检查永远无法命中。原回答还明确写该定义未读完、未确认分支。应单独检查预测实体类型，不能报告“函数未读且未标”。
+10-05,psf__requests-2317,真违规,R1_body_incomplete_unmarked:requests/sessions.py:Session.prepare_request,True,True,C仅从340行开始读 prepare_request 的中间部分，未收到定义头；候选中列出该方法，推断还讨论其行为，却没有该函数未读完的说明。
+12-01,sympy__sympy-18698,误判,R4_citation_not_delivered:sympy/polys/polyclasses.py:784,False,False,784行 DMP.sqf_list 定义签名确在搜索结果；事实只报告“搜索命中，未读正文”，后文也标函数体未读完。
+12-02,sympy__sympy-18698,误判,R4_citation_not_delivered:sympy/polys/rings.py:2457,False,False,2457行 PolyElement.sqf_list 签名确在搜索结果；没有声称正文完整。
+12-03,sympy__sympy-18698,边界,R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list,False,False,C完整读完检索元数据所给6204-6218（15行），但 audit 仍判不完整。可能是检索器不含装饰器而校验器包含；AST实际span未持久化，不能确定只缺哪一行。
+13-01,astropy__astropy-12907,真违规,R1_body_incomplete_unmarked:astropy/modeling/separable.py:_arith_oper,True,True,同base历史日志可确定 _arith_oper 为130-168；C只到160，缺161-168；候选列出该函数且事实讨论实现，没有声明该函数未读完。
+13-02,astropy__astropy-12907,误判,R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable,False,False,未核验点明确“_separable 函数体未读完（…定义位置与实现未收到）”；同一文件语境无歧义，仅缺完整路径。
+14-01,sphinx-doc__sphinx-8595,误判,R4_citation_not_delivered:sphinx/ext/autodoc/__init__.py:1077,False,False,1077行 if not self.__all__ 已由搜索交付，原文明确搜索命中。函数归属被误认是另一个诊断问题，不支持 R4 的“此行未交付”标签。
+14-02,sphinx-doc__sphinx-8595,边界,R4_citation_not_delivered:sphinx/util/inspect.py:145-158,True,True,搜索只给145、147-149、151-152、155-156、158等行；概要部分有直接支持并标未读正文，但连续145-158引用有缺口。
+14-03,sphinx-doc__sphinx-8595,误判,R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members,False,False,事实段已明确 get_module_members 在1066处被截断、后续未读，未核验段也列出同一分页；校验器只认完整ID同一行的“未读完”。
+14-04,sphinx-doc__sphinx-8595,边界,R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:filter_members,False,False,写成模块级 filter_members，且将1077/1083附近逻辑归给它；同base B检索显示这些行属于 ModuleDocumenter.get_object_members。虽然原答已声明 filter_members 未读完，不能把纠正这个实体/诊断错误计作确定的纯误判修复。
+14-05,sphinx-doc__sphinx-8595,误判,R1_body_incomplete_unmarked:sphinx/util/inspect.py:getall,False,False,完整ID同一行明确“完整函数体未读”，仅因为不是字面“未读完”而触发。
+16-01,matplotlib__matplotlib-24970,误判,R3_unverified_strong_claim,False,False,正则命中“根因是”，但整句以“待验证假设：”限定；不是声称已确认根因。全局词法扫描忽略限定。
+16-02,matplotlib__matplotlib-24970,误判,R4_citation_not_delivered:colors.py:808,False,False,未核验点明确未读这些方法，并说808附近只见搜索；不能将这一未读声明判作未经交付的事实引用。
+16-03,matplotlib__matplotlib-24970,真违规,R1_body_incomplete_unmarked:lib/matplotlib/colors.py:Colormap.__init__,True,True,C从660行的docstring起点开始，未收到 __init__ 定义头；未核验点标的是不同方法 Colormap._init，不是 __init__，不能替代该函数标注。
+18-01,sphinx-doc__sphinx-8721,误判,R4_citation_not_delivered:sphinx/ext/viewcode.py:281,False,False,281行 add_config_value(...False...)由 C搜索实际交付，足以支持“默认False”这条窄事实；无需把完整 setup 函数读完才可复述该行。
+18-02,sphinx-doc__sphinx-8721,误判,R4_citation_not_delivered:sphinx/ext/viewcode.py:204-291,False,False,未核验点直接说204-291未读完，并给出未续读cursor；R4全文扫描误伤。
+18-03,sphinx-doc__sphinx-8721,误判,R1_body_incomplete_unmarked:sphinx/ext/viewcode.py:collect_pages,False,False,同一未核验条目以完整文件路径/范围说明未读完，并点名collect_pages尾部；仅未重复 path:collect_pages 的完整实体格式。
+19-01,matplotlib__matplotlib-25332,边界,R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_xlabels,True,True,对应方法 def1335-1394全部交付，但报错ID是Figure.align_xlabels；历史B元数据指附近方法属于FigureBase。缺完整类/继承源码以严格验证映射，不能断言精确ID已读完整，也不能断言正文未读。
+19-02,matplotlib__matplotlib-25332,边界,R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_ylabels,False,False,实际align_ylabels尾部因总预算未读，原文已点名尾部未读；同时Figure与FigureBase定义归属混淆。身份映射与标签问题交织，保守归边界。
+20-01,scikit-learn__scikit-learn-10297,边界,R4_citation_not_delivered:sklearn/linear_model/tests/test_ridge.py:577-587,True,True,只收到577、578、587搜索行；RidgeCV测试存在有支持，但连续范围与“只覆盖、未见另一类”概括更强；原文又明确仅搜索、后文承认未确认覆盖缺口，保守归边界。
+22-01,astropy__astropy-14365,误判,R3_unverified_strong_claim,False,False,“根因在”处于“待验证假设：”句内，并声明行为未验证；正则忽略假设限定。
+22-02,astropy__astropy-14365,误判,R4_citation_not_delivered:astropy/io/ascii/qdp.py:201-638,False,False,明确“未读完：…201-638”，并列出尚未读到的实现；这正是所要求的缺口披露。
+22-03,astropy__astropy-14365,误判,R1_body_incomplete_unmarked:astropy/io/ascii/qdp.py:_interpret_err_lines,False,False,未核验点同一句明确201-638未读完，“含 _interpret_err_lines 剩余部分”；标注清楚，但没有完整实体ID同一行。
+23-01,sympy__sympy-13480,边界,R4_citation_not_delivered:hyperbolic.py:590,False,False,完整hyperbolic.py:590源行确已在C read_file交付；原答用唯一可对应的basename。不过冻结提示明确要求完整相对路径，接受缩写属格式契约放宽，不计为确定误判。
+23-02,sympy__sympy-13480,边界,R4_citation_not_delivered:trigonometric.py:1307-1310,False,False,完整trigonometric.py:1307-1310均已读；仅basename导致lookup失败。和上一条一样，证据真实但违反完整路径字面要求，归边界。
+23-03,sympy__sympy-13480,边界,R1_body_incomplete_unmarked:sympy/functions/elementary/hyperbolic.py:coth.eval,False,False,检索给出的coth.eval def范围557-607全部交付，仍被判不完整；可能漏装饰器，日志无原AST完整span。不能把正文完整和带装饰器的实体完整混为一谈。
+23-04,sympy__sympy-13480,真违规,R1_body_incomplete_unmarked:sympy/functions/elementary/trigonometric.py:cot.eval,True,True,cot.eval只收到1295-1320中部，没有函数头；用其作为复制来源参与推断，却没有cot.eval未读完标注。关于coth类上下文未读的声明不是cot.eval标注。
+24-01,django__django-13925,真违规,R4_citation_not_delivered:django/apps/config.py:64-70,True,True,事实段把64-70写为已读依据；C仅搜索收到64、69、70，未收到65-68，没有在此说明仅搜索，且同时概括两个属性行为。
+24-02,django__django-13925,真违规,R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412,True,True,事实段引用389-412并断言测试覆盖两条路径，C只收到稀疏搜索命中（389/394/399/412等），没有完整测试体，未标“搜索命中”。
+24-03,django__django-13925,误判,R4_citation_not_delivered:base.py:364,False,False,该推断明确“搜索仅命中…manager.auto_created”“无法确认”pk来源；364行manager赋值确由C搜索交付，不是编造已读根因证据。
+24-04,django__django-13925,误判,R4_citation_not_delivered:options.py:439,False,False,同上，options.py:439的manager赋值确已搜索交付，且用于说明证据不足。
+24-05,django__django-13925,边界,R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden,True,True,C搜索已见69行定义和70行return，却没有完整函数/装饰器span；R1可能反映未读装饰器或仅拒绝搜索证据。当前日志不能独立证明完整实体覆盖，保守归边界。

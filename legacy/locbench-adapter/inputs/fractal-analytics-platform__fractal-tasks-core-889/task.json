@@ -1,0 +1,6 @@
+{
+  "instance_id": "fractal-analytics-platform__fractal-tasks-core-889",
+  "repo": "fractal-analytics-platform/fractal-tasks-core",
+  "base_commit": "5c5ccaff10eb5508bae321c61cb5d0741a36a91a",
+  "problem_statement": "Review/optimize use of `get_overlapping_pairs_3D` in Cellpose task\nBranching from #764 (fixed in principle with #778)\r\n\r\nAfter a fix, it'd be useful to have a rough benchmark of `get_overlapping_pairs_3D for` one of those many-labels cases (say 1000 labels for a given `i_ROI`). Since this function does nothing else than printing a warning, I would be very strict in how long a runtime we can accept.\r\n\r\nIf it turns out that it is slow, we can easily improve it in a trivial way (simply stop after the first overlap is found) or also in more systematic ways (the current approach is close to being the definition of a slow Python function: a quadratic-scaling for loop, which calls a pure-Python function and then even appends to a list).\r\n\r\nIf the function is not slow, then there's no special need for a refactor.\n"
+}

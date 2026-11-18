@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-7052",
+  "repo": "modin-project/modin",
+  "base_commit": "fe3a229df446172b98ed88e6993503d944695c81",
+  "problem_statement": "Update Exception message for `astype` function in the case of duplicated values\n\n"
+}

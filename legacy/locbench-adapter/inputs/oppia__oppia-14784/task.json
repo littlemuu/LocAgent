@@ -1,0 +1,6 @@
+{
+  "instance_id": "oppia__oppia-14784",
+  "repo": "oppia/oppia",
+  "base_commit": "16da6ea6778a7b54b601eb6b6a73abff28855766",
+  "problem_statement": "Slow load times for translation Opportunities\n<!--\r\n  - Thanks for taking the time to report a bug in the Oppia project.\r\n  - Before filing a new issue, please do a quick search to check that it hasn't\r\n  - already been filed on the [issue tracker](https://github.com/oppia/oppia/issues)._\r\n  -->\r\n\r\n**Describe the bug**\r\nopportunitiessummaryhandler/translation takes 6-7 seconds to execute on production\r\n\r\n**To Reproduce**\r\nSteps to reproduce the behavior:\r\n 1. Go to 'Oppia.org'\r\n 2. Click on 'Translate text'\r\n 3. Open network tab in inspector\r\n 4. Select a language/ or click on the pagination icons\r\n 4. See error\r\n\r\n**Observed behavior**\r\nSlow load times for translation opportunities\r\n\r\n**Expected behavior**\r\nShould have similar load times to question opportunities which are aprx 400 ms to 1 second vs 6- 7 seconds we are seeing here\r\n\r\n**Screenshots**\r\n![Screen Shot 2021-12-01 at 12 56 27 PM](https://user-images.githubusercontent.com/35385366/144312712-8388cf71-29a3-4000-83fa-0c93396f035d.png)\r\n\r\n\r\n\r\n\n"
+}

@@ -1,0 +1,146 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "runxfail"}
+META: {"next_offset": null}
+src/_pytest/skipping.py:33:         "--runxfail",
+src/_pytest/skipping.py:35:         dest="runxfail",
+src/_pytest/skipping.py:50:     if config.option.runxfail:
+src/_pytest/skipping.py:241:     if not item.config.option.runxfail:
+src/_pytest/skipping.py:253:     if not item.config.option.runxfail:
+src/_pytest/skipping.py:273:     elif item.config.option.runxfail:
+testing/test_skipping.py:233:         result = testdir.runpytest("--runxfail")
+testing/test_skipping.py:334:         result = testdir.runpytest(p, "--runxfail")
+testing/test_skipping.py:352:         result = testdir.runpytest(p, "--runxfail")
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "src/_pytest/skipping.py:pytest_runtest_makereport"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 src/_pytest/skipping.py:pytest_runtest_makereport [exact_id]
+path=src/_pytest/skipping.py; lines=261-305; implementation_start=262; read_file(path="src/_pytest/skipping.py", start_line=261, end_line=305)
+261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+262:     outcome = yield
+263:     rep = outcome.get_result()
+264:     xfailed = item._store.get(xfailed_key, None)
+265:     # unittest special case, see setting of unexpectedsuccess_key
+266:     if unexpectedsuccess_key in item._store and rep.when == "call":
+267:         reason = item._store[unexpectedsuccess_key]
+268:         if reason:
+269:             rep.longrepr = "Unexpected success: {}".format(reason)
+270:         else:
+271:             rep.longrepr = "Unexpected success"
+272:         rep.outcome = "failed"
+273:     elif item.config.option.runxfail:
+274:         pass  # don't interfere
+275:     elif call.excinfo and isinstance(call.excinfo.value, xfail.Exception):
+276:         assert call.excinfo.value.msg is not None
+277:         rep.wasxfail = "reason: " + call.excinfo.value.msg
+... lines 278-301 omitted ...
+302:         _, _, reason = rep.longrepr
+303:         filename, line = item.reportinfo()[:2]
+304:         assert line is not None
+305:         rep.longrepr = str(filename), line + 1, reason
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 310, "path": "src/_pytest/skipping.py", "start_line": 255}
+META: {"end_column": 26, "end_line": 310, "next_cursor": null, "start_column": 0, "start_line": 255, "total_lines": 314}
+255:             xfail("[NOTRUN] " + xfailed.reason)
+256: 
+257:     yield
+258: 
+259: 
+260: @hookimpl(hookwrapper=True)
+261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+262:     outcome = yield
+263:     rep = outcome.get_result()
+264:     xfailed = item._store.get(xfailed_key, None)
+265:     # unittest special case, see setting of unexpectedsuccess_key
+266:     if unexpectedsuccess_key in item._store and rep.when == "call":
+267:         reason = item._store[unexpectedsuccess_key]
+268:         if reason:
+269:             rep.longrepr = "Unexpected success: {}".format(reason)
+270:         else:
+271:             rep.longrepr = "Unexpected success"
+272:         rep.outcome = "failed"
+273:     elif item.config.option.runxfail:
+274:         pass  # don't interfere
+275:     elif call.excinfo and isinstance(call.excinfo.value, xfail.Exception):
+276:         assert call.excinfo.value.msg is not None
+277:         rep.wasxfail = "reason: " + call.excinfo.value.msg
+278:         rep.outcome = "skipped"
+279:     elif not rep.skipped and xfailed:
+280:         if call.excinfo:
+281:             raises = xfailed.raises
+282:             if raises is not None and not isinstance(call.excinfo.value, raises):
+283:                 rep.outcome = "failed"
+284:             else:
+285:                 rep.outcome = "skipped"
+286:                 rep.wasxfail = xfailed.reason
+287:         elif call.when == "call":
+288:             if xfailed.strict:
+289:                 rep.outcome = "failed"
+290:                 rep.longrepr = "[XPASS(strict)] " + xfailed.reason
+291:             else:
+292:                 rep.outcome = "passed"
+293:                 rep.wasxfail = xfailed.reason
+294:     elif (
+295:         item._store.get(skipped_by_mark_key, True)
+296:         and rep.skipped
+297:         and type(rep.longrepr) is tuple
+298:     ):
+299:         # skipped by mark.skipif; change the location of the failure
+300:         # to point to the item definition, otherwise it will display
+301:         # the location of where the skip exception was raised within pytest
+302:         _, _, reason = rep.longrepr
+303:         filename, line = item.reportinfo()[:2]
+304:         assert line is not None
+305:         rep.longrepr = str(filename), line + 1, reason
+306: 
+307: 
+308: def pytest_report_teststatus(report: BaseReport) -> Optional[Tuple[str, str, str]]:
+309:     if hasattr(report, "wasxfail"):
+310:         if report.skipped:
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 260, "path": "src/_pytest/skipping.py", "start_line": 225}
+META: {"end_column": 27, "end_line": 260, "next_cursor": null, "start_column": 0, "start_line": 225, "total_lines": 314}
+225: # Whether skipped due to skip or skipif marks.
+226: skipped_by_mark_key = StoreKey[bool]()
+227: # Saves the xfail mark evaluation. Can be refreshed during call if None.
+228: xfailed_key = StoreKey[Optional[Xfail]]()
+229: unexpectedsuccess_key = StoreKey[str]()
+230: 
+231: 
+232: @hookimpl(tryfirst=True)
+233: def pytest_runtest_setup(item: Item) -> None:
+234:     item._store[skipped_by_mark_key] = False
+235: 
+236:     skipped = evaluate_skip_marks(item)
+237:     if skipped:
+238:         item._store[skipped_by_mark_key] = True
+239:         skip(skipped.reason)
+240: 
+241:     if not item.config.option.runxfail:
+242:         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+243:         if xfailed and not xfailed.run:
+244:             xfail("[NOTRUN] " + xfailed.reason)
+245: 
+246: 
+247: @hookimpl(hookwrapper=True)
+248: def pytest_runtest_call(item: Item) -> Generator[None, None, None]:
+249:     xfailed = item._store.get(xfailed_key, None)
+250:     if xfailed is None:
+251:         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+252: 
+253:     if not item.config.option.runxfail:
+254:         if xfailed and not xfailed.run:
+255:             xfail("[NOTRUN] " + xfailed.reason)
+256: 
+257:     yield
+258: 
+259: 
+260: @hookimpl(hookwrapper=True)
+

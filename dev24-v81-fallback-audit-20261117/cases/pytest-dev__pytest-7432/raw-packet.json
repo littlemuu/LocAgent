@@ -1,0 +1,10 @@
+{
+  "answer": "已读到的事实（附文件:行号）\n- src/_pytest/skipping.py:261-305 完整读到 pytest_runtest_makereport 函数体（含 docstring 区段与全部 elif 分支）。\n- src/_pytest/skipping.py:273-274 分支 `elif item.config.option.runxfail: pass  # don't interfere` 位于 skip 位置修正分支之前。\n- src/_pytest/skipping.py:294-305 是唯一把 rep.longrepr 从 tuple 改写为 `(filename, line + 1, reason)` 的分支，条件为 `skipped_by_mark_key` 为真、`rep.skipped` 且 longrepr 为 tuple。\n- src/_pytest/skipping.py:232-239 pytest_runtest_setup 在 skip 标记命中时置 `skipped_by_mark_key = True` 并调用 `skip(skipped.reason)`。\n- src/_pytest/skipping.py:241-244 仅在 `not runxfail` 时写入 xfailed_key，说明 runxfail 只应影响 xfail 路径。\n\n推断\n- 待验证假设：`--runxfail` 使 src/_pytest/skipping.py:pytest_runtest_makereport 在 273 行提前 `pass` 返回，从而跳过 294-305 的 skip 位置重写，导致 longrepr 保留 pytest 内部 raise 位置（即 skipping.py 自身行号）。\n- 待验证假设：修复方向是把 skip 位置修正分支移到 runxfail 判断之前，或让 runxfail 分支只跳过 xfail 相关处理而不跳过 skip 重写。\n- 待验证假设：src/_pytest/skipping.py:pytest_runtest_setup 已正确设置 skipped_by_mark_key，故 294 行条件本身在 runxfail 下仍成立，问题仅在分支顺序。\n\n未核验点\n- 未读 src/_pytest/skipping.py 其余部分（1-224、306-314），未确认是否有其他 hook 也改写 longrepr。\n- 未读 testing/test_skipping.py:233、334、352 的既有 runxfail 测试，未确认是否已有覆盖 skip 位置的用例。\n- 未运行任何测试，未验证 reportinfo() 在 runxfail 下的返回值。\n\n最小验证：`python -m pytest testing/test_skipping.py -q -k runxfail`（并新增断言：`--runxfail -rs` 输出中 SKIPPED 行指向测试文件而非 src/_pytest/skipping.py）",
+  "entities": [
+    "src/_pytest/skipping.py:pytest_runtest_makereport",
+    "src/_pytest/skipping.py:pytest_runtest_setup"
+  ],
+  "files": [
+    "src/_pytest/skipping.py"
+  ]
+}

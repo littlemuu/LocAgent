@@ -1,0 +1,138 @@
+{
+  "records": 55,
+  "counts": {
+    "R1": {
+      "真违规": 5,
+      "误判": 10,
+      "边界": 10
+    },
+    "R2": {
+      "真违规": 0,
+      "误判": 0,
+      "边界": 0
+    },
+    "R3": {
+      "真违规": 0,
+      "误判": 2,
+      "边界": 0
+    },
+    "R4": {
+      "真违规": 2,
+      "误判": 19,
+      "边界": 7
+    }
+  },
+  "total_counts": {
+    "真违规": 7,
+    "误判": 31,
+    "边界": 17
+  },
+  "original_fallback": {
+    "count": 20,
+    "total": 24,
+    "rate": 0.8333333333333334
+  },
+  "estimated_after_removing_confirmed_false_positives": {
+    "count": 14,
+    "total": 24,
+    "rate": 0.5833333333333334,
+    "retained": [
+      "sympy__sympy-21379",
+      "matplotlib__matplotlib-23314",
+      "pylint-dev__pylint-7080",
+      "sphinx-doc__sphinx-11445",
+      "pydata__xarray-4094",
+      "psf__requests-2317",
+      "sympy__sympy-18698",
+      "astropy__astropy-12907",
+      "sphinx-doc__sphinx-8595",
+      "matplotlib__matplotlib-24970",
+      "matplotlib__matplotlib-25332",
+      "scikit-learn__scikit-learn-10297",
+      "sympy__sympy-13480",
+      "django__django-13925"
+    ],
+    "released": [
+      "astropy__astropy-14182",
+      "pytest-dev__pytest-7432",
+      "scikit-learn__scikit-learn-13779",
+      "django__django-13033",
+      "sphinx-doc__sphinx-8721",
+      "astropy__astropy-14365"
+    ],
+    "boundary_still_blocks": true,
+    "method": "annotated existing triggers only; no rerun, no new failures inferred"
+  },
+  "sensitivity": {
+    "known_true_cases": 6,
+    "true_case_ids": [
+      "pylint-dev__pylint-7080",
+      "psf__requests-2317",
+      "astropy__astropy-12907",
+      "matplotlib__matplotlib-24970",
+      "sympy__sympy-13480",
+      "django__django-13925"
+    ],
+    "if_all_boundary_flags_waived": 0.25,
+    "if_R3_prefix_semantics_remains_literal": {
+      "count": 15,
+      "rate": 0.625
+    },
+    "note": "25% is only an optimistic policy sensitivity bound, NOT the false-positive-only estimate"
+  },
+  "R1_lengths": {
+    "entity_flags": 23,
+    "pagination_flags": 2,
+    "non_function_aliases": 1,
+    "function_like_flags": 22,
+    "exact_identity_def_ranges": 6,
+    "possible_referent_ranges": 1,
+    "unknown_exact_ranges": 16,
+    "lengths": [
+      15,
+      38,
+      39,
+      51,
+      56,
+      96
+    ],
+    "min": 15,
+    "median": 45.0,
+    "max": 96,
+    "bins": {
+      "1-50": 3,
+      "51-100": 3,
+      ">100": 0
+    },
+    "definition": "def到AST末行，含docstring、不含装饰器；只对可核实6项统计，不能外推全部函数"
+  },
+  "R1_budget": {
+    "R1_case_count": 17,
+    "global_cap_closed_cases": [
+      "sympy__sympy-21379",
+      "pylint-dev__pylint-7080",
+      "matplotlib__matplotlib-25332"
+    ],
+    "R1_records_in_cap_cases": 5,
+    "entity_gaps_with_direct_budget_contribution": [
+      "07-02",
+      "19-02"
+    ],
+    "note": "题级触顶不等于每条R1由预算造成；剩余14题未耗尽总字节上限。4096单页和14336总预算分开统计。"
+  },
+  "read_line_accounting": {
+    "read_file_calls_checked": 46,
+    "complete_display_lines_checked": 2863,
+    "full_display_lines_not_credited": 0,
+    "limitation": "仅核对日志中从列0开始且以换行结束的完整read_file显示行；无完整快照，不能重建所有AST/字符覆盖"
+  },
+  "scope": {
+    "network_calls": 0,
+    "API_calls": 0,
+    "cloud_started": false,
+    "locator_rerun": false,
+    "frozen_modified": false,
+    "holdout_access": false,
+    "B_reference": "20题同base_commit历史B定位日志仅辅助边界，未计入C阅读覆盖"
+  }
+}

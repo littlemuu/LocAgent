@@ -1,0 +1,6 @@
+{
+  "instance_id": "numpy__numpy-8206",
+  "repo": "numpy/numpy",
+  "base_commit": "6feb18ce79bacdac09945cf2ca0ddf85f8294298",
+  "problem_statement": "Add \"insert_zero\" option for np.diff\nI often find myself wanting the difference of an array along some axis, where the 0th element should just be the first entry of the array along that axis, so that the shape of the output matches that of the input.   This is a pretty common requirement for people working with finite differences in any way (eg all signal processing)\n\nCurrently, I do this with the awkward use of `np.insert`, as demonstrated:\n\n```\na = np.random.RandomState(1234).randint(12, size=(3, 4))\narray([[ 3,  6,  5,  4],\n       [ 8,  9,  1,  7],\n       [ 9, 10, 11, 10]])\n# Want a diff along columns of a:\nnp.diff(np.insert(a, 0, 0, axis=0), axis=0)\n> array([[ 3,  6,  5,  4],\n       [ 5,  3, -4,  3],\n       [ 1,  1, 10,  3]])\n# Which is ugly and reallocates a whole intermediate array\n# It would be more convenient to go:\nnp.diff(a, axis=0, insert_zero=True)\n```\n\nThis would allow us to have an easy inverse of cumsum, so that\n\n`np.all( np.cumsum(np.diff(arr, axis=1, insert_zero=True), axis=1) == arr)`\n\n"
+}

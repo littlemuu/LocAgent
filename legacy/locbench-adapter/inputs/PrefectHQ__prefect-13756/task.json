@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-13756",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "38b424138539decd1ce396d0d73c6b73451e547b",
+  "problem_statement": "Add a `deferred` parameter to `Task.map` to control whether to defer or submit tasks\nCurrently, `Task.map` always submits tasks within a flow or defers tasks outside of a flow. But now that we support using `delay` and `apply_async` within flows correctly, a flow might want to defer tasks with `map` and may not be using `PrefectTaskRunner`, so we should allow controlling map behavior with a `deferred` parameter that defaults to `False`.\n"
+}

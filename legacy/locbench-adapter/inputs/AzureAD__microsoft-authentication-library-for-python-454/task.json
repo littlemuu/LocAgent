@@ -1,0 +1,6 @@
+{
+  "instance_id": "AzureAD__microsoft-authentication-library-for-python-454",
+  "repo": "AzureAD/microsoft-authentication-library-for-python",
+  "base_commit": "66a1c5a935e59c66281ccf73a3931681eeedee23",
+  "problem_statement": "MSAL can consider using lazy import for `request`, `jwt`\n**Describe the bug**\r\n\r\nImporting MSAL is can cost ~300ms on Windows due to some heavy libraries like `request` and `jwt`: \r\n\r\n```\r\npython -X importtime -c \"import msal\"  2>perf.log; tuna .\\perf.log\r\n```\r\n\r\n![image](https://user-images.githubusercontent.com/4003950/137872368-a85b9753-f46b-4ffe-acdd-323815486c1b.png)\r\n\r\nMSAL can consider using lazy import for these libraries so that importing MSAL can be lightweight. (Azure CLI lazily imports MSAL: https://github.com/Azure/azure-cli/pull/19898)\n"
+}

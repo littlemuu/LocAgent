@@ -1,0 +1,6 @@
+{
+  "instance_id": "gitpython-developers__GitPython-1636",
+  "repo": "gitpython-developers/GitPython",
+  "base_commit": "e19abe75bbd7d766d7f06171c6524431e4653545",
+  "problem_statement": "CVE-2023-40590: Untrusted search path on Windows systems leading to arbitrary code execution \nThis appeared in the CVE additional information here https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-wfm5-v35h-vwf4.\r\n\r\nI found it reported already. I am reporting it here just in case.\r\n\n"
+}

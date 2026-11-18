@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-16421",
+  "repo": "django/django",
+  "base_commit": "70f39e46f86b946c273340d52109824c776ffb4c",
+  "problem_statement": "Improve utils.text.Truncator &co to use a full HTML parser.\nDescription\n\t\t\n(last modified by Carlton Gibson)\t\t\nOriginal description:\nI'm using Truncator.chars to truncate wikis, and it sometimes truncates in the middle of &quot; entities, resulting in '<p>some text &qu</p>'\nThis is a limitation of the regex based implementation (which has had security issues, and presents an intractable problem). \nBetter to move to use a HTML parser, for Truncate, and strip_tags(), via html5lib and bleach.\nImprove utils.text.Truncator &co to use a full HTML parser.\nDescription\n\t\t\n(last modified by Carlton Gibson)\t\t\nOriginal description:\nI'm using Truncator.chars to truncate wikis, and it sometimes truncates in the middle of &quot; entities, resulting in '<p>some text &qu</p>'\nThis is a limitation of the regex based implementation (which has had security issues, and presents an intractable problem). \nBetter to move to use a HTML parser, for Truncate, and strip_tags(), via html5lib and bleach.\n"
+}

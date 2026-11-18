@@ -1,0 +1,34 @@
+{
+  "archives_sha256": {
+    "first8-evidence-v4.tar.gz": "087d37e8f1b0028afae37161413970b4ce1dff10173e606af464e571d38d1bc5",
+    "remaining16-evidence-v5.tar.gz": "b0c7869fc806975f39f512b98fba4be1c1a90af396d954cd4652dd2dfec82c87"
+  },
+  "summary_sha256": "cab28a40474b9e9940e7af2265b3f3529b42c34d5a0b3bae8ca9345465a5ed55",
+  "ids_in_v5_order": [
+    "sympy__sympy-21379",
+    "astropy__astropy-14182",
+    "matplotlib__matplotlib-23314",
+    "pytest-dev__pytest-7432",
+    "scikit-learn__scikit-learn-13779",
+    "django__django-13033",
+    "pylint-dev__pylint-7080",
+    "sphinx-doc__sphinx-11445",
+    "pydata__xarray-4094",
+    "psf__requests-2317",
+    "pytest-dev__pytest-7490",
+    "sympy__sympy-18698",
+    "astropy__astropy-12907",
+    "sphinx-doc__sphinx-8595",
+    "django__django-13158",
+    "matplotlib__matplotlib-24970",
+    "scikit-learn__scikit-learn-14087",
+    "sphinx-doc__sphinx-8721",
+    "matplotlib__matplotlib-25332",
+    "scikit-learn__scikit-learn-10297",
+    "django__django-13964",
+    "astropy__astropy-14365",
+    "sympy__sympy-13480",
+    "django__django-13925"
+  ],
+  "A_B_rerun": false
+}

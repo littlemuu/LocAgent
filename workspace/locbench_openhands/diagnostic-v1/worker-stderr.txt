@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/xiaomu/Documents/Codex/2026-11-12/task/readonly_agent/locagent_worker.py", line 42, in <module>
+    main()
+  File "/Users/xiaomu/Documents/Codex/2026-11-12/task/readonly_agent/locagent_worker.py", line 37, in main
+    result = LocAgentRetriever(snapshot, graph).retrieve(request['query'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xiaomu/Documents/Codex/2026-11-12/task/readonly_agent/locagent.py", line 38, in __init__
+    raise ValueError('graph_entity_content_mismatch')
+ValueError: graph_entity_content_mismatch

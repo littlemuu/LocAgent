@@ -1,0 +1,62 @@
+{
+  "execution_mode": "static-old-answer-calibration-NOT-live-v8",
+  "quality_measured": false,
+  "packet": {
+    "answer": "已读到的事实（附文件:行号）\ndjango/db/models/sql/compiler.py:700-767 已收到这些完整源码行；仅表示阅读覆盖。\ndjango/db/models/sql/query.py:2295-2320 已收到这些完整源码行；仅表示阅读覆盖。\n推断\n待验证假设：候选位置可能与问题有关；当前证据不足以提出可靠的具体根因判断。\n未核验点\n原诊断未通过证据校验；关键调用链未核验。\ndjango/db/models/sql/compiler.py:SQLCompiler.find_ordering_name：函数/实体源码已读完，行为未验证。\ndjango/db/models/sql/query.py:get_order_dir：函数/实体源码已读完，行为未验证。\ndjango/db/models/sql/compiler.py:SQLCompiler._setup_joins：函数/实体源码已读完，行为未验证。\ndjango/db/models/sql/compiler.py：分页未读完，仍有 next_cursor。\n最小验证：`python -m pytest -q`（未运行；一般回归入口，不能单独验证具体根因）。",
+    "entities": [
+      "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name",
+      "django/db/models/sql/query.py:get_order_dir",
+      "django/db/models/sql/compiler.py:SQLCompiler._setup_joins"
+    ],
+    "files": [
+      "django/db/models/sql/compiler.py",
+      "django/db/models/sql/query.py"
+    ]
+  },
+  "audit": {
+    "policy": "locator-diagnostic-calibration-v8",
+    "raw_packet": {
+      "answer": "This is a genuine bug, not a misunderstanding. The root cause is in SQLCompiler.find_ordering_name (django/db/models/sql/compiler.py:715-749). After resolving the join path, it checks whether the final field is a relation with model-level ordering: `if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk'`. For `record__root_id`, the resolved field is the self-referencing FK `root`, whose attname is `root_id`; the comparison `attname != name` compares `'root_id'` against the full lookup string `'record__root_id'`, so it is unequal and the branch is wrongly taken. Django then appends OneModel.Meta.ordering (`-id`) relative to the joined alias, producing the extra LEFT OUTER JOIN to T3 and the unexpected DESC. The `-record__root_id` case flips the inherited direction via get_order_dir (query.py:2302-2313), explaining the ASC result. The `record__root__id` form works because the final piece is the pk `id`, not the relation, so the ordering-inheritance branch is skipped. The annotate(F(...)) workaround also avoids it since the ordering target is an annotation. The fix should compare the last path segment (or the field's name) rather than the whole dotted name, so that `record__root_id` is recognized as targeting the FK's attname and does not inherit Meta.ordering. I did not read get_order_by (compiler.py:271) or the full setup_joins path, so the exact minimal patch is unconfirmed.",
+      "entities": [
+        "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name",
+        "django/db/models/sql/query.py:get_order_dir",
+        "django/db/models/sql/compiler.py:SQLCompiler._setup_joins"
+      ],
+      "files": [
+        "django/db/models/sql/compiler.py",
+        "django/db/models/sql/query.py"
+      ]
+    },
+    "violations": [
+      "R2_three_sections",
+      "R3_unverified_strong_claim",
+      "R4_citation_not_delivered:query.py:2302-2313",
+      "R4_citation_not_delivered:compiler.py:271",
+      "R1_cursor_unfinished_unmarked"
+    ],
+    "fallback": true,
+    "delivered_full_line_ranges": [
+      [
+        "django/db/models/sql/compiler.py",
+        700,
+        767
+      ],
+      [
+        "django/db/models/sql/query.py",
+        2295,
+        2320
+      ]
+    ],
+    "pending_read_pages": {
+      "rf1_24f3bbf7d1b0d4f3f5dc152d98478214f8a788dd24e1a8ce063f11aead0c27a2": "django/db/models/sql/compiler.py"
+    },
+    "entity_body_complete": {
+      "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name": true,
+      "django/db/models/sql/query.py:get_order_dir": true,
+      "django/db/models/sql/compiler.py:SQLCompiler._setup_joins": true
+    },
+    "call_chain_complete": false,
+    "behavior_verified": false,
+    "quality_measured": false
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-10262",
+  "repo": "huggingface/diffusers",
+  "base_commit": "f9d5a9324d77169d486a60f3b4b267c74149b982",
+  "problem_statement": "Make `time_embed_dim` of `UNet2DModel` changeable\n**Is your feature request related to a problem? Please describe.**\r\nI want to change the `time_embed_dim` of `UNet2DModel`, but it is hard coded as `time_embed_dim = block_out_channels[0] * 4` in the `__init__` function.\r\n\r\n**Describe the solution you'd like.**\r\nMake `time_embedding_dim` a parameter of the `__init__` function, with the default value of `None`. Use `time_embed_dim = time_embedding_dim or block_out_channels[0] * 4` in the function body.\r\n\r\n**Describe alternatives you've considered.**\r\nN/A.\r\n\r\n**Additional context.**\r\nThe same thing in `UNet2DConditionModel` can be changed via the parameter `time_embedding_dim` of its `__init__` function.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-14259",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "af200f20b9ba72609f404b5eb92da3ed30682695",
+  "problem_statement": "return `CursorResult` from prefect_sqlalchemy execute/execute_many methods\n### First check\n\n- [X] I added a descriptive title to this issue.\n- [X] I used the GitHub search to find a similar request and didn't find it.\n- [X] I searched the Prefect documentation for this feature.\n\n### Prefect Version\n\n3.x\n\n### Describe the current behavior\n\n`execute_many` method returns `None`\n\n### Describe the proposed behavior\n\n`execute_many` method would return `CursorResult` so that users could interact with the result of the executed query\n\n### Example Use\n\n_No response_\n\n### Additional context\n\n_No response_\n"
+}

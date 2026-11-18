@@ -1,0 +1,6 @@
+{
+  "instance_id": "ray-project__ray-48790",
+  "repo": "ray-project/ray",
+  "base_commit": "e70b37a435122609f88e02ce3377b8dd7f780e6b",
+  "problem_statement": "[serve] logging_config specified in `serve.run` is not propagated cluster-wide\n### Description\n\nSpecifying `logging_config` in `serve.run(..., logging_config={...})` does not configure logging for the cluster, as is expected. This is because we don't propagate `logging_config` to `.serve_start(...)` here:\r\n\r\nhttps://github.com/ray-project/ray/blob/master/python/ray/serve/api.py#L475-L477\r\n\r\nA simple workaround for now is,\r\n```Python\r\nlogging_config = {\"log_level\": \"...\"}\r\nserve.start(logging_config=logging_config)\r\nserve.run(logging_config=logging_config)\r\n```\n\n### Use case\n\nThis issue arose when trying to configure Serve logging holistically for tests.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "zulip__zulip-31168",
+  "repo": "zulip/zulip",
+  "base_commit": "3d58a7ec0455ba609955c13470d31854687eff7a",
+  "problem_statement": "Make creating streams faster in large organizations\nIn large organizations (like chat.zulip.org), creating a stream can be very slow (seconds to tens of seconds). We should fix this.\r\n\r\nIt should be possible to reproduce this by creating 20K users with `manage.py populate_db --extra-users` in a development environment.\nMake creating streams faster in large organizations\nIn large organizations (like chat.zulip.org), creating a stream can be very slow (seconds to tens of seconds). We should fix this.\r\n\r\nIt should be possible to reproduce this by creating 20K users with `manage.py populate_db --extra-users` in a development environment.\n"
+}

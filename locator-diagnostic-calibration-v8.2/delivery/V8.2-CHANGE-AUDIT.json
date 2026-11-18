@@ -1,0 +1,34 @@
+{
+  "parent_v81_unchanged": true,
+  "changed_existing_files": [
+    "calibration/policy.py",
+    "tests/test_calibration.py",
+    "tests/test_v81.py"
+  ],
+  "added_tests_and_fixtures": [
+    "tests/test_v82.py",
+    "tests/fixtures/v81-recorded24.json",
+    "tests/fixtures/v81-reviewed55.json",
+    "tests/TEST_CHANGES_V82.md"
+  ],
+  "unchanged_baseline_files": 42,
+  "original_B_files_verified": 42,
+  "only_runtime_change": "calibration/policy.py",
+  "locator_entrypoint_unchanged": true,
+  "config_unchanged": true,
+  "prompt_notice_read_priority_unchanged": true,
+  "coding_retrieval_budget_harness_unchanged": true,
+  "binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "tests": {
+    "original": 22,
+    "v8": 22,
+    "v81": 11,
+    "v82": 29,
+    "total": 84
+  },
+  "mock_protocol_tests_only": true,
+  "live_Coding_Agent": "未运行",
+  "harness": "未运行",
+  "API_calls": 0,
+  "cloud_started": false
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60398",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "e62fcb15a70dfb6f4c408cf801f83b216578335b",
+  "problem_statement": "DOC: Fix docstring typo\n### Pandas version checks\n\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\n\n\n### Location of the documentation\n\nhttps://github.com/pandas-dev/pandas/blob/main/pandas/core/series.py\n\n### Documentation problem\n\nThe docstring for the __arrow_c_stream__ method in the Series class uses the word \"behaviour\".\n\n### Suggested fix for documentation\n\nSuggested to rewrite as \"behavior\", which is the American English spelling, to maintain consistency with the rest of the Pandas codebase.\n"
+}

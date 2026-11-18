@@ -1,0 +1,6 @@
+{
+  "instance_id": "tobymao__sqlglot-4390",
+  "repo": "tobymao/sqlglot",
+  "base_commit": "e7b67e0c280179188ce1bca650735978b758dca1",
+  "problem_statement": "Simple query, wrong tables list\nVery simple query, wrong tables list! it considers `activity_id` as a table!\r\n\r\n```python\r\nsql='ALTER TABLE ride DROP COLUMN activity_id'\r\nlist(sqlglot.parse_one(sql, read='mysql').find_all(sqlglot.exp.Table))\r\n# list(sqlglot.parse_one(sql, read='mysql').find_all(sqlglot.exp.Table))\r\n#  0 = {Table} Table(\\n  this=Identifier(this=ride, quoted=False))\r\n#  1 = {Table} Table(\\n  this=Identifier(this=activity_id, quoted=False))\r\n```\r\n\r\n\n"
+}

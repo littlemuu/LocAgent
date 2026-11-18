@@ -1,0 +1,83 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- django/db/models/base.py:1298-1320：`_check_default_pk` 的触发条件只有三项：`cls._meta.pk.auto_created` 为真、`settings.is_overridden('DEFAULT_AUTO_FIELD')` 为假、`cls._meta.app_config._is_default_auto_field_overridden` 为假；三者同时成立才返回 models.W042。\n- django/db/models/base.py:1265-1296：`check()` 在 `not cls._meta.swapped` 分支内无条件把 `_check_default_pk()` 加入 errors，未对抽象基类/继承链做额外过滤。\n- django/db/models/options.py:221-250：`_get_default_pk_class` 从 `app_config.default_auto_field` 或 `settings.DEFAULT_AUTO_FIELD` 取路径，并校验其为 AutoField 子类。\n- django/apps/config.py:64-70：`default_auto_field` 属性与 `_is_default_auto_field_overridden` 仅比较类属性是否被覆盖。\n- tests/check_framework/test_model_checks.py:389-412：测试覆盖了 app 级 default_auto_field 与 setting 两种抑制路径。\n\n推断\n- 待验证假设：W042 的判定只看 `cls._meta.pk.auto_created`，而继承自带显式主键的父类时，子类 `_meta.pk` 若仍指向父类自动生成的 id 字段（auto_created=True），就会误报；修复方向应是在 django/db/models/base.py:Model._check_default_pk 中排除 pk 来自父类/非本模型自动创建的情形。\n- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。\n\n未核验点\n- 未读完：`Model._meta` 构建与 pk 自动创建逻辑（options.py 中 pk 相关方法、base.py 中字段继承处理）未读。\n- 未核验：`Options._get_default_pk_class` 的调用点（未读）。\n- 未运行任何验证，未证明调用链穷尽。\n\n最小验证：`python -m pytest tests/check_framework/test_model_checks.py -q -k default_pk`（仅作回归入口，不能单独证明根因）",
+    "entities": [
+      "django/db/models/base.py:Model._check_default_pk",
+      "django/db/models/options.py:Options._get_default_pk_class",
+      "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+    ],
+    "files": [
+      "django/db/models/base.py",
+      "django/db/models/options.py",
+      "django/apps/config.py",
+      "tests/check_framework/test_model_checks.py"
+    ]
+  },
+  "violations": [
+    "R4_citation_not_delivered:django/apps/config.py:64-70",
+    "R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412",
+    "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+  ],
+  "violation_count": 3,
+  "rule_counts": {
+    "R1": 1,
+    "R2": 0,
+    "R3": 0,
+    "R4": 2
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [
+    {
+      "rule": "R4",
+      "violation": "R4_citation_not_delivered:django/apps/config.py:64-70",
+      "targets": [
+        "django/apps/config.py:64-70"
+      ]
+    },
+    {
+      "rule": "R4",
+      "violation": "R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412",
+      "targets": [
+        "tests/check_framework/test_model_checks.py:389-412"
+      ]
+    },
+    {
+      "rule": "R1",
+      "violation": "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+      "targets": [
+        "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+      ]
+    }
+  ],
+  "disclosure_count": 3,
+  "disclosure_attached": true,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "django/db/models/base.py",
+      1240,
+      1330
+    ],
+    [
+      "django/db/models/options.py",
+      200,
+      250
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "django/db/models/base.py:Model._check_default_pk": true,
+    "django/db/models/options.py:Options._get_default_pk_class": true,
+    "django/apps/config.py:AppConfig._is_default_auto_field_overridden": false
+  },
+  "entity_def_spans": {},
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [
+    "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+  ],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-10754",
+  "repo": "dask/dask",
+  "base_commit": "3a91f5ea706d7acc2e836031b430e25d89402091",
+  "problem_statement": "Deprecate Series.view\nSame as the others, that's deprecated in pandas for 3.0 so we can move ahead with it already\r\n\r\n\n"
+}

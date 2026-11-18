@@ -1,0 +1,6 @@
+{
+  "instance_id": "explodinggradients__ragas-1627",
+  "repo": "explodinggradients/ragas",
+  "base_commit": "c3a183167b375bf5e22c8c8959d212e6b58103be",
+  "problem_statement": "In NoiseSensitivity, the `.` should be deleted as the split condition.\n[ ] I checked the [documentation](https://docs.ragas.io/) and related resources and couldn't find an answer to my question.\r\n\r\n**Your Question**\r\nAfter the sentence is split, i think the `.` should no longer be used as a split condition. Many other languages ​​do not use `.` as a split condition. Just follow the result of `sentence_segmenter`.\r\n\r\n**Code Examples**\r\nhttps://github.com/explodinggradients/ragas/blob/main/src/ragas/metrics/_noise_sensitivity.py#L104C13-L104C46\r\n\r\n**Additional context**\r\nI will provide a pr.\r\n\n"
+}

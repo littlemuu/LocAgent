@@ -1,0 +1,6 @@
+{
+  "instance_id": "keras-team__keras-19852",
+  "repo": "keras-team/keras",
+  "base_commit": "84b283e6200bcb051ed976782fbb2b123bf9b8fc",
+  "problem_statement": "model.keras format much slower to load\nAnyone experiencing unreasonably slow load times when loading a keras-format saved model? I have noticed this repeated when working in ipython, where simply instantiating a model via `Model.from_config` then calling `model.load_weights` is much (several factors) faster than loading a `model.keras` file.\r\n\r\nMy understanding is the keras format is simply a zip file with the config.json file and weights h5 (iirc) but weirdly enough, there's something not right going on while loading.\n"
+}

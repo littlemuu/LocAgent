@@ -1,0 +1,9 @@
+{
+  "status": "reproduced",
+  "mode": "synthetic local defect reproduction; NOT C retry or effectiveness result",
+  "API_calls": 0,
+  "error_type": "AssertionError",
+  "error": "['R1_body_incomplete_unmarked:sympy/ntheory/factor_.py:core']",
+  "mechanism": "file path segment core is mistaken for the unrelated function core during fallback validation",
+  "frozen_code_modified": false
+}

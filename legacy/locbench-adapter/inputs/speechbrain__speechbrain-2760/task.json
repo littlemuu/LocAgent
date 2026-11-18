@@ -1,0 +1,6 @@
+{
+  "instance_id": "speechbrain__speechbrain-2760",
+  "repo": "speechbrain/speechbrain",
+  "base_commit": "16b6420d4ff23210cfca2e888be8853264e0cb17",
+  "problem_statement": "Weighted SSL model not unfreezable\n### Describe the bug\n\nIn our HF Weighted SSL model implementation, we `detach()` the hidden states, meaning weights are not updated.\r\n\r\nRelevant code:\r\nhttps://github.com/speechbrain/speechbrain/blob/develop/speechbrain/lobes/models/huggingface_transformers/weighted_ssl.py#L81\r\n\r\n```\r\nhidden_states = torch.stack(feats.hidden_states, dim=0).detach()\r\n```\n\n### Expected behaviour\n\nIf passing `freeze=False` I'd expect the weights to get updated.\n\n### To Reproduce\n\n_No response_\n\n### Environment Details\n\n_No response_\n\n### Relevant Log Output\n\n_No response_\n\n### Additional Context\n\n_No response_\n"
+}

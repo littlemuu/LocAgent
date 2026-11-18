@@ -1,0 +1,6 @@
+{
+  "instance_id": "Standard-Labs__real-intent-27",
+  "repo": "Standard-Labs/real-intent",
+  "base_commit": "ed2a2cf98cbce1f571212aadd0cebf07f0bb5bd9",
+  "problem_statement": "Email validation may be slow\nHave a hunch that email validation with MillionVerifier is very slow. \r\n\r\nUse threads to concurrently process emails and phones (check rate limits on Numverify and MillionVerifier).\n"
+}

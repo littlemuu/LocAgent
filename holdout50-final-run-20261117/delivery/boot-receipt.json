@@ -1,0 +1,12 @@
+{
+  "observed_at": 1794925033.473047,
+  "instance_id": "ins-1njewmmg",
+  "observed_status": "运行中",
+  "public_ip": "101.32.181.180",
+  "private_ip": "172.19.0.3",
+  "observed_billing": "按量计费",
+  "source": "Tencent console UI tab133698902",
+  "current_round_authorized": true,
+  "offline_equivalence_passed_before_boot": true,
+  "model_calls_before_boot": 0
+}

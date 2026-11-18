@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18616",
+  "repo": "django/django",
+  "base_commit": "b9aa3239ab1328c915684d89b87a49459cabd30b",
+  "problem_statement": "Add 307 and 308 redirect response codes to django.shortcuts.redirect\nDescription\n\t \nOther than 301 and 302 response codes for redirects, there is also:\n​https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307\n​https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/308\nCurrently, Django is unaware of these.\nProposal:\nAdd two new HTTP response classes for 307 and 308.\nEnhance django.shortcuts.redirect with a new keyword argument preserve_method that, in combination with the existing permanent, decides which of the four redirect classes to use.\nAdd 307 and 308 redirect response codes to django.shortcuts.redirect\nDescription\n\t \nOther than 301 and 302 response codes for redirects, there is also:\n​https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/307\n​https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/308\nCurrently, Django is unaware of these.\nProposal:\nAdd two new HTTP response classes for 307 and 308.\nEnhance django.shortcuts.redirect with a new keyword argument preserve_method that, in combination with the existing permanent, decides which of the four redirect classes to use.\n"
+}

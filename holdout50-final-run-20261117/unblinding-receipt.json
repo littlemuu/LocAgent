@@ -1,0 +1,28 @@
+{
+  "unblinded_at": 1794948644.244707,
+  "reason": "planned_50_tasks_150_arms_finished_once",
+  "archive_sha256": "2011b95dd19512da53b21ac69e489d64398b1445e7f22d7d9fd1d98526c51668",
+  "archive_members": 24194,
+  "status_before_unblinding": {
+    "at": 1794948499.2108212,
+    "completed_arms": 150,
+    "completed_tasks": 50,
+    "current_arm": null,
+    "current_stage": null,
+    "current_task_number": 50,
+    "finished_at": 1794948499.2073724,
+    "free_bytes": 82613141504,
+    "started_at": 1794925183.421162,
+    "status": "finished",
+    "stop_reason": null,
+    "unblinded": false,
+    "exit": "0",
+    "credential_exists": false,
+    "free_bytes_now": 82612887552,
+    "running_container_count": 0,
+    "resource_deviation": false,
+    "observed_at": 1794948508.0405731
+  },
+  "pre_unblinding_backup_verified": true,
+  "no_reruns_authorized": true
+}

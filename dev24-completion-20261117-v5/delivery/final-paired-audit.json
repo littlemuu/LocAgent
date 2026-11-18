@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "trial_episodes": 48,
+  "trial_pairs": 24,
+  "core_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "actual_model": "deepseek-flash",
+  "ab_prompt_schema_budget_identical": true,
+  "ab_first_payload_identical_except_localization": true,
+  "all_predictions_match_diff": true,
+  "first_edit_and_empty_patch_verified": true,
+  "single_lane_A_then_B_verified": true,
+  "prior_round_limit_cny": 50,
+  "new_round_financial_stop_disabled_by_user": true,
+  "ledger_all_requests_including_prior_smoke": [
+    432,
+    707
+  ],
+  "unknown_requests": 0,
+  "holdout_content_read": false,
+  "extra_repetitions_run": false
+}

@@ -1,0 +1,85 @@
+{
+  "new20": {
+    "reviewed_proposal_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "samples": [],
+    "config": {
+      "api_base": "https://api.deepseek.com",
+      "budget_policy": "locagent-followup5-v1",
+      "chunk_size": 500,
+      "fuzzy_search": true,
+      "global_import": true,
+      "hard_token_limit": 2000,
+      "input_estimate_gate": 65536,
+      "max_calls": 3,
+      "max_chunk_size": 2000,
+      "max_chunks": 200,
+      "max_output_tokens": 512,
+      "min_chunk_size": 100,
+      "model": "openai/deepseek-v4-flash",
+      "provider_context_tokens": 1048576,
+      "resolved_family": "DeepSeek-V4.1-Flash",
+      "search_protocol": "bounded-v1",
+      "temperature": 0,
+      "thinking": "disabled",
+      "top_k": 5
+    },
+    "engine_hashes": {},
+    "labels_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "metric_specification_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "function_applicable_sources": [],
+    "label_rule_version": "base-deletion-post-insertion-ast-v2",
+    "limit_cny": "0",
+    "phases": [
+      {
+        "name": "initial-five",
+        "start": 0,
+        "end": 10
+      },
+      {
+        "name": "remaining-fifteen",
+        "start": 10,
+        "end": 40
+      }
+    ],
+    "environment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "regression5": {
+    "reviewed_proposal_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "samples": [],
+    "config": {
+      "api_base": "https://api.deepseek.com",
+      "budget_policy": "locagent-followup5-v1",
+      "chunk_size": 500,
+      "fuzzy_search": true,
+      "global_import": true,
+      "hard_token_limit": 2000,
+      "input_estimate_gate": 65536,
+      "max_calls": 3,
+      "max_chunk_size": 2000,
+      "max_chunks": 200,
+      "max_output_tokens": 512,
+      "min_chunk_size": 100,
+      "model": "openai/deepseek-v4-flash",
+      "provider_context_tokens": 1048576,
+      "resolved_family": "DeepSeek-V4.1-Flash",
+      "search_protocol": "bounded-v1",
+      "temperature": 0,
+      "thinking": "disabled",
+      "top_k": 5
+    },
+    "engine_hashes": {},
+    "labels_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "metric_specification_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "function_applicable_sources": [],
+    "label_rule_version": "base-deletion-post-insertion-ast-v2",
+    "limit_cny": "0",
+    "phases": [
+      {
+        "name": "regression-five",
+        "start": 0,
+        "end": 10
+      }
+    ],
+    "environment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-29944",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "aae9234e816469391512910e8265552f215d6263",
+  "problem_statement": "ENH: Group some columns in subplots with DataFrame.plot\n`df.plot(subplots=True)`  will create one subplot per column. Is there a way to group multiple columns on the same subplot (and leave the rest of the column separated)?\r\n\r\nI'd be happy to submit a PR if that's something you'd consider? In terms of API  `subplot` could accept a list of tuples where each tuple indicates which columns should be grouped together.\n"
+}

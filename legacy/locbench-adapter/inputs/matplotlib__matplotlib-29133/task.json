@@ -1,0 +1,6 @@
+{
+  "instance_id": "matplotlib__matplotlib-29133",
+  "repo": "matplotlib/matplotlib",
+  "base_commit": "9caa0a648d73ac402dce3d5177497260a5ad1019",
+  "problem_statement": "[MNT]: More consistent color parameters for bar()\n### Summary\n\nFrom #29072. `bar()` supports\r\n\r\n- `color` : color or list of color\r\n- `edgecolor` : color or list of color\r\n- `facecolor`: color\r\n\r\ni.e.\r\n\r\n- `facecolor` cannot take a sequence\r\n- there are no plural aliase (e.g. `edgecolors`)\r\n- likely (t.b.c.) the aliases also do not support sequences, similar to #28884\n\n### Proposed fix\n\nMake `facecolor` accept sequences and check that the parameter precedence among `color`, `edgecolor` and `facecolor` is reasonable and comparable with `scatter`, which can take an explicit color via `c` (equivalent to `color` here).\r\n\r\nFor now, I'd refrain from introducing plural aliase. `bar()` is originally and primarily a style-all-bars-identical function. Per-bar styling was added later on, and I don't think there's a strong need to support this additional use case with an added plural alias.\r\n\r\n\n"
+}

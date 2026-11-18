@@ -1,0 +1,16 @@
+{
+  "verified_at": 1794919530.8716211,
+  "instance_id": "ins-1njewmmg",
+  "source": "Tencent Cloud console UI, tab 133698902",
+  "url": "https://console.cloud.tencent.com/cvm/instance/index?rid=5&ProjectId=0&pid=0",
+  "user_action": "已手动选择关机不计费",
+  "observed_status": "已关机",
+  "observed_mode": "关机不计费模式",
+  "observed_billing": "按量计费-部分停止计费",
+  "observed_public_ipv4": "-",
+  "observed_private_ipv4": "172.19.0.3",
+  "credential_deleted_before_shutdown": true,
+  "containers_before_shutdown": 0,
+  "preserved_task_image_cache_count": 24,
+  "completed": true
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-9846",
+  "repo": "vllm-project/vllm",
+  "base_commit": "5608e611c2116cc17c6808b2ae1ecb4a3e263493",
+  "problem_statement": "[Feature]: CI - Split up \"Models Test\" and \"Vision Language Models Test\"\n### 🚀 The feature, motivation and pitch\r\n\r\nTakes 1 hour+ on CI compared to others, which take <~30 min. Thus, ends up being a bottleneck\r\n\r\nSo, should be split up similar to kernels\r\n\r\nCC: @khluu \r\n\n"
+}

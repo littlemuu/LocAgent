@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "captured_at": 1794904584.0704033,
+  "v8_binding": "c072f4f8c9764f0311fabb7f52dfabbcdc04ba0369473296cba75547d54edf3a",
+  "baseline_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "running_containers": [],
+  "credentials_present": {
+    "C-v8.env": false,
+    "checkpoint.env": false,
+    "remaining16.env": false,
+    "smoke.env": false
+  },
+  "all_requests_settled": true,
+  "api_requests": 4,
+  "run_exit": "1",
+  "failed_step": "trial:sympy__sympy-21379:locator"
+}

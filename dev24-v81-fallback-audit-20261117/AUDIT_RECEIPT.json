@@ -1,0 +1,28 @@
+{
+  "input_files_unchanged": 178,
+  "frozen": {
+    "locator-diagnostic-calibration-v8": {
+      "declared_files_verified": 51,
+      "binding": "c072f4f8c9764f0311fabb7f52dfabbcdc04ba0369473296cba75547d54edf3a",
+      "mismatches": []
+    },
+    "locator-diagnostic-calibration-v8.1": {
+      "declared_files_verified": 53,
+      "binding": "9def7a0000b202dc8f7127ef6424b596c1155015bc7d248e74203512b02f7cee",
+      "mismatches": []
+    }
+  },
+  "provider_answers_verified": 24,
+  "violation_records": 55,
+  "case_pages": 24,
+  "broken_local_links": 0,
+  "network_calls": 0,
+  "API_calls": 0,
+  "cloud_started": false,
+  "locator_rerun": false,
+  "Coding_Agent": "未运行",
+  "harness": "未运行",
+  "runtime_tests": "未运行",
+  "holdout_access": false,
+  "verification": "Only local log/code parsing, hashes, output consistency; no frozen runtime imported or executed."
+}

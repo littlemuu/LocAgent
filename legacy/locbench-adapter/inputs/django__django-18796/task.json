@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18796",
+  "repo": "django/django",
+  "base_commit": "63dbe30d3363715deaf280214d75b03f6d65a571",
+  "problem_statement": "\"view on site\" URL doesn't accept non-integer ContentType pks\nDescription\n\t \nMost admin URL paths use the path converter to allow any type of ID, however, the \"view on site\" uses the int converter for content_type_id.\nThis doesn't work on MongoDB which uses ObjectIdAutoField (bson.ObjectId) for all models since AutoField isn't supported.\n"
+}

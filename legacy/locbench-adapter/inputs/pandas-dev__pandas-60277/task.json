@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60277",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "4fcee0e431135bf6fa97440d4d7e17a96630fe6e",
+  "problem_statement": "DOC: Document merge_cells=\"columns\" in to_excel\nhttps://pandas.pydata.org/docs/dev/reference/api/pandas.DataFrame.to_excel.html\r\n\r\nThe `merge_cells` argument can also take `\"columns\"` due to #35384. This should be added to the docstring.\n"
+}

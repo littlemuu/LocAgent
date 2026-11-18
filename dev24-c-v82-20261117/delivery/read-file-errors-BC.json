@@ -1,0 +1,324 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "django__django-13033",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "C_count": 2,
+    "C_errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 110,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      },
+      {
+        "index": 5,
+        "arguments": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 1,
+    "B_errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ]
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "C_count": 2,
+    "C_errors": [
+      {
+        "index": 3,
+        "arguments": {
+          "cursor": null,
+          "end_line": 125,
+          "path": "requests/compat.py",
+          "start_line": 80
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      },
+      {
+        "index": 5,
+        "arguments": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 1,
+    "B_errors": [
+      {
+        "index": 3,
+        "arguments": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ]
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7490",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 1,
+    "B_errors": [
+      {
+        "index": 3,
+        "arguments": {
+          "cursor": null,
+          "end_line": 330,
+          "path": "src/_pytest/skipping.py",
+          "start_line": 240
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ]
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "C_count": 1,
+    "C_errors": [
+      {
+        "index": 5,
+        "arguments": {
+          "cursor": "rf1_a71234d8d665de5cbfc1a5043ee50f6ed8c917e855fcf4a2b69dbc20aad1ae3e",
+          "end_line": 317,
+          "path": "astropy/modeling/separable.py",
+          "start_line": 100
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "django__django-13158",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 1,
+    "B_errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 1420,
+          "path": "django/forms/models.py",
+          "start_line": 1295
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ]
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-14087",
+    "C_count": 1,
+    "C_errors": [
+      {
+        "index": 5,
+        "arguments": {
+          "cursor": "rf1_1403a18c044072a6a6b40e0474348ba47b9fe972b0ceacea2cda5beb88d4aa05",
+          "end_line": 2203,
+          "path": "sklearn/linear_model/logistic.py",
+          "start_line": 2130
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "C_count": 1,
+    "C_errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 300,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 120
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "django__django-13964",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "C_count": 1,
+    "C_errors": [
+      {
+        "index": 5,
+        "arguments": {
+          "cursor": "rf1_0bd754ce77861946d9bfce79c8570d91cf438a6443c1c1f7002aaa68ebb725f5",
+          "end_line": 330,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": 133
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 0,
+    "B_errors": []
+  },
+  {
+    "instance_id": "django__django-13925",
+    "C_count": 0,
+    "C_errors": [],
+    "B_count": 1,
+    "B_errors": [
+      {
+        "index": 6,
+        "arguments": {
+          "cursor": null,
+          "end_line": 430,
+          "path": "tests/check_framework/test_model_checks.py",
+          "start_line": 370
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ]
+  }
+]

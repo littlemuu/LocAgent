@@ -1,0 +1,29 @@
+{
+  "binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "evidence_archive_sha256": "12e7dbfefc79ff3c86ee042ad5d1f5f01d403895e1489f4d7fb73fa91fa6221d",
+  "files": {
+    "delivery/ABC-per-task.json": "5f018d910c28cccd4717291b6e8f5306219be92a7e5e84c17cafd79867f39845",
+    "delivery/C-per-task.csv": "d289c4f6d3622b68d7e94920055b24569636d760da8774f7b71121060f72b0a5",
+    "delivery/C-per-task.json": "b64e114063f2975591d0f779c44023857b0ae28b7fad8e3ed19a5c5efb42f9a3",
+    "delivery/REPORT_ZH.md": "d0c8c32c8919fbe6c4432aa66a67401ca258f5b06f177dd125856e9105a64ca4",
+    "delivery/additional-harness-observations.json": "e555b8801171733487074c6b07dd1cae4e7cde34ce0c86ac440342eceea34aef",
+    "delivery/authorization-confirmation.json": "b6cefac032c6a9f1f0c5ab15740b588a4a62a40cc6b5650ffc355789733644f3",
+    "delivery/boot-receipt.json": "81f6d3a4c5b8c7731ddbc0c0c2cc740081410320a4a4aa6006e0a3ad03c970a1",
+    "delivery/continuation-deployment.json": "021d827e8e955287c635e749e139e5520c28d8a0835b8047a99711afd14e98ab",
+    "delivery/control-tests.log": "55a63f1696cfec695f4d7d05f962d09e64ca1b8bee9ae5ad7140b52d98469a3d",
+    "delivery/environment-observations.json": "b3cbf336017c130ea58dfc88d700cbc3ce54a74459f0e4dd1e76e0c7f44aec38",
+    "delivery/failure-judgments.json": "ae0b9c8952df63e9ec39280cdee1fdb2f00459997d5f5ffd251bb13a3d382554",
+    "delivery/final-cloud-audit.json": "5ccb4b10b73c1013ac5d53cfe89ccde2f7147d4567dcec3ee169c2e49ee83d66",
+    "delivery/final-remote-verification.json": "119296d492b7fe1da46f0de8599ae0a7ec6c2062431cecd4d3f6522680f347cb",
+    "delivery/focus-observations.json": "c7da8c3f06a370cd4c577d7b401c22af7d9362acf36e773ad8b9d3d58406e6fd",
+    "delivery/local-freeze-verification.json": "82b91bac56633b444c30ad64cc2e560dbd5cada9c61ce3da6df3fa0301a79d7e",
+    "delivery/post-amendment-local-verification.json": "1a1896df96f15d570a56bccda2ab3a6a86bf7839406ca96abb95767cbdd37c73",
+    "delivery/price-reference.json": "7d45fd58af7d777d222a50761471f9bad8e12e0b6657cdcfa02c0062265e2450",
+    "delivery/read-file-errors-BC.json": "622846bdf488e76b6d0ba112ed2fe22603239f2d287c3fe301cff9c0a96f90d0",
+    "delivery/resource-verification.json": "65f39098651952f77b189e0e7de96cbd29b17dcba4c32efb0a564444c27e016e",
+    "delivery/result-validation.json": "eeb8847bfd096ec1078b964dc864f6452f9e5c7e6b2547062fab02746b37cc04",
+    "delivery/shutdown-receipt.json": "f0a0ebf89d9e25aadc4206a5ecb2939c388aafe567d8f2cd1ecf9f5b3f8bd785",
+    "delivery/shutdown-wechat.jpg": "fbfbbb14a8ffbf26f44930c330349b662c490ccde5c3e447e0b6ee0f226b4cfb",
+    "delivery/summary.json": "df9c9d7fb58b729cdaf9058ba2de073f2f7f0228762cf6cfa7a5b0e0198a1509"
+  }
+}

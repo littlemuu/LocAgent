@@ -1,0 +1,6 @@
+{
+  "instance_id": "sqlfluff__sqlfluff-6399",
+  "repo": "sqlfluff/sqlfluff",
+  "base_commit": "80f4fc2d3bbc7839e41a9018ae4918118c309656",
+  "problem_statement": "replace deprecated appdirs dependency with platformdirs\n### Search before asking\n\n- [X] I searched the [issues](https://github.com/sqlfluff/sqlfluff/issues) and found no similar issues.\n\n\n### Description\n\nhttps://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068011\r\n\r\npython3-appdirs is dead upstream[1] and its Debian maintainer has indicated\r\nthat it should not be included in trixie[2]. A recommended replacement is\r\npython3-platformdirs[3], which is a fork of appdirs with a very similar API.\r\n\r\nPlease migrate from appdirs to platformdirs or some other replacement,\r\nso that appdirs can be removed.\n\n### Use case\n\nn/a\n\n### Dialect\n\nnone\n\n### Are you willing to work on and submit a PR to address the issue?\n\n- [ ] Yes I am willing to submit a PR!\n\n### Code of Conduct\n\n- [X] I agree to follow this project's [Code of Conduct](https://github.com/sqlfluff/sqlfluff/blob/main/CODE_OF_CONDUCT.md)\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-9617",
+  "repo": "vllm-project/vllm",
+  "base_commit": "e7116c017c86cb547f4d1888edaf13a9be2a4562",
+  "problem_statement": "[Bug]:  Support Falcon Mamba \n### Your current environment\n\nDoes VLLM support  Falcon Mamba models? if not, when it will be supported \n\n### 🐛 Describe the bug\n\nDoes VLLM support  Falcon Mamba models? if not, when it will be supported \n"
+}

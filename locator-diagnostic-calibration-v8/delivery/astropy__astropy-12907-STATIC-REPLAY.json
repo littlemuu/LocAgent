@@ -1,0 +1,59 @@
+{
+  "execution_mode": "static-old-answer-calibration-NOT-live-v8",
+  "quality_measured": false,
+  "packet": {
+    "answer": "已读到的事实（附文件:行号）\nastropy/modeling/separable.py:60-271 已收到这些完整源码行；仅表示阅读覆盖。\n推断\n待验证假设：候选位置可能与问题有关；当前证据不足以提出可靠的具体根因判断。\n未核验点\n原诊断未通过证据校验；关键调用链未核验。\nastropy/modeling/separable.py:_coord_matrix：函数/实体源码已读完，行为未验证。\nastropy/modeling/separable.py:_cstack：函数/实体源码已读完，行为未验证。\nastropy/modeling/separable.py:separability_matrix：未读完，不能作为确定根因依据。\nastropy/modeling/separable.py:_separable：未读完，不能作为确定根因依据。\nastropy/modeling/separable.py：分页未读完，仍有 next_cursor。\n最小验证：`python -m pytest -q`（未运行；一般回归入口，不能单独验证具体根因）。",
+    "entities": [
+      "astropy/modeling/separable.py:_coord_matrix",
+      "astropy/modeling/separable.py:_cstack",
+      "astropy/modeling/separable.py:separability_matrix",
+      "astropy/modeling/separable.py:_separable"
+    ],
+    "files": [
+      "astropy/modeling/separable.py"
+    ]
+  },
+  "audit": {
+    "policy": "locator-diagnostic-calibration-v8",
+    "raw_packet": {
+      "answer": "This is a genuine bug, not expected behavior. The root cause is in `_coord_matrix` (astropy/modeling/separable.py:171-216), which builds the per-model coordinate matrix used by `_cstack` for the `&` operator.\n\nWhen a child of `&` is itself a CompoundModel (e.g. `cm = Linear1D(10) & Linear1D(5)`), `_coord_matrix` does not recurse into it. Instead it only checks `model.separable` (line 202). For a separable compound model it falls into the `else` branch (lines 209-215), which builds a diagonal matrix `mat[i, i] = 1` for `i in range(model.n_inputs)` and, for a right child, rolls it by `noutp - model.n_outputs`. That diagonal construction assumes the child's outputs map one-to-one onto its own inputs in order, which is wrong for a nested compound whose internal structure is not a simple identity-like diagonal. The result is that the nested `cm` contributes a full 2x2 block of True values instead of the correct diagonal, producing the observed `[[T,T,F,F],[T,T,F,F],[F,F,T,T],[F,F,T,T]]`.\n\nBy contrast, the flat case `Pix2Sky_TAN() & Linear1D(10) & Linear1D(5)` works because each `&` operand is a simple (non-compound) model, so `_coord_matrix`'s diagonal path is correct for each leaf.\n\nThe fix would be to make `_coord_matrix` recurse into compound models (calling `_separable`/`_cstack` on the nested model) rather than treating any separable model as a diagonal. I did not read the full `_separable` dispatch (lines 271-313) or `_cdot`, so I cannot rule out related issues for `|` with nested compounds; that remains uncertain.",
+      "entities": [
+        "astropy/modeling/separable.py:_coord_matrix",
+        "astropy/modeling/separable.py:_cstack",
+        "astropy/modeling/separable.py:separability_matrix",
+        "astropy/modeling/separable.py:_separable"
+      ],
+      "files": [
+        "astropy/modeling/separable.py"
+      ]
+    },
+    "violations": [
+      "R2_three_sections",
+      "R3_unverified_strong_claim",
+      "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable",
+      "R1_body_incomplete_unmarked:astropy/modeling/separable.py:separability_matrix",
+      "R1_cursor_unfinished_unmarked"
+    ],
+    "fallback": true,
+    "delivered_full_line_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        60,
+        271
+      ]
+    ],
+    "pending_read_pages": {
+      "rf1_10c8b34fd7c56a030082cadc39c955a7be68b0f34f1cda15b2517239ab4d3490": "astropy/modeling/separable.py",
+      "rf1_8d329ea38f9f230db52a664bb4a7f63a92a17b50f6bbd1adbbd69bae0b273d8a": "astropy/modeling/separable.py"
+    },
+    "entity_body_complete": {
+      "astropy/modeling/separable.py:_coord_matrix": true,
+      "astropy/modeling/separable.py:_cstack": true,
+      "astropy/modeling/separable.py:separability_matrix": false,
+      "astropy/modeling/separable.py:_separable": false
+    },
+    "call_chain_complete": false,
+    "behavior_verified": false,
+    "quality_measured": false
+  }
+}

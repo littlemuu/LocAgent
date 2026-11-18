@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "core_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "offline_tests_passed": 22,
+  "inherited_execution_methods_identical": 6,
+  "scope_rejection_checks": 4,
+  "mcnemar_comparisons_with_scipy_binomtest": 325,
+  "scope_tasks": 16,
+  "scope_coding_episodes": 32,
+  "controls_sha256": {
+    "summarize_checkpoint.py": "926557ef06b917c9df8150236503362d33cde21882aec11c0b14d8ad0767c947",
+    "audit_dev24.py": "bd9049b3ba703898c8da36eea8fe46d287497c4acf0074c249bd7d07309eeb4c",
+    "status_remaining16.py": "9612f95a7479132b58ad6388c473a3ed189265e9711470ffc881fc3bbc55c4f8",
+    "run_remaining16.py": "a296c2d8cf5afca0acc8876c4a853b8c98eb707c883e8a26648c5c1a2af5e798",
+    "summarize_dev24.py": "005fa17148386d9fbb1f125ba552304b1c4d63ae75addaba1984130e1e4aba99"
+  },
+  "initial_new_api_limit_cny": 30,
+  "financial_stop_later_disabled_by_user": true
+}

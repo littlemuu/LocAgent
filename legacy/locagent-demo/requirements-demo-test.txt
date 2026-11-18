@@ -1,0 +1,3 @@
+# Runtime plus optional service dependencies used by boundary regression tests.
+-r requirements-runtime.txt
+-r requirements-service.txt

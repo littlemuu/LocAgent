@@ -1,0 +1,11 @@
+{
+  "tests": 48,
+  "failures": 0,
+  "errors": 0,
+  "status": "passed",
+  "network_attempts": 0,
+  "historical_path_attempts": [],
+  "elapsed_seconds": 16.827,
+  "real_llm_requests": 0,
+  "real_embedding_requests": 0
+}

@@ -1,0 +1,140 @@
+B TOOL 1: locagent_retrieve
+ARGS: {"offset": 0, "query": "sqf_list"}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sympy/polys/polytools.py:sqf_list [exact_qualified_name]
+path=sympy/polys/polytools.py; lines=6204-6218; implementation_start=6218; read_file(path="sympy/polys/polytools.py", start_line=6204, end_line=6218)
+Docstring lines 6205-6217; preview prioritizes implementation. read_file preserves complete text.
+6204: def sqf_list(f, *gens, **args):
+... lines 6205-6217 omitted ...
+6218:     return _generic_factor_list(f, gens, args, method='sqf')
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+B TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "sqf"}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sympy/polys/polytools.py:sqf [exact_qualified_name]
+path=sympy/polys/polytools.py; lines=6222-6236; implementation_start=6236; read_file(path="sympy/polys/polytools.py", start_line=6222, end_line=6236)
+Docstring lines 6223-6235; preview prioritizes implementation. read_file preserves complete text.
+6222: def sqf(f, *gens, **args):
+... lines 6223-6235 omitted ...
+6236:     return _generic_factor(f, gens, args, method='sqf')
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+B TOOL 3: search_text
+ARGS: {"offset": 0, "query": "def sqf_list"}
+sympy/polys/polyclasses.py:784:     def sqf_list(f, all=False):
+sympy/polys/polyclasses.py:789:     def sqf_list_include(f, all=False):
+sympy/polys/polytools.py:3210:     def sqf_list(f, all=False):
+sympy/polys/polytools.py:3239:     def sqf_list_include(f, all=False):
+sympy/polys/polytools.py:6204: def sqf_list(f, *gens, **args):
+sympy/polys/rings.py:2457:     def sqf_list(f, all=False):
+
+B TOOL 4: search_text
+ARGS: {"offset": 0, "query": "def dup_sqf_list"}
+sympy/polys/compatibility.py:879:     def dup_sqf_list(self, f, all=False):
+sympy/polys/compatibility.py:882:     def dup_sqf_list_include(self, f, all=False):
+sympy/polys/sqfreetools.py:281: def dup_sqf_list(f, K, all=False):
+sympy/polys/sqfreetools.py:338: def dup_sqf_list_include(f, K, all=False):
+
+B TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 340, "path": "sympy/polys/sqfreetools.py", "start_line": 281}
+281: def dup_sqf_list(f, K, all=False):
+282:     """
+283:     Return square-free decomposition of a polynomial in ``K[x]``.
+284: 
+285:     Examples
+286:     ========
+287: 
+288:     >>> from sympy.polys import ring, ZZ
+289:     >>> R, x = ring("x", ZZ)
+290: 
+291:     >>> f = 2*x**5 + 16*x**4 + 50*x**3 + 76*x**2 + 56*x + 16
+292: 
+293:     >>> R.dup_sqf_list(f)
+294:     (2, [(x + 1, 2), (x + 2, 3)])
+295:     >>> R.dup_sqf_list(f, all=True)
+296:     (2, [(1, 1), (x + 1, 2), (x + 2, 3)])
+297: 
+298:     """
+299:     if K.is_FiniteField:
+300:         return dup_gf_sqf_list(f, K, all=all)
+301: 
+302:     if K.is_Field:
+303:         coeff = dup_LC(f, K)
+304:         f = dup_monic(f, K)
+305:     else:
+306:         coeff, f = dup_primitive(f, K)
+307: 
+308:         if K.is_negative(dup_LC(f, K)):
+309:             f = dup_neg(f, K)
+310:             coeff = -coeff
+311: 
+312:     if dup_degree(f) <= 0:
+313:         return coeff, []
+314: 
+315:     result, i = [], 1
+316: 
+317:     h = dup_diff(f, 1, K)
+318:     g, p, q = dup_inner_gcd(f, h, K)
+319: 
+320:     while True:
+321:         d = dup_diff(p, 1, K)
+322:         h = dup_sub(q, d, K)
+323: 
+324:         if not h:
+325:             result.append((p, i))
+326:             break
+327: 
+328:         g, p, q = dup_inner_gcd(p, h, K)
+329: 
+330:         if all or dup_degree(g) > 0:
+331:             result.append((g, i))
+332: 
+333:         i += 1
+334: 
+335:     return coeff, result
+336: 
+337: 
+338: def dup_sqf_list_include(f, K, all=False):
+339:     """
+340:     Return square-free decomposition of a polynomial in ``K[x]``.
+
+
+B TOOL 6: read_file
+ARGS: {"cursor": null, "end_line": 3240, "path": "sympy/polys/polytools.py", "start_line": 3210}
+3210:     def sqf_list(f, all=False):
+3211:         """
+3212:         Returns a list of square-free factors of ``f``.
+3213: 
+3214:         Examples
+3215:         ========
+3216: 
+3217:         >>> from sympy import Poly
+3218:         >>> from sympy.abc import x
+3219: 
+3220:         >>> f = 2*x**5 + 16*x**4 + 50*x**3 + 76*x**2 + 56*x + 16
+3221: 
+3222:         >>> Poly(f).sqf_list()
+3223:         (2, [(Poly(x + 1, x, domain='ZZ'), 2),
+3224:              (Poly(x + 2, x, domain='ZZ'), 3)])
+3225: 
+3226:         >>> Poly(f).sqf_list(all=True)
+3227:         (2, [(Poly(1, x, domain='ZZ'), 1),
+3228:              (Poly(x + 1, x, domain='ZZ'), 2),
+3229:              (Poly(x + 2, x, domain='ZZ'), 3)])
+3230: 
+3231:         """
+3232:         if hasattr(f.rep, 'sqf_list'):
+3233:             coeff, factors = f.rep.sqf_list(all)
+3234:         else:  # pragma: no cover
+3235:             raise OperationNotSupported(f, 'sqf_list')
+3236: 
+3237:         return f.rep.dom.to_sympy(coeff), [(f.per(g), k) for g, k in factors]
+3238: 
+3239:     def sqf_list_include(f, all=False):
+3240:         """
+

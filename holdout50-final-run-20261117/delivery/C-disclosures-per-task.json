@@ -1,0 +1,1011 @@
+[
+  {
+    "number": 1,
+    "instance_id": "astropy__astropy-14096",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 2,
+    "instance_id": "astropy__astropy-7166",
+    "resolved": false,
+    "disclosure_count": 3,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 3
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 3,
+    "instance_id": "astropy__astropy-7336",
+    "resolved": false,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 1,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": "rf1_dab8c694713bcabed15c222eef3e2d19259892e378645b45bd5bf95b106e50c0",
+          "end_line": 231,
+          "path": "astropy/units/decorators.py",
+          "start_line": 155
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "instance_id": "astropy__astropy-8872",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 5,
+    "instance_id": "django__django-13821",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": "rf1_3acc87196d9c7546f9dbb15e85fcccc22091c413a5fbb59df83b7e206d8344b1",
+          "end_line": 113,
+          "path": "django/db/backends/sqlite3/features.py",
+          "start_line": 78
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 6
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "instance_id": "django__django-14539",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 7,
+    "instance_id": "django__django-15380",
+    "resolved": true,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 1,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 8,
+    "instance_id": "django__django-15572",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 70,
+          "path": "django/utils/_os.py",
+          "start_line": 50
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "instance_id": "django__django-15629",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 2,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "django/db/backends/mysql/schema.py",
+          "start_line": 150
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 180,
+          "path": "django/db/backends/mysql/schema.py",
+          "start_line": 160
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 10,
+    "instance_id": "matplotlib__matplotlib-24177",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 11,
+    "instance_id": "matplotlib__matplotlib-24637",
+    "resolved": false,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 2,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 12,
+    "instance_id": "matplotlib__matplotlib-26208",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 13,
+    "instance_id": "matplotlib__matplotlib-26291",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 413,
+          "path": "lib/mpl_toolkits/axes_grid1/inset_locator.py",
+          "start_line": 355
+        },
+        "error": "investigation_closed",
+        "index": 6,
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "number": 14,
+    "instance_id": "matplotlib__matplotlib-26342",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": "rf1_ad5690c52dd61eb0a69287fb0c5e95564be04d7ba3bc8276ac7c99cbca8ea540",
+          "end_line": 1060,
+          "path": "lib/matplotlib/contour.py",
+          "start_line": 973
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "instance_id": "mwaskom__seaborn-3069",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 2,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 1700,
+          "path": "seaborn/_core/plot.py",
+          "start_line": 1628
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 1660,
+          "path": "seaborn/_core/plot.py",
+          "start_line": 1628
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 6
+      }
+    ]
+  },
+  {
+    "number": 16,
+    "instance_id": "mwaskom__seaborn-3187",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 17,
+    "instance_id": "pallets__flask-5014",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 18,
+    "instance_id": "psf__requests-1142",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 19,
+    "instance_id": "psf__requests-1724",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 20,
+    "instance_id": "psf__requests-1766",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 21,
+    "instance_id": "psf__requests-2931",
+    "resolved": false,
+    "disclosure_count": 4,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 3
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 22,
+    "instance_id": "psf__requests-5414",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 23,
+    "instance_id": "pydata__xarray-4075",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 24,
+    "instance_id": "pydata__xarray-4695",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 25,
+    "instance_id": "pydata__xarray-6721",
+    "resolved": true,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 26,
+    "instance_id": "pydata__xarray-6938",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 27,
+    "instance_id": "pylint-dev__pylint-4661",
+    "resolved": false,
+    "disclosure_count": 3,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 3
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 2,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 140,
+          "path": "pylint/config/__init__.py",
+          "start_line": 1
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 130,
+          "path": "pylint/config/__init__.py",
+          "start_line": 40
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 28,
+    "instance_id": "pylint-dev__pylint-4970",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 389,
+          "path": "pylint/checkers/similar.py",
+          "start_line": 371
+        },
+        "error": "investigation_closed",
+        "index": 6,
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "number": 29,
+    "instance_id": "pylint-dev__pylint-6903",
+    "resolved": true,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 2,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 30,
+    "instance_id": "pylint-dev__pylint-7277",
+    "resolved": true,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 2
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 3,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 140,
+          "path": "pylint/__init__.py",
+          "start_line": 1
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 1
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "pylint/__init__.py",
+          "start_line": 70
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 115,
+          "path": "pylint/__init__.py",
+          "start_line": 75
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 31,
+    "instance_id": "pylint-dev__pylint-8898",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 32,
+    "instance_id": "pytest-dev__pytest-10081",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": "rf1_5a249e1a88bb5272bd24e22198c27e0339d8ae44e0601f47887a76e003674cb1",
+          "end_line": 383,
+          "path": "src/_pytest/unittest.py",
+          "start_line": 300
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 5
+      }
+    ]
+  },
+  {
+    "number": 33,
+    "instance_id": "pytest-dev__pytest-5631",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 34,
+    "instance_id": "pytest-dev__pytest-5787",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 35,
+    "instance_id": "pytest-dev__pytest-7236",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "src/_pytest/skipping.py",
+          "start_line": 100
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      }
+    ]
+  },
+  {
+    "number": 36,
+    "instance_id": "pytest-dev__pytest-7521",
+    "resolved": true,
+    "disclosure_count": 3,
+    "rule_counts": {
+      "R1": 2,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 2,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 300,
+          "path": "src/_pytest/capture.py",
+          "start_line": 198
+        },
+        "error": "investigation_closed",
+        "index": 5,
+        "next": "finish"
+      },
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 420,
+          "path": "src/_pytest/capture.py",
+          "start_line": 300
+        },
+        "error": "investigation_closed",
+        "index": 6,
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "number": 37,
+    "instance_id": "scikit-learn__scikit-learn-11578",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 38,
+    "instance_id": "scikit-learn__scikit-learn-12973",
+    "resolved": true,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 39,
+    "instance_id": "scikit-learn__scikit-learn-25973",
+    "resolved": true,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 2,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 1,
+    "read_file_errors": [
+      {
+        "arguments": {
+          "cursor": null,
+          "end_line": 400,
+          "path": "sklearn/feature_selection/_sequential.py",
+          "start_line": 1
+        },
+        "error": "tool_error",
+        "error_type": "ValueError",
+        "index": 3
+      }
+    ]
+  },
+  {
+    "number": 40,
+    "instance_id": "scikit-learn__scikit-learn-26323",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 41,
+    "instance_id": "sphinx-doc__sphinx-8035",
+    "resolved": false,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 1,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 42,
+    "instance_id": "sphinx-doc__sphinx-8265",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 43,
+    "instance_id": "sphinx-doc__sphinx-8269",
+    "resolved": false,
+    "disclosure_count": 1,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 1
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 44,
+    "instance_id": "sphinx-doc__sphinx-8551",
+    "resolved": false,
+    "disclosure_count": 2,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 2
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 45,
+    "instance_id": "sphinx-doc__sphinx-9281",
+    "resolved": false,
+    "disclosure_count": 0,
+    "rule_counts": {
+      "R1": 0,
+      "R2": 0,
+      "R3": 0,
+      "R4": 0
+    },
+    "full_fallback": false,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 46,
+    "instance_id": "sympy__sympy-13091",
+    "resolved": null,
+    "disclosure_count": null,
+    "rule_counts": null,
+    "full_fallback": null,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 47,
+    "instance_id": "sympy__sympy-13757",
+    "resolved": null,
+    "disclosure_count": null,
+    "rule_counts": null,
+    "full_fallback": null,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 48,
+    "instance_id": "sympy__sympy-13877",
+    "resolved": null,
+    "disclosure_count": null,
+    "rule_counts": null,
+    "full_fallback": null,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 49,
+    "instance_id": "sympy__sympy-15809",
+    "resolved": null,
+    "disclosure_count": null,
+    "rule_counts": null,
+    "full_fallback": null,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  },
+  {
+    "number": 50,
+    "instance_id": "sympy__sympy-22914",
+    "resolved": null,
+    "disclosure_count": null,
+    "rule_counts": null,
+    "full_fallback": null,
+    "validator_error": null,
+    "read_file_error_count": 0,
+    "read_file_errors": []
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "instance_id": "latchset__jwcrypto-195",
+  "repo": "latchset/jwcrypto",
+  "base_commit": "e0249b1161cb8ef7a3a9910948103b816bc0a299",
+  "problem_statement": "The pyca/cryptography RSA PKCS#1 v1.5 is unsafe, making the users of it vulnerable to Bleichenbacher attacks\nThe API provided by pyca/cryptography is not secure, as documented in their docs:\r\nhttps://github.com/pyca/cryptography/commit/8686d524b7b890bcbe6132b774bd72a3ae37cf0d\r\n\r\nAs far as I can tell, it's one of the APIs that jwcrypto uses to implement the key management: https://github.com/latchset/jwcrypto/blob/3b7e8322d37a6b07f862d46e6a43b139cbcc89c5/jwcrypto/jwe.py#L36\r\n\r\nThat would mean that jwcrypto is vulnerable to Bleichenbacher attacks.\r\nTo fix it, implementing an API with built-in workarounding of padding oracle attacks is necessary in pyca/cryptography, as briefly described in https://github.com/pyca/cryptography/issues/5510.\n"
+}

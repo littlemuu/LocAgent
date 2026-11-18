@@ -1,0 +1,254 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "builtin_str"}
+META: {"next_offset": null}
+requests/compat.py:96:     builtin_str = str
+requests/compat.py:111:     builtin_str = str
+requests/models.py:34:     is_py2, chardet, json, builtin_str, basestring)
+requests/models.py:443:                 self.headers['Content-Length'] = builtin_str(length)
+requests/models.py:469:             self.headers['Content-Length'] = builtin_str(body.tell())
+requests/models.py:474:                 self.headers['Content-Length'] = builtin_str(l)
+requests/sessions.py:16: from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str
+requests/sessions.py:428:         method = builtin_str(method)
+requests/utils.py:27:                      builtin_str, getproxies, proxy_bypass, urlunparse)
+requests/utils.py:663:     if isinstance(string, builtin_str):
+test_requests.py:19:     Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)
+test_requests.py:999:         assert isinstance(s, builtin_str)
+
+TOOL 2: list_files
+ARGS: {"offset": 0}
+META: {"next_offset": null}
+docs/_themes/flask_theme_support.py
+docs/conf.py
+requests/__init__.py
+requests/adapters.py
+requests/api.py
+requests/auth.py
+requests/certs.py
+requests/compat.py
+requests/cookies.py
+requests/exceptions.py
+requests/hooks.py
+requests/models.py
+requests/packages/__init__.py
+requests/packages/chardet/__init__.py
+requests/packages/chardet/big5freq.py
+requests/packages/chardet/big5prober.py
+requests/packages/chardet/chardetect.py
+requests/packages/chardet/chardistribution.py
+requests/packages/chardet/charsetgroupprober.py
+requests/packages/chardet/charsetprober.py
+requests/packages/chardet/codingstatemachine.py
+requests/packages/chardet/compat.py
+requests/packages/chardet/constants.py
+requests/packages/chardet/cp949prober.py
+requests/packages/chardet/escprober.py
+requests/packages/chardet/escsm.py
+requests/packages/chardet/eucjpprober.py
+requests/packages/chardet/euckrfreq.py
+requests/packages/chardet/euckrprober.py
+requests/packages/chardet/euctwfreq.py
+requests/packages/chardet/euctwprober.py
+requests/packages/chardet/gb2312freq.py
+requests/packages/chardet/gb2312prober.py
+requests/packages/chardet/hebrewprober.py
+requests/packages/chardet/jisfreq.py
+requests/packages/chardet/jpcntx.py
+requests/packages/chardet/langbulgarianmodel.py
+requests/packages/chardet/langcyrillicmodel.py
+requests/packages/chardet/langgreekmodel.py
+requests/packages/chardet/langhebrewmodel.py
+requests/packages/chardet/langhungarianmodel.py
+requests/packages/chardet/langthaimodel.py
+requests/packages/chardet/latin1prober.py
+requests/packages/chardet/mbcharsetprober.py
+requests/packages/chardet/mbcsgroupprober.py
+requests/packages/chardet/mbcssm.py
+requests/packages/chardet/sbcharsetprober.py
+requests/packages/chardet/sbcsgroupprober.py
+requests/packages/chardet/sjisprober.py
+requests/packages/chardet/universaldetector.py
+requests/packages/chardet/utf8prober.py
+requests/packages/urllib3/__init__.py
+requests/packages/urllib3/_collections.py
+requests/packages/urllib3/connection.py
+requests/packages/urllib3/connectionpool.py
+requests/packages/urllib3/contrib/__init__.py
+requests/packages/urllib3/contrib/ntlmpool.py
+requests/packages/urllib3/contrib/pyopenssl.py
+requests/packages/urllib3/exceptions.py
+requests/packages/urllib3/fields.py
+requests/packages/urllib3/filepost.py
+requests/packages/urllib3/packages/__init__.py
+requests/packages/urllib3/packages/ordered_dict.py
+requests/packages/urllib3/packages/six.py
+requests/packages/urllib3/packages/ssl_match_hostname/__init__.py
+requests/packages/urllib3/packages/ssl_match_hostname/_implementation.py
+requests/packages/urllib3/poolmanager.py
+requests/packages/urllib3/request.py
+requests/packages/urllib3/response.py
+requests/packages/urllib3/util/__init__.py
+requests/packages/urllib3/util/connection.py
+requests/packages/urllib3/util/request.py
+requests/packages/urllib3/util/response.py
+requests/packages/urllib3/util/retry.py
+requests/packages/urllib3/util/ssl_.py
+requests/packages/urllib3/util/timeout.py
+requests/packages/urllib3/util/url.py
+requests/sessions.py
+requests/status_codes.py
+requests/structures.py
+requests/utils.py
+setup.py
+test_requests.py
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 470, "path": "requests/sessions.py", "start_line": 400}
+META: {"end_column": 0, "end_line": 470, "next_cursor": null, "start_column": 0, "start_line": 400, "total_lines": 671}
+400:         :param data: (optional) Dictionary or bytes to send in the body of the
+401:             :class:`Request`.
+402:         :param json: (optional) json to send in the body of the
+403:             :class:`Request`.
+404:         :param headers: (optional) Dictionary of HTTP Headers to send with the
+405:             :class:`Request`.
+406:         :param cookies: (optional) Dict or CookieJar object to send with the
+407:             :class:`Request`.
+408:         :param files: (optional) Dictionary of ``'filename': file-like-objects``
+409:             for multipart encoding upload.
+410:         :param auth: (optional) Auth tuple or callable to enable
+411:             Basic/Digest/Custom HTTP Auth.
+412:         :param timeout: (optional) How long to wait for the server to send
+413:             data before giving up, as a float, or a (`connect timeout, read
+414:             timeout <user/advanced.html#timeouts>`_) tuple.
+415:         :type timeout: float or tuple
+416:         :param allow_redirects: (optional) Set to True by default.
+417:         :type allow_redirects: bool
+418:         :param proxies: (optional) Dictionary mapping protocol to the URL of
+419:             the proxy.
+420:         :param stream: (optional) whether to immediately download the response
+421:             content. Defaults to ``False``.
+422:         :param verify: (optional) if ``True``, the SSL cert will be verified.
+423:             A CA_BUNDLE path can also be provided.
+424:         :param cert: (optional) if String, path to ssl client cert file (.pem).
+425:             If Tuple, ('cert', 'key') pair.
+426:         """
+427: 
+428:         method = builtin_str(method)
+429: 
+430:         # Create the Request.
+431:         req = Request(
+432:             method = method.upper(),
+433:             url = url,
+434:             headers = headers,
+435:             files = files,
+436:             data = data or {},
+437:             json = json,
+438:             params = params or {},
+439:             auth = auth,
+440:             cookies = cookies,
+441:             hooks = hooks,
+442:         )
+443:         prep = self.prepare_request(req)
+444: 
+445:         proxies = proxies or {}
+446: 
+447:         settings = self.merge_environment_settings(
+448:             prep.url, proxies, stream, verify, cert
+449:         )
+450: 
+451:         # Send the request.
+452:         send_kwargs = {
+453:             'timeout': timeout,
+454:             'allow_redirects': allow_redirects,
+455:         }
+456:         send_kwargs.update(settings)
+457:         resp = self.send(prep, **send_kwargs)
+458: 
+459:         return resp
+460: 
+461:     def get(self, url, **kwargs):
+462:         """Sends a GET request. Returns :class:`Response` object.
+463: 
+464:         :param url: URL for the new :class:`Request` object.
+465:         :param \*\*kwargs: Optional arguments that ``request`` takes.
+466:         """
+467: 
+468:         kwargs.setdefault('allow_redirects', True)
+469:         return self.request('GET', url, **kwargs)
+470: 
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 125, "path": "requests/compat.py", "start_line": 80}
+META: {"error": "tool_error", "error_type": "ValueError"}
+
+
+TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 120, "path": "requests/compat.py", "start_line": 85}
+META: {"error": "tool_error", "error_type": "ValueError"}
+
+
+TOOL 6: read_file
+ARGS: {"cursor": null, "end_line": 400, "path": "requests/sessions.py", "start_line": 340}
+META: {"end_column": 78, "end_line": 400, "next_cursor": null, "start_column": 0, "start_line": 340, "total_lines": 671}
+340:         transmission and returns it. The :class:`PreparedRequest` has settings
+341:         merged from the :class:`Request <Request>` instance and those of the
+342:         :class:`Session`.
+343: 
+344:         :param request: :class:`Request` instance to prepare with this
+345:             session's settings.
+346:         """
+347:         cookies = request.cookies or {}
+348: 
+349:         # Bootstrap CookieJar.
+350:         if not isinstance(cookies, cookielib.CookieJar):
+351:             cookies = cookiejar_from_dict(cookies)
+352: 
+353:         # Merge with session cookies
+354:         merged_cookies = merge_cookies(
+355:             merge_cookies(RequestsCookieJar(), self.cookies), cookies)
+356: 
+357: 
+358:         # Set environment's basic authentication if not explicitly set.
+359:         auth = request.auth
+360:         if self.trust_env and not auth and not self.auth:
+361:             auth = get_netrc_auth(request.url)
+362: 
+363:         p = PreparedRequest()
+364:         p.prepare(
+365:             method=request.method.upper(),
+366:             url=request.url,
+367:             files=request.files,
+368:             data=request.data,
+369:             json=request.json,
+370:             headers=merge_setting(request.headers, self.headers, dict_class=CaseInsensitiveDict),
+371:             params=merge_setting(request.params, self.params),
+372:             auth=merge_setting(auth, self.auth),
+373:             cookies=merged_cookies,
+374:             hooks=merge_hooks(request.hooks, self.hooks),
+375:         )
+376:         return p
+377: 
+378:     def request(self, method, url,
+379:         params=None,
+380:         data=None,
+381:         headers=None,
+382:         cookies=None,
+383:         files=None,
+384:         auth=None,
+385:         timeout=None,
+386:         allow_redirects=True,
+387:         proxies=None,
+388:         hooks=None,
+389:         stream=None,
+390:         verify=None,
+391:         cert=None,
+392:         json=None):
+393:         """Constructs a :class:`Request <Request>`, prepares it and sends it.
+394:         Returns :class:`Response <Response>` object.
+395: 
+396:         :param method: method for the new :class:`Request` object.
+397:         :param url: URL for the new :class:`Request` object.
+398:         :param params: (optional) Dictionary or bytes to be sent in the query
+399:             string for the :class:`Request`.
+400:         :param data: (optional) Dictionary or bytes to send in the body of the
+

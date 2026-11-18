@@ -1,0 +1,234 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "__all__"}
+META: {"next_offset": null}
+sphinx/builders/__init__.py:293:             self.build(['__all__'], to_build)
+sphinx/builders/__init__.py:343:         if docnames and docnames != ['__all__']:
+sphinx/builders/__init__.py:508:         if build_docnames is None or build_docnames == ['__all__']:
+sphinx/domains/python.py:1378:         return s in typing.__all__  # type: ignore
+sphinx/ext/autodoc/__init__.py:788:                # forcedly skipped member (ex. a module attribute not defined in __all__)
+sphinx/ext/autodoc/__init__.py:992:         self.__all__ = None  # type: Optional[Sequence[str]]
+sphinx/ext/autodoc/__init__.py:1020:                 self.__all__ = inspect.getall(self.object)
+sphinx/ext/autodoc/__init__.py:1022:             # __all__ raises an error.
+sphinx/ext/autodoc/__init__.py:1023:             logger.warning(__('%s.__all__ raises an error. Ignored: %r'),
+sphinx/ext/autodoc/__init__.py:1026:             # invalid __all__ found.
+sphinx/ext/autodoc/__init__.py:1027:             logger.warning(__('__all__ should be a list of strings, not %r '
+sphinx/ext/autodoc/__init__.py:1028:                               '(in module %s) -- ignoring __all__') %
+sphinx/ext/autodoc/__init__.py:1077:             if not self.__all__:
+sphinx/ext/autodoc/__init__.py:1083:                     if member.__name__ not in self.__all__:
+sphinx/ext/autodoc/__init__.py:1102:         if order == 'bysource' and self.__all__:
+sphinx/ext/autodoc/__init__.py:1103:             # Sort alphabetically first (for members not listed on the __all__)
+sphinx/ext/autodoc/__init__.py:1106:             # Sort by __all__
+sphinx/ext/autodoc/__init__.py:1109:                 if name in self.__all__:
+sphinx/ext/autodoc/__init__.py:1110:                     return self.__all__.index(name)
+sphinx/ext/autodoc/__init__.py:1112:                     return len(self.__all__)
+sphinx/ext/autodoc/mock.py:86:         self.__all__ = []  # type: List[str]
+sphinx/testing/util.py:29: __all__ = [
+sphinx/util/inspect.py:145:     """Get __all__ attribute of the module as dict.
+sphinx/util/inspect.py:147:     Return None if given *obj* does not have __all__.
+sphinx/util/inspect.py:148:     Raises AttributeError if given *obj* raises an error on accessing __all__.
+sphinx/util/inspect.py:149:     Raises ValueError if given *obj* have invalid __all__.
+sphinx/util/inspect.py:151:     __all__ = safe_getattr(obj, '__all__', None)
+sphinx/util/inspect.py:152:     if __all__ is None:
+sphinx/util/inspect.py:155:         if (isinstance(__all__, (list, tuple)) and all(isinstance(e, str) for e in __all__)):
+sphinx/util/inspect.py:156:             return __all__
+sphinx/util/inspect.py:158:             raise ValueError(__all__)
+tests/roots/test-ext-autodoc/target/__init__.py:6: __all__ = ['Class']
+tests/roots/test-ext-autodoc/target/sort_by_all.py:1: __all__ = ['baz', 'foo', 'Bar']
+tests/roots/test-ext-viewcode/spam/mod3.py:3: __all__ = ('Class3',)
+tests/roots/test-root/autodoc_target.py:4: __all__ = ['Class']
+tests/test_ext_autodoc_events.py:90:             return True  # Skip "Class" class in __all__
+tests/test_ext_autodoc_events.py:92:             return False  # Show "raises()" function (not in __all__)
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "sphinx/ext/autodoc/importer.py:get_object_members"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sphinx/ext/autodoc/importer.py:get_object_members [exact_id]
+path=sphinx/ext/autodoc/importer.py; lines=184-245; implementation_start=187; read_file(path="sphinx/ext/autodoc/importer.py", start_line=184, end_line=245)
+Docstring lines 186-186; preview prioritizes implementation. read_file preserves complete text.
+184: def get_object_members(subject: Any, objpath: List[str], attrgetter: Callable,
+185:                        analyzer: ModuleAnalyzer = None) -> Dict[str, Attribute]:
+... lines 186-186 omitted ...
+187:     from sphinx.ext.autodoc import INSTANCEATTR
+188: 
+189:     # the members directly defined in the class
+190:     obj_dict = attrgetter(subject, '__dict__', {})
+191: 
+192:     members = {}  # type: Dict[str, Attribute]
+193: 
+194:     # enum members
+195:     if isenumclass(subject):
+196:         for name, value in subject.__members__.items():
+197:             if name not in members:
+198:                 members[name] = Attribute(name, True, value)
+199: 
+200:         superclass = subject.__mro__[1]
+201:         for name in obj_dict:
+202:             if name not in superclass.__dict__:
+... lines 203-241 omitted ...
+242:             if namespace == ns and name not in members:
+243:                 members[name] = Attribute(name, True, INSTANCEATTR)
+244: 
+245:     return members
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 245, "path": "sphinx/ext/autodoc/importer.py", "start_line": 184}
+META: {"end_column": 18, "end_line": 245, "next_cursor": null, "start_column": 0, "start_line": 184, "total_lines": 351}
+184: def get_object_members(subject: Any, objpath: List[str], attrgetter: Callable,
+185:                        analyzer: ModuleAnalyzer = None) -> Dict[str, Attribute]:
+186:     """Get members and attributes of target object."""
+187:     from sphinx.ext.autodoc import INSTANCEATTR
+188: 
+189:     # the members directly defined in the class
+190:     obj_dict = attrgetter(subject, '__dict__', {})
+191: 
+192:     members = {}  # type: Dict[str, Attribute]
+193: 
+194:     # enum members
+195:     if isenumclass(subject):
+196:         for name, value in subject.__members__.items():
+197:             if name not in members:
+198:                 members[name] = Attribute(name, True, value)
+199: 
+200:         superclass = subject.__mro__[1]
+201:         for name in obj_dict:
+202:             if name not in superclass.__dict__:
+203:                 value = safe_getattr(subject, name)
+204:                 members[name] = Attribute(name, True, value)
+205: 
+206:     # members in __slots__
+207:     try:
+208:         __slots__ = getslots(subject)
+209:         if __slots__:
+210:             from sphinx.ext.autodoc import SLOTSATTR
+211: 
+212:             for name in __slots__:
+213:                 members[name] = Attribute(name, True, SLOTSATTR)
+214:     except (AttributeError, TypeError, ValueError):
+215:         pass
+216: 
+217:     # other members
+218:     for name in dir(subject):
+219:         try:
+220:             value = attrgetter(subject, name)
+221:             directly_defined = name in obj_dict
+222:             name = unmangle(subject, name)
+223:             if name and name not in members:
+224:                 members[name] = Attribute(name, directly_defined, value)
+225:         except AttributeError:
+226:             continue
+227: 
+228:     # annotation only member (ex. attr: int)
+229:     for i, cls in enumerate(getmro(subject)):
+230:         try:
+231:             for name in getannotations(cls):
+232:                 name = unmangle(cls, name)
+233:                 if name and name not in members:
+234:                     members[name] = Attribute(name, i == 0, INSTANCEATTR)
+235:         except AttributeError:
+236:             pass
+237: 
+238:     if analyzer:
+239:         # append instance attributes (cf. self.attr1) if analyzer knows
+240:         namespace = '.'.join(objpath)
+241:         for (ns, name) in analyzer.find_attr_docs():
+242:             if namespace == ns and name not in members:
+243:                 members[name] = Attribute(name, True, INSTANCEATTR)
+244: 
+245:     return members
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 1120, "path": "sphinx/ext/autodoc/__init__.py", "start_line": 985}
+META: {"end_column": 61, "end_line": 1066, "next_cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275", "start_column": 0, "start_line": 985, "total_lines": 2617}
+985:         'private-members': members_option, 'special-members': members_option,
+986:         'imported-members': bool_option, 'ignore-module-all': bool_option
+987:     }  # type: Dict[str, Callable]
+988: 
+989:     def __init__(self, *args: Any) -> None:
+990:         super().__init__(*args)
+991:         merge_members_option(self.options)
+992:         self.__all__ = None  # type: Optional[Sequence[str]]
+993: 
+994:     @classmethod
+995:     def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any
+996:                             ) -> bool:
+997:         # don't document submodules automatically
+998:         return False
+999: 
+1000:     def resolve_name(self, modname: str, parents: Any, path: str, base: Any
+1001:                      ) -> Tuple[str, List[str]]:
+1002:         if modname is not None:
+1003:             logger.warning(__('"::" in automodule name doesn\'t make sense'),
+1004:                            type='autodoc')
+1005:         return (path or '') + base, []
+1006: 
+1007:     def parse_name(self) -> bool:
+1008:         ret = super().parse_name()
+1009:         if self.args or self.retann:
+1010:             logger.warning(__('signature arguments or return annotation '
+1011:                               'given for automodule %s') % self.fullname,
+1012:                            type='autodoc')
+1013:         return ret
+1014: 
+1015:     def import_object(self, raiseerror: bool = False) -> bool:
+1016:         ret = super().import_object(raiseerror)
+1017: 
+1018:         try:
+1019:             if not self.options.ignore_module_all:
+1020:                 self.__all__ = inspect.getall(self.object)
+1021:         except AttributeError as exc:
+1022:             # __all__ raises an error.
+1023:             logger.warning(__('%s.__all__ raises an error. Ignored: %r'),
+1024:                            (self.fullname, exc), type='autodoc')
+1025:         except ValueError as exc:
+1026:             # invalid __all__ found.
+1027:             logger.warning(__('__all__ should be a list of strings, not %r '
+1028:                               '(in module %s) -- ignoring __all__') %
+1029:                            (exc.args[0], self.fullname), type='autodoc')
+1030: 
+1031:         return ret
+1032: 
+1033:     def add_directive_header(self, sig: str) -> None:
+1034:         Documenter.add_directive_header(self, sig)
+1035: 
+1036:         sourcename = self.get_sourcename()
+1037: 
+1038:         # add some module-specific options
+1039:         if self.options.synopsis:
+1040:             self.add_line('   :synopsis: ' + self.options.synopsis, sourcename)
+1041:         if self.options.platform:
+1042:             self.add_line('   :platform: ' + self.options.platform, sourcename)
+1043:         if self.options.deprecated:
+1044:             self.add_line('   :deprecated:', sourcename)
+1045: 
+1046:     def get_module_members(self) -> Dict[str, ObjectMember]:
+1047:         """Get members of target module."""
+1048:         if self.analyzer:
+1049:             attr_docs = self.analyzer.attr_docs
+1050:         else:
+1051:             attr_docs = {}
+1052: 
+1053:         members = {}  # type: Dict[str, ObjectMember]
+1054:         for name in dir(self.object):
+1055:             try:
+1056:                 value = safe_getattr(self.object, name, None)
+1057:                 docstring = attr_docs.get(('', name), [])
+1058:                 members[name] = ObjectMember(name, value, docstring="\n".join(docstring))
+1059:             except AttributeError:
+1060:                 continue
+1061: 
+1062:         # annotation only member (ex. attr: int)
+1063:         try:
+1064:             for name in inspect.getannotations(self.object):
+1065:                 if name not in members:
+1066:                     docstring = attr_docs.get(('', name), [])
+
+
+TOOL 5: read_file
+ARGS: {"cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275", "end_line": 1120, "path": "sphinx/ext/autodoc/__init__.py", "start_line": 1066}
+META: {"error": "tool_error", "error_type": "ValueError"}
+

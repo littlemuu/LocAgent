@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-10280",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "1557cb8a1910bce6dc33cd5cd3a08c380bdec566",
+  "problem_statement": "[MRG] ENH: Added block_size parameter for lesser memory consumption\n#### Reference Issue\r\nFixes #7287\r\n\r\n\r\n#### What does this implement/fix? Explain your changes.\r\nThis intends to add a function `pairwise_distances_blockwise` with an additional block_size parameter to avoid storing all the O(n^2) pairs' distances. This would then be used by `neighbors`, `silhouette_score` and `pairwise_distances_argmin_min`.\r\n\r\n#### Any other comments?\r\n\r\n- [x] Stacking within `pairwise_distances_reduce`\r\n- [x] Revert changes to `sklearn/neighbors`\r\n- [x] Docstring for `pairwise_distances_reduce`\r\n- [x] Tests for `pairwise_distances_reduce`\n"
+}

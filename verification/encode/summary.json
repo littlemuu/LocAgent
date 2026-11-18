@@ -1,0 +1,249 @@
+{
+  "version": "encoding-dev37-v8.1",
+  "status": "passed",
+  "cases": [
+    {
+      "id": "AzureAD__microsoft-authentication-library-for-python-407",
+      "snapshot": "9ee3328cdbff79822e28ff83572b6e3c9f9a2bb287f16ffde0029f99b3f12056",
+      "corpus": "85cd77ad7e315e5897c9ca8e6ecba08e8054db43b0efa6e228b3ced7e20628a3",
+      "chunks": 388
+    },
+    {
+      "id": "AzureAD__microsoft-authentication-library-for-python-454",
+      "snapshot": "64ad3895a49a56bb688bf9dd82b6c06f5421281f64095979e7e64e9ca9664f49",
+      "corpus": "d736ecb1846f79b9d68a3615095d61a292931102fa42148357c4d7803be795a4",
+      "chunks": 404
+    },
+    {
+      "id": "CWorthy-ocean__roms-tools-227",
+      "snapshot": "b58135f3e37c1fc8952faf166c50994b02bee99dabd9227b9c3299bb6e32c807",
+      "corpus": "7813dfa762fb62e9cd478bf8da33e042047d93972d1919aa11fe2a41617410a9",
+      "chunks": 453
+    },
+    {
+      "id": "Delgan__loguru-1239",
+      "snapshot": "32d30d7dafd0cc4cc3aeab0ad54b1f24af1120f462da9079d9d37056b0c626d3",
+      "corpus": "58e6fce64f55eb819cbb41a07a82d66903eb4e7261903d5a68fa5e2ff232963e",
+      "chunks": 1424
+    },
+    {
+      "id": "JoinMarket-Org__joinmarket-clientserver-1180",
+      "snapshot": "6b6f57ba407a7e6823ae6e19ce1891bb1fcac280a6575fa1b60536b73396989c",
+      "corpus": "2bc90a1f7a350c0f5675a6b56a132f3ea992bed330ceb1e164aeeec1c98741d8",
+      "chunks": 2024
+    },
+    {
+      "id": "TransformerLensOrg__TransformerLens-333",
+      "snapshot": "9b9b73c5088ae1a16d21b67e05c3899404bf08c26322a32920cadd204562b138",
+      "corpus": "11db9e3786f5d89939b5b33503c18b1569397e07decca8a2f6e7d1b8727de65d",
+      "chunks": 538
+    },
+    {
+      "id": "duncanscanga__VDRS-Solutions-73",
+      "snapshot": "485bbf7a62e49aebabe4af97695a8d92bce399e7794bdf9a426e2dc5493a5d21",
+      "corpus": "cdc7e36fb01382264aa3a604a9f4c958fa26da377e090d37eaef280d74f071a4",
+      "chunks": 90
+    },
+    {
+      "id": "gaogaotiantian__viztracer-528",
+      "snapshot": "7b79de8068518956d7ed04c0e8617f7c0cd05b717a51976e7c51efa3f67c857c",
+      "corpus": "a7f02f2dd3e2db02412d26ffed241daf076c021fffbb290169bb17e52c51578f",
+      "chunks": 659
+    },
+    {
+      "id": "huggingface__accelerate-3261",
+      "snapshot": "b55d253fdaa0573cbb6f200ce0983fbc48b7d6fd3f6fd38597d79dd0bbd610fc",
+      "corpus": "490e230454f979771552185c9fe2828cb51ba0507d3439e3a02fe7c922043a0d",
+      "chunks": 1788
+    },
+    {
+      "id": "huggingface__trl-2332",
+      "snapshot": "73372ce08aa864358d10141cf22b336afcb7472aa2998a0e84b89a14506bf784",
+      "corpus": "bcb337ab0b43873445b81d3cb65547e9e870f9384c6faed6cfba2dc18fb9f97c",
+      "chunks": 890
+    },
+    {
+      "id": "huggingface__trl-2398",
+      "snapshot": "1926394036b0fcb37926d81cc7c64fcfd0fb9d03995d2bb860681974a5e6ed48",
+      "corpus": "c566b4273a20f21ab6a760f2e75c938f8cb403737c09cc489281a17f360f1b39",
+      "chunks": 927
+    },
+    {
+      "id": "huggingface__trl-2433",
+      "snapshot": "936c7aeffb4bf04ade4982bda4adda495db7229b3147f6bab8cb8a288550ed57",
+      "corpus": "460fd6687ca55b4cd6943d72c4b17b9d6432c400cab01a1e61ad430c0c0bbd5c",
+      "chunks": 938
+    },
+    {
+      "id": "huggingface__trl-2450",
+      "snapshot": "3d8f7f53b0691075591c834f130826c8564841f8abeb73e0bda73b3825bdc901",
+      "corpus": "04696786aafa8647faa4214e481950fcbdbfe42c4542a3b58f65b93ce65c583c",
+      "chunks": 938
+    },
+    {
+      "id": "jazzband__django-two-factor-auth-390",
+      "snapshot": "97ef41f77bce1a571875a1786e36952bad6dacd7cd70b10f5a7ca0d9cf23b7bd",
+      "corpus": "4f4be3290027bb2aad69335f1dd27c03c9d01c3c0880efa6cbb8803fcf87459c",
+      "chunks": 278
+    },
+    {
+      "id": "jobatabs__textec-53",
+      "snapshot": "6a674a3469e954917c6ce537959e8d73a9b5c2ac3878434d6e3cbfe24e7aa28f",
+      "corpus": "cfd46bf21dd1486c883db279a3aa7c286f850f8681de9f323863e4aa70936588",
+      "chunks": 64
+    },
+    {
+      "id": "matchms__matchms-backup-187",
+      "snapshot": "8cbe195bb071870812d7a82ba63c6f5de7fcabc300283d63fcaca49a3b0232fc",
+      "corpus": "95ff71308e189eb3c11cba9dee70fb30f1c2c4b8cc2d2c98d43b64265a3024aa",
+      "chunks": 198
+    },
+    {
+      "id": "phidatahq__phidata-1563",
+      "snapshot": "f9c4064d46e9965f1c8a99fd45e822f0878dad9aed34786b1781141ad0c35816",
+      "corpus": "6aa3e081a6612d8b56ad6c9a6e52ef5afb7a06c7cea186dc396638756b68587a",
+      "chunks": 2259
+    },
+    {
+      "id": "roboflow__supervision-1698",
+      "snapshot": "c4999d3fa432c16c7476de1e5203b74b20412a046983553d103432bbe08b3dce",
+      "corpus": "e63ed7d9752484a68d615931fa61f8d86857f8512a932f2ea1c2e419e6f9b951",
+      "chunks": 785
+    },
+    {
+      "id": "roboflow__supervision-1739",
+      "snapshot": "9767097c19fef26bb8dd86cb7576b9fecf7b72ef9f3fbbff750f7c16f1ef8429",
+      "corpus": "ed8a2b2bc00eee8ca96b06ce8a64dae74ca00c3419ffec2bc993ef841ac35621",
+      "chunks": 794
+    },
+    {
+      "id": "rwth-i6__sisyphus-191",
+      "snapshot": "ee052b4aa0495a814a0dfb4f058e1a15f04ee37e173eb48c52f0be600073a66b",
+      "corpus": "50eb07bc782a6fd85fbbf7c1b9e8efebe2887594373439f12551c50cc15ef03a",
+      "chunks": 790
+    },
+    {
+      "id": "sgkit-dev__sgkit-447",
+      "snapshot": "322c1a3a4582211a5499d6741500d560f79f5c8218683c5e62023a15c0f9b61f",
+      "corpus": "08f8524d8310a510bcc544dc410f0aefc302ef1d3abff001fa0337a1f0159375",
+      "chunks": 510
+    },
+    {
+      "id": "spotify__luigi-3308",
+      "snapshot": "123b9f41296adaf1a156b019b14d0ee74fe29416e295f538300d70bd4d91985d",
+      "corpus": "187b8820f7ba42f56355993e22b60d46f6af034b4663fbbb12c73223203aa4af",
+      "chunks": 4908
+    },
+    {
+      "id": "spotify__luigi-3324",
+      "snapshot": "aea0bde8342dcfbae8321173f3293f7a28a5ffbaffce5784c6aa05e4587e614c",
+      "corpus": "6ecb0c0111853110627df9c679b610f3fdf595d190235b922bdd63d4dd23fbcb",
+      "chunks": 4953
+    },
+    {
+      "id": "tobymao__sqlglot-3167",
+      "snapshot": "2668bece8967804528e20f3211a51de3a674b3e78039c75a37ae9f7ed7f74e05",
+      "corpus": "8bbaa8f18ab9ee7c563a85f20fc4238e6f21836682c0c90ff738a854a0426cca",
+      "chunks": 3408
+    },
+    {
+      "id": "tobymao__sqlglot-3417",
+      "snapshot": "2e765a50fe271f6fd4a4acb56b48e39c4fadf385175f655b6126734db829923a",
+      "corpus": "d0ddab64e2e8bf809f8113279aa2e3ccae9edf186cb23c85e702d3fc2417b566",
+      "chunks": 3476
+    },
+    {
+      "id": "tobymao__sqlglot-3436",
+      "snapshot": "fdc4819c782f882518c4b57791e65e48a5a397410f3d7741e41b50c21f0cbdb4",
+      "corpus": "0fd0825cfe80f953a5b955b7a191ef33fcf662a32cdb6f51e51d1fd7d85cdabe",
+      "chunks": 3481
+    },
+    {
+      "id": "tobymao__sqlglot-3901",
+      "snapshot": "faee6f62cc0a7110cd8c26ad84e70abe65431a78517f9d6c8279b1baa10975f5",
+      "corpus": "1d9d5f58f8ac41ebdf08070b563a42e7a65d3469fd1a4f8733fa0dbe9e95a3de",
+      "chunks": 2759
+    },
+    {
+      "id": "tobymao__sqlglot-4366",
+      "snapshot": "147ea653189fb06de410e6618e260fe15940e64b9ea77916c570902d5314bfee",
+      "corpus": "211e14f13b191cc3f3cd09fe1ba6c950fc0d0c3f2964c683f90e719155b402c4",
+      "chunks": 2943
+    },
+    {
+      "id": "tobymao__sqlglot-4369",
+      "snapshot": "cad193feb12fcb4e78879ee18236f8b8e307b552a2b5e05295c0c1fd050f1d88",
+      "corpus": "8936b86430048a197922b315e779bd5906d8859e102ca4364ad194b38f2e80a2",
+      "chunks": 2944
+    },
+    {
+      "id": "tobymao__sqlglot-4415",
+      "snapshot": "b5a9de827929d1187525484643e3a0f62d484a05d6a9383ddca368b44aa936a9",
+      "corpus": "0d58c6cf5e265487137531e29044883b620e2bd90a30aa6a3956111dd14d62e1",
+      "chunks": 2961
+    },
+    {
+      "id": "tobymao__sqlglot-4480",
+      "snapshot": "1c13eb38200a72d400ea98f8ad7516197be7f1b8a8a96e6ec8de0ea5a7fc16ef",
+      "corpus": "e1d03c8f1b4d64b5ff2de00da2e5fd0a6cb00712c9bbcd3c4de2736368507e11",
+      "chunks": 2988
+    },
+    {
+      "id": "tobymao__sqlglot-4515",
+      "snapshot": "60633e2b71abfcebc6d79bfed5e317b7298d183833db9872ba0494945a754976",
+      "corpus": "56a67a929f83dbb9ef4d309997acb22885d334a5d714bf262649105dab6953a5",
+      "chunks": 2995
+    },
+    {
+      "id": "tobymao__sqlglot-4519",
+      "snapshot": "8c0ee867f86a40f925383adbd7e33d068d7ca75738139fedd2bec189992a98a5",
+      "corpus": "122f964e705ab3103c0567dc36396f4e398477f7576fd3fa50888186b5406a1d",
+      "chunks": 2997
+    },
+    {
+      "id": "tobymao__sqlglot-4523",
+      "snapshot": "f7dead24429daddff61e144123fbfd7d3a7a0ecaf5a7d43a09fcfb213b16cce1",
+      "corpus": "cf8d5e3761fb71da1740382330f92a709573300d38e3d55219bfffa550e3e3ba",
+      "chunks": 2997
+    },
+    {
+      "id": "tobymao__sqlglot-4524",
+      "snapshot": "38a937947fb1ccc731c4f2f7848c0038c03df0108c941bbef7e01e1321c9ea53",
+      "corpus": "20f300a797dbeaae88f32a4128647328203f38946274a461bbc9a50146d856ea",
+      "chunks": 2997
+    },
+    {
+      "id": "tobymao__sqlglot-4526",
+      "snapshot": "1d007014a8838c73dcee25ac14cf69caadff2066d792b713eb4199f2fe28026f",
+      "corpus": "b05b407db491538a298200c6d22dccb5a20bd35c29c118568ba3dce134afc6b6",
+      "chunks": 2998
+    },
+    {
+      "id": "xCDAT__xcdat-689",
+      "snapshot": "bd396b7901265b4cef062cc5fe2da358fa5a01e96e6647e095277482f6b0179a",
+      "corpus": "15fa69ecb446f80261f3e30031d1df9e75fa5e4af7e7eea099981eb56c3d33d9",
+      "chunks": 460
+    }
+  ],
+  "unique_documents": 24146,
+  "document_memberships": 67404,
+  "unique_queries": 37,
+  "document_utf8_bytes": 22247210,
+  "max_document_utf8_bytes": 12067,
+  "max_query_utf8_bytes": 5574,
+  "query_contract": "exact_utf8_max16000_v1",
+  "text_policy": "entity + newline + original function source; all span-bound definitions preserved; max12000 Unicode code points per source chunk",
+  "provider_binding": "unbound: this is a text-input freeze, not a provider cache; provider model, revision, dimension, instructions and token limits must be separately pinned before encoding",
+  "regression_sha256": "f0d8dc284d16fed3d7263da5beb186b2a3686744dd744c5c5ed68b0e4f8498d4",
+  "registry_sha256": "e508172ca348a5db0b1da0d715d3e504976fc00a4af4801d65eeedee7c1c6518",
+  "files": {
+    "documents.jsonl": "f002dd54be346a7d8fda527fef5a616c2b41a855cbbc46ecbabdc2444a135cdc",
+    "queries.jsonl": "3386512a329f24f82b1439ba9e50531048d7f870ad553b3e8a6d0fcf362bbb8a"
+  },
+  "paid_calls": 0,
+  "network_attempts": 0,
+  "historical_path_attempts": [],
+  "elapsed_seconds": 8.487,
+  "real_llm_requests": 0,
+  "real_embedding_requests": 0
+}

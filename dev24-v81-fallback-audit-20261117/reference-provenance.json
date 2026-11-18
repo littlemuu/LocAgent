@@ -1,0 +1,162 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "base_commit": "624217179aaf8d094e6ff75b7493ad1ee47599b0",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/sympy__sympy-21379/locator/result.json",
+    "sha256": "30ee4d94507de58f7a77ccfadcf0d2b57f1b0383a11fc22c479a2c62789ab259",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "base_commit": "b34751b7ed02b2cfcc36037fb729d4360480a299",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/scikit-learn__scikit-learn-13779/locator/result.json",
+    "sha256": "c54a559c31bea8eda921a63b292e654bbd65757b58ca534fb9a6e1a1c0318d93",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "django__django-13033",
+    "base_commit": "a59de6e89e8dc1f3e71c9a5a5bbceb373ea5247e",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/django__django-13033/locator/result.json",
+    "sha256": "b750a4a2dd5dc8c4ea3778ed4ecfbe929958b7ccc8a569117682780f5fc4d431",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "base_commit": "3c5eca2ded3dd2b59ebaf23eb289453b5d2930f0",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/pylint-dev__pylint-7080/locator/result.json",
+    "sha256": "9ed67857f0407bc916e798ae2c9786d7ac5efaaa969d0839f12f65e98d4a864e",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "base_commit": "71db08c05197545944949d5aa76cd340e7143627",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/sphinx-doc__sphinx-11445/locator/result.json",
+    "sha256": "2f64af85fd60f9036c48e9d6834f03d7a569e696c8b70b6fee0cc500ee94c3e6",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "base_commit": "a5917978be39d13cd90b517e1de4e7a539ffaa48",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/astropy__astropy-14182/locator/result.json",
+    "sha256": "56c11f2e3fd7f21396116c58bcd60fce0d7cc46c90e01e9cee4103880ac0b4ae",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "base_commit": "e6e300e729dd33956e5448d8be9a0b1540b4e53a",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/pytest-dev__pytest-7432/locator/result.json",
+    "sha256": "6cc53985568d52a716dfda80ef4d974c56082c13e0bc026eaddabb92aa0b4418",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "base_commit": "97fc1154992f64cfb2f86321155a7404efeb2d8a",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/matplotlib__matplotlib-23314/locator/result.json",
+    "sha256": "7728cecf55c195a26937e3e1c64cb88845d1dbee6843f25757eaf0ed150c1ebe",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "base_commit": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/psf__requests-2317/locator/result.json",
+    "sha256": "f43d12a323fd31863d9def0d4c26fa952fa480af5ea810aa3c41cea2348fd6ea",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "base_commit": "b19bce971e82f2497d67fdacdeca8db08ae0ba56",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sphinx-doc__sphinx-8595/locator/result.json",
+    "sha256": "b91ded9453b338daa89073b9ed34115094402c5699be3535139c5eb0e95deb1d",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "base_commit": "82ef497a8c88f0f6e50d84520e7276bfbf65025d",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sphinx-doc__sphinx-8721/locator/result.json",
+    "sha256": "70ac92afd44f892e91e3d659e84b9d9dafc4a47351940bbe718f3b42d9bcc846",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "base_commit": "b90661d6a46aa3619d3eec94d5281f5888add501",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/scikit-learn__scikit-learn-10297/locator/result.json",
+    "sha256": "e6a4cee3ffbf53fdb15729b302cc0c075123e29c1b9515721f22d067d7c3ef0b",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "base_commit": "7269fa3e33e8d02485a647da91a5a2a60a06af61",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/astropy__astropy-14365/locator/result.json",
+    "sha256": "f9b6a38bc0616b26fb73b52999793b0a92c817832fc36b1aa036e111e6fb12cd",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "base_commit": "d16bfe05a744909de4b27f5875fe0d4ed41ce607",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/astropy__astropy-12907/locator/result.json",
+    "sha256": "f7d86cfa2232ad40bedf1615737a2fd3dccdb2eb3256d5faa59f21d093bb64bf",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "base_commit": "f57fe3f4b3f2cab225749e1b3b38ae1bf80b62f0",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sympy__sympy-13480/locator/result.json",
+    "sha256": "cbd6da9d2edb34d07b89fa5648c2ebc7d4d9e97ed8b43a61203efc25f7838b10",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "base_commit": "a64cf2d5476e7bbda099b34c40b7be1880dbd39a",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/pydata__xarray-4094/locator/result.json",
+    "sha256": "3228b26239bf326f2621f491d27cb6f912ed70eaa31e3d38ce587f69c26534dc",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "base_commit": "a3011dfd1aaa2487cce8aa7369475533133ef777",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/matplotlib__matplotlib-24970/locator/result.json",
+    "sha256": "6c7e47dfbad39e008d85ddc5168071161c43f8b42ee5a824775af60ffe32d9b7",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "base_commit": "66ba515e671638971bd11a34cff12c107a437e0b",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/matplotlib__matplotlib-25332/locator/result.json",
+    "sha256": "9b3c474e0b82bec85347b5b9dc4441a8a9c40bfea3e8791eb9edcb484b4c1ebf",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "base_commit": "3dff1b98a78f28c953ae2140b69356b8391e399c",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sympy__sympy-18698/locator/result.json",
+    "sha256": "0eb6ed21dfb302e85919746d2ada10a7f1700507bc31e3fb75433a4c5bee28d2",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  },
+  {
+    "instance_id": "django__django-13925",
+    "base_commit": "0c42cdf0d2422f4c080e93594d5d15381d6e955e",
+    "source_archive": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/django__django-13925/locator/result.json",
+    "sha256": "c38a2b25b5029b4abd57af8904db52e40426e389b268dbfaf953c9f9e7e10e3c",
+    "purpose": "source-boundary reference only; NOT C read evidence"
+  }
+]

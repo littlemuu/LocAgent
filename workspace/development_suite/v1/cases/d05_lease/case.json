@@ -1,0 +1,130 @@
+{
+  "root": "source",
+  "source_files": [
+    "jobs/api.py",
+    "jobs/completion.py",
+    "jobs/leases.py",
+    "jobs/metrics.py",
+    "jobs/reports.py",
+    "jobs/tokens.py"
+  ],
+  "issue": "A job lease expires and another worker claims the same job. Explain how the claim token changes, which acknowledgements and renewals are accepted at the exact deadline, and whether the implementation prevents two concurrent claimants from both performing work. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "search_text",
+            "input": {
+              "query": "lease",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "jobs/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "lease",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "jobs/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-17T21:08:40.971391+08:00",
+  "phase": "offline_preflight_complete_awaiting_user_decisions",
+  "boot_authorized_this_round": false,
+  "instance_boot_attempts": 0,
+  "model_API_calls": 0,
+  "holdout_content_decoded": false,
+  "holdout_unblinded": false,
+  "holdout_episodes_run": 0,
+  "results": "未运行",
+  "frozen_components_modified": false,
+  "remote_credentials_transferred": false,
+  "cloud_disk_expanded": false,
+  "cache_deleted": false,
+  "blockers": [
+    "frozen_evaluator_dev24_only_requires_explicitly_reviewed_holdout_data_adapter",
+    "full_50_image_retention_capacity_not_cleared",
+    "explicit_current_round_estimate_and_boot_confirmation_pending"
+  ],
+  "next_action": "Wait for user confirmation of estimates, data-adapter boundary, and image-retention policy. No boot or model call until authorized and preconditions satisfied."
+}

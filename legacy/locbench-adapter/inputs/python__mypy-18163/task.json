@@ -1,0 +1,6 @@
+{
+  "instance_id": "python__mypy-18163",
+  "repo": "python/mypy",
+  "base_commit": "8ef21976cfd190d0b1974f438a7d30e8eaea5272",
+  "problem_statement": "`==`-based narrowing of `Optional`\n1. Mypy's current behaviour:\r\n\r\n```python\r\nx: int | None\r\nif x == None:\r\n    x  # \"Union[builtins.int, None]\"\r\nelse:\r\n    x  # \"Union[builtins.int, None]\"\r\n```\r\n\r\n2. Pyright's current behaviour:\r\n\r\n```python\r\nx: int | None\r\nif x == None:\r\n    x  # x is None\r\nelse:\r\n    x  # x is int\r\n```\r\n\r\n3. I think the ideal solution would be:\r\n\r\n```python\r\nx: int | None\r\nif x == None:\r\n    x  # \"Union[builtins.int, None]\"\r\nelse:\r\n    x  # \"builtins.int\"\r\n```\r\n\r\nThis [Mypy code comment](https://github.com/python/mypy/blob/3b00002acdf098e7241df8f2e1843f8b8260b168/mypy/checker.py#L6278-L6280) seems to favour solution 2.\r\n\r\nI am asking because if Mypy would follow solution 2 or 3, `in`-based narrowing of optional types could be implemented more consistently.   \r\n\r\nRelated pull requests: #15760 #17154 #17044.\r\n\n"
+}

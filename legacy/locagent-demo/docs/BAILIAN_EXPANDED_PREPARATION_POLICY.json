@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "status": "preparation_only_no_model_authority",
+  "target_queries": 50,
+  "verified_subset_target": 3,
+  "selection_note": "Public dataset raw download unavailable; diagnostic subset from reviewed public Blinker issues/PRs, not representative of 50-query multi-repository target.",
+  "queries": [
+    {
+      "id": "blinker-issue-173",
+      "kind": "issue",
+      "number": 173,
+      "pr": 174
+    },
+    {
+      "id": "blinker-pr-148",
+      "kind": "pull_request_task",
+      "number": 148,
+      "pr": 148
+    },
+    {
+      "id": "blinker-pr-149",
+      "kind": "pull_request_task",
+      "number": 149,
+      "pr": 149
+    }
+  ],
+  "query_text": "verbatim original title only; exclude bodies, comments, hints, patch, test_patch. This avoids embedded solution patches; loses detailed issue context. Apply identically before ranking.",
+  "candidate_policy": "ALL allowed .py files in each base commit, including tests/docs, never select from patch targets. Existing rag_offline.allowed and chunk_snapshot; function regions only, including overloads/nested functions; max_chars=12000. Fail whole snapshot on limits/unsupported eligible source, no silent file omission.",
+  "limits": {
+    "files": 3000,
+    "total_bytes": 33554432,
+    "file_bytes": 1048576,
+    "chunks": 20000
+  },
+  "arms": {
+    "bm25": "Lucene k1=1.5,b=.75 English stemming/stopwords; positive only; max chunk per entity",
+    "dense": "1024 exact cosine normalized fsum; max chunk per entity",
+    "rrf": {
+      "k": 60,
+      "dense_weight": 2,
+      "bm25_weight": 1,
+      "truncate": null
+    }
+  },
+  "ties": "entity lexicographic",
+  "cutoffs": [
+    1,
+    3,
+    5
+  ],
+  "gold": "patch-overlap proxy at base commit; deepest containing function for changed old lines; parent function only if its own lines change. Added/module/class-only changes are file gold and function NA, never inferred from hunk header.",
+  "metrics": "Hit@k=any gold hit; Recall@k=unique gold hits/number unique gold. Macro question mean, per repo/source type/gold multiplicity/explicit symbol. File projection ranked by best function rank. Partial function labels excluded from primary function denominator, reported separately. Missing result score zero for eligible query. NA separately counted; frozen samples not replaced after rankings.",
+  "cache": "Zero historical vector reuse. Future within-round dedup only identical endpoint/model/dimension/role/instruct/preprocess/chunker/input text, with exact content hash and settled raw-response+ledger evidence. Repo/commit membership separate.",
+  "authorization": "No requests to embedding or LLM; historical reservation 1.277952 CNY occupied, unknown .557056 retained; new separately approved budget and manifest required.",
+  "stop": "No rankings in preparation. Freeze source bytes, labels, query texts, full candidate membership, batches, engine/package hashes and budget before any new results. Initial subset does not freeze uncollected 47 queries."
+}

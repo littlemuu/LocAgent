@@ -1,0 +1,6 @@
+{
+  "instance_id": "PlasmaPy__PlasmaPy-2542",
+  "repo": "PlasmaPy/PlasmaPy",
+  "base_commit": "db62754e6150dc841074afe2e155f21a806e7f1b",
+  "problem_statement": "Reduce cognitive complexity of `gyroradius`\nRight now [`plasmapy.formulary.lengths.gyroradius`](https://github.com/PlasmaPy/PlasmaPy/blob/fc12bbd286ae9db82ab313d8c380808b814a462c/plasmapy/formulary/lengths.py#LL102C5-L102C15) has several nested conditionals.  As a consequence, the code for `gyroradius` has high [cognitive complexity](https://www.sonarsource.com/docs/CognitiveComplexity.pdf), which makes it hard to read and hard to change. Part of the reason is that we are enabling `gyroradius` to get the speed perpendicular to the magnetic field using a bunch of methods, while also making sure that `gyroradius` works with `Quantity` arrays and validating inputs.\r\n\r\nIt would be helpful to clean up the function to reduce its cognitive complexity.  This could include breaking out some of the content of conditionals into private functions, possibly with function names that say what it is doing instead of using comments.\r\n\r\nThis could be a good first contribution, but would probably require some familiarity with `astropy.units` and `RelativisticBody`.  Pull requests that partially address this would be welcome too.\r\n\r\n\n"
+}

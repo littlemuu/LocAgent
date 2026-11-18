@@ -1,0 +1,6 @@
+{
+  "instance_id": "ray-project__ray-48793",
+  "repo": "ray-project/ray",
+  "base_commit": "4b4f3c669bc71027cbae99d5b12ec750b70d96d4",
+  "problem_statement": "ray/serve/generated file is missing after running setup-dev.py\n### What happened + What you expected to happen\n\nWhen running `python setup-dev.py`, it creates softlink for each python package. However, since the generated folder is not part of the repository, creating the symbolic link for the `serve` package inadvertently overwrites the folder and the generated folder can't be found anymore.\n\n### Versions / Dependencies\n\nLastest\n\n### Reproduction script\n\n```\r\n\r\npip install -U \"ray[serve] @ https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-3.0.0.dev0-cp39-cp39-macosx_11_0_arm64.whl\"\r\npython python/ray/setup-dev.py\r\n\r\n```\n\n### Issue Severity\n\nMedium: It is a significant difficulty but I can work around it.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "cisagov__manage.get.gov-1669",
+  "repo": "cisagov/manage.get.gov",
+  "base_commit": "e84941dc935588212146e7f32f88236728d24e2c",
+  "problem_statement": "Exporting any domain report (full metadata, current-full, -federal) takes a long time, 401s, and only generates on the second attempt\n### Current Behavior\r\n\r\nSee title.\r\n\r\n### Expected Behavior\r\n\r\nGenerating one of these reports shouldn't take multiple minutes, throw an error, or require a retry.\r\n\r\n### Steps to Reproduce\r\n\r\n1. In the domains table on manage.get.gov/admin, click on \"Export all domain metadata\", \"Export current-full.csv\". or \"Export current-federal.csv\" \r\n2. Wait ~3 mins for the browser to throw ERR_TOO_MANY_REDIRECTS, redirect to a 401 page\r\n3. Navigate back to the page to re-request the report, which should arrive in roughly a minute\r\n\r\n### Environment\r\n\r\nStable\r\n\r\n### Additional Context\r\n\r\n* The [current-full.csv I was able to retrieve](https://docs.google.com/spreadsheets/d/1STyDpPj3kx1kJFJ9gQgmLe9OUamNNs1h7c_n71Q3x_s/edit#gid=787357430) the second time. Much of the data is off.\r\n* See [Slack thread](https://cisa-corp.slack.com/archives/C05BGB4L5NF/p1702609627618349).\r\n\r\n### Issue Links\r\n\r\n_No response_\n"
+}

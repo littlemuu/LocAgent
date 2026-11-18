@@ -1,0 +1,263 @@
+{
+  "C_expected": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "C_actual": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "C_files": 57,
+  "C_mismatches": [],
+  "deployment_copy_mismatches": {
+    "locator-diagnostic-calibration-v8.2": [],
+    "dev24-c-v82-20261117/frozen": []
+  },
+  "AB_expected": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "AB_actual": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "AB_files": 34,
+  "AB_original_v5_zip_comparison": {
+    "locagent_e2e/__init__.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/agent.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/baseline.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/baseline_original.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/checkpoint.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/coding_tools.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/common.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/completion.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/driver.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/evaluation.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/ledger.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/locator_policy.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/sandbox.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "locagent_e2e/transport.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "config/coding-system.txt": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "config/experiment.json": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "config/frozen-baseline-source.json": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "config/requirements-cloud.lock": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "config/trial-authorization.example.json": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/path_retrieval_v4/__init__.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/path_retrieval_v4/retriever.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/retrieval_evidence_v6/__init__.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/retrieval_evidence_v6/retriever.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/sdk_finish_selfcheck_v7/__init__.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/experiments/sdk_finish_selfcheck_v7/finish_policy.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/__init__.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/control.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/core.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/deepseek_wire.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/offline.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/openhands_tools.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "runtime/readonly_agent/read_lines.py": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "data/dev24/manifest.json": {
+      "matches": 1,
+      "byte_identical": true
+    },
+    "data/dev24/content/receipt.json": {
+      "matches": 1,
+      "byte_identical": true
+    }
+  },
+  "all_42_shared_baseline_files_byte_identical_to_v5_zip": [
+    "baseline/checkpoint-authorization.json",
+    "baseline/config/coding-system.txt",
+    "baseline/config/experiment.json",
+    "baseline/config/frozen-baseline-source.json",
+    "baseline/config/requirements-cloud.lock",
+    "baseline/config/trial-authorization.example.json",
+    "baseline/data/dev24/content/public.json",
+    "baseline/data/dev24/content/receipt.json",
+    "baseline/data/dev24/ids.txt",
+    "baseline/data/dev24/manifest.json",
+    "baseline/locagent_e2e/__init__.py",
+    "baseline/locagent_e2e/agent.py",
+    "baseline/locagent_e2e/baseline.py",
+    "baseline/locagent_e2e/baseline_original.py",
+    "baseline/locagent_e2e/checkpoint.py",
+    "baseline/locagent_e2e/coding_tools.py",
+    "baseline/locagent_e2e/common.py",
+    "baseline/locagent_e2e/completion.py",
+    "baseline/locagent_e2e/driver.py",
+    "baseline/locagent_e2e/evaluation.py",
+    "baseline/locagent_e2e/ledger.py",
+    "baseline/locagent_e2e/locator_policy.py",
+    "baseline/locagent_e2e/sandbox.py",
+    "baseline/locagent_e2e/transport.py",
+    "baseline/runtime/experiments/path_retrieval_v4/__init__.py",
+    "baseline/runtime/experiments/path_retrieval_v4/retriever.py",
+    "baseline/runtime/experiments/retrieval_evidence_v6/__init__.py",
+    "baseline/runtime/experiments/retrieval_evidence_v6/retriever.py",
+    "baseline/runtime/experiments/sdk_finish_selfcheck_v7/__init__.py",
+    "baseline/runtime/experiments/sdk_finish_selfcheck_v7/finish_policy.py",
+    "baseline/runtime/readonly_agent/__init__.py",
+    "baseline/runtime/readonly_agent/control.py",
+    "baseline/runtime/readonly_agent/core.py",
+    "baseline/runtime/readonly_agent/deepseek_wire.py",
+    "baseline/runtime/readonly_agent/offline.py",
+    "baseline/runtime/readonly_agent/openhands_tools.py",
+    "baseline/runtime/readonly_agent/read_lines.py",
+    "baseline/tests/test_checkpoint_gates.py",
+    "baseline/tests/test_completion_and_edits.py",
+    "baseline/tests/test_preparation.py",
+    "baseline/tests/test_resume_and_boundaries.py",
+    "baseline/tests/test_smoke_subset.py"
+  ],
+  "coding_agent_sha256": "ba7e6c4b4ab4c988a07aad5e69b3056f7f7fa38c8d5f453294d6e95d0a32e228",
+  "coding_system_sha256": "9ef4e82098027c90e2e5b900cd33f9a8d775cbda6b3dedd224089d05724ac8f9",
+  "config": {
+    "version": "e2e-checkpoint-v4-text-finish-and-edit-metrics",
+    "model": "deepseek-flash",
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "sdk_version": "1.62.0",
+    "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+    "supersedes_harness_design_only": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "seed": 20261117,
+    "arms": [
+      "A",
+      "B"
+    ],
+    "baseline": "v7 selfcheck + unchanged v6 identifier BM25/preview; no dense or retrieval improvement",
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    },
+    "coding": {
+      "max_requests": 40,
+      "max_output_tokens": 4096,
+      "input_tokens": 1000000,
+      "output_tokens": 64000,
+      "evidence_bytes": 262144,
+      "tool_output_bytes": 16384,
+      "timeout_seconds": 2700,
+      "command_timeout_seconds": 120
+    },
+    "locator": {
+      "max_requests": 4,
+      "max_output_tokens": 2048,
+      "input_tokens": 128000,
+      "output_tokens": 8192,
+      "source_bytes": 14336,
+      "timeout_seconds": 300,
+      "wire_request_bytes": 65536
+    },
+    "smoke_max_cny": 6.85,
+    "max_serialized_request_bytes": 524288,
+    "concurrency": 1,
+    "automatic_retries": 0,
+    "formal_trial_authorized": false,
+    "cloud_target": {
+      "architecture": "x86_64",
+      "cpu": 8,
+      "memory_gib": 16,
+      "disk_gib_approx": 150
+    },
+    "local_image_pull_limit": 2,
+    "prices_cny_per_million": {
+      "cache_miss_peak": 2,
+      "cache_hit_peak": 0.04,
+      "output_peak": 8,
+      "offpeak_multiplier": 0.5,
+      "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+      "checked_date": "2026-11-17"
+    },
+    "smoke_runtime_v1_note": "The halted paid smoke used max_output_tokens=2048; v2 restores stage1 coding limit4096, offline-tested only. Do not merge old and new-budget A/B outcomes.",
+    "checkpoint_api_budget_cny": 50,
+    "checkpoint_trial_tasks": 8,
+    "checkpoint_trial_arm_order": [
+      "A",
+      "B"
+    ],
+    "checkpoint_stop_empty_rate_above": 0.5
+  },
+  "current_remote_verification": "not_run_instance_off"
+}

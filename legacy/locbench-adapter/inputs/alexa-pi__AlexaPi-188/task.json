@@ -1,0 +1,6 @@
+{
+  "instance_id": "alexa-pi__AlexaPi-188",
+  "repo": "alexa-pi/AlexaPi",
+  "base_commit": "81d04a41212a5b6040a402c6f84907a16f5b186b",
+  "problem_statement": "Streaming audio to and from AVS\nWhile waiting for Echo push notifications for a year now, I did a small extension of https://github.com/sammachin/AlexaPi to essentially enable push by submitting pre-recorded questions to AVS when triggered by an event. It worked pretty well, but the problem I faced is that response time is slow, typically 5 or even 10 seconds. I believe the approach used in https://github.com/alexa/alexa-avs-sample-app address those performance issues by streaming the audio to AVS (and maybe also streaming the response back, I asked that question, hoping to hear back from them). The approach is explained here - https://forums.developer.amazon.com/questions/10982/avs-takes-too-much-time-to-respond.html. \n\nIs streaming audio to and from AVS in the plan for the new evolving AlexaPi?\n\n"
+}

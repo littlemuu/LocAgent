@@ -1,0 +1,130 @@
+{
+  "root": "source",
+  "source_files": [
+    "imports/api.py",
+    "imports/index.py",
+    "imports/parser.py",
+    "imports/preview.py",
+    "imports/reports.py",
+    "imports/totals.py"
+  ],
+  "issue": "A batch imports CSV-like rows containing tenant, invoice identifier and amount. Explain the normalization and validation path, how malformed rows are reported, which value wins for repeated invoice keys, and whether replacement rows are added twice to the final totals. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "search_text",
+            "input": {
+              "query": "invoice",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "imports/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "invoice",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "imports/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

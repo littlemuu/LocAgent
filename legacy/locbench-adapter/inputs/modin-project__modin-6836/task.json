@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-6836",
+  "repo": "modin-project/modin",
+  "base_commit": "097ea527c8e3f099e1f252b067a1d5eb055ad0b5",
+  "problem_statement": "FEAT: Do not put binary functions to the Ray storage multiple times.\nCurrently, the binary operations are wrapped into lambdas which are put into the Ray storage on each operation.\n"
+}

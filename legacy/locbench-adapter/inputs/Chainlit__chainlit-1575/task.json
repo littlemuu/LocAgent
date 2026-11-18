@@ -1,0 +1,6 @@
+{
+  "instance_id": "Chainlit__chainlit-1575",
+  "repo": "Chainlit/chainlit",
+  "base_commit": "8b2d4bacfd4fa2c8af72e2d140d527d20125b07b",
+  "problem_statement": "Security: allowed origins should not be * by default\nCORS headers should be restricted to the current domain at least, by default. \n"
+}

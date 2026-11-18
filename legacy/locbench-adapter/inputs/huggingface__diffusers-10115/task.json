@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-10115",
+  "repo": "huggingface/diffusers",
+  "base_commit": "65ab1052b8b38687bcf37afe746a7cf20dedc045",
+  "problem_statement": "Some bugs in FLUX pipeline\n### Describe the bug\n\n1. missing self.theta in get_1d_rotary_pos_embed:\r\nhttps://github.com/huggingface/diffusers/blob/main/src/diffusers/models/embeddings.py#L961-L963\r\n2. if prompt_embeds is None, pooled_prompt_embeds will never be computed:\r\nhttps://github.com/huggingface/diffusers/blob/main/src/diffusers/pipelines/flux/pipeline_flux.py#L348-L363\n\n### Reproduction\n\n.\n\n### Logs\n\n_No response_\n\n### System Info\n\n.\n\n### Who can help?\n\n@yiyixuxu @sayakpaul @DN6 @asomoza\n"
+}

@@ -1,0 +1,10 @@
+{
+  "instance_id": "ins-1njewmmg",
+  "observed_state": "运行中",
+  "public_ip": "43.129.192.160",
+  "ip_source": "live Tencent console after current start; not historical IP",
+  "observed_at": "2026-11-17T16:26:34.207169+08:00",
+  "billing": "按量计费",
+  "cpu": 16,
+  "memory_gib": 64
+}

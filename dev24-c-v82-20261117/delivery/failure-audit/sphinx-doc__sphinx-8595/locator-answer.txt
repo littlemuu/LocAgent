@@ -1,0 +1,21 @@
+已读到的事实（附文件:行号）
+- sphinx/util/inspect.py:144-158：getall() 用 safe_getattr 取 __all__，为 None 时返回 None，否则校验为 list/tuple 且元素均为 str 后原样返回（空列表 [] 会原样返回，不报错）。
+- sphinx/ext/autodoc/__init__.py:1015-1031：ModuleDocumenter.import_object 在未设置 ignore_module_all 时把 inspect.getall(self.object) 结果赋给 self.__all__；AttributeError/ValueError 仅告警。
+- sphinx/ext/autodoc/__init__.py:989-992：__init__ 中 self.__all__ 初始为 None。
+- sphinx/ext/autodoc/__init__.py:1074-1086：get_object_members 在 want_all 时用 `if not self.__all__:` 判断，空列表与 None 同为假值，于是走 `return True, list(members.values())` 分支，即把全部成员当作隐式成员返回；只有非空 __all__ 才把不在其中的成员标记 skipped。
+- sphinx/ext/autodoc/__init__.py:1046-1072：get_module_members 用 dir(self.object) 收集全部成员，因此空 __all__ 时 foo/bar/baz 都会进入 members。
+- sphinx/ext/autodoc/__init__.py:1100-1102：sort_members 同样以 `self.__all__` 真值判断是否按 __all__ 排序。
+
+推断
+- 待验证假设：根因在 sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_object_members 的 `if not self.__all__` 判断，它把“无 __all__（None）”与“空 __all__（[]）”混为一谈，导致空 __all__ 时返回 want_all=True 并输出全部成员。
+- 待验证假设：修复方向是区分 None 与空序列（例如 `if self.__all__ is None:`），使空 __all__ 走 else 分支并把所有成员标记 skipped，从而不输出任何条目。
+- 待验证假设：sphinx/ext/autodoc/__init__.py:ModuleDocumenter.sort_members 的 `self.__all__` 真值判断在空 __all__ 时退化为默认排序，但此时成员已全部 skipped，影响可能有限，需验证。
+
+未核验点
+- sphinx/ext/autodoc/__init__.py:ClassDocumenter.get_object_members 未读完（仅见 1621-1633），类级 __all__ 行为未核验。
+- sphinx/ext/autodoc/importer.py:get_object_members 未读完（仅见 184-202、242-245），其成员收集细节未核验。
+- sphinx/ext/autodoc/__init__.py 分页 cursor=rf1_71a3265cba1879f349994bc6e62a2736fb154626c3948fec04c9ac53499b6482 未续读（sort_members 之后）。
+- 未追踪 Documenter.filter_members / document_members 调用链，未确认 skipped 成员是否确实被过滤。
+- 未运行任何测试或构建验证。
+
+最小验证：`python -m pytest -q tests/test_ext_autodoc.py -k module_all`（或断言：对含 `__all__ = []` 的模块调用 ModuleDocumenter.get_object_members(True) 返回的成员全部 skipped）。

@@ -1,0 +1,291 @@
+B TOOL 1: locagent_retrieve
+ARGS: {"offset": 0, "query": "RidgeClassifierCV"}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sklearn/linear_model/ridge.py:RidgeClassifierCV [exact_qualified_name]
+path=sklearn/linear_model/ridge.py; lines=1247-1381; implementation_start=1335; read_file(path="sklearn/linear_model/ridge.py", start_line=1247, end_line=1381)
+Docstring lines 1248-1334; preview prioritizes implementation. read_file preserves complete text.
+1247: class RidgeClassifierCV(LinearClassifierMixin, _BaseRidgeCV):
+... lines 1248-1334 omitted ...
+1335:     def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+1336:                  normalize=False, scoring=None, cv=None, class_weight=None):
+1337:         super(RidgeClassifierCV, self).__init__(
+1338:             alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
+1339:             scoring=scoring, cv=cv)
+1340:         self.class_weight = class_weight
+1341: 
+1342:     def fit(self, X, y, sample_weight=None):
+1343:         """Fit the ridge classifier.
+1344: 
+1345:         Parameters
+1346:         ----------
+1347:         X : array-like, shape (n_samples, n_features)
+1348:             Training vectors, where n_samples is the number of samples
+1349:             and n_features is the number of features.
+1350: 
+... lines 1351-1377 omitted ...
+1378: 
+1379:     @property
+1380:     def classes_(self):
+1381:         return self._label_binarizer.classes_
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+B TOOL 2: search_text
+ARGS: {"offset": 0, "query": "store_cv_values"}
+sklearn/linear_model/ridge.py:885:                  gcv_mode=None, store_cv_values=False):
+sklearn/linear_model/ridge.py:892:         self.store_cv_values = store_cv_values
+sklearn/linear_model/ridge.py:1077:         if self.store_cv_values:
+sklearn/linear_model/ridge.py:1091:                  store_cv_values=False):
+sklearn/linear_model/ridge.py:1098:         self.store_cv_values = store_cv_values
+sklearn/linear_model/ridge.py:1124:                                   store_cv_values=self.store_cv_values)
+sklearn/linear_model/ridge.py:1127:             if self.store_cv_values:
+sklearn/linear_model/ridge.py:1130:             if self.store_cv_values:
+sklearn/linear_model/ridge.py:1131:                 raise ValueError("cv!=None and store_cv_values=True "
+sklearn/linear_model/ridge.py:1213:     store_cv_values : boolean, default=False
+sklearn/linear_model/ridge.py:1223:         Cross-validation values for each alpha (if `store_cv_values=True` and \
+sklearn/linear_model/ridge.py:1308:         Cross-validation values for each alpha (if `store_cv_values=True` and
+sklearn/linear_model/tests/test_ridge.py:577: def test_ridgecv_store_cv_values():
+sklearn/linear_model/tests/test_ridge.py:578:     # Test _RidgeCV's store_cv_values attribute.
+sklearn/linear_model/tests/test_ridge.py:587:     r = RidgeCV(alphas=alphas, store_cv_values=True)
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 1140, "path": "sklearn/linear_model/ridge.py", "start_line": 1080}
+1080:             else:
+1081:                 cv_values_shape = n_samples, n_y, len(self.alphas)
+1082:             self.cv_values_ = cv_values.reshape(cv_values_shape)
+1083: 
+1084:         return self
+1085: 
+1086: 
+1087: class _BaseRidgeCV(LinearModel):
+1088:     def __init__(self, alphas=(0.1, 1.0, 10.0),
+1089:                  fit_intercept=True, normalize=False, scoring=None,
+1090:                  cv=None, gcv_mode=None,
+1091:                  store_cv_values=False):
+1092:         self.alphas = alphas
+1093:         self.fit_intercept = fit_intercept
+1094:         self.normalize = normalize
+1095:         self.scoring = scoring
+1096:         self.cv = cv
+1097:         self.gcv_mode = gcv_mode
+1098:         self.store_cv_values = store_cv_values
+1099: 
+1100:     def fit(self, X, y, sample_weight=None):
+1101:         """Fit Ridge regression model
+1102: 
+1103:         Parameters
+1104:         ----------
+1105:         X : array-like, shape = [n_samples, n_features]
+1106:             Training data
+1107: 
+1108:         y : array-like, shape = [n_samples] or [n_samples, n_targets]
+1109:             Target values. Will be cast to X's dtype if necessary
+1110: 
+1111:         sample_weight : float or array-like of shape [n_samples]
+1112:             Sample weight
+1113: 
+1114:         Returns
+1115:         -------
+1116:         self : object
+1117:         """
+1118:         if self.cv is None:
+1119:             estimator = _RidgeGCV(self.alphas,
+1120:                                   fit_intercept=self.fit_intercept,
+1121:                                   normalize=self.normalize,
+1122:                                   scoring=self.scoring,
+1123:                                   gcv_mode=self.gcv_mode,
+1124:                                   store_cv_values=self.store_cv_values)
+1125:             estimator.fit(X, y, sample_weight=sample_weight)
+1126:             self.alpha_ = estimator.alpha_
+1127:             if self.store_cv_values:
+1128:                 self.cv_values_ = estimator.cv_values_
+1129:         else:
+1130:             if self.store_cv_values:
+1131:                 raise ValueError("cv!=None and store_cv_values=True "
+1132:                                  " are incompatible")
+1133:             parameters = {'alpha': self.alphas}
+1134:             gs = GridSearchCV(Ridge(fit_intercept=self.fit_intercept,
+1135:                                     normalize=self.normalize),
+1136:                               parameters, cv=self.cv, scoring=self.scoring)
+1137:             gs.fit(X, y, sample_weight=sample_weight)
+1138:             estimator = gs.best_estimator_
+1139:             self.alpha_ = gs.best_estimator_.alpha
+1140: 
+
+
+B TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 1345, "path": "sklearn/linear_model/ridge.py", "start_line": 1290}
+1290:         - An object to be used as a cross-validation generator.
+1291:         - An iterable yielding train/test splits.
+1292: 
+1293:         Refer :ref:`User Guide <cross_validation>` for the various
+1294:         cross-validation strategies that can be used here.
+1295: 
+1296:     class_weight : dict or 'balanced', optional
+1297:         Weights associated with classes in the form ``{class_label: weight}``.
+1298:         If not given, all classes are supposed to have weight one.
+1299: 
+1300:         The "balanced" mode uses the values of y to automatically adjust
+1301:         weights inversely proportional to class frequencies in the input data
+1302:         as ``n_samples / (n_classes * np.bincount(y))``
+1303: 
+1304:     Attributes
+1305:     ----------
+1306:     cv_values_ : array, shape = [n_samples, n_alphas] or \
+1307:     shape = [n_samples, n_responses, n_alphas], optional
+1308:         Cross-validation values for each alpha (if `store_cv_values=True` and
+1309:     `cv=None`). After `fit()` has been called, this attribute will contain \
+1310:     the mean squared errors (by default) or the values of the \
+1311:     `{loss,score}_func` function (if provided in the constructor).
+1312: 
+1313:     coef_ : array, shape = [n_features] or [n_targets, n_features]
+1314:         Weight vector(s).
+1315: 
+1316:     intercept_ : float | array, shape = (n_targets,)
+1317:         Independent term in decision function. Set to 0.0 if
+1318:         ``fit_intercept = False``.
+1319: 
+1320:     alpha_ : float
+1321:         Estimated regularization parameter
+1322: 
+1323:     See also
+1324:     --------
+1325:     Ridge : Ridge regression
+1326:     RidgeClassifier : Ridge classifier
+1327:     RidgeCV : Ridge regression with built-in cross validation
+1328: 
+1329:     Notes
+1330:     -----
+1331:     For multi-class classification, n_class classifiers are trained in
+1332:     a one-versus-all approach. Concretely, this is implemented by taking
+1333:     advantage of the multi-variate response support in Ridge.
+1334:     """
+1335:     def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+1336:                  normalize=False, scoring=None, cv=None, class_weight=None):
+1337:         super(RidgeClassifierCV, self).__init__(
+1338:             alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
+1339:             scoring=scoring, cv=cv)
+1340:         self.class_weight = class_weight
+1341: 
+1342:     def fit(self, X, y, sample_weight=None):
+1343:         """Fit the ridge classifier.
+1344: 
+1345:         Parameters
+
+
+B TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 1381, "path": "sklearn/linear_model/ridge.py", "start_line": 1342}
+1342:     def fit(self, X, y, sample_weight=None):
+1343:         """Fit the ridge classifier.
+1344: 
+1345:         Parameters
+1346:         ----------
+1347:         X : array-like, shape (n_samples, n_features)
+1348:             Training vectors, where n_samples is the number of samples
+1349:             and n_features is the number of features.
+1350: 
+1351:         y : array-like, shape (n_samples,)
+1352:             Target values. Will be cast to X's dtype if necessary
+1353: 
+1354:         sample_weight : float or numpy array of shape (n_samples,)
+1355:             Sample weight.
+1356: 
+1357:         Returns
+1358:         -------
+1359:         self : object
+1360:         """
+1361:         check_X_y(X, y, accept_sparse=['csr', 'csc', 'coo'],
+1362:                   multi_output=True)
+1363: 
+1364:         self._label_binarizer = LabelBinarizer(pos_label=1, neg_label=-1)
+1365:         Y = self._label_binarizer.fit_transform(y)
+1366:         if not self._label_binarizer.y_type_.startswith('multilabel'):
+1367:             y = column_or_1d(y, warn=True)
+1368: 
+1369:         if self.class_weight:
+1370:             if sample_weight is None:
+1371:                 sample_weight = 1.
+1372:             # modify the sample weights with the corresponding class weight
+1373:             sample_weight = (sample_weight *
+1374:                              compute_sample_weight(self.class_weight, y))
+1375: 
+1376:         _BaseRidgeCV.fit(self, X, Y, sample_weight=sample_weight)
+1377:         return self
+1378: 
+1379:     @property
+1380:     def classes_(self):
+1381:         return self._label_binarizer.classes_
+
+
+B TOOL 6: read_file
+ARGS: {"cursor": null, "end_line": 1247, "path": "sklearn/linear_model/ridge.py", "start_line": 1180}
+1180:         a scorer callable object / function with signature
+1181:         ``scorer(estimator, X, y)``.
+1182: 
+1183:     cv : int, cross-validation generator or an iterable, optional
+1184:         Determines the cross-validation splitting strategy.
+1185:         Possible inputs for cv are:
+1186: 
+1187:         - None, to use the efficient Leave-One-Out cross-validation
+1188:         - integer, to specify the number of folds.
+1189:         - An object to be used as a cross-validation generator.
+1190:         - An iterable yielding train/test splits.
+1191: 
+1192:         For integer/None inputs, if ``y`` is binary or multiclass,
+1193:         :class:`sklearn.model_selection.StratifiedKFold` is used, else,
+1194:         :class:`sklearn.model_selection.KFold` is used.
+1195: 
+1196:         Refer :ref:`User Guide <cross_validation>` for the various
+1197:         cross-validation strategies that can be used here.
+1198: 
+1199:     gcv_mode : {None, 'auto', 'svd', eigen'}, optional
+1200:         Flag indicating which strategy to use when performing
+1201:         Generalized Cross-Validation. Options are::
+1202: 
+1203:             'auto' : use svd if n_samples > n_features or when X is a sparse
+1204:                      matrix, otherwise use eigen
+1205:             'svd' : force computation via singular value decomposition of X
+1206:                     (does not work for sparse matrices)
+1207:             'eigen' : force computation via eigendecomposition of X^T X
+1208: 
+1209:         The 'auto' mode is the default and is intended to pick the cheaper
+1210:         option of the two depending upon the shape and format of the training
+1211:         data.
+1212: 
+1213:     store_cv_values : boolean, default=False
+1214:         Flag indicating if the cross-validation values corresponding to
+1215:         each alpha should be stored in the `cv_values_` attribute (see
+1216:         below). This flag is only compatible with `cv=None` (i.e. using
+1217:         Generalized Cross-Validation).
+1218: 
+1219:     Attributes
+1220:     ----------
+1221:     cv_values_ : array, shape = [n_samples, n_alphas] or \
+1222:         shape = [n_samples, n_targets, n_alphas], optional
+1223:         Cross-validation values for each alpha (if `store_cv_values=True` and \
+1224:         `cv=None`). After `fit()` has been called, this attribute will \
+1225:         contain the mean squared errors (by default) or the values of the \
+1226:         `{loss,score}_func` function (if provided in the constructor).
+1227: 
+1228:     coef_ : array, shape = [n_features] or [n_targets, n_features]
+1229:         Weight vector(s).
+1230: 
+1231:     intercept_ : float | array, shape = (n_targets,)
+1232:         Independent term in decision function. Set to 0.0 if
+1233:         ``fit_intercept = False``.
+1234: 
+1235:     alpha_ : float
+1236:         Estimated regularization parameter.
+1237: 
+1238:     See also
+1239:     --------
+1240:     Ridge : Ridge regression
+1241:     RidgeClassifier : Ridge classifier
+1242:     RidgeClassifierCV : Ridge classifier with built-in cross validation
+1243:     """
+1244:     pass
+1245: 
+1246: 
+1247: class RidgeClassifierCV(LinearClassifierMixin, _BaseRidgeCV):
+

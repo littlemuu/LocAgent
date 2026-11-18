@@ -1,0 +1,6 @@
+{
+  "instance_id": "Delgan__loguru-1239",
+  "repo": "Delgan/loguru",
+  "base_commit": "65fe4a8db9a8f297ae3648f51b5e3050b30945a9",
+  "problem_statement": "Add unit tests for traceback formatting of RecursionError\nFor example, the following snippet:\r\n\r\n```python\r\nfrom loguru import logger\r\n\r\ndef rec():\r\n    rec()\r\n\r\ntry:\r\n    rec()\r\nexcept Exception:\r\n    logger.exception(\"Oups\")\r\n```\r\n\r\nShould produce the following logs:\r\n\r\n```txt\r\n2024-02-17 12:06:00.577 | ERROR    | __main__:<module>:9 - Oups\r\nTraceback (most recent call last):\r\n\r\n> File \"/home/delgan/Code/loguru/script.py\", line 7, in <module>\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n  [Previous line repeated 996 more times]\r\n\r\nRecursionError: maximum recursion depth exceeded\r\n```\r\n\r\nNote the \"[Previous line repeated 996 more times]\".\r\n\n"
+}

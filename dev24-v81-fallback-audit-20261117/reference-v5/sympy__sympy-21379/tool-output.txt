@@ -1,0 +1,172 @@
+B TOOL 1: search_text
+ARGS: {"offset": 0, "query": "Piecewise generators do not make sense"}
+sympy/polys/polytools.py:4399:             raise PolynomialError("Piecewise generators do not make sense")
+
+B TOOL 2: search_text
+ARGS: {"offset": 0, "query": "def _subs"}
+sympy/core/basic.py:955:     def _subs(self, old, new, **hints):
+sympy/core/function.py:1738:             def _subset(a, b):
+sympy/integrals/heurisch.py:494:     def _substitute(expr):
+sympy/simplify/sqrtdenest.py:73: def _subsets(n):
+sympy/solvers/polysys.py:218:     def _subs_root(f, gen, zero):
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 4410, "path": "sympy/polys/polytools.py", "start_line": 4370}
+4370:         expr = sympify(expr)
+4371: 
+4372:         if isinstance(expr, Basic):
+4373:             if expr.is_Poly:
+4374:                 _polys.append(i)
+4375:             else:
+4376:                 _exprs.append(i)
+4377: 
+4378:                 if opt.expand:
+4379:                     expr = expr.expand()
+4380:         else:
+4381:             failed = True
+4382: 
+4383:         exprs.append(expr)
+4384: 
+4385:     if failed:
+4386:         raise PolificationFailed(opt, origs, exprs, True)
+4387: 
+4388:     if _polys:
+4389:         # XXX: this is a temporary solution
+4390:         for i in _polys:
+4391:             exprs[i] = exprs[i].as_expr()
+4392: 
+4393:     reps, opt = _parallel_dict_from_expr(exprs, opt)
+4394:     if not opt.gens:
+4395:         raise PolificationFailed(opt, origs, exprs, True)
+4396: 
+4397:     for k in opt.gens:
+4398:         if isinstance(k, Piecewise):
+4399:             raise PolynomialError("Piecewise generators do not make sense")
+4400: 
+4401:     coeffs_list, lengths = [], []
+4402: 
+4403:     all_monoms = []
+4404:     all_coeffs = []
+4405: 
+4406:     for rep in reps:
+4407:         monoms, coeffs = list(zip(*list(rep.items())))
+4408: 
+4409:         coeffs_list.extend(coeffs)
+4410:         all_monoms.append(monoms)
+
+
+B TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 1030, "path": "sympy/core/basic.py", "start_line": 955}
+955:     def _subs(self, old, new, **hints):
+956:         """Substitutes an expression old -> new.
+957: 
+958:         If self is not equal to old then _eval_subs is called.
+959:         If _eval_subs doesn't want to make any special replacement
+960:         then a None is received which indicates that the fallback
+961:         should be applied wherein a search for replacements is made
+962:         amongst the arguments of self.
+963: 
+964:         >>> from sympy import Add
+965:         >>> from sympy.abc import x, y, z
+966: 
+967:         Examples
+968:         ========
+969: 
+970:         Add's _eval_subs knows how to target x + y in the following
+971:         so it makes the change:
+972: 
+973:         >>> (x + y + z).subs(x + y, 1)
+974:         z + 1
+975: 
+976:         Add's _eval_subs doesn't need to know how to find x + y in
+977:         the following:
+978: 
+979:         >>> Add._eval_subs(z*(x + y) + 3, x + y, 1) is None
+980:         True
+981: 
+982:         The returned None will cause the fallback routine to traverse the args and
+983:         pass the z*(x + y) arg to Mul where the change will take place and the
+984:         substitution will succeed:
+985: 
+986:         >>> (z*(x + y) + 3).subs(x + y, 1)
+987:         z + 3
+988: 
+989:         ** Developers Notes **
+990: 
+991:         An _eval_subs routine for a class should be written if:
+992: 
+993:             1) any arguments are not instances of Basic (e.g. bool, tuple);
+994: 
+995:             2) some arguments should not be targeted (as in integration
+996:                variables);
+997: 
+998:             3) if there is something other than a literal replacement
+999:                that should be attempted (as in Piecewise where the condition
+1000:                may be updated without doing a replacement).
+1001: 
+1002:         If it is overridden, here are some special cases that might arise:
+1003: 
+1004:             1) If it turns out that no special change was made and all
+1005:                the original sub-arguments should be checked for
+1006:                replacements then None should be returned.
+1007: 
+1008:             2) If it is necessary to do substitutions on a portion of
+1009:                the expression then _subs should be called. _subs will
+1010:                handle the case of any sub-expression being equal to old
+1011:                (which usually would not be the case) while its fallback
+1012:                will handle the recursion into the sub-arguments. For
+1013:                example, after Add's _eval_subs removes some matching terms
+1014:                it must process the remaining terms so it calls _subs
+1015:                on each of the un-matched terms and then adds them
+1016:                onto the terms previously obtained.
+1017: 
+1018:            3) If the initial expression should remain unchanged then
+1019:               the original expression should be returned. (Whenever an
+1020:               expression is returned, modified or not, no further
+1021:               substitution of old -> new is attempted.) Sum's _eval_subs
+1022:               routine uses this strategy when a substitution is attempted
+1023:               on any of its summation variables.
+1024:         """
+1025: 
+1026:         def fallback(self, old, new):
+1027:             """
+1028:             Try to replace old with new in any of self's arguments.
+1029:             """
+1030:             hit = False
+
+
+B TOOL 5: search_text
+ARGS: {"offset": 0, "query": "def _eval_subs"}
+sympy/concrete/expr_with_limits.py:306:     def _eval_subs(self, old, new):
+sympy/core/add.py:873:     def _eval_subs(self, old, new):
+sympy/core/basic.py:1066:     def _eval_subs(self, old, new):
+sympy/core/function.py:352:     def _eval_subs(self, old, new):
+sympy/core/function.py:1710:     def _eval_subs(self, old, new):
+sympy/core/function.py:2371:     def _eval_subs(self, old, new):
+sympy/core/mul.py:1597:     def _eval_subs(self, old, new):
+sympy/core/numbers.py:699:     def _eval_subs(self, old, new):
+sympy/core/numbers.py:2854:     def _eval_subs(self, old, new):
+sympy/core/numbers.py:3020:     def _eval_subs(self, old, new):
+sympy/core/power.py:791:     def _eval_subs(self, old, new):
+sympy/core/symbol.py:310:     def _eval_subs(self, old, new):
+sympy/functions/elementary/exponential.py:429:     def _eval_subs(self, old, new):
+sympy/functions/elementary/piecewise.py:807:     def _eval_subs(self, old, new):
+sympy/functions/elementary/trigonometric.py:1596:     def _eval_subs(self, old, new):
+sympy/geometry/curve.py:88:     def _eval_subs(self, old, new):
+sympy/geometry/entity.py:151:     def _eval_subs(self, old, new):
+sympy/logic/boolalg.py:708:     def _eval_subs(self, old, new):
+sympy/logic/boolalg.py:851:     def _eval_subs(self, old, new):
+sympy/physics/control/lti.py:227:     def _eval_subs(self, old, new):
+sympy/physics/units/quantities.py:151:     def _eval_subs(self, old, new):
+sympy/polys/polytools.py:580:     def _eval_subs(f, old, new):
+sympy/polys/rootoftools.py:791:     def _eval_subs(self, old, new):
+sympy/series/formal.py:1138:     def _eval_subs(self, old, new):
+sympy/series/fourier.py:188:     def _eval_subs(self, old, new):
+sympy/series/order.py:416:     def _eval_subs(self, old, new):
+sympy/sets/conditionset.py:221:     def _eval_subs(self, old, new):
+
+B TOOL 6: search_text
+ARGS: {"offset": 0, "query": "def _parallel_dict_from_expr"}
+sympy/polys/polyutils.py:180: def _parallel_dict_from_expr_if_gens(exprs, opt):
+sympy/polys/polyutils.py:231: def _parallel_dict_from_expr_no_gens(exprs, opt):
+sympy/polys/polyutils.py:323: def _parallel_dict_from_expr(exprs, opt):

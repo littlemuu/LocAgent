@@ -1,0 +1,15 @@
+{
+  "original_audit": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-14087/locator/diagnostic-audit.json",
+  "original_result": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-14087/locator/result.json",
+  "original_provider_finish": [
+    "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-14087/locator-wire/response-66.json"
+  ],
+  "original_localization_metadata": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-14087/localization.json",
+  "v82_binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "replay_mode": "saved original finish + recorded C coverage/search/retrieval metadata; no source snapshot invented",
+  "new_API_calls": 0,
+  "model_calls": 0,
+  "body_sha256": "8777a8a4eb43c0a3923228264588a96a34328f64c8913b2607a50c1c98b65057",
+  "body_preserved": true,
+  "serialized_envelope_bytes": 3095
+}

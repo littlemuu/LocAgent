@@ -1,0 +1,194 @@
+{
+  "root": "source",
+  "source_files": [
+    "dispatch/api.py",
+    "dispatch/backoff.py",
+    "dispatch/cleanup.py",
+    "dispatch/http.py",
+    "dispatch/identity.py",
+    "dispatch/metrics.py",
+    "dispatch/receipts.py",
+    "dispatch/reports.py",
+    "dispatch/retry.py",
+    "dispatch/worker.py"
+  ],
+  "issue": "A queued webhook delivery receives a transient HTTP failure and is retried. Explain how the original delivery identifier is preserved, which responses and attempt counts permit another retry, and where a previously acknowledged delivery is prevented from being sent again. Trace the relevant functions across files, cite source evidence, and state limits of the duplicate protection. Do not modify or execute the source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "b1",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "b2-0",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/worker.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "b2-1",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/retry.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "b2-2",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/receipts.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "b2-3",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/http.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "b2-4",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/identity.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "b3",
+            "name": "finish",
+            "input": {
+              "files": [
+                "dispatch/worker.py",
+                "dispatch/retry.py",
+                "dispatch/receipts.py",
+                "dispatch/http.py",
+                "dispatch/identity.py"
+              ],
+              "entities": [
+                "dispatch/worker.py:process_delivery",
+                "dispatch/retry.py:retry_allowed",
+                "dispatch/retry.py:schedule_retry",
+                "dispatch/receipts.py:ReceiptStore.was_acknowledged",
+                "dispatch/http.py:send_request"
+              ],
+              "answer": "process_delivery checks receipts before send_request, acknowledges 2xx, and delegates other statuses to schedule_retry. retry_allowed permits 429 or 5xx while attempt < 3. schedule_retry copies the job and changes only attempt, preserving delivery_id. send_request sends that identifier as Idempotency-Key. delivery_key derives the initial identifier from event and endpoint. ReceiptStore keeps acknowledgements in memory: protection is lost on restart or pruning; check/send/mark is not atomic, so concurrent workers can still send twice. The receiver must implement idempotency; the header alone does not prove it. Transport exceptions are not converted into retryable status codes. Offline scripted contract fixture; not a model-quality result."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "r1",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "retry",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "r2-0",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/worker.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "r2-1",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/receipts.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "r2-2",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/http.py",
+              "offset": 0
+            }
+          },
+          {
+            "type": "tool_use",
+            "id": "r2-3",
+            "name": "read_file",
+            "input": {
+              "path": "dispatch/identity.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "r3",
+            "name": "finish",
+            "input": {
+              "files": [
+                "dispatch/worker.py",
+                "dispatch/retry.py",
+                "dispatch/receipts.py",
+                "dispatch/http.py",
+                "dispatch/identity.py"
+              ],
+              "entities": [
+                "dispatch/worker.py:process_delivery",
+                "dispatch/retry.py:retry_allowed",
+                "dispatch/retry.py:schedule_retry",
+                "dispatch/receipts.py:ReceiptStore.was_acknowledged",
+                "dispatch/http.py:send_request"
+              ],
+              "answer": "process_delivery checks receipts before send_request, acknowledges 2xx, and delegates other statuses to schedule_retry. retry_allowed permits 429 or 5xx while attempt < 3. schedule_retry copies the job and changes only attempt, preserving delivery_id. send_request sends that identifier as Idempotency-Key. delivery_key derives the initial identifier from event and endpoint. ReceiptStore keeps acknowledgements in memory: protection is lost on restart or pruning; check/send/mark is not atomic, so concurrent workers can still send twice. The receiver must implement idempotency; the header alone does not prove it. Transport exceptions are not converted into retryable status codes. Offline scripted contract fixture; not a model-quality result."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

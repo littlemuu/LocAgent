@@ -1,0 +1,130 @@
+{
+  "root": "source",
+  "source_files": [
+    "docs/access.py",
+    "docs/api.py",
+    "docs/audit.py",
+    "docs/listing.py",
+    "docs/reports.py",
+    "docs/shares.py"
+  ],
+  "issue": "A user opens or edits a document using a tenant-scoped identity and an optional share token. Explain the order of access checks, when ownership or an administrator role helps, what a share token permits, and whether recording an audit event itself grants access. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "search_text",
+            "input": {
+              "query": "access",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "docs/access.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "access",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "docs/access.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

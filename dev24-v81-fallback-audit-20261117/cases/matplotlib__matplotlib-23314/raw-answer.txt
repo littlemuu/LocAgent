@@ -1,0 +1,17 @@
+已读到的事实（附文件:行号）
+- lib/matplotlib/artist.py:1008-1018：Artist.set_visible 只设置 self._visible = b，然后 pchanged() 与 stale = True，不做任何绘制期判断。
+- lib/matplotlib/axes/_base.py:3018-3023：_AxesBase.draw 开头有 `if not self.get_visible(): return`，即二维 Axes 在 draw 入口处自行短路。
+- lib/mpl_toolkits/mplot3d/axes3d.py:389-444：Axes3D.draw 重写了 draw，开头只调用 _unstale_viewLim()，随后直接 self.patch.draw(renderer)（393 行），没有 get_visible() 检查；之后才在 444 行调用 super().draw(renderer)。
+- lib/mpl_toolkits/mplot3d/axes3d.py:411-414：collections/patches 的筛选只检查子 artist 的 get_visible()，不检查 Axes 自身可见性。
+- lib/mpl_toolkits/mplot3d/axes3d.py:435-441：_axis3don 为真时直接绘制 pane 与 axis，同样无 Axes 自身可见性判断。
+
+推断
+- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。
+- 待验证假设：lib/matplotlib/artist.py:Artist.set_visible 本身行为正确（仅置标志），问题在于 Axes3D.draw 未消费该标志，故修复点应在 Axes3D.draw 入口处提前返回。
+
+未核验点
+- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。
+- 未读完：lib/matplotlib/widgets.py:ToolLineHandles.set_visible、lib/matplotlib/widgets.py:_SelectorWidget.set_visible（与本问题相关性低，仅作排除）。
+- 未核验 Axes3D 是否另有 set_visible 覆写或 _axis3don 相关分支；未运行任何渲染验证。
+
+最小验证：`python -c "import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; f,a=plt.subplots(1,2,subplot_kw={'projection':'3d'}); a[0].set_visible(False); f.canvas.draw(); print(a[0].get_visible())"` 并配合检查渲染输出中左侧区域是否仍出现 3D 背景。

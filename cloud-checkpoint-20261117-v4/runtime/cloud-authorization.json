@@ -1,0 +1,24 @@
+{
+  "authorized_at": "2026-11-17T02:29:45.850935+00:00",
+  "instance_id": "ins-1njewmmg",
+  "host": "119.28.178.216",
+  "mode": "cloud x86 independent smoke v2",
+  "allowed_ids": [
+    "sympy__sympy-21379",
+    "astropy__astropy-14182"
+  ],
+  "arms": [
+    "A",
+    "B"
+  ],
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "model": "deepseek-flash",
+  "new_api_limit_cny": 8.75,
+  "prior_smoke_conservative_upper_cny": 1.243996,
+  "cumulative_api_upper_limit_cny": 9.993996,
+  "cloud_cost_separate": true,
+  "automatic_retries": 0,
+  "formal_trial_authorized": false,
+  "stop_instance_without_compute_charges_afterward": true,
+  "basis": "User authorized cloud environment configuration and completion of unfinished smoke, no formal trial, shutdown without charges after completion. Existing 10 yuan API cap retained across runs."
+}

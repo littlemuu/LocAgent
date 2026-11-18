@@ -1,0 +1,110 @@
+{
+  "status": "completed",
+  "sdk_status": "finished",
+  "failure": null,
+  "answer": {
+    "files": [],
+    "entities": [],
+    "answer": "Scripted connectivity fixture only; no model judgment or localization score."
+  },
+  "requests": 4,
+  "tool_calls": 3,
+  "source_bytes": 5774,
+  "network_attempts": 0,
+  "live_calls": 0,
+  "cost": 0,
+  "quality_measured": false,
+  "tools": [
+    "list_files",
+    "search_text",
+    "read_file",
+    "locagent_retrieve",
+    "finish"
+  ],
+  "budget_simulation": {
+    "mode": "offline_preparation",
+    "authorization": "not_granted",
+    "currency": "CNY",
+    "simulation": true,
+    "spent_upper_micro_cny": 22400,
+    "reserved_micro_cny": 0,
+    "limit_micro_cny": 17000000,
+    "halted": false,
+    "reason": null,
+    "needs_review": false,
+    "calls": [
+      {
+        "id": 1,
+        "arm": "baseline",
+        "turn": 1,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 2,
+        "arm": "baseline",
+        "turn": 2,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 3,
+        "arm": "baseline",
+        "turn": 3,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 4,
+        "arm": "baseline",
+        "turn": 4,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 5,
+        "arm": "retrieval",
+        "turn": 1,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 6,
+        "arm": "retrieval",
+        "turn": 2,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 7,
+        "arm": "retrieval",
+        "turn": 3,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      },
+      {
+        "id": 8,
+        "arm": "retrieval",
+        "turn": 4,
+        "status": "settled",
+        "reservation": 2113536,
+        "cost": 2800,
+        "http_status": 200
+      }
+    ]
+  }
+}

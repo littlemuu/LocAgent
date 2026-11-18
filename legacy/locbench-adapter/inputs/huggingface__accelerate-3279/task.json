@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__accelerate-3279",
+  "repo": "huggingface/accelerate",
+  "base_commit": "cb8b7c637a8588668c52bd306f9b2828f69d9585",
+  "problem_statement": "Calling infer_auto_device_map() with max_memory=None throws an error in version 1.2.0\n### System Info\r\n\r\n```Shell\r\naccelerate==1.2.0\r\n```\r\n\r\n### Reproduction\r\n\r\nBug is from this commit:\r\nhttps://github.com/huggingface/accelerate/commit/d7b1b368e9f484a18636a71600566b757d5cf87e\r\n\r\n`max_memory` initialization was moved into `_init_infer_auto_device_map`, which does not return the `max_memory` value.\r\n\r\nSo if max_memory=None is passed to `infer_auto_device_map` (the default value), then it will still be None at line 1415:\r\nhttps://github.com/huggingface/accelerate/blob/cb8b7c637a8588668c52bd306f9b2828f69d9585/src/accelerate/utils/modeling.py#L1415\r\n\r\nLeading to error: TypeError: 'NoneType' object is not subscriptable\r\n\r\n### Expected behavior\r\n\r\nmax_memory=None when passed to `infer_auto_device_map` does not throw an error.\n"
+}

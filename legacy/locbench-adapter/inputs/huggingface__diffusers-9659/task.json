@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-9659",
+  "repo": "huggingface/diffusers",
+  "base_commit": "5956b68a6927126daffc2c5a6d1a9a189defe288",
+  "problem_statement": "add load_lora_weights to  pipeline_stable_diffusion_3_img2img.py\n**Is your feature request related to a problem? Please describe.*\"\r\nYes, there is no effective way to load lora weights with SD3\r\n\r\nA clear and concise description of what the problem is. Ex. I'm always frustrated when [...].\r\nI can't get LoRa weights to load despite the fact there is a thorough and easy way to train them\r\n\r\n**Describe the solution you'd like.**\r\nthe function load_lora_weights() should be added to pipeline_stable_diffusion_3_img2img.py\r\n\r\n**Describe alternatives you've considered.**\r\nA clear and concise description of any alternative solutions or features you've considered.\r\nAny sort of work around using another form of loader or model merging etc.\r\n\r\n**Additional context.**\r\nAdd any other context or screenshots about the feature request here.\r\nhttps://huggingface.co/Mujeeb603/SD3-medium-Geometry-Diagrams-Lora-1\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "mathesar-foundation__mathesar-3117",
+  "repo": "mathesar-foundation/mathesar",
+  "base_commit": "e7b175bc2f7db0ae6e69c723c6a054c6dc2152d8",
+  "problem_statement": "The requirement of superuser postgresql access is problematic\n## Problem\r\nMathesar needs a Postgres superuser to function correctly, from the docs at https://docs.mathesar.org/installation/build-from-source/ \r\n\r\n## Proposed solution\r\nThe mathesar user should not require superuser access. \r\n\r\n## Additional context\r\nThe superuser is a global permission meaning that a user that has superuser permission will be able to access (and do stuff) not on the mathesar but *all* the databases of the RDBMS. Considering that many production systems have a single RDBMS hosting many application this is a major problem since the mathsar user won't have any access boundaries on the same RDBMS. The mathesar user access can be unlimited but *must* be bounded without the mathesar database.\n"
+}

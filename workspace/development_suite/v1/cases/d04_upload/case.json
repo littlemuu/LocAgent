@@ -1,0 +1,130 @@
+{
+  "root": "source",
+  "source_files": [
+    "uploads/api.py",
+    "uploads/checksum.py",
+    "uploads/finalize.py",
+    "uploads/parts.py",
+    "uploads/progress.py",
+    "uploads/reports.py"
+  ],
+  "issue": "An upload receives parts out of order and receives one part number twice. Explain which bytes are eventually assembled, what prevents incomplete or checksum-mismatched uploads from finishing, and what state remains if durable object storage raises during completion. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "search_text",
+            "input": {
+              "query": "parts",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "uploads/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "parts",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "uploads/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

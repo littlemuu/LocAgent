@@ -1,0 +1,6 @@
+{
+  "instance_id": "gammasim__simtools-1183",
+  "repo": "gammasim/simtools",
+  "base_commit": "5dcc802561e21122783af829aede24c0a411b4a2",
+  "problem_statement": "test_get_corsika_telescope_list takes too long\nThe `test_get_corsika_telescope_list` test takes roughly 20 seconds to run. Profiling it points to excessive time spent initializing the array model, perhaps related to reading from the DB too many times.\r\n\r\n```\r\n  ncalls  tottime  percall  cumtime  percall filename:lineno(function)\r\n        1    0.000    0.000   21.427   21.427 /workdir/external/simtools/simtools/model/array_model.py:41(__init__)\r\n        1    0.000    0.000   20.855   20.855 /workdir/external/simtools/simtools/model/array_model.py:69(_initialize)\r\n       60    0.004    0.000   20.773    0.346 /workdir/external/simtools/simtools/model/model_parameter.py:49(__init__)\r\n       58    0.002    0.000   19.823    0.342 /workdir/external/simtools/simtools/model/telescope_model.py:38(__init__)\r\n        1    0.000    0.000    0.994    0.994 /workdir/external/simtools/simtools/model/site_model.py:27(__init__)\r\n       61    0.001    0.000    0.574    0.009 /workdir/external/simtools/simtools/db/db_handler.py:57(__init__)\r\n```\r\n\r\nNeed to look into it further (in the middle of something else, opening this issue so it is not forgotten). \n"
+}

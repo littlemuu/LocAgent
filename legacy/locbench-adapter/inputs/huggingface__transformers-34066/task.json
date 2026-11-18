@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-34066",
+  "repo": "huggingface/transformers",
+  "base_commit": "a37a06a20b4a006963f15acf5f49afa5a0496f29",
+  "problem_statement": "Default behaviour in `TextClassificationPipeline` for regression problem type\n### Feature request\r\n\r\nThe `AutoModelForSequenceClassification` class also supports problem_type=regression. I am not sure if it is popularly used but I believe that function_to_apply in `TextClassificationPipeline` should behave as if it is set to \"none\"  for this case?\r\n\r\n### Motivation\r\n\r\nCurrently, the \"sigmoid\" function is also applied for regression tasks which, in my opinion, might not be the correct default behaviour.\r\n\r\n### Your contribution\r\n\r\nI believe this can be handled by adding an additional condition for `self.model.config.problem_type == \"regression\"` before [this](https://github.com/huggingface/transformers/blob/38f9f10dd9240619ea17fb6c7acb51b3bc592232/src/transformers/pipelines/text_classification.py#L195) line.\n"
+}

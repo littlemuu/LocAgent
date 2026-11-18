@@ -1,0 +1,25 @@
+{
+  "approved": true,
+  "approved_at": "2026-11-17T22:15:13.877049+08:00",
+  "scope": "User confirms final frozen holdout50 ABC(v8.2) once; minimal dataset adapter and external scheduling explicitly authorized after dev24 byte equivalence; no experimental component modifications; no reruns.",
+  "ids_sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6",
+  "C_binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "AB_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "api_total_cap_cny": null,
+  "concurrency": 1,
+  "repetitions": 1,
+  "automatic_retries": 0,
+  "coding_max_requests": 40,
+  "locator_max_requests": 4,
+  "min_free_disk_GiB": 30,
+  "image_policy": "Preserve original24; remove only newly pulled holdout task image after ABC and evidence-manifest completion",
+  "estimated_host_hours": [
+    6.5,
+    11
+  ],
+  "stop_on_preflight_deviation": true,
+  "no_rescoring": true,
+  "delete_remote_credential": true,
+  "shutdown_after": true,
+  "user_confirmation_text": "确认本轮估算（API 不设总上限；主机预计 6.5–11 小时）。同意新增最小的 holdout 评分数据适配入口与外层调度，57/42文件及组件不改。先离线dev24逐字等价核验；镜像方案1；首个付费请求前版本、commit、容器资源、df，低于30GiB或偏差就停下汇报。其余照预注册执行，一次性运行，不重跑。"
+}

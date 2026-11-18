@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "instance_id": "scikit-learn__scikit-learn-10297",
+  "base_commit": "b90661d6a46aa3619d3eec94d5281f5888add501",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sklearn/linear_model/ridge.py:1335-1340：RidgeClassifierCV.__init__ 的签名只有 alphas、fit_intercept、normalize、scoring、cv、class_weight，没有 store_cv_values，也没有 gcv_mode；super().__init__ 只透传前五个参数。\n- sklearn/linear_model/ridge.py:1088-1098：_BaseRidgeCV.__init__ 接受 gcv_mode 与 store_cv_values=False，并设置 self.store_cv_values。\n- sklearn/linear_model/ridge.py:1118-1132：_BaseRidgeCV.fit 在 cv is None 时把 self.store_cv_values 传给 _RidgeGCV，并在其为真时设置 self.cv_values_；cv 非 None 且 store_cv_values 为真时抛 ValueError。\n- sklearn/linear_model/ridge.py:1306-1311：RidgeClassifierCV 的 docstring 在 Attributes 中描述 cv_values_ 依赖 store_cv_values=True 且 cv=None。\n- sklearn/linear_model/ridge.py:1376：RidgeClassifierCV.fit 直接调用 _BaseRidgeCV.fit(self, X, Y, sample_weight=...)。\n- sklearn/linear_model/tests/test_ridge.py:577-587：已有测试只覆盖 RidgeCV 的 store_cv_values，未见 RidgeClassifierCV 的对应测试（仅搜索命中，未读正文）。\n\n推断\n- 待验证假设：sklearn/linear_model/ridge.py:RidgeClassifierCV.__init__ 未暴露 store_cv_values（也未透传给父类），因此构造时 TypeError，且实例上不存在该属性，导致 sklearn/linear_model/ridge.py:_BaseRidgeCV.fit 中 self.store_cv_values 的读取路径对分类器不可用。\n- 待验证假设：修复方向是在 RidgeClassifierCV.__init__ 增加 store_cv_values=False（可能还有 gcv_mode）并透传给 super()，使 sklearn/linear_model/ridge.py:_BaseRidgeCV.fit 的 cv_values_ 分支对分类器生效。\n\n未核验点\n- 未读 _RidgeGCV 的 __init__/fit 完整正文（仅搜索命中 885-892、1077 行），cv_values_ 形状与多类 one-vs-all 下的语义未核验。\n- 未读 RidgeCV 类定义正文，未确认其参数列表与 RidgeClassifierCV 的差异。\n- 未读 test_ridge.py 正文，未确认测试覆盖缺口。\n- 未运行任何验证。\n\n最小验证：`python -c \"from sklearn.linear_model import RidgeClassifierCV; RidgeClassifierCV(store_cv_values=True)\"`\n\n以下内容未在阅读记录中核验：\n- [R4] sklearn/linear_model/tests/test_ridge.py:577-587",
+    "entities": [
+      "sklearn/linear_model/ridge.py:RidgeClassifierCV.__init__",
+      "sklearn/linear_model/ridge.py:_BaseRidgeCV.__init__",
+      "sklearn/linear_model/ridge.py:_BaseRidgeCV.fit",
+      "sklearn/linear_model/ridge.py:RidgeClassifierCV.fit"
+    ],
+    "files": [
+      "sklearn/linear_model/ridge.py",
+      "sklearn/linear_model/tests/test_ridge.py"
+    ]
+  }
+}

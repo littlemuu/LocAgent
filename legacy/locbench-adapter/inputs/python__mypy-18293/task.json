@@ -1,0 +1,6 @@
+{
+  "instance_id": "python__mypy-18293",
+  "repo": "python/mypy",
+  "base_commit": "c4f5056d6c43db556b5215cb3c330fcde25a77cd",
+  "problem_statement": "(🐞) Wrong column number for `TypedDict.setdefault`\n```py\r\nfrom typing import TypedDict\r\n\r\nclass A(TypedDict):\r\n    x: int\r\na: A\r\na.setdefault('x', '')  # test.py:6:1: error: Argument 2 to \"setdefault\" of \"TypedDict\" has incompatible type \"str\"; expected \"int\"\r\n```\r\ncolumn 1?\r\n\r\nInternally an error with the correct column number is generated, but is filtered out as a duplicate.\n"
+}

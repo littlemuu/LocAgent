@@ -1,0 +1,6 @@
+{
+  "instance_id": "tardis-sn__tardis-2782",
+  "repo": "tardis-sn/tardis",
+  "base_commit": "e1aa88723a6836e8a25cc1afb24b578b1b78651f",
+  "problem_statement": "No need to need benchmarks for different values of length for generate_rpacket_last_interaction_tracker_list.\n@officialasishkumar Currently the said benchmark runs for different values of length, which is not required.\r\nThe related code:\r\nhttps://github.com/tardis-sn/tardis/blob/e1aa88723a6836e8a25cc1afb24b578b1b78651f/benchmarks/transport_montecarlo_packet_trackers.py#L33-L38\r\n\r\nMy question, was this intended? if not can you please remove that since it can increase the runtime of benchmark workflow.\r\n\n"
+}

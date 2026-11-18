@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18785",
+  "repo": "django/django",
+  "base_commit": "c12bc980e5b2bb25e447cd8dee550cad767f1ad2",
+  "problem_statement": "Template system: escape() calls in get_exception_info() should be removed\nDescription\n\t \n​Here there are some calls to escape()\nThey shouldn't be there: escaping happens in templates for non-safe strings anyway, so there's no need.\nAnd there _is_ a drawback: as an example, the Python Sentry SDK ​copies this info, but because it gets sent over the wire (as a JSON string) the information that this has already been escaped is lost, and on the receiving end it is escaped again.\nThis means that on the server-side ​the Error-tracking, in my case Bugsink will show doubly escaped html code snippets. This looks something like this:\n&lt;p class=&quot;relative text-slate-600 text-base md:text-xl mb-4 md:mb-5&quot;&gt; \nRemoving the calls to escape simply solves this. Which makes sense: calling escape is simply not the responsibility of this piece of code, it should just stay marked as unsafe and be escape at the edges (on rendering).\n"
+}

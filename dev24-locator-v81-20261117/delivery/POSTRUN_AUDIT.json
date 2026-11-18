@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "trial_ids_original_order": true,
+  "tasks": 24,
+  "requests": 94,
+  "all_requests_settled": true,
+  "actual_models": [
+    "deepseek-flash"
+  ],
+  "packets_delivered": 24,
+  "packet_matches_sdk_finish": true,
+  "candidate_lists_unchanged": true,
+  "max_requests_per_task": 4,
+  "automatic_retries": 0,
+  "validator_error_count": 0,
+  "live_coding_agent": "未运行",
+  "harness": "未运行",
+  "holdout": "未运行",
+  "cached_images_restored": 18,
+  "API_credential_deleted": true,
+  "shutdown_verified": true,
+  "shutdown_mode": "STOP_CHARGING"
+}

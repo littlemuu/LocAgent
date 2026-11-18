@@ -1,0 +1,10 @@
+{
+  "instance_id": "ins-1njewmmg",
+  "state": "已关机",
+  "mode": "关机不计费模式",
+  "billing": "按量计费-部分停止计费",
+  "public_ip_released": true,
+  "cloud_private_api_credential_deleted": true,
+  "formal_trial_run": false,
+  "verification_source": "Tencent Cloud console visible state after stop submission and refresh"
+}

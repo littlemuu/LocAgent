@@ -1,0 +1,6 @@
+{
+  "instance_id": "keras-team__keras-20626",
+  "repo": "keras-team/keras",
+  "base_commit": "a0f586beb7842d86fce623cab5d3a7fdb2419e9b",
+  "problem_statement": "Normalization layer fails to broadcast scalar mean and variance\nNormalization layer errors out for scalar mean and variance arguments. The documentation states that these arguments will be broadcast to the necessary size and the examples include scalars, but instead the source code seems to only reshape them (see [here](https://github.com/keras-team/keras/blob/v3.7.0/keras/src/layers/preprocessing/normalization.py#L193)).\r\n\r\nI'm using Python 3.12.1 and Keras 3.6.0.\r\n\r\n```\r\n>>> in1 = keras.Input(shape=(16, 16, 3))\r\n>>> normLayer = keras.layers.Normalization(mean=0.1, variance=0.05)\r\n>>> out1 = normLayer(in1)\r\nI tensorflow/core/framework/local_rendezvous.cc:405] Local rendezvous is aborting with status: INVALID_ARGUMENT: Input to reshape is a tensor with 1 values, but the requested shape has 3\r\n```\n"
+}

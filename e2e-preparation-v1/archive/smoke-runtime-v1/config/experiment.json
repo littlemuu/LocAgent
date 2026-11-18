@@ -1,0 +1,57 @@
+{
+  "version": "e2e-dev24-prep-v1",
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "sdk_version": "1.62.0",
+  "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+  "supersedes_harness_design_only": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+  "seed": 20261117,
+  "arms": [
+    "A",
+    "B"
+  ],
+  "baseline": "v7 selfcheck + unchanged v6 identifier BM25/preview; no dense or retrieval improvement",
+  "temperature": 0,
+  "thinking": {
+    "type": "disabled"
+  },
+  "coding": {
+    "max_requests": 40,
+    "max_output_tokens": 2048,
+    "input_tokens": 1000000,
+    "output_tokens": 64000,
+    "evidence_bytes": 262144,
+    "tool_output_bytes": 16384,
+    "timeout_seconds": 2700,
+    "command_timeout_seconds": 120
+  },
+  "locator": {
+    "max_requests": 4,
+    "max_output_tokens": 2048,
+    "input_tokens": 128000,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "smoke_max_cny": 10,
+  "max_serialized_request_bytes": 524288,
+  "concurrency": 1,
+  "automatic_retries": 0,
+  "formal_trial_authorized": false,
+  "cloud_target": {
+    "architecture": "x86_64",
+    "cpu": 8,
+    "memory_gib": 16,
+    "disk_gib_approx": 150
+  },
+  "local_image_pull_limit": 2,
+  "prices_cny_per_million": {
+    "cache_miss_peak": 2,
+    "cache_hit_peak": 0.04,
+    "output_peak": 8,
+    "offpeak_multiplier": 0.5,
+    "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "checked_date": "2026-11-17"
+  }
+}

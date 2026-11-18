@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18104",
+  "repo": "django/django",
+  "base_commit": "ceea86baa36b91d0002911770340a2d7bd4f64b7",
+  "problem_statement": "Cache Model._meta.swapped\nDescription\n\t \nAnother candidate for caching, like #35232 before.\nThe Model._meta.swapped property returns the model that this one has been swapped for. Since most models are not swappable (only auth.User is officially swappable), it returns None in nearly all cases.\nI found this property was the most called function in Django when profiling a subset of Django’s tests, with:\n$ python -m cProfile -o profile runtests.py --parallel 1 *model*\n$ python -m pstats profile <<< 'sort ncalls\nstats 10000' | less\nThis showed 439,484 calls to swapped, taking 29ms of the 5.597s test run, or 0.5% of the total runtime.\nAfter adding @cached_property, this is reduced to 3,653 calls, rounding down to 0ms.\n"
+}

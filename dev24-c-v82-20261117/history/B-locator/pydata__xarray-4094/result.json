@@ -1,0 +1,127 @@
+{
+  "actual_model_ids": [
+    "deepseek-flash"
+  ],
+  "budget": {
+    "input_tokens": 128000,
+    "max_output_tokens": 2048,
+    "max_requests": 4,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "completion_tokens": 872,
+  "cost_upper_cny": 0.039232,
+  "elapsed_seconds": 6.761716419999999,
+  "finished": {
+    "answer": "The bug is in DataArray.to_unstacked_dataset (xarray/core/dataarray.py:1901-1967). It builds each output variable with `self.sel({variable_dim: k}).squeeze(drop=True)` and then constructs `Dataset(data_dict)`.\n\nFor single-dim variables (e.g. `a` and `b` both `(x)`), to_stacked_array (xarray/core/dataset.py:3443-3468) expands each variable along the `variable` level and stacks, so the resulting MultiIndex has a `variable` level plus the (empty) stacking dims. When unstacking, selecting `variable_dim: k` leaves a scalar coordinate for the `variable` level (and possibly the other level) attached to each selected DataArray. Because every selected variable carries a conflicting scalar coordinate named `variable` (value 'a' vs 'b'), `Dataset(data_dict)` raises the MergeError about conflicting values for variable 'y'/'variable'.\n\nThe fix should drop the leftover scalar coordinates from the stacked MultiIndex levels (e.g. reset/drop the `variable` and other level coords) before constructing the Dataset, rather than relying on `squeeze(drop=True)` alone. I did not read the full test bodies (test_dataset.py:3033-3055, test_dataarray.py:2132-2135), so the exact expected roundtrip semantics for single-dim variables remain unverified; the diagnosis is based on the implementation logic and the reported traceback.",
+    "entities": [
+      "xarray/core/dataarray.py:DataArray.to_unstacked_dataset",
+      "xarray/core/dataset.py:Dataset.to_stacked_array"
+    ],
+    "files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py",
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py"
+    ]
+  },
+  "prompt_tokens": 16128,
+  "requests": 4,
+  "scripted": false,
+  "source_bytes": 9658,
+  "status": "completed",
+  "system_prompt_sha256": "830348d04a5a93d7a63adca6ee3fd80f8e44af44254010f71a38ac9ffda3e518",
+  "technical_failure": null,
+  "tool_audit": [
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "to_unstacked_dataset"
+      },
+      "calls": 1,
+      "result": {
+        "next_offset": null,
+        "text": "xarray/core/dataarray.py:1901:     def to_unstacked_dataset(self, dim, level=0):\nxarray/core/dataarray.py:1944:         >>> roundtripped = stacked.to_unstacked_dataset(dim=\"z\")\nxarray/core/dataset.py:3410:         DataArray.to_unstacked_dataset\nxarray/tests/test_dataarray.py:2132:     def test_to_unstacked_dataset_raises_value_error(self):\nxarray/tests/test_dataarray.py:2135:             data.to_unstacked_dataset(\"x\", 0)\nxarray/tests/test_dataset.py:3033:     def test_to_stacked_array_to_unstacked_dataset(self):\nxarray/tests/test_dataset.py:3040:         x = y.to_unstacked_dataset(\"features\")\nxarray/tests/test_dataset.py:3044:         x0 = y[0].to_unstacked_dataset(\"features\")\nxarray/tests/test_dataset.py:3048:     def test_to_stacked_array_to_unstacked_dataset_different_dimension(self):\nxarray/tests/test_dataset.py:3055:         x = y.to_unstacked_dataset(\"features\")\nxarray/tests/test_units.py:3481:     def test_to_unstacked_dataset(self, dtype):\nxarray/tests/test_units.py:3493:         func = method(\"to_unstacked_dataset\", dim=\"z\")"
+      },
+      "source_bytes": 1104,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "def to_stacked_array"
+      },
+      "calls": 2,
+      "result": {
+        "next_offset": null,
+        "text": "xarray/core/dataset.py:3370:     def to_stacked_array("
+      },
+      "source_bytes": 1188,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 1990,
+        "path": "xarray/core/dataarray.py",
+        "start_line": 1895
+      },
+      "calls": 3,
+      "result": {
+        "end_column": 0,
+        "end_line": 1990,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 1895,
+        "text": "1895:         --------\n1896:         DataArray.stack\n1897:         \"\"\"\n1898:         ds = self._to_temp_dataset().unstack(dim, fill_value, sparse)\n1899:         return self._from_temp_dataset(ds)\n1900: \n1901:     def to_unstacked_dataset(self, dim, level=0):\n1902:         \"\"\"Unstack DataArray expanding to Dataset along a given level of a\n1903:         stacked coordinate.\n1904: \n1905:         This is the inverse operation of Dataset.to_stacked_array.\n1906: \n1907:         Parameters\n1908:         ----------\n1909:         dim : str\n1910:             Name of existing dimension to unstack\n1911:         level : int or str\n1912:             The MultiIndex level to expand to a dataset along. Can either be\n1913:             the integer index of the level or its name.\n1914:         label : int, default 0\n1915:             Label of the level to expand dataset along. Overrides the label\n1916:             argument if given.\n1917: \n1918:         Returns\n1919:         -------\n1920:         unstacked: Dataset\n1921: \n1922:         Examples\n1923:         --------\n1924:         >>> import xarray as xr\n1925:         >>> arr = xr.DataArray(\n1926:         ...     np.arange(6).reshape(2, 3),\n1927:         ...     coords=[(\"x\", [\"a\", \"b\"]), (\"y\", [0, 1, 2])],\n1928:         ... )\n1929:         >>> data = xr.Dataset({\"a\": arr, \"b\": arr.isel(y=0)})\n1930:         >>> data\n1931:         <xarray.Dataset>\n1932:         Dimensions:  (x: 2, y: 3)\n1933:         Coordinates:\n1934:           * x        (x) <U1 'a' 'b'\n1935:           * y        (y) int64 0 1 2\n1936:         Data variables:\n1937:             a        (x, y) int64 0 1 2 3 4 5\n1938:             b        (x) int64 0 3\n1939:         >>> stacked = data.to_stacked_array(\"z\", [\"y\"])\n1940:         >>> stacked.indexes[\"z\"]\n1941:         MultiIndex(levels=[['a', 'b'], [0, 1, 2]],\n1942:                 labels=[[0, 0, 0, 1], [0, 1, 2, -1]],\n1943:                 names=['variable', 'y'])\n1944:         >>> roundtripped = stacked.to_unstacked_dataset(dim=\"z\")\n1945:         >>> data.identical(roundtripped)\n1946:         True\n1947: \n1948:         See Also\n1949:         --------\n1950:         Dataset.to_stacked_array\n1951:         \"\"\"\n1952: \n1953:         idx = self.indexes[dim]\n1954:         if not isinstance(idx, pd.MultiIndex):\n1955:             raise ValueError(f\"'{dim}' is not a stacked coordinate\")\n1956: \n1957:         level_number = idx._get_level_number(level)\n1958:         variables = idx.levels[level_number]\n1959:         variable_dim = idx.names[level_number]\n1960: \n1961:         # pull variables out of datarray\n1962:         data_dict = {}\n1963:         for k in variables:\n1964:             data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)\n1965: \n1966:         # unstacked dataset\n1967:         return Dataset(data_dict)\n1968: \n1969:     def transpose(self, *dims: Hashable, transpose_coords: bool = True) -> \"DataArray\":\n1970:         \"\"\"Return a new DataArray object with transposed dimensions.\n1971: \n1972:         Parameters\n1973:         ----------\n1974:         *dims : hashable, optional\n1975:             By default, reverse the dimensions. Otherwise, reorder the\n1976:             dimensions to this order.\n1977:         transpose_coords : boolean, default True\n1978:             If True, also transpose the coordinates of this DataArray.\n1979: \n1980:         Returns\n1981:         -------\n1982:         transposed : DataArray\n1983:             The returned DataArray's array is transposed.\n1984: \n1985:         Notes\n1986:         -----\n1987:         This operation returns a view of this array's data. It is\n1988:         lazy for dask-backed DataArrays but not for numpy-backed DataArrays\n1989:         -- the data will be fully loaded.\n1990: \n",
+        "total_lines": 3828
+      },
+      "source_bytes": 5176,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 3420,
+        "path": "xarray/core/dataset.py",
+        "start_line": 3370
+      },
+      "calls": 4,
+      "result": {
+        "end_column": 13,
+        "end_line": 3420,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 3370,
+        "text": "3370:     def to_stacked_array(\n3371:         self,\n3372:         new_dim: Hashable,\n3373:         sample_dims: Sequence[Hashable],\n3374:         variable_dim: str = \"variable\",\n3375:         name: Hashable = None,\n3376:     ) -> \"DataArray\":\n3377:         \"\"\"Combine variables of differing dimensionality into a DataArray\n3378:         without broadcasting.\n3379: \n3380:         This method is similar to Dataset.to_array but does not broadcast the\n3381:         variables.\n3382: \n3383:         Parameters\n3384:         ----------\n3385:         new_dim : Hashable\n3386:             Name of the new stacked coordinate\n3387:         sample_dims : Sequence[Hashable]\n3388:             Dimensions that **will not** be stacked. Each array in the dataset\n3389:             must share these dimensions. For machine learning applications,\n3390:             these define the dimensions over which samples are drawn.\n3391:         variable_dim : str, optional\n3392:             Name of the level in the stacked coordinate which corresponds to\n3393:             the variables.\n3394:         name : str, optional\n3395:             Name of the new data array.\n3396: \n3397:         Returns\n3398:         -------\n3399:         stacked : DataArray\n3400:             DataArray with the specified dimensions and data variables\n3401:             stacked together. The stacked coordinate is named ``new_dim``\n3402:             and represented by a MultiIndex object with a level containing the\n3403:             data variable names. The name of this level is controlled using\n3404:             the ``variable_dim`` argument.\n3405: \n3406:         See Also\n3407:         --------\n3408:         Dataset.to_array\n3409:         Dataset.stack\n3410:         DataArray.to_unstacked_dataset\n3411: \n3412:         Examples\n3413:         --------\n3414:         >>> data = xr.Dataset(\n3415:         ...     data_vars={\n3416:         ...         \"a\": ((\"x\", \"y\"), [[0, 1, 2], [3, 4, 5]]),\n3417:         ...         \"b\": (\"x\", [6, 7]),\n3418:         ...     },\n3419:         ...     coords={\"y\": [\"u\", \"v\", \"w\"]},\n3420:         ... )\n",
+        "total_lines": 6372
+      },
+      "source_bytes": 7468,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 3470,
+        "path": "xarray/core/dataset.py",
+        "start_line": 3420
+      },
+      "calls": 5,
+      "result": {
+        "end_column": 0,
+        "end_line": 3470,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 3420,
+        "text": "3420:         ... )\n3421: \n3422:         >>> data\n3423:         <xarray.Dataset>\n3424:         Dimensions:  (x: 2, y: 3)\n3425:         Coordinates:\n3426:         * y        (y) <U1 'u' 'v' 'w'\n3427:         Dimensions without coordinates: x\n3428:         Data variables:\n3429:             a        (x, y) int64 0 1 2 3 4 5\n3430:             b        (x) int64 6 7\n3431: \n3432:         >>> data.to_stacked_array(\"z\", sample_dims=[\"x\"])\n3433:         <xarray.DataArray (x: 2, z: 4)>\n3434:         array([[0, 1, 2, 6],\n3435:             [3, 4, 5, 7]])\n3436:         Coordinates:\n3437:         * z         (z) MultiIndex\n3438:         - variable  (z) object 'a' 'a' 'a' 'b'\n3439:         - y         (z) object 'u' 'v' 'w' nan\n3440:         Dimensions without coordinates: x\n3441: \n3442:         \"\"\"\n3443:         stacking_dims = tuple(dim for dim in self.dims if dim not in sample_dims)\n3444: \n3445:         for variable in self:\n3446:             dims = self[variable].dims\n3447:             dims_include_sample_dims = set(sample_dims) <= set(dims)\n3448:             if not dims_include_sample_dims:\n3449:                 raise ValueError(\n3450:                     \"All variables in the dataset must contain the \"\n3451:                     \"dimensions {}.\".format(dims)\n3452:                 )\n3453: \n3454:         def ensure_stackable(val):\n3455:             assign_coords = {variable_dim: val.name}\n3456:             for dim in stacking_dims:\n3457:                 if dim not in val.dims:\n3458:                     assign_coords[dim] = None\n3459: \n3460:             expand_dims = set(stacking_dims).difference(set(val.dims))\n3461:             expand_dims.add(variable_dim)\n3462:             # must be list for .expand_dims\n3463:             expand_dims = list(expand_dims)\n3464: \n3465:             return (\n3466:                 val.assign_coords(**assign_coords)\n3467:                 .expand_dims(expand_dims)\n3468:                 .stack({new_dim: (variable_dim,) + stacking_dims})\n3469:             )\n3470: \n",
+        "total_lines": 6372
+      },
+      "source_bytes": 9658,
+      "tool": "read_file"
+    }
+  ],
+  "tool_calls": 5,
+  "tool_schema_sha256": "4f9f105004ff571b15f3bf886e21b46ab3708aa681518d2616e9e4812379bc00"
+}

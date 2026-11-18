@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18888",
+  "repo": "django/django",
+  "base_commit": "edd74c3417fa3a0b29295012ff31dbe44843303c",
+  "problem_statement": "makemessages: is_valid_locale regex fails to validate locales with numeric region codes\nDescription\n\t\t\n(last modified by Juan Pablo Mallarino)\t\t\nThe is_valid_locale function in the makemessages management command uses a regular expression that doesn't account for locales with numeric region codes, such as es_419. The current regex only allows uppercase letters after the underscore. This excludes valid locale codes that use numbers in the region subtag.\nThis can cause issues when trying to generate message files for these locales. For example, running makemessages with es_419 will not generate the expected message files, potentially leading to missing translations.\nProposed Solution\nModify the regular expression in is_valid_locale to include numeric characters in the region subtag validation. The suggested change is:\nFrom:\nr\"^[a-z]+_[A-Z].*$\"\nTo:\nr\"^[a-z]+_[A-Z0-9].*$\"\nThis change would allow the validation of locales while still maintaining the expected format for other locale codes. This simple modification would ensure broader compatibility and avoid unexpected behavior when working with valid locales containing numeric region codes.\n"
+}

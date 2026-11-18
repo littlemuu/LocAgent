@@ -1,0 +1,6 @@
+{
+  "instance_id": "ray-project__ray-49071",
+  "repo": "ray-project/ray",
+  "base_commit": "f498afc76dfafcf447106471e8df33578a6293be",
+  "problem_statement": "[RLlib] action_masking_example.py fails - RLModule build fails with \"unexpected keyword argument 'observation_space'\"\n### What happened + What you expected to happen\n\nRunning the `action_masking_rl_module.py` example, which is shipped with 2.39 release, fails at RLModule instantiation.\r\n\r\n>   File \"C:\\Users\\Philipp\\anaconda3\\envs\\py311-raynew\\Lib\\site-packages\\ray\\rllib\\core\\rl_module\\rl_module.py\", line 100, in build\r\n>     module = self.module_class(\r\n>              ^^^^^^^^^^^^^^^^^^\r\n> TypeError: ActionMaskingRLModule.__init__() got an unexpected keyword argument 'observation_space'\r\n\r\nI did no change to the file locally. I skipped the CLI args \"--enable-new-api-stack\", as for PPO the new API stack is enabled by default since of release 2.39\n\n### Versions / Dependencies\n\npython==3.11.9\r\nray===2.39.0\r\ntorch==2.3.1+cu118\r\ngymnasium==1.0.0\n\n### Reproduction script\n\npython ray/rllib/examples/rl_modules/action_masking_rl_module.py\n\n### Issue Severity\n\nMedium: It is a significant difficulty but I can work around it.\n"
+}

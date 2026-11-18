@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-17885",
+  "repo": "django/django",
+  "base_commit": "03c0a3de722c4a7de9f3edfeb26417ebc8b90fe9",
+  "problem_statement": "Make ModelAdmin.search_fields raise data errors on __exact lookups for non-string fields.\nDescription\n\t \nCurrently, ​all queries are done as string lookups which gives something like this on PostgreSQL, for example: (\"admin_views_pluggablesearchperson\".\"age\"::text) = UPPER(20)). It would be more efficient if the admin cast the search value to an integer and used that for the query.\n"
+}

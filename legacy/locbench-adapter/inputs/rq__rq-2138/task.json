@@ -1,0 +1,6 @@
+{
+  "instance_id": "rq__rq-2138",
+  "repo": "rq/rq",
+  "base_commit": "bb7f34053730da924486f97baa0d34fee9b1918b",
+  "problem_statement": "Dangling job occurs when job_id contains the character \":\"\nHi,\r\n\r\nAfter updating to v2.0.0, job_id cannot contain the character \":\"; otherwise, the job is never picked up or started by a worker.\r\n\r\nI'll investigate this over the next few days, but I suspect that [PR #1964](https://github.com/rq/rq/pull/1964) might restrict the job_id format. We may need to add validation when creating jobs to address this.\r\n\n"
+}

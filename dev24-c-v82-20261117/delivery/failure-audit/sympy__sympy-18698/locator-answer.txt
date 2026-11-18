@@ -1,0 +1,20 @@
+已读到的事实（附文件:行号）
+- sympy/polys/polytools.py:6204-6218：模块级 sqf_list 仅做 docstring 与转发，返回 _generic_factor_list(f, gens, args, method='sqf')，本身不含任何平方自由分解算法。
+- sympy/polys/polytools.py:3210-3237：Poly.sqf_list 调用 f.rep.sqf_list(all)，再用 f.rep.dom.to_sympy(coeff) 与 f.per(g) 把系数/因子转回 sympy 对象；未做任何合并或重排。
+- sympy/polys/polyclasses.py:784-787：DMP.sqf_list 直接调用 dmp_sqf_list(f.rep, f.lev, f.dom, all)，再逐项 f.per(g) 包装，同样无合并逻辑。
+- 因此用户示例中 (x-3,3) 与 (x-2,3) 并列出现、以及 (x**2-1,2) 未拆成 (x-1,1),(x+1,1) 的差异，都不在这三层包装里产生。
+
+推断
+- 待验证假设：真正决定“同一重数下多个因子是否合并/是否拆分”的是 sympy/polys/sqfreetools.py:dmp_sqf_list（及其 dup_sqf_list 分支），它按重数分组返回因子乘积，故重数 3 的两个线性因子被合并成一个二次因子，而重数 2 的 (x**2-1) 保持未拆——这与用户观察到的两种输出形态一致。
+- 待验证假设：sqf_list 与 sqf_list_include 的差异（polyclasses.py:789-792 走 dmp_sqf_list_include）可能造成“一致性”观感差异，但用户两例都走 sqf_list，故不是本例主因。
+- 待验证假设：若期望输出为 (x**2-5*x+6, 3) 这类合并形式，则问题在于 sqf_list 未对同重数因子做乘积合并，而非分解错误。
+
+未核验点
+- sympy/polys/sqfreetools.py 中 dmp_sqf_list / dup_sqf_list 的函数体完全未读（未读完），上述分组行为属推测。
+- _generic_factor_list 的函数体未读，无法确认 method='sqf' 分支是否对结果做后处理或排序。
+- 未运行任何代码，未验证实际输出与重数分组细节。
+
+最小验证：`python -c "from sympy import *; x=symbols('x'); print(sqf_list((x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3))"` 并对照 Poly(...).sqf_list() 输出。
+
+以下内容未在阅读记录中核验：
+- [R4] sympy/polys/polytools.py:sqf_list；sympy/polys/polytools.py:Poly.sqf_list；sympy/polys/polyclasses.py:DMP.sqf_list

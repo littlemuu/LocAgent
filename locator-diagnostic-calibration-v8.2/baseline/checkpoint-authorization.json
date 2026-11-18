@@ -1,0 +1,73 @@
+{
+  "approved": true,
+  "budget_cny": 50,
+  "ids_sha256": "febb6210cee4be652d9b1e6dceb84aec9181bcb3540493e0ff9bd4545209d552",
+  "trial_ids": [
+    "sympy__sympy-21379",
+    "astropy__astropy-14182",
+    "matplotlib__matplotlib-23314",
+    "pytest-dev__pytest-7432",
+    "scikit-learn__scikit-learn-13779",
+    "django__django-13033",
+    "pylint-dev__pylint-7080",
+    "sphinx-doc__sphinx-11445"
+  ],
+  "dev24_plan_ids": [
+    "sympy__sympy-21379",
+    "astropy__astropy-14182",
+    "matplotlib__matplotlib-23314",
+    "pytest-dev__pytest-7432",
+    "scikit-learn__scikit-learn-13779",
+    "django__django-13033",
+    "pylint-dev__pylint-7080",
+    "sphinx-doc__sphinx-11445",
+    "pydata__xarray-4094",
+    "psf__requests-2317",
+    "pytest-dev__pytest-7490",
+    "sympy__sympy-18698",
+    "astropy__astropy-12907",
+    "sphinx-doc__sphinx-8595",
+    "django__django-13158",
+    "matplotlib__matplotlib-24970",
+    "scikit-learn__scikit-learn-14087",
+    "sphinx-doc__sphinx-8721",
+    "matplotlib__matplotlib-25332",
+    "scikit-learn__scikit-learn-10297",
+    "django__django-13964",
+    "astropy__astropy-14365",
+    "sympy__sympy-13480",
+    "django__django-13925"
+  ],
+  "smoke_live": [
+    [
+      "astropy__astropy-14182",
+      "A"
+    ]
+  ],
+  "smoke_offline_replay": [
+    [
+      "sympy__sympy-21379",
+      "A"
+    ],
+    [
+      "sympy__sympy-21379",
+      "B"
+    ],
+    [
+      "astropy__astropy-14182",
+      "B"
+    ]
+  ],
+  "max_trial_episodes": 16,
+  "arm_order": [
+    "A",
+    "B"
+  ],
+  "pause_after": 8,
+  "empty_patch_stop_above": 0.5,
+  "automatic_retries": 0,
+  "holdout_access": false,
+  "temporary_cloud_key_approved": true,
+  "shutdown_without_compute_fees_after": true,
+  "basis": "User explicitly authorized text-stop compatibility fix and edit metrics without prompt/retrieval/coding budget changes; complete missing smoke, then run dev24 A/B once with mandatory pause after first 8 tasks. Total current-round API cap CNY50. Delete cloud API key and shutdown without charges."
+}

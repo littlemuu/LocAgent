@@ -1,0 +1,278 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "tool_index": 3,
+    "complete_display_lines": 99,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-21379",
+    "tool_index": 4,
+    "complete_display_lines": 61,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-21379",
+    "tool_index": 5,
+    "complete_display_lines": 83,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "tool_index": 3,
+    "complete_display_lines": 66,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "tool_index": 4,
+    "complete_display_lines": 105,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "tool_index": 5,
+    "complete_display_lines": 76,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "tool_index": 3,
+    "complete_display_lines": 56,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "tool_index": 4,
+    "complete_display_lines": 11,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "tool_index": 5,
+    "complete_display_lines": 61,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "tool_index": 3,
+    "complete_display_lines": 56,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "tool_index": 4,
+    "complete_display_lines": 36,
+    "not_credited": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "tool_index": 3,
+    "complete_display_lines": 36,
+    "not_credited": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "tool_index": 5,
+    "complete_display_lines": 94,
+    "not_credited": []
+  },
+  {
+    "instance_id": "django__django-13033",
+    "tool_index": 3,
+    "complete_display_lines": 68,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "tool_index": 3,
+    "complete_display_lines": 82,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "tool_index": 4,
+    "complete_display_lines": 41,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "tool_index": 5,
+    "complete_display_lines": 54,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "tool_index": 3,
+    "complete_display_lines": 31,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "tool_index": 3,
+    "complete_display_lines": 96,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "tool_index": 4,
+    "complete_display_lines": 92,
+    "not_credited": []
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "tool_index": 5,
+    "complete_display_lines": 9,
+    "not_credited": []
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "tool_index": 3,
+    "complete_display_lines": 71,
+    "not_credited": []
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "tool_index": 6,
+    "complete_display_lines": 61,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "tool_index": 3,
+    "complete_display_lines": 15,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "tool_index": 4,
+    "complete_display_lines": 31,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "tool_index": 3,
+    "complete_display_lines": 99,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "tool_index": 4,
+    "complete_display_lines": 61,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "tool_index": 3,
+    "complete_display_lines": 62,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "tool_index": 4,
+    "complete_display_lines": 82,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "tool_index": 3,
+    "complete_display_lines": 78,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "tool_index": 4,
+    "complete_display_lines": 23,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "tool_index": 3,
+    "complete_display_lines": 81,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "tool_index": 4,
+    "complete_display_lines": 85,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "tool_index": 3,
+    "complete_display_lines": 81,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "tool_index": 4,
+    "complete_display_lines": 81,
+    "not_credited": []
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "tool_index": 5,
+    "complete_display_lines": 42,
+    "not_credited": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "tool_index": 3,
+    "complete_display_lines": 77,
+    "not_credited": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "tool_index": 4,
+    "complete_display_lines": 61,
+    "not_credited": []
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "tool_index": 5,
+    "complete_display_lines": 58,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "tool_index": 3,
+    "complete_display_lines": 114,
+    "not_credited": []
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "tool_index": 5,
+    "complete_display_lines": 67,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "tool_index": 3,
+    "complete_display_lines": 51,
+    "not_credited": []
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "tool_index": 4,
+    "complete_display_lines": 26,
+    "not_credited": []
+  },
+  {
+    "instance_id": "django__django-13925",
+    "tool_index": 3,
+    "complete_display_lines": 51,
+    "not_credited": []
+  },
+  {
+    "instance_id": "django__django-13925",
+    "tool_index": 4,
+    "complete_display_lines": 51,
+    "not_credited": []
+  },
+  {
+    "instance_id": "django__django-13925",
+    "tool_index": 5,
+    "complete_display_lines": 41,
+    "not_credited": []
+  }
+]

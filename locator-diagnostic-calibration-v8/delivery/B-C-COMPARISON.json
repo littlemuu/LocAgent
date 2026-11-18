@@ -1,0 +1,279 @@
+{
+  "baseline_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "baseline_files": [
+    {
+      "B_sha256": "7058d736f7b2165c3926374a90dc1a0dbfef0fa01b8a9a4ccede74c8abc57776",
+      "C_dependency_sha256": "7058d736f7b2165c3926374a90dc1a0dbfef0fa01b8a9a4ccede74c8abc57776",
+      "identical": true,
+      "path": "checkpoint-authorization.json"
+    },
+    {
+      "B_sha256": "a49395e7b57c7b664f8711ee929d4ec1137b89f8001eebbdc4aee3079ebcd00a",
+      "C_dependency_sha256": "a49395e7b57c7b664f8711ee929d4ec1137b89f8001eebbdc4aee3079ebcd00a",
+      "identical": true,
+      "path": "locagent_e2e/locator_policy.py"
+    },
+    {
+      "B_sha256": "2712457e28b799d712ad0e27f7d5e1b701ba83484018a4dbe4e0e3c7bc0de6ea",
+      "C_dependency_sha256": "2712457e28b799d712ad0e27f7d5e1b701ba83484018a4dbe4e0e3c7bc0de6ea",
+      "identical": true,
+      "path": "locagent_e2e/checkpoint.py"
+    },
+    {
+      "B_sha256": "6ac3f9f45b8e97498b30166a2aed7bd94fa7998374c60b01999e3fa773224225",
+      "C_dependency_sha256": "6ac3f9f45b8e97498b30166a2aed7bd94fa7998374c60b01999e3fa773224225",
+      "identical": true,
+      "path": "locagent_e2e/completion.py"
+    },
+    {
+      "B_sha256": "e227e3916c488e9feea57bedc5e3ecb6a1cb498591ddd32821ae29ebb456e54e",
+      "C_dependency_sha256": "e227e3916c488e9feea57bedc5e3ecb6a1cb498591ddd32821ae29ebb456e54e",
+      "identical": true,
+      "path": "locagent_e2e/baseline.py"
+    },
+    {
+      "B_sha256": "8cf1273476fc1d31497e59959e75fec1ecf103a7a8807900e7fdad61ad0776a8",
+      "C_dependency_sha256": "8cf1273476fc1d31497e59959e75fec1ecf103a7a8807900e7fdad61ad0776a8",
+      "identical": true,
+      "path": "locagent_e2e/transport.py"
+    },
+    {
+      "B_sha256": "62383d81ac6b7c23dae9eb881d32965824e289d30a9719f73400914bac6efa27",
+      "C_dependency_sha256": "62383d81ac6b7c23dae9eb881d32965824e289d30a9719f73400914bac6efa27",
+      "identical": true,
+      "path": "locagent_e2e/evaluation.py"
+    },
+    {
+      "B_sha256": "b35791bfac920861b87fd2895506fc0bcad2847c600ed9486034921716eaccb0",
+      "C_dependency_sha256": "b35791bfac920861b87fd2895506fc0bcad2847c600ed9486034921716eaccb0",
+      "identical": true,
+      "path": "locagent_e2e/ledger.py"
+    },
+    {
+      "B_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C_dependency_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true,
+      "path": "locagent_e2e/__init__.py"
+    },
+    {
+      "B_sha256": "adf6824f6255f083809bd30b1f647d53ac571d6e3e595a92cc6e89ee856853c4",
+      "C_dependency_sha256": "adf6824f6255f083809bd30b1f647d53ac571d6e3e595a92cc6e89ee856853c4",
+      "identical": true,
+      "path": "locagent_e2e/coding_tools.py"
+    },
+    {
+      "B_sha256": "97ee63f40134d7a3afc959401c27c4976d206b741fa46f458149490ddd45a412",
+      "C_dependency_sha256": "97ee63f40134d7a3afc959401c27c4976d206b741fa46f458149490ddd45a412",
+      "identical": true,
+      "path": "locagent_e2e/sandbox.py"
+    },
+    {
+      "B_sha256": "105681c8991c10272344db27723c3ba74ccbb0e1caea758c44766e3b7d360734",
+      "C_dependency_sha256": "105681c8991c10272344db27723c3ba74ccbb0e1caea758c44766e3b7d360734",
+      "identical": true,
+      "path": "locagent_e2e/common.py"
+    },
+    {
+      "B_sha256": "ba7e6c4b4ab4c988a07aad5e69b3056f7f7fa38c8d5f453294d6e95d0a32e228",
+      "C_dependency_sha256": "ba7e6c4b4ab4c988a07aad5e69b3056f7f7fa38c8d5f453294d6e95d0a32e228",
+      "identical": true,
+      "path": "locagent_e2e/agent.py"
+    },
+    {
+      "B_sha256": "d140fce45265a6d16adac16910c5d76bef6a8486cd251463d7fe37817444c564",
+      "C_dependency_sha256": "d140fce45265a6d16adac16910c5d76bef6a8486cd251463d7fe37817444c564",
+      "identical": true,
+      "path": "locagent_e2e/baseline_original.py"
+    },
+    {
+      "B_sha256": "6a4052a55d3e6560f3874ab79bf1928c4557b6fd66730bc5a57fb616e47b4e07",
+      "C_dependency_sha256": "6a4052a55d3e6560f3874ab79bf1928c4557b6fd66730bc5a57fb616e47b4e07",
+      "identical": true,
+      "path": "locagent_e2e/driver.py"
+    },
+    {
+      "B_sha256": "aa78c20d6cb88316c0fe47f6d6218bbe280d91b5ba07cca5be9388f352b6ddf1",
+      "C_dependency_sha256": "aa78c20d6cb88316c0fe47f6d6218bbe280d91b5ba07cca5be9388f352b6ddf1",
+      "identical": true,
+      "path": "config/trial-authorization.example.json"
+    },
+    {
+      "B_sha256": "a21e4ff0fc53472ff8b4ce2029c636cfb521a494a43a9bf92e323b046204564f",
+      "C_dependency_sha256": "a21e4ff0fc53472ff8b4ce2029c636cfb521a494a43a9bf92e323b046204564f",
+      "identical": true,
+      "path": "config/frozen-baseline-source.json"
+    },
+    {
+      "B_sha256": "3bd90e224646e4d8976a85eb627f6439926782e8b6e24cc462fc6f4f906f8945",
+      "C_dependency_sha256": "3bd90e224646e4d8976a85eb627f6439926782e8b6e24cc462fc6f4f906f8945",
+      "identical": true,
+      "path": "config/experiment.json"
+    },
+    {
+      "B_sha256": "937bdff545d76818a790be307c4aa5cbce5b6ca8a23e8f07ee177f111f2f043d",
+      "C_dependency_sha256": "937bdff545d76818a790be307c4aa5cbce5b6ca8a23e8f07ee177f111f2f043d",
+      "identical": true,
+      "path": "config/requirements-cloud.lock"
+    },
+    {
+      "B_sha256": "9ef4e82098027c90e2e5b900cd33f9a8d775cbda6b3dedd224089d05724ac8f9",
+      "C_dependency_sha256": "9ef4e82098027c90e2e5b900cd33f9a8d775cbda6b3dedd224089d05724ac8f9",
+      "identical": true,
+      "path": "config/coding-system.txt"
+    },
+    {
+      "B_sha256": "b786890e3db73a4bc4b1c7e56839a722fe3a636eef2fe918b427813b91059777",
+      "C_dependency_sha256": "b786890e3db73a4bc4b1c7e56839a722fe3a636eef2fe918b427813b91059777",
+      "identical": true,
+      "path": "tests/test_smoke_subset.py"
+    },
+    {
+      "B_sha256": "7616a3b5748714a49e5a4f60e0850012bfa99e1363fc8ac773b3b151d79d73d9",
+      "C_dependency_sha256": "7616a3b5748714a49e5a4f60e0850012bfa99e1363fc8ac773b3b151d79d73d9",
+      "identical": true,
+      "path": "tests/test_checkpoint_gates.py"
+    },
+    {
+      "B_sha256": "a330619f05ef661680a9733d99c662e04f6f5c40fa75b536d5e924569aab4990",
+      "C_dependency_sha256": "a330619f05ef661680a9733d99c662e04f6f5c40fa75b536d5e924569aab4990",
+      "identical": true,
+      "path": "tests/test_preparation.py"
+    },
+    {
+      "B_sha256": "5ed7c5c2b63d4abf63eddcaae76da4e637feaae136a76e327a5ea4b0460aa8b1",
+      "C_dependency_sha256": "5ed7c5c2b63d4abf63eddcaae76da4e637feaae136a76e327a5ea4b0460aa8b1",
+      "identical": true,
+      "path": "tests/test_resume_and_boundaries.py"
+    },
+    {
+      "B_sha256": "821e934eece1ecae7029cf3052c2fecbce27d782b7ce906bdc47699f0b6fb655",
+      "C_dependency_sha256": "821e934eece1ecae7029cf3052c2fecbce27d782b7ce906bdc47699f0b6fb655",
+      "identical": true,
+      "path": "tests/test_completion_and_edits.py"
+    },
+    {
+      "B_sha256": "d06fb23bdea00ab984bf8f86bb13b807fe2e651a8517b850a8f85c62a0d6f822",
+      "C_dependency_sha256": "d06fb23bdea00ab984bf8f86bb13b807fe2e651a8517b850a8f85c62a0d6f822",
+      "identical": true,
+      "path": "runtime/readonly_agent/openhands_tools.py"
+    },
+    {
+      "B_sha256": "b9eb6f94119d293526ad1a151bfd34d73bf5a09f6125f0f8e8ae7a2e4ebd07d7",
+      "C_dependency_sha256": "b9eb6f94119d293526ad1a151bfd34d73bf5a09f6125f0f8e8ae7a2e4ebd07d7",
+      "identical": true,
+      "path": "runtime/readonly_agent/control.py"
+    },
+    {
+      "B_sha256": "c86eb25191a94dd4ebb49e74c60e37fda51614c3966c279e05b48910a07c49fc",
+      "C_dependency_sha256": "c86eb25191a94dd4ebb49e74c60e37fda51614c3966c279e05b48910a07c49fc",
+      "identical": true,
+      "path": "runtime/readonly_agent/__init__.py"
+    },
+    {
+      "B_sha256": "64684d6a4be97da92807576e59ee9aa18a165b84686a05756a0275b437bb37cd",
+      "C_dependency_sha256": "64684d6a4be97da92807576e59ee9aa18a165b84686a05756a0275b437bb37cd",
+      "identical": true,
+      "path": "runtime/readonly_agent/offline.py"
+    },
+    {
+      "B_sha256": "076692e60ede68aca2154772b9a840cc56c139c2fc6ebff8be707bb4a848922c",
+      "C_dependency_sha256": "076692e60ede68aca2154772b9a840cc56c139c2fc6ebff8be707bb4a848922c",
+      "identical": true,
+      "path": "runtime/readonly_agent/core.py"
+    },
+    {
+      "B_sha256": "f82f80a05ac312522294f81251ec692732e35ba4013e56234242cb54a5532663",
+      "C_dependency_sha256": "f82f80a05ac312522294f81251ec692732e35ba4013e56234242cb54a5532663",
+      "identical": true,
+      "path": "runtime/readonly_agent/read_lines.py"
+    },
+    {
+      "B_sha256": "f7f789b6e6be2222777fdbd0e762c6ab9770a69acb9caa050b4df5debc429eb2",
+      "C_dependency_sha256": "f7f789b6e6be2222777fdbd0e762c6ab9770a69acb9caa050b4df5debc429eb2",
+      "identical": true,
+      "path": "runtime/readonly_agent/deepseek_wire.py"
+    },
+    {
+      "B_sha256": "db9f793d4a36fc7e2ebc62ccb7d236235bcc1f5e3045bd7cb5f980499f9a18ba",
+      "C_dependency_sha256": "db9f793d4a36fc7e2ebc62ccb7d236235bcc1f5e3045bd7cb5f980499f9a18ba",
+      "identical": true,
+      "path": "runtime/experiments/path_retrieval_v4/retriever.py"
+    },
+    {
+      "B_sha256": "1a9a9cb149350f45ea7cbd376b0c2890e64fe12f58ae576bf2fd49686c4d6a3a",
+      "C_dependency_sha256": "1a9a9cb149350f45ea7cbd376b0c2890e64fe12f58ae576bf2fd49686c4d6a3a",
+      "identical": true,
+      "path": "runtime/experiments/path_retrieval_v4/__init__.py"
+    },
+    {
+      "B_sha256": "40a1f183a39aa3d8bcf5d1a409379b6ef48ea2cd44a4c7a0bc8a89a85a180e57",
+      "C_dependency_sha256": "40a1f183a39aa3d8bcf5d1a409379b6ef48ea2cd44a4c7a0bc8a89a85a180e57",
+      "identical": true,
+      "path": "runtime/experiments/retrieval_evidence_v6/retriever.py"
+    },
+    {
+      "B_sha256": "c7571ce6af8478ab453c732403905940ae65757b1a13f17d9aecd9e207a49652",
+      "C_dependency_sha256": "c7571ce6af8478ab453c732403905940ae65757b1a13f17d9aecd9e207a49652",
+      "identical": true,
+      "path": "runtime/experiments/retrieval_evidence_v6/__init__.py"
+    },
+    {
+      "B_sha256": "fdfe78e5334eacb8150130d089a63327fb321cb06213f7df1650d76438003fc9",
+      "C_dependency_sha256": "fdfe78e5334eacb8150130d089a63327fb321cb06213f7df1650d76438003fc9",
+      "identical": true,
+      "path": "runtime/experiments/sdk_finish_selfcheck_v7/finish_policy.py"
+    },
+    {
+      "B_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "C_dependency_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identical": true,
+      "path": "runtime/experiments/sdk_finish_selfcheck_v7/__init__.py"
+    },
+    {
+      "B_sha256": "febb6210cee4be652d9b1e6dceb84aec9181bcb3540493e0ff9bd4545209d552",
+      "C_dependency_sha256": "febb6210cee4be652d9b1e6dceb84aec9181bcb3540493e0ff9bd4545209d552",
+      "identical": true,
+      "path": "data/dev24/ids.txt"
+    },
+    {
+      "B_sha256": "8c600eab9033d0e90a4f21c3c26938f44618129637d07b087bfec9b009ac21a1",
+      "C_dependency_sha256": "8c600eab9033d0e90a4f21c3c26938f44618129637d07b087bfec9b009ac21a1",
+      "identical": true,
+      "path": "data/dev24/manifest.json"
+    },
+    {
+      "B_sha256": "8b6281d8e6471b5ee52333e1a1032695f695ce24c75ee4833ea1b058fa7c06f3",
+      "C_dependency_sha256": "8b6281d8e6471b5ee52333e1a1032695f695ce24c75ee4833ea1b058fa7c06f3",
+      "identical": true,
+      "path": "data/dev24/content/public.json"
+    },
+    {
+      "B_sha256": "577ff7540fa03047cfb82a2b1e7afdf34b85eb6fb2bb222302e5b1748f19c8ba",
+      "C_dependency_sha256": "577ff7540fa03047cfb82a2b1e7afdf34b85eb6fb2bb222302e5b1748f19c8ba",
+      "identical": true,
+      "path": "data/dev24/content/receipt.json"
+    }
+  ],
+  "baseline_files_modified": 0,
+  "coding_contract_comparison": "actual first request equality after replacing only localization_packet tested",
+  "harness_container_config_changed": false,
+  "historical_freezes_sha256": {
+    "cloud-checkpoint-20261117-v4/runtime/CHECKPOINT_FREEZE.json": "5228a828a019adec6597cd7395c5c34ec98d018e3cf560a8d6f7222a1c2b9e95",
+    "cloud-checkpoint-20261117-v4/runtime/CLOUD_FREEZE.json": "f9fcdac2635e6740f921dd230e9252f1fe1d0fcb3f9f42ad8716eaeb343cfc01",
+    "cloud-checkpoint-20261117-v4/runtime/FREEZE.json": "026d8ccdc4e7cc1ab2284185c210574786b94691533dc51787e37a2e3b1d6bc2",
+    "dev24-completion-20261117-v5/delivery/SHA256SUMS.json": "8d183fb3d34fdebea1211b219229fa0185d1213b813c9fb3435a6812a4b148c8"
+  },
+  "hybrid_v8_imported": false,
+  "new_config_sha256": "ba2853f4824b54ab32f6091b916f11fed05bd80eb9fb41d95040668a2b588ab5",
+  "new_locator_code": [
+    {
+      "path": "calibration/locator.py",
+      "purpose": "only C locator SDK loop, evidence tracking and version-1 packet builder"
+    },
+    {
+      "path": "calibration/policy.py",
+      "purpose": "locator instructions, delivered evidence ledger and diagnostic calibration"
+    }
+  ],
+  "tool_schema_comparison": "actual SDK/wire equality tested"
+}

@@ -1,0 +1,2 @@
+# Keep regression tests visible despite the repository-wide test_*.py rule.
+!test_*.py

@@ -1,0 +1,260 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "ignore_paths"}
+META: {"next_offset": null}
+pylint/lint/pylinter.py:604:                         self.config.ignore_paths,
+pylint/lint/pylinter.py:778:             self._ignore_paths,
+pylint/lint/pylinter.py:1014:         self._ignore_paths = self.linter.config.ignore_paths
+tests/checkers/unittest_design.py:50:     def test_ignore_paths_with_no_value(self) -> None:
+tests/config/unittest_config.py:73:     @set_config(ignore_paths=".*/tests/.*,.*\\ignore\\.*")
+tests/config/unittest_config.py:74:     def test_ignore_paths_with_value(self) -> None:
+tests/config/unittest_config.py:76:         options = self.linter.config.ignore_paths
+tests/config/unittest_config.py:83:     def test_ignore_paths_with_no_value(self) -> None:
+tests/config/unittest_config.py:87:         options = self.linter.config.ignore_paths
+tests/lint/unittest_expand_modules.py:119:     @set_config(ignore_paths="")
+tests/lint/unittest_expand_modules.py:127:             self.linter.config.ignore_paths,
+tests/lint/unittest_expand_modules.py:145:     @set_config(ignore_paths=".*/lint/.*")
+tests/lint/unittest_expand_modules.py:153:             self.linter.config.ignore_paths,
+
+TOOL 2: search_text
+ARGS: {"offset": 0, "query": "recursive"}
+META: {"next_offset": 3985}
+pylint/checkers/base/name_checker/checker.py:382:             self._recursive_check_names(args)
+pylint/checkers/base/name_checker/checker.py:469:     def _recursive_check_names(self, args: list[nodes.AssignName]) -> None:
+pylint/checkers/base/name_checker/checker.py:470:         """Check names in a possibly recursive list <arg>."""
+pylint/checkers/classes/class_checker.py:942:                     # Ignore recursive calls
+pylint/checkers/design_analysis.py:206:     """Counts the number of boolean expressions in BoolOp `bool_op` (recursive).
+pylint/checkers/modified_iterating_checker.py:186:             for t in utils.find_assigned_names_recursive(iter_obj.parent.target)
+pylint/checkers/refactoring/refactoring_checker.py:167:     This requires recursive checking, because destructuring assignment can have
+pylint/checkers/typecheck.py:512:     #   * Walk up recursively until if statement is found.
+pylint/checkers/typecheck.py:1932:     def _recursive_search_for_classdef_type(
+pylint/checkers/typecheck.py:1955:         left_is_type = self._recursive_search_for_classdef_type(left_obj, "__or__")
+pylint/checkers/typecheck.py:1958:         right_is_type = self._recursive_search_for_classdef_type(right_obj, "__ror__")
+pylint/checkers/utils.py:1419:     child statement recursively.
+pylint/checkers/utils.py:1847: def find_assigned_names_recursive(
+pylint/checkers/utils.py:1856:             yield from find_assigned_names_recursive(elt)
+pylint/checkers/variables.py:718:                     NamesConsumer._defines_name_raises_or_returns_recursive(
+pylint/checkers/variables.py:764:     def _defines_name_raises_or_returns_recursive(
+pylint/checkers/variables.py:845:             if NamesConsumer._recursive_search_for_continue_before_break(
+pylint/checkers/variables.py:855:     def _recursive_search_for_continue_before_break(
+pylint/checkers/variables.py:868:             if NamesConsumer._recursive_search_for_continue_before_break(
+pylint/checkers/variables.py:1256:                 for name in utils.find_assigned_names_recursive(generator.target):
+pylint/checkers/variables.py:1513:         is_recursive_klass = (
+pylint/checkers/variables.py:1521:             is_recursive_klass
+pylint/checkers/variables.py:1559:             is_recursive_klass,
+pylint/checkers/variables.py:1576:                 is_recursive_klass
+pylint/checkers/variables.py:1825:         is_recursive_klass,
+pylint/checkers/variables.py:1903:         elif is_recursive_klass:
+pylint/lint/base_options.py:346:             "recursive",
+pylint/lint/pylinter.py:634:         if self.config.recursive:
+pylint/pyreverse/diadefslib.py:110:         """Extract recursively classes related to klass_node."""
+pylint/pyreverse/main.py:107:             help="show recursively all associated off all associated classes",
+pylint/typing.py:133: # Mypy doesn't support recursive types (yet), see https://github.com/python/mypy/issues/731
+tests/checkers/unittest_utils.py:171: def test_inherit_from_std_ex_recursive_definition() -> None:
+tests/functional/c/condition_evals_to_constant.py:25: # Simplifies recursively
+tests/functional/n/no/no_member_imports.py:41: def test_ignored_classes_no_recursive_pattern() -> None:
+tests/functional/s/simplifiable/simplifiable_condition.py:24: # Simplifies recursively
+tests/functional/u/unused/unused_private_member.py:57:     def __test_recursive(self):  # [unused-private-member]
+tests/functional/u/unused/unused_private_member.py:58:         self.__test_recursive()
+tests/lint/unittest_lint.py:883: def test_recursive_ignore(ignore_parameter, ignore_parameter_value) -> None:
+tests/lint/unittest_lint.py:886:             "--recursive",
+tests/test_self.py:1231:     def test_regression_recursive(self):
+tests/test_self.py:1232:  """Tests if error is raised when linter is executed over directory not using --recursive=y"""
+tests/test_self.py:1234:             [join(HERE, "regrtest_data", "directory", "subdirectory"), "--recursive=n"],
+tests/test_self.py:1238:     def tes
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 700, "path": "pylint/lint/pylinter.py", "start_line": 580}
+META: {"end_column": 80, "end_line": 661, "next_cursor": "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2", "start_column": 0, "start_line": 580, "total_lines": 1253}
+580:         # the store
+581:         for msg in self.msgs_store.messages:
+582:             if not msg.may_be_emitted():
+583:                 self._msgs_state[msg.msgid] = False
+584: 
+585:     def _discover_files(self, files_or_modules: Sequence[str]) -> Iterator[str]:
+586:         """Discover python modules and packages in sub-directory.
+587: 
+588:         Returns iterator of paths to discovered modules and packages.
+589:         """
+590:         for something in files_or_modules:
+591:             if os.path.isdir(something) and not os.path.isfile(
+592:                 os.path.join(something, "__init__.py")
+593:             ):
+594:                 skip_subtrees: list[str] = []
+595:                 for root, _, files in os.walk(something):
+596:                     if any(root.startswith(s) for s in skip_subtrees):
+597:                         # Skip subtree of already discovered package.
+598:                         continue
+599: 
+600:                     if _is_ignored_file(
+601:                         root,
+602:                         self.config.ignore,
+603:                         self.config.ignore_patterns,
+604:                         self.config.ignore_paths,
+605:                     ):
+606:                         skip_subtrees.append(root)
+607:                         continue
+608: 
+609:                     if "__init__.py" in files:
+610:                         skip_subtrees.append(root)
+611:                         yield root
+612:                     else:
+613:                         yield from (
+614:                             os.path.join(root, file)
+615:                             for file in files
+616:                             if file.endswith(".py")
+617:                         )
+618:             else:
+619:                 yield something
+620: 
+621:     def check(self, files_or_modules: Sequence[str] | str) -> None:
+622:         """Main checking entry: check a list of files or modules from their name.
+623: 
+624:         files_or_modules is either a string or list of strings presenting modules to check.
+625:         """
+626:         self.initialize()
+627:         if not isinstance(files_or_modules, (list, tuple)):
+628:             # TODO: 3.0: Remove deprecated typing and update docstring
+629:             warnings.warn(
+630:                 "In pylint 3.0, the checkers check function will only accept sequence of string",
+631:                 DeprecationWarning,
+632:             )
+633:             files_or_modules = (files_or_modules,)  # type: ignore[assignment]
+634:         if self.config.recursive:
+635:             files_or_modules = tuple(self._discover_files(files_or_modules))
+636:         if self.config.from_stdin:
+637:             if len(files_or_modules) != 1:
+638:                 raise exceptions.InvalidArgsError(
+639:                     "Missing filename required for --from-stdin"
+640:                 )
+641: 
+642:             filepath = files_or_modules[0]
+643:             with fix_import_path(files_or_modules):
+644:                 self._check_files(
+645:                     functools.partial(self.get_ast, data=_read_stdin()),
+646:                     [self._get_file_descr_from_stdin(filepath)],
+647:                 )
+648:         elif self.config.jobs == 1:
+649:             with fix_import_path(files_or_modules):
+650:                 self._check_files(
+651:                     self.get_ast, self._iterate_file_descrs(files_or_modules)
+652:                 )
+653:         else:
+654:             check_parallel(
+655:                 self,
+656:                 self.config.jobs,
+657:                 self._iterate_file_descrs(files_or_modules),
+658:                 files_or_modules,
+659:             )
+660: 
+661:     def check_single_file(self, name: str, filepath: str, modname: str) -> None:
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 800, "path": "pylint/lint/pylinter.py", "start_line": 760}
+META: {"end_column": 26, "end_line": 800, "next_cursor": null, "start_column": 0, "start_line": 760, "total_lines": 1253}
+760:         self, files_or_modules: Sequence[str]
+761:     ) -> Iterator[FileItem]:
+762:         """Return generator yielding file descriptions (tuples of module name, file
+763:         path, base name).
+764: 
+765:         The returned generator yield one item for each Python module that should be linted.
+766:         """
+767:         for descr in self._expand_files(files_or_modules):
+768:             name, filepath, is_arg = descr["name"], descr["path"], descr["isarg"]
+769:             if self.should_analyze_file(name, filepath, is_argument=is_arg):
+770:                 yield FileItem(name, filepath, descr["basename"])
+771: 
+772:     def _expand_files(self, modules: Sequence[str]) -> list[ModuleDescriptionDict]:
+773:         """Get modules and errors from a list of modules and handle errors."""
+774:         result, errors = expand_modules(
+775:             modules,
+776:             self.config.ignore,
+777:             self.config.ignore_patterns,
+778:             self._ignore_paths,
+779:         )
+780:         for error in errors:
+781:             message = modname = error["mod"]
+782:             key = error["key"]
+783:             self.set_current_module(modname)
+784:             if key == "fatal":
+785:                 message = str(error["ex"]).replace(os.getcwd() + os.sep, "")
+786:             self.add_message(key, args=message)
+787:         return result
+788: 
+789:     def set_current_module(
+790:         self, modname: str | None, filepath: str | None = None
+791:     ) -> None:
+792:         """Set the name of the currently analyzed module and
+793:         init statistics for it.
+794:         """
+795:         if not modname and filepath is None:
+796:             return
+797:         self.reporter.on_set_current_module(modname or "", filepath)
+798:         if modname is None:
+799:             # TODO: 3.0: Remove all modname or ""'s in this method
+800:             warnings.warn(
+
+
+TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 760, "path": "pylint/lint/pylinter.py", "start_line": 661}
+META: {"end_column": 32, "end_line": 714, "next_cursor": "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161", "start_column": 0, "start_line": 661, "total_lines": 1253}
+661:     def check_single_file(self, name: str, filepath: str, modname: str) -> None:
+662:         warnings.warn(
+663:             "In pylint 3.0, the checkers check_single_file function will be removed. "
+664:             "Use check_single_file_item instead.",
+665:             DeprecationWarning,
+666:         )
+667:         self.check_single_file_item(FileItem(name, filepath, modname))
+668: 
+669:     def check_single_file_item(self, file: FileItem) -> None:
+670:         """Check single file item.
+671: 
+672:         The arguments are the same that are documented in _check_files
+673: 
+674:         initialize() should be called before calling this method
+675:         """
+676:         with self._astroid_module_checker() as check_astroid_module:
+677:             self._check_file(self.get_ast, check_astroid_module, file)
+678: 
+679:     def _check_files(
+680:         self,
+681:         get_ast: GetAstProtocol,
+682:         file_descrs: Iterable[FileItem],
+683:     ) -> None:
+684:         """Check all files from file_descrs."""
+685:         with self._astroid_module_checker() as check_astroid_module:
+686:             for file in file_descrs:
+687:                 try:
+688:                     self._check_file(get_ast, check_astroid_module, file)
+689:                 except Exception as ex:  # pylint: disable=broad-except
+690:                     template_path = prepare_crash_report(
+691:                         ex, file.filepath, self.crash_file_path
+692:                     )
+693:                     msg = get_fatal_error_message(file.filepath, template_path)
+694:                     if isinstance(ex, AstroidError):
+695:                         symbol = "astroid-error"
+696:                         self.add_message(symbol, args=(file.filepath, msg))
+697:                     else:
+698:                         symbol = "fatal"
+699:                         self.add_message(symbol, args=msg)
+700: 
+701:     def _check_file(
+702:         self,
+703:         get_ast: GetAstProtocol,
+704:         check_astroid_module: Callable[[nodes.Module], bool | None],
+705:         file: FileItem,
+706:     ) -> None:
+707:         """Check a file using the passed utility functions (get_ast and
+708:         check_astroid_module).
+709: 
+710:         :param callable get_ast: callable returning AST from defined file taking the following arguments
+711:         - filepath: path to the file to check
+712:         - name: Python module name
+713:         :param callable check_astroid_module: callable checking an AST taking the following arguments
+714:         - ast: AST of the module
+
+
+TOOL 6: search_text
+ARGS: {"offset": 0, "query": "def _is_ignored_file"}
+META: {"error": "investigation_closed", "next": "finish"}
+

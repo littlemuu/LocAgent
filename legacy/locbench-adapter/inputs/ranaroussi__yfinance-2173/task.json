@@ -1,0 +1,6 @@
+{
+  "instance_id": "ranaroussi__yfinance-2173",
+  "repo": "ranaroussi/yfinance",
+  "base_commit": "3ac85397cbaee4b28baea8e900e1de6e7b2fbe52",
+  "problem_statement": "Any way to get more news?\n`ticker.news` seems to return 8 to 10 news articles.\r\n\r\nHowever, Yahoo Finance can offer many more than 8 to 10 news articles per ticker: https://finance.yahoo.com/quote/MSFT/news/ (keep scrolling down).\r\n\r\nIs there a way to get more than 8 to 10 news articles with yfinance? \n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "Project-MONAI__MONAI-8123",
+  "repo": "Project-MONAI/MONAI",
+  "base_commit": "052dbb4439165bfc1fc3132fadb0955587e4d30e",
+  "problem_statement": "Optimize the VISTA3D latency\n**Is your feature request related to a problem? Please describe.**\r\nThe VISTA3D is a very brilliant model for everything segmentation in a medical image. However it suffers a slowdown [issue](https://github.com/Project-MONAI/model-zoo/tree/dev/models/vista3d/docs#inference-gpu-benchmarks) when running on a GPU platform, which takes minutes to run a single inference. Therefore, a lower latency version of the VISTA3D model should be a user-friendly model and gain more usage.\r\n\r\n**Describe the solution you'd like**\r\n1. Update the VISTA3D bundle parameters to achieve a better latency.\r\n2. Update the VISTA3D network to solve some latency bottlenecks.\r\n3. Try to accelerate the bundle with acceleration tools like TensorRT.\r\n\r\n**Additional context**\r\nSome analyzation has already done in [this PR](https://github.com/Project-MONAI/model-zoo/pull/671).\r\nThe corresponding MONAI core code change is included [here](https://github.com/binliunls/MONAI/pull/1)\r\n\n"
+}

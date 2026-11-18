@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-5930",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "03db9d3f74372f71da8dc14a6aca151727b7df55",
+  "problem_statement": "Could not run with argurment \"-s lambda\" or \"-s awslambda\"\n### Steps to Reproduce\n\nexport LOG_LEVEL=INFO && python prowler.py aws -s lambda\r\n\r\n\n\n### Expected behavior\n\nProwler should scan for awslambda service\n\n### Actual Result with Screenshots or Logs\n\n2024-11-27 13:57:25,877 [File: __main__.py:280]         [Module: __main__]       ERROR: There are no checks to execute. Please, check your input arguments\r\n\n\n### How did you install Prowler?\n\nCloning the repository from github.com (git clone)\n\n### Environment Resource\n\nLocal PC\n\n### OS used\n\nMacOS Sonoma 14.6.1\n\n### Prowler version\n\nProwler 5.0.0 (You are running the latest version, yay!)\n\n### Pip version\n\npip 24.3.1 \n\n### Context\n\n_No response_\n"
+}

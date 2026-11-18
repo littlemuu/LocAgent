@@ -1,0 +1,11 @@
+{
+  "answer": "已读到的事实（附文件:行号）\n- django/db/models/query.py:919-923：`none()` 只做 `clone = self._chain()` 后调用 `clone.query.set_empty()`，未检查 `query.combinator`/`combined_queries`。\n- django/db/models/query.py:988-997：`_combinator_query()` 克隆后 `clear_ordering(True)`、`clear_limits()`，并把 `combined_queries` 设为 `(self.query,) + 其他 query`，再设 `combinator`/`combinator_all`。\n- django/db/models/query.py:999-1004：`union()` 仅在 `self` 是 `EmptyQuerySet` 时特殊处理，否则直接走 `_combinator_query('union', ...)`。\n- django/db/models/query.py:936-950：`filter()`/`exclude()` 会先调用 `_not_support_combined_queries(...)`，说明组合查询对部分方法有显式限制，而 `none()` 没有。\n\n推断\n- 待验证假设：`django/db/models/query.py:QuerySet.none` 在组合查询上只把外层 `query` 置空，而 SQL 编译时组合查询以 `combined_queries` 为准，因此 `set_empty()` 不生效，`none()` 返回的仍是 union 的全部结果。\n- 待验证假设：`django/db/models/query.py:QuerySet._combinator_query` 保存的 `combined_queries` 是 `none()` 之后仍被使用的数据源，故需在 `none()` 中同时清空/短路 `combined_queries` 或返回 `EmptyQuerySet`。\n- 待验证假设：表单空值路径（`ModelMultipleChoiceField` 的 `_check_values`/`clean` 对空值返回 `self.queryset.none()`）是触发点，`django/db/models/query.py:QuerySet.union` 本身行为正常。\n\n未核验点\n- 未读 `Query.set_empty()`、`Query.get_compiler()`/`SQLCompiler.as_sql()` 中 `combinator` 分支，无法确认空标记是否被组合分支忽略。\n- 未读 `EmptyQuerySet` 定义与 `_not_support_combined_queries` 实现。\n- 未读 `django/forms/models.py` 中 `ModelMultipleChoiceField` 空值处理调用链。\n- 未运行任何测试或复现脚本。\n\n最小验证：`python -m pytest -q tests/queries/test_qs_combinators.py -k none`（或断言 `Publication.objects.filter(id__lt=2).union(Publication.objects.filter(id__gt=5)).none().count() == 0`）",
+  "entities": [
+    "django/db/models/query.py:QuerySet.none",
+    "django/db/models/query.py:QuerySet.union",
+    "django/db/models/query.py:QuerySet._combinator_query"
+  ],
+  "files": [
+    "django/db/models/query.py"
+  ]
+}

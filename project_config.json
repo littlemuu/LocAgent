@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "paths": {
+    "runtime": "runtime",
+    "tests": "tests",
+    "python": ".venv/bin/python",
+    "wheelhouse": "vendor/wheels",
+    "legacy_reference": "vendor/legacy",
+    "dev_registry": "data/dev37/registry.json",
+    "verification": "verification",
+    "freezes": "freezes"
+  },
+  "historical_readonly_aliases": {
+    "original_workspace": "/Users/xiaomu/Documents/Codex/2026-11-12/task",
+    "original_legacy": "/Users/xiaomu/Documents/Codex/locagent-demo-20261108",
+    "historical_benchmark_root": "/Users/xiaomu/Documents/Codex/2026-11-10/task"
+  },
+  "goal": "Does improved localization improve Coding Agent end-to-end SWE-bench resolve rate?",
+  "execution_policy": {
+    "paid_calls": false,
+    "holdout_execution": false,
+    "max_stage": 1
+  },
+  "host": {
+    "bootstrap_python": "/Users/xiaomu/.local/share/uv/python/cpython-3.12.16-macos-aarch64-none/bin/python3.12"
+  }
+}

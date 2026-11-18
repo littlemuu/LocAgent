@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__accelerate-3248",
+  "repo": "huggingface/accelerate",
+  "base_commit": "29be4788629b772a3b722076e433b5b3b5c85da3",
+  "problem_statement": "`preload_module_classes` is lost in attach_execution_device_hook.\n### System Info\r\n\r\nhttps://github.com/huggingface/accelerate/blob/3fcc9461c4fcb7228df5e5246809ba09cfbb232e/src/accelerate/hooks.py#L439\r\nShould we pass preload_module_classes  to the next calling? such as\r\n```\r\n        attach_execution_device_hook(child, execution_device, tied_params_map=tied_params_map, \r\n preload_module_classes=preload_module_classes)\r\n```\r\n\r\n\r\n### Information\r\n\r\n- [ ] The official example scripts\r\n- [ ] My own modified scripts\r\n\r\n### Tasks\r\n\r\n- [ ] One of the scripts in the examples/ folder of Accelerate or an officially supported `no_trainer` script in the `examples` folder of the `transformers` repo (such as `run_no_trainer_glue.py`)\r\n- [ ] My own task or dataset (give details below)\r\n\r\n### Reproduction\r\n\r\nStep into the code is enough.\r\n\r\n### Expected behavior\r\n\r\nIdentify the bug.\n"
+}

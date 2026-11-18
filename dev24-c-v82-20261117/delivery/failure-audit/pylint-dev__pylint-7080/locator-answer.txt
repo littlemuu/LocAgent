@@ -1,0 +1,22 @@
+已读到的事实（附文件:行号）
+- pylint/lint/pylinter.py:585-619：`_discover_files` 在 `os.walk` 中对每个 `root` 调用 `_is_ignored_file(root, self.config.ignore, self.config.ignore_patterns, self.config.ignore_paths)`，命中则把 root 加入 `skip_subtrees` 并 `continue`；未命中时若 `__init__.py` 在 files 中则 yield root，否则 yield 该目录下所有 `.py` 文件。
+- pylint/lint/pylinter.py:634-635：`check` 在 `self.config.recursive` 为真时用 `tuple(self._discover_files(files_or_modules))` 替换待检查列表。
+- pylint/lint/pylinter.py:767-770：`_iterate_file_descrs` 对 `_expand_files` 的每个描述符调用 `should_analyze_file(name, filepath, is_argument=is_arg)` 后才 yield。
+- pylint/lint/pylinter.py:772-787：`_expand_files` 把 `self._ignore_paths` 传给 `expand_modules`。
+- pylint/lint/pylinter.py:600-607 与 609-611：目录命中忽略规则时只跳过该 root 子树；但 `__init__.py` 存在时 yield 的是目录 root 本身而非文件。
+
+推断
+- 待验证假设：`pylint/lint/pylinter.py:PyLinter._discover_files` 对 `ignore_paths` 的匹配对象是 `os.walk` 的 `root`（目录路径），而用户正则 `^src/gen/.*$` 以 `^` 锚定且用正斜杠，在 Windows 上 root 形如 `src\gen`，故正则不匹配，导致 `src/gen` 未被跳过。
+- 待验证假设：`pylint/lint/pylinter.py:PyLinter.check` 在 recursive 分支用发现结果替换原参数，若发现阶段未过滤，后续 `_expand_files`/`should_analyze_file` 是否再次应用 `ignore_paths` 决定最终是否仍被检查；`_expand_files` 确实传入 `_ignore_paths`，但 `expand_modules` 内部对已展开文件是否应用该正则未读，故不能断定。
+- 待验证假设：`pylint/lint/pylinter.py:PyLinter._iterate_file_descrs` 的 `should_analyze_file` 可能只处理 `ignore`/`ignore_patterns` 而不处理 `ignore_paths`，形成第二道缺口。
+
+未核验点
+- `_is_ignored_file` 函数体未读（仅见调用点），其路径规范化/分隔符处理未知。
+- `expand_modules` 与 `should_analyze_file` 函数体未读，无法确认 `ignore_paths` 是否在展开阶段生效。
+- 未续读分页：pylint/lint/pylinter.py cursor=rf1_51261be707a65fa96f9198f8fecc9b4ea087129d0f52e74d7b076a96d49ab759（661-714 之后）与 cursor=rf1_2e2c0ca45321af18120afb78c67405a3f42d338b3722eb93090fe2e3c678296d（714 之后）。
+- 未运行任何验证；未确认 Windows 路径分隔符与正则锚定的实际交互。
+
+最小验证：`python -c "import re,os;print(bool(re.match(r'^src/gen/.*$', os.path.join('src','gen'))))"`（在 Windows 上预期为 False，支持分隔符假设）
+
+以下内容未在阅读记录中核验：
+- [R1] pylint/lint/pylinter.py:PyLinter._iterate_file_descrs

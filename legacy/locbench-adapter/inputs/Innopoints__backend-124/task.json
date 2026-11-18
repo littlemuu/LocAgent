@@ -1,0 +1,6 @@
+{
+  "instance_id": "Innopoints__backend-124",
+  "repo": "Innopoints/backend",
+  "base_commit": "c1779409130762a141710875bd1d758c8671b1d8",
+  "problem_statement": "Implement CSRF protection\n\n"
+}

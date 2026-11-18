@@ -1,0 +1,170 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "def __set__"}
+META: {"next_offset": null}
+django/contrib/contenttypes/fields.py:247:     def __set__(self, instance, value):
+django/contrib/gis/db/models/proxy.py:49:     def __set__(self, instance, value):
+django/db/models/fields/files.py:212:     def __set__(self, instance, value):
+django/db/models/fields/files.py:345:     def __set__(self, instance, value):
+django/db/models/fields/related_descriptors.py:76:     def __set__(self, instance, value):
+django/db/models/fields/related_descriptors.py:203:     def __set__(self, instance, value):
+django/db/models/fields/related_descriptors.py:309:     def __set__(self, instance, value):
+django/db/models/fields/related_descriptors.py:430:     def __set__(self, instance, value):
+django/db/models/fields/related_descriptors.py:544:     def __set__(self, instance, value):
+tests/field_subclassing/fields.py:15:     def __set__(self, instance, value):
+tests/foreign_object/models/article.py:10:     def __set__(self, instance, value):
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__ [exact_id]
+path=django/db/models/fields/related_descriptors.py; lines=203-267; implementation_start=214; read_file(path="django/db/models/fields/related_descriptors.py", start_line=203, end_line=267)
+Docstring lines 204-212; preview prioritizes implementation. read_file preserves complete text.
+203:     def __set__(self, instance, value):
+... lines 204-213 omitted ...
+214:         if value is not None and not isinstance(value, self.field.remote_field.model._meta.concrete_model):
+215:             raise ValueError(
+216:                 'Cannot assign "%r": "%s.%s" must be a "%s" instance.' % (
+217:                     value,
+218:                     instance._meta.object_name,
+219:                     self.field.name,
+220:                     self.field.remote_field.model._meta.object_name,
+221:                 )
+222:             )
+223:         elif value is not None:
+224:             if instance._state.db is None:
+225:                 instance._state.db = router.db_for_write(instance.__class__, instance=value)
+226:             if value._state.db is None:
+227:                 value._state.db = router.db_for_write(value.__class__, instance=instance)
+228:             if not router.allow_relation(value, instance):
+229:                 raise ValueError('Cannot assign "%r": the current database router prevents this relation.' % value)
+... lines 230-263 omitted ...
+264:         # the related object to the current instance to avoid an extra SQL
+265:         # query if it's accessed later on.
+266:         if value is not None and not remote_field.multiple:
+267:             remote_field.set_cached_value(value, instance)
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 268, "path": "django/db/models/fields/related_descriptors.py", "start_line": 203}
+META: {"end_column": 0, "end_line": 268, "next_cursor": null, "start_column": 0, "start_line": 203, "total_lines": 1205}
+203:     def __set__(self, instance, value):
+204:         """
+205:         Set the related instance through the forward relation.
+206: 
+207:         With the example above, when setting ``child.parent = parent``:
+208: 
+209:         - ``self`` is the descriptor managing the ``parent`` attribute
+210:         - ``instance`` is the ``child`` instance
+211:         - ``value`` is the ``parent`` instance on the right of the equal sign
+212:         """
+213:         # An object must be an instance of the related class.
+214:         if value is not None and not isinstance(value, self.field.remote_field.model._meta.concrete_model):
+215:             raise ValueError(
+216:                 'Cannot assign "%r": "%s.%s" must be a "%s" instance.' % (
+217:                     value,
+218:                     instance._meta.object_name,
+219:                     self.field.name,
+220:                     self.field.remote_field.model._meta.object_name,
+221:                 )
+222:             )
+223:         elif value is not None:
+224:             if instance._state.db is None:
+225:                 instance._state.db = router.db_for_write(instance.__class__, instance=value)
+226:             if value._state.db is None:
+227:                 value._state.db = router.db_for_write(value.__class__, instance=instance)
+228:             if not router.allow_relation(value, instance):
+229:                 raise ValueError('Cannot assign "%r": the current database router prevents this relation.' % value)
+230: 
+231:         remote_field = self.field.remote_field
+232:         # If we're setting the value of a OneToOneField to None, we need to clear
+233:         # out the cache on any old related object. Otherwise, deleting the
+234:         # previously-related object will also cause this object to be deleted,
+235:         # which is wrong.
+236:         if value is None:
+237:             # Look up the previously-related object, which may still be available
+238:             # since we've not yet cleared out the related field.
+239:             # Use the cache directly, instead of the accessor; if we haven't
+240:             # populated the cache, then we don't care - we're only accessing
+241:             # the object to invalidate the accessor cache, so there's no
+242:             # need to populate the cache just to expire it again.
+243:             related = self.field.get_cached_value(instance, default=None)
+244: 
+245:             # If we've got an old related object, we need to clear out its
+246:             # cache. This cache also might not exist if the related object
+247:             # hasn't been accessed yet.
+248:             if related is not None:
+249:                 remote_field.set_cached_value(related, None)
+250: 
+251:             for lh_field, rh_field in self.field.related_fields:
+252:                 setattr(instance, lh_field.attname, None)
+253: 
+254:         # Set the values of the related field.
+255:         else:
+256:             for lh_field, rh_field in self.field.related_fields:
+257:                 setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
+258: 
+259:         # Set the related instance cache used by __get__ to avoid an SQL query
+260:         # when accessing the attribute we just set.
+261:         self.field.set_cached_value(instance, value)
+262: 
+263:         # If this is a one-to-one relation, set the reverse accessor cache on
+264:         # the related object to the current instance to avoid an extra SQL
+265:         # query if it's accessed later on.
+266:         if value is not None and not remote_field.multiple:
+267:             remote_field.set_cached_value(value, instance)
+268: 
+
+
+TOOL 4: search_text
+ARGS: {"offset": 0, "query": "def get_foreign_related_value"}
+META: {"next_offset": null}
+django/db/models/fields/related.py:649:     def get_foreign_related_value(self, instance):
+
+TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 680, "path": "django/db/models/fields/related.py", "start_line": 640}
+META: {"end_column": 0, "end_line": 680, "next_cursor": null, "start_column": 0, "start_line": 640, "total_lines": 1694}
+640:         return tuple(lhs_field for lhs_field, rhs_field in self.related_fields)
+641: 
+642:     @cached_property
+643:     def foreign_related_fields(self):
+644:         return tuple(rhs_field for lhs_field, rhs_field in self.related_fields if rhs_field)
+645: 
+646:     def get_local_related_value(self, instance):
+647:         return self.get_instance_value_for_fields(instance, self.local_related_fields)
+648: 
+649:     def get_foreign_related_value(self, instance):
+650:         return self.get_instance_value_for_fields(instance, self.foreign_related_fields)
+651: 
+652:     @staticmethod
+653:     def get_instance_value_for_fields(instance, fields):
+654:         ret = []
+655:         opts = instance._meta
+656:         for field in fields:
+657:             # Gotcha: in some cases (like fixture loading) a model can have
+658:             # different values in parent_ptr_id and parent's id. So, use
+659:             # instance.pk (that is, parent_ptr_id) when asked for instance.id.
+660:             if field.primary_key:
+661:                 possible_parent_link = opts.get_ancestor_link(field.model)
+662:                 if (not possible_parent_link or
+663:                         possible_parent_link.primary_key or
+664:                         possible_parent_link.model._meta.abstract):
+665:                     ret.append(instance.pk)
+666:                     continue
+667:             ret.append(getattr(instance, field.attname))
+668:         return tuple(ret)
+669: 
+670:     def get_attname_column(self):
+671:         attname, column = super().get_attname_column()
+672:         return attname, None
+673: 
+674:     def get_joining_columns(self, reverse_join=False):
+675:         source = self.reverse_related_fields if reverse_join else self.related_fields
+676:         return tuple((lhs_field.column, rhs_field.column) for lhs_field, rhs_field in source)
+677: 
+678:     def get_reverse_joining_columns(self):
+679:         return self.get_joining_columns(reverse_join=True)
+680: 
+

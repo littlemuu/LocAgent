@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-14693",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "80181d73383659c27f4e16122328f6c383e852fe",
+  "problem_statement": "Configure `ipc_mode` or `shm_size` on container creation\nFor some flows that utilize `multiprocessing` for ML workloads, I need to run containers with increased shared memory available under `/dev/shm` (`--shm_size`) or use the host's namespace (--ipc_mode='host').  Looking through the code, I believe this would expand `DockerWorkerJobConfiguration` to include these two settings, which are available in `Container.create`.  \r\n\r\nProposed additions:\r\n- Add `ipc_mode` and `shm_size` to `DockerWorkerJobConfiguration`, both defaulting to `None` to preserve default behavior.\r\n\r\n@desertaxle \n"
+}

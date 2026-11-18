@@ -1,0 +1,352 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "Piecewise generators do not make sense"}
+META: {"next_offset": null}
+sympy/polys/polytools.py:4399:             raise PolynomialError("Piecewise generators do not make sense")
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "sympy/core/basic.py Basic.subs"}
+META: {"next_offset": 3971}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sympy/core/basic.py:Basic.subs [identifier_components]
+path=sympy/core/basic.py; lines=761-952; implementation_start=874; read_file(path="sympy/core/basic.py", start_line=761, end_line=952)
+Docstring lines 762-873; preview prioritizes implementation. read_file preserves complete text.
+761:     def subs(self, *args, **kwargs):
+... lines 762-873 omitted ...
+874:         from sympy.core.compatibility import _nodes, default_sort_key
+875:         from sympy.core.containers import Dict
+876:         from sympy.core.symbol import Dummy, Symbol
+877:         from sympy.utilities.misc import filldedent
+878: 
+879:         unordered = False
+880:         if len(args) == 1:
+881:             sequence = args[0]
+882:             if isinstance(sequence, set):
+883:                 unordered = True
+884:             elif isinstance(sequence, (Dict, Mapping)):
+885:                 unordered = True
+886:                 sequence = sequence.items()
+887:             elif not iterable(sequence):
+888:                 raise ValueError(filldedent("""
+889:                    When a single argument is passed to subs
+... lines 890-948 omitted ...
+949:                 rv = rv._subs(old, new, **kwargs)
+950:                 if not isinstance(rv, Basic):
+951:                     break
+952:             return rv
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+#2 sympy/core/basic.py:Basic._subs [identifier_components]
+path=sympy/core/basic.py; lines=955-1064; implementation_start=1026; read_file(path="sympy/core/basic.py", start_line=955, end_line=1064)
+Docstring lines 956-1024; preview prioritizes implementation. read_file preserves complete text.
+955:     def _subs(self, old, new, **hints):
+... lines 956-1025 omitted ...
+1026:         def fallback(self, old, new):
+1027:             """
+1028:             Try to replace old with new in any of self's arguments.
+1029:             """
+1030:             hit = False
+1031:             args = list(self.args)
+1032:             for i, arg in enumerate(args):
+1033:                 if not hasattr(arg, '_eval_subs'):
+1034:                     continue
+1035:                 arg = arg._subs(old, new, **hints)
+1036:                 if not _aresame(arg, args[i]):
+1037:                     hit = True
+1038:                     args[i] = arg
+1039:             if hit:
+1040:                 rv = self.func(*args)
+1041:                 hack2 = hints.get('hack2', False)
+... lines 1042-1060 omitted ...
+1061:         rv = self._eval_subs(old, new)
+1062:         if rv is None:
+1063:             rv = fallback(self, old, new)
+1064:         return rv
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+#3 sympy/core/function.py:Subs [identifier_components]
+path=sympy/core/function.py; lines=2108-2435; implementation_start=2196; read_file(path="sympy/core/function.py", start_line=2108, end_line=2435)
+Docstring lines 2109-2195; preview prioritizes implementation. read_file preserves complete text.
+2108: class Subs(Expr):
+... lines 2109-2195 omitted ...
+2196:     def __new__(cls, expr, variables, point, **assumptions):
+2197:         from sympy import Symbol
+2198: 
+2199:         if not is_sequence(variables, Tuple):
+2200:             variables = [variables]
+2201:         variables = Tuple(*variables)
+2202: 
+2203:         if has_dups(variables):
+2204:             repeated = [str(v) for v, i in Counter(variables).items() if i > 1]
+2205:             __ = ', '.join(repeated)
+2206:             raise ValueError(filldedent('''
+2207:                 The following expressions appear more than once: %s
+2208:                 ''' % __))
+2209: 
+2210:         point = Tuple(*(point if is_sequence(point, Tuple) else [point]))
+2211: 
+... lines 2212-2431 omitted ...
+2432:             # substitution has been performed:
+2433:           
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 1064, "path": "sympy/core/basic.py", "start_line": 761}
+META: {"end_column": 42, "end_line": 859, "next_cursor": "rf1_3c73ede6f5621532b26b3ed21be5fea5e62fb94a52ee9de36045924d5270234d", "start_column": 0, "start_line": 761, "total_lines": 2063}
+761:     def subs(self, *args, **kwargs):
+762:         """
+763:         Substitutes old for new in an expression after sympifying args.
+764: 
+765:         `args` is either:
+766:           - two arguments, e.g. foo.subs(old, new)
+767:           - one iterable argument, e.g. foo.subs(iterable). The iterable may be
+768:              o an iterable container with (old, new) pairs. In this case the
+769:                replacements are processed in the order given with successive
+770:                patterns possibly affecting replacements already made.
+771:              o a dict or set whose key/value items correspond to old/new pairs.
+772:                In this case the old/new pairs will be sorted by op count and in
+773:                case of a tie, by number of args and the default_sort_key. The
+774:                resulting sorted list is then processed as an iterable container
+775:                (see previous).
+776: 
+777:         If the keyword ``simultaneous`` is True, the subexpressions will not be
+778:         evaluated until all the substitutions have been made.
+779: 
+780:         Examples
+781:         ========
+782: 
+783:         >>> from sympy import pi, exp, limit, oo
+784:         >>> from sympy.abc import x, y
+785:         >>> (1 + x*y).subs(x, pi)
+786:         pi*y + 1
+787:         >>> (1 + x*y).subs({x:pi, y:2})
+788:         1 + 2*pi
+789:         >>> (1 + x*y).subs([(x, pi), (y, 2)])
+790:         1 + 2*pi
+791:         >>> reps = [(y, x**2), (x, 2)]
+792:         >>> (x + y).subs(reps)
+793:         6
+794:         >>> (x + y).subs(reversed(reps))
+795:         x**2 + 2
+796: 
+797:         >>> (x**2 + x**4).subs(x**2, y)
+798:         y**2 + y
+799: 
+800:         To replace only the x**2 but not the x**4, use xreplace:
+801: 
+802:         >>> (x**2 + x**4).xreplace({x**2: y})
+803:         x**4 + y
+804: 
+805:         To delay evaluation until all substitutions have been made,
+806:         set the keyword ``simultaneous`` to True:
+807: 
+808:         >>> (x/y).subs([(x, 0), (y, 0)])
+809:         0
+810:         >>> (x/y).subs([(x, 0), (y, 0)], simultaneous=True)
+811:         nan
+812: 
+813:         This has the added feature of not allowing subsequent substitutions
+814:         to affect those already made:
+815: 
+816:         >>> ((x + y)/y).subs({x + y: y, y: x + y})
+817:         1
+818:         >>> ((x + y)/y).subs({x + y: y, y: x + y}, simultaneous=True)
+819:         y/(x + y)
+820: 
+821:         In order to obtain a canonical result, unordered iterables are
+822:         sorted by count_op length, number of arguments and by the
+823:         default_sort_key to break any ties. All other iterables are left
+824:         unsorted.
+825: 
+826:         >>> from sympy import sqrt, sin, cos
+827:         >>> from sympy.abc import a, b, c, d, e
+828: 
+829:         >>> A = (sqrt(sin(2*x)), a)
+830:         >>> B = (sin(2*x), b)
+831:         >>> C = (cos(2*x), c)
+832:         >>> D = (x, d)
+833:         >>> E = (exp(x), e)
+834: 
+835:         >>> expr = sqrt(sin(2*x))*sin(exp(x)*x)*cos(2*x) + sin(2*x)
+836: 
+837:         >>> expr.subs(dict([A, B, C, D, E]))
+838:         a*c*sin(d*e) + b
+839: 
+840:         The resulting expression represents a literal replacement of the
+841:         old arguments with the new arguments. This may not reflect the
+842:         limiting behavior of the expression:
+843: 
+844:         >>> (x**3 - 3*x).subs({x: oo})
+845:         nan
+846: 
+847:         >>> limit(x**3 - 3*x, x, oo)
+848:         oo
+849: 
+850:         If the substitution will be followed by numerical
+851:         evaluation, it is better to pass the substitution to
+852:         evalf as
+853: 
+854:         >>> (1/x).evalf(subs={x: 3.0}, n=21)
+855:         0.333333333333333333333
+856: 
+857:         rather than
+858: 
+859:         >>> (1/x).subs({x: 3.0}).evalf(21)
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 4420, "path": "sympy/polys/polytools.py", "start_line": 4360}
+META: {"end_column": 0, "end_line": 4420, "next_cursor": null, "start_column": 0, "start_line": 4360, "total_lines": 7229}
+4360:                 opt.polys = True
+4361: 
+4362:             return [f, g], opt
+4363: 
+4364:     origs, exprs = list(exprs), []
+4365:     _exprs, _polys = [], []
+4366: 
+4367:     failed = False
+4368: 
+4369:     for i, expr in enumerate(origs):
+4370:         expr = sympify(expr)
+4371: 
+4372:         if isinstance(expr, Basic):
+4373:             if expr.is_Poly:
+4374:                 _polys.append(i)
+4375:             else:
+4376:                 _exprs.append(i)
+4377: 
+4378:                 if opt.expand:
+4379:                     expr = expr.expand()
+4380:         else:
+4381:             failed = True
+4382: 
+4383:         exprs.append(expr)
+4384: 
+4385:     if failed:
+4386:         raise PolificationFailed(opt, origs, exprs, True)
+4387: 
+4388:     if _polys:
+4389:         # XXX: this is a temporary solution
+4390:         for i in _polys:
+4391:             exprs[i] = exprs[i].as_expr()
+4392: 
+4393:     reps, opt = _parallel_dict_from_expr(exprs, opt)
+4394:     if not opt.gens:
+4395:         raise PolificationFailed(opt, origs, exprs, True)
+4396: 
+4397:     for k in opt.gens:
+4398:         if isinstance(k, Piecewise):
+4399:             raise PolynomialError("Piecewise generators do not make sense")
+4400: 
+4401:     coeffs_list, lengths = [], []
+4402: 
+4403:     all_monoms = []
+4404:     all_coeffs = []
+4405: 
+4406:     for rep in reps:
+4407:         monoms, coeffs = list(zip(*list(rep.items())))
+4408: 
+4409:         coeffs_list.extend(coeffs)
+4410:         all_monoms.append(monoms)
+4411: 
+4412:         lengths.append(len(coeffs))
+4413: 
+4414:     domain = opt.domain
+4415: 
+4416:     if domain is None:
+4417:         opt.domain, coeffs_list = construct_domain(coeffs_list, opt=opt)
+4418:     else:
+4419:         coeffs_list = list(map(domain.from_sympy, coeffs_list))
+4420: 
+
+
+TOOL 5: read_file
+ARGS: {"cursor": "rf1_3c73ede6f5621532b26b3ed21be5fea5e62fb94a52ee9de36045924d5270234d", "end_line": null, "path": "sympy/core/basic.py", "start_line": null}
+META: {"end_column": 25, "end_line": 942, "next_cursor": "rf1_e05b5bdfccaa95ed8bb81f49ce43fd2d1157d871d8faa36deca72123911aa8ed", "start_column": 0, "start_line": 860, "total_lines": 2063}
+860:         0.333333333333333314830
+861: 
+862:         as the former will ensure that the desired level of precision is
+863:         obtained.
+864: 
+865:         See Also
+866:         ========
+867:         replace: replacement capable of doing wildcard-like matching,
+868:                  parsing of match, and conditional replacements
+869:         xreplace: exact node replacement in expr tree; also capable of
+870:                   using matching rules
+871:         sympy.core.evalf.EvalfMixin.evalf: calculates the given formula to a desired level of precision
+872: 
+873:         """
+874:         from sympy.core.compatibility import _nodes, default_sort_key
+875:         from sympy.core.containers import Dict
+876:         from sympy.core.symbol import Dummy, Symbol
+877:         from sympy.utilities.misc import filldedent
+878: 
+879:         unordered = False
+880:         if len(args) == 1:
+881:             sequence = args[0]
+882:             if isinstance(sequence, set):
+883:                 unordered = True
+884:             elif isinstance(sequence, (Dict, Mapping)):
+885:                 unordered = True
+886:                 sequence = sequence.items()
+887:             elif not iterable(sequence):
+888:                 raise ValueError(filldedent("""
+889:                    When a single argument is passed to subs
+890:                    it should be a dictionary of old: new pairs or an iterable
+891:                    of (old, new) tuples."""))
+892:         elif len(args) == 2:
+893:             sequence = [args]
+894:         else:
+895:             raise ValueError("subs accepts either 1 or 2 arguments")
+896: 
+897:         sequence = list(sequence)
+898:         for i, s in enumerate(sequence):
+899:             if isinstance(s[0], str):
+900:                 # when old is a string we prefer Symbol
+901:                 s = Symbol(s[0]), s[1]
+902:             try:
+903:                 s = [sympify(_, strict=not isinstance(_, (str, type)))
+904:                      for _ in s]
+905:             except SympifyError:
+906:                 # if it can't be sympified, skip it
+907:                 sequence[i] = None
+908:                 continue
+909:             # skip if there is no change
+910:             sequence[i] = None if _aresame(*s) else tuple(s)
+911:         sequence = list(filter(None, sequence))
+912: 
+913:         if unordered:
+914:             sequence = dict(sequence)
+915:             # order so more complex items are first and items
+916:             # of identical complexity are ordered so
+917:             # f(x) < f(y) < x < y
+918:             # \___ 2 __/    \_1_/  <- number of nodes
+919:             #
+920:             # For more complex ordering use an unordered sequence.
+921:             k = list(ordered(sequence, default=False, keys=(
+922:                 lambda x: -_nodes(x),
+923:                 lambda x: default_sort_key(x),
+924:                 )))
+925:             sequence = [(k, sequence[k]) for k in k]
+926: 
+927:         if kwargs.pop('simultaneous', False):  # XXX should this be the default for dict subs?
+928:             reps = {}
+929:             rv = self
+930:             kwargs['hack2'] = True
+931:             m = Dummy('subs_m')
+932:             for old, new in sequence:
+933:                 com = new.is_commutative
+934:                 if com is None:
+935:                     com = True
+936:                 d = Dummy('subs_d', commutative=com)
+937:                 # using d*m so Subs will be used on dummy variables
+938:                 # in things like Derivative(f(x, y), x) in which x
+939:                 # is both free and bound
+940:                 rv = rv._subs(old, d*m, **kwargs)
+941:                 if not isinstance(rv, Basic):
+942:                     break
+
+
+TOOL 6: read_file
+ARGS: {"cursor": null, "end_line": 1064, "path": "sympy/core/basic.py", "start_line": 955}
+META: {"error": "investigation_closed", "next": "finish"}
+

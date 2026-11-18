@@ -1,0 +1,219 @@
+TOOL 1: locagent_retrieve
+ARGS: {"offset": 0, "query": "VotingClassifier.fit"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sklearn/ensemble/voting.py:VotingClassifier.fit [exact_qualified_name]
+path=sklearn/ensemble/voting.py; lines=240-273; implementation_start=261; read_file(path="sklearn/ensemble/voting.py", start_line=240, end_line=273)
+Docstring lines 241-260; preview prioritizes implementation. read_file preserves complete text.
+240:     def fit(self, X, y, sample_weight=None):
+... lines 241-260 omitted ...
+261:         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
+262:             raise NotImplementedError('Multilabel and multi-output'
+263:                                       ' classification is not supported.')
+264: 
+265:         if self.voting not in ('soft', 'hard'):
+266:             raise ValueError("Voting must be 'soft' or 'hard'; got (voting=%r)"
+267:                              % self.voting)
+268: 
+269:         self.le_ = LabelEncoder().fit(y)
+270:         self.classes_ = self.le_.classes_
+271:         transformed_y = self.le_.transform(y)
+272: 
+273:         return super().fit(X, transformed_y, sample_weight)
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 2: search_text
+ARGS: {"offset": 0, "query": "class VotingClassifier"}
+META: {"next_offset": null}
+sklearn/ensemble/voting.py:138: class VotingClassifier(_BaseVoting, ClassifierMixin):
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 275, "path": "sklearn/ensemble/voting.py", "start_line": 240}
+META: {"end_column": 25, "end_line": 275, "next_cursor": null, "start_column": 0, "start_line": 240, "total_lines": 488}
+240:     def fit(self, X, y, sample_weight=None):
+241:         """ Fit the estimators.
+242: 
+243:         Parameters
+244:         ----------
+245:         X : {array-like, sparse matrix}, shape (n_samples, n_features)
+246:             Training vectors, where n_samples is the number of samples and
+247:             n_features is the number of features.
+248: 
+249:         y : array-like, shape (n_samples,)
+250:             Target values.
+251: 
+252:         sample_weight : array-like, shape (n_samples,) or None
+253:             Sample weights. If None, then samples are equally weighted.
+254:             Note that this is supported only if all underlying estimators
+255:             support sample weights.
+256: 
+257:         Returns
+258:         -------
+259:         self : object
+260:         """
+261:         if isinstance(y, np.ndarray) and len(y.shape) > 1 and y.shape[1] > 1:
+262:             raise NotImplementedError('Multilabel and multi-output'
+263:                                       ' classification is not supported.')
+264: 
+265:         if self.voting not in ('soft', 'hard'):
+266:             raise ValueError("Voting must be 'soft' or 'hard'; got (voting=%r)"
+267:                              % self.voting)
+268: 
+269:         self.le_ = LabelEncoder().fit(y)
+270:         self.classes_ = self.le_.classes_
+271:         transformed_y = self.le_.transform(y)
+272: 
+273:         return super().fit(X, transformed_y, sample_weight)
+274: 
+275:     def predict(self, X):
+
+
+TOOL 4: search_text
+ARGS: {"offset": 0, "query": "sample_weight"}
+META: {"next_offset": 4018}
+examples/calibration/plot_calibration.py:55: sample_weight = np.random.RandomState(42).rand(y.shape[0])
+examples/calibration/plot_calibration.py:59:     train_test_split(X, y, sample_weight, test_size=0.9, random_state=42)
+examples/linear_model/plot_sgd_weighted_samples.py:19: sample_weight = 100 * np.abs(np.random.randn(20))
+examples/linear_model/plot_sgd_weighted_samples.py:21: sample_weight[:10] *= 10
+examples/linear_model/plot_sgd_weighted_samples.py:26: plt.scatter(X[:, 0], X[:, 1], c=y, s=sample_weight, alpha=0.9,
+examples/linear_model/plot_sgd_weighted_samples.py:38: clf.fit(X, y, sample_weight=sample_weight)
+examples/svm/plot_weighted_samples.py:22: def plot_decision_function(classifier, sample_weight, axis, title):
+examples/svm/plot_weighted_samples.py:31:     axis.scatter(X[:, 0], X[:, 1], c=y, s=100 * sample_weight, alpha=0.9,
+examples/svm/plot_weighted_samples.py:42: sample_weight_last_ten = abs(np.random.randn(len(X)))
+examples/svm/plot_weighted_samples.py:43: sample_weight_constant = np.ones(len(X))
+examples/svm/plot_weighted_samples.py:45: sample_weight_last_ten[15:] *= 5
+examples/svm/plot_weighted_samples.py:46: sample_weight_last_ten[9] *= 15
+examples/svm/plot_weighted_samples.py:52: clf_weights.fit(X, y, sample_weight=sample_weight_last_ten)
+examples/svm/plot_weighted_samples.py:58: plot_decision_function(clf_no_weights, sample_weight_constant, axes[0],
+examples/svm/plot_weighted_samples.py:60: plot_decision_function(clf_weights, sample_weight_last_ten, axes[1],
+sklearn/base.py:332:     def score(self, X, y, sample_weight=None):
+sklearn/base.py:347:         sample_weight : array-like, shape = [n_samples], optional
+sklearn/base.py:357:         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)
+sklearn/base.py:364:     def score(self, X, y, sample_weight=None):
+sklearn/base.py:386:         sample_weight : array-like, shape = [n_samples], optional
+sklearn/base.py:421:         return r2_score(y, y_pred, sample_weight=sample_weight,
+sklearn/calibration.py:113:     def fit(self, X, y, sample_weight=None):
+sklearn/calibration.py:124:         sample_weight : array-like, shape = [n_samples] or None
+sklearn/calibration.py:160:             if sample_weight is not None:
+sklearn/calibration.py:161:                 calibrated_classifier.fit(X, y, sample_weight)
+sklearn/calibration.py:169:             if (sample_weight is not None
+sklearn/calibration.py:170:                     and "sample_weight" not in fit_parameters):
+sklearn/calibration.py:171:                 warnings.warn("%s does not support sample_weight. Samples"
+sklearn/calibration.py:174:                 base_estimator_sample_weight = None
+sklearn/calibration.py:176:                 if sample_weight is not None:
+sklearn/calibration.py:177:                     sample_weight = check_array(sample_weight, ensure_2d=False)
+sklearn/calibration.py:178:                     check_consistent_length(y, sample_weight)
+sklearn/calibration.py:179:                 base_estimator_sample_weight = sample_weight
+sklearn/calibration.py:182:                 if base_estimator_sample_weight is not None:
+sklearn/calibration.py:185:                         sample_weight=base_estimator_sample_weight[train])
+sklearn/calibration.py:192:                 if sample_weight is not None:
+sklearn/calibration.py:194:                                               sample_weight[test])
+sklearn/calibration.py:316:     def fit(self, X, y, sample_weight=None):
+sklearn/calibration.py:327:         sample_weight : array-like, shape = [n_samples] or None
+sklearn/calibration.py:356:             calibrator.fit(this_df, Y[:, k], sample_weight)
+sklearn/calibration.py:403: def _sigmoid_calibration(df, y, sample_weight=None):
+sklearn/calibration.py:414:     sample_weight : array-like, shape = [n_samples] or None
+sklearn/calibration.py:446:         if sample_weight is not None:
+sklearn/calibration.py:447:             return (sample_weight * loss).sum()
+sklearn/calibration.py:456:         if sample_weight is not N
+
+TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 137, "path": "sklearn/ensemble/voting.py", "start_line": 1}
+META: {"end_column": 66, "end_line": 94, "next_cursor": "rf1_c8957b2c39a1085cf503830f60179a951e7a537289c00842799eaa5156baa65f", "start_column": 0, "start_line": 1, "total_lines": 488}
+1: """
+2: Soft Voting/Majority Rule classifier and Voting regressor.
+3: 
+4: This module contains:
+5:  - A Soft Voting/Majority Rule classifier for classification estimators.
+6:  - A Voting regressor for regression estimators.
+7: """
+8: 
+9: # Authors: Sebastian Raschka <se.raschka@gmail.com>,
+10: #          Gilles Louppe <g.louppe@gmail.com>,
+11: #          Ramil Nugmanov <stsouko@live.ru>
+12: #          Mohamed Ali Jamaoui <m.ali.jamaoui@gmail.com>
+13: #
+14: # License: BSD 3 clause
+15: 
+16: import numpy as np
+17: from abc import abstractmethod
+18: 
+19: from ..base import ClassifierMixin
+20: from ..base import RegressorMixin
+21: from ..base import TransformerMixin
+22: from ..base import clone
+23: from ..preprocessing import LabelEncoder
+24: from ..utils._joblib import Parallel, delayed
+25: from ..utils.validation import has_fit_parameter, check_is_fitted
+26: from ..utils.metaestimators import _BaseComposition
+27: from ..utils import Bunch
+28: 
+29: 
+30: def _parallel_fit_estimator(estimator, X, y, sample_weight=None):
+31:     """Private function used to fit an estimator within a job."""
+32:     if sample_weight is not None:
+33:         estimator.fit(X, y, sample_weight=sample_weight)
+34:     else:
+35:         estimator.fit(X, y)
+36:     return estimator
+37: 
+38: 
+39: class _BaseVoting(_BaseComposition, TransformerMixin):
+40:     """Base class for voting.
+41: 
+42:     Warning: This class should not be used directly. Use derived classes
+43:     instead.
+44:     """
+45:     _required_parameters = ['estimators']
+46: 
+47:     @property
+48:     def named_estimators(self):
+49:         return Bunch(**dict(self.estimators))
+50: 
+51:     @property
+52:     def _weights_not_none(self):
+53:         """Get the weights of not `None` estimators"""
+54:         if self.weights is None:
+55:             return None
+56:         return [w for est, w in zip(self.estimators,
+57:                                     self.weights) if est[1] is not None]
+58: 
+59:     def _predict(self, X):
+60:         """Collect results from clf.predict calls. """
+61:         return np.asarray([clf.predict(X) for clf in self.estimators_]).T
+62: 
+63:     @abstractmethod
+64:     def fit(self, X, y, sample_weight=None):
+65:         """
+66:         common fit operations.
+67:         """
+68:         if self.estimators is None or len(self.estimators) == 0:
+69:             raise AttributeError('Invalid `estimators` attribute, `estimators`'
+70:                                  ' should be a list of (string, estimator)'
+71:                                  ' tuples')
+72: 
+73:         if (self.weights is not None and
+74:                 len(self.weights) != len(self.estimators)):
+75:             raise ValueError('Number of `estimators` and weights must be equal'
+76:                              '; got %d weights, %d estimators'
+77:                              % (len(self.weights), len(self.estimators)))
+78: 
+79:         if sample_weight is not None:
+80:             for name, step in self.estimators:
+81:                 if not has_fit_parameter(step, 'sample_weight'):
+82:                     raise ValueError('Underlying estimator \'%s\' does not'
+83:                                      ' support sample weights.' % name)
+84: 
+85:         names, clfs = zip(*self.estimators)
+86:         self._validate_names(names)
+87: 
+88:         n_isnone = np.sum([clf is None for _, clf in self.estimators])
+89:         if n_isnone == len(self.estimators):
+90:             raise ValueError('All estimators are None. At least one is '
+91:                              'required!')
+92: 
+93:         self.estimators_ = Parallel(n_jobs=self.n_jobs)(
+94:                 delayed(_parallel_fit_estimator)(clone(clf), X, y,
+

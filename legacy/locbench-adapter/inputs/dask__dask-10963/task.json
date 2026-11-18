@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-10963",
+  "repo": "dask/dask",
+  "base_commit": "fa2d072c4b494b95a4352b17217fde4a301ed76b",
+  "problem_statement": "Support bag.to_dataframe when query planning is enabled\nAs far as I can tell, dask bags can only be converted to dask dataframes when query planning is disabled. It would be great to support both query planning, and the flexibility of turning bags into dataframes. Currently calling to_dataframe with query planning enabled throws the following error.\r\n\r\n>    df = bag.to_dataframe(columns=['line'])\r\n  File \".../python3.10/site-packages/dask/bag/core.py\", line 1624, in to_dataframe\r\n    return dd.DataFrame(dsk, dfs.name, meta, divisions)\r\nTypeError: FrameBase.__init__() takes 2 positional arguments but 5 were given\r\n\n"
+}

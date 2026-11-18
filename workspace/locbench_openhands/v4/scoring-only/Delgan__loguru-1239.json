@@ -1,0 +1,50 @@
+{
+  "instance_id": "Delgan__loguru-1239",
+  "base_commit": "65fe4a8db9a8f297ae3648f51b5e3050b30945a9",
+  "gold_entities": [
+    "loguru/_better_exceptions.py:ExceptionFormatter._format_list"
+  ],
+  "gold_files": [
+    "loguru/_better_exceptions.py"
+  ],
+  "official_normalized_gold": [
+    "loguru/_better_exceptions.py:ExceptionFormatter._format_list"
+  ],
+  "mapping": {
+    "instance_id": "Delgan__loguru-1239",
+    "status": "ready",
+    "source_id": "prepared-68fd1d4d89544a5f03b8927ec3a05e7e0ef4ec65537dcdd7b14e0c73c420da7c",
+    "scorer_sha256": "7f3ff294cd3ad142978e468fe81a2643d0bf9d23635bc25afef1aa40e8c7c559",
+    "gold_mappings": [
+      {
+        "label": "loguru/_better_exceptions.py:ExceptionFormatter._format_list",
+        "strict_ast": {
+          "kind": "function",
+          "start_line": 536,
+          "end_line": 544,
+          "ancestor_functions": []
+        },
+        "bm25_overlap_chunks": 1,
+        "test_or_hidden_policy_excluded": false
+      }
+    ],
+    "patch_checks": [
+      {
+        "path": "loguru/_better_exceptions.py",
+        "patch_old_blob": "e9ee1124",
+        "verified_blob": "e9ee1124f1bde60efab15a55f208dc147f2d51d8"
+      }
+    ],
+    "oracle_contract": true,
+    "empty_contract": true,
+    "class_slot_contract": true,
+    "added_functions_excluded": [],
+    "changed_function_labels_not_unique_root_cause": true,
+    "semantic_review": "pending",
+    "model_calls": 0,
+    "quality_evaluated": false,
+    "persisted_bm25_query_passed": true
+  },
+  "labels_sha256": "e0638d98d162ac0edbb60ddea37b3e2f6fb49ebbaae765d70cf894379e7715a6",
+  "semantics": "Changed functions in reference patch; not a unique root-cause oracle."
+}

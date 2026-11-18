@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18854",
+  "repo": "django/django",
+  "base_commit": "edd74c3417fa3a0b29295012ff31dbe44843303c",
+  "problem_statement": "Postgresql: ArrayField with Unicode characters gets serialized as string of \"\\u XXXX\" characters\nDescription\n\t \nIn ArrayField.value_to_string(self, obj) the value is encoded using JSON.dumps(values), which produces escaped Unicode \\u XXXX by default.\nFor example, an ArrayField with 3 elements [\"один\", \"два\", \"три\"] (1,2,3 in Russian) will produce\n[\"\\u043e\\u0434\\u0438\\u043d\", \"\\u0434\\u0432\\u0430\", \"\\u0442\\u0440\\u0438\"]\nWhile this is not a bug per se, this becomes a nuisance when viewing on result of \"dumpdata\" management command:\nThe ArrayField fields will be encoded differently from other text fields.\nPerhaps there should be an option to turn on/off the ensure_ascii parameter in JSON.dumps(values, ensure_ascii=option)) ?\nThe option can be enabled by default, as we do for 'hstore' field, or perhaps enabled conditionally:\nin the field settings ArrayField(name='numbers', ascii_only=False)\nin settings.py ( ARRAY_FIELD_ENSURE_ASCII )\nI will be glad to submit a patch.\n"
+}

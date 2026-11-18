@@ -1,0 +1,9 @@
+{
+  "recorded_at": 1794908357.996545,
+  "user_instruction": "如果镜像可以复用就保留缓存",
+  "implementation": "extra Docker tags; restore original tags after run.exit; no new pull/API",
+  "sidecar_sha256": "afe0de279fb9ac9e1dc63ecbb39d4a715445fde85557e06c7e709e311faf49ee",
+  "frozen_runtime_modified": false,
+  "locator_run_restarted": false,
+  "removed_before_change": 6
+}

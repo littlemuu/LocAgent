@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18508",
+  "repo": "django/django",
+  "base_commit": "519087819ed6e8bfbe6be208df71a7df19f23a58",
+  "problem_statement": "Reduce CreateModel + AlterModelTable to CreateModel\nDescription\n\t \nLike #33572, migration optimization can reduce CreateModel and AlterModelTable for the same model down to just CreateModel with db_table in options.\n"
+}

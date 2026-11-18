@@ -1,0 +1,11 @@
+{
+  "suite": "new",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "blocked_external_actions": [],
+  "api_calls": 0,
+  "elapsed_seconds": 1.6274256249889731,
+  "quality_measured": false
+}

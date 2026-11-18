@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "instance_id": "sympy__sympy-18698",
+  "base_commit": "3dff1b98a78f28c953ae2140b69356b8391e399c",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sympy/polys/polytools.py:6204-6218：模块级 sqf_list 仅做 docstring 与转发，返回 _generic_factor_list(f, gens, args, method='sqf')，本身不含任何平方自由分解算法。\n- sympy/polys/polytools.py:3210-3240：Poly.sqf_list 在 f.rep 有 sqf_list 时调用 f.rep.sqf_list(all)，再把系数与因子经 dom.to_sympy / f.per 转回；否则抛 OperationNotSupported。\n- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。\n\n推断\n- 待验证假设：用户示例走的是 Poly.sqf_list → DMP.sqf_list（sympy/polys/polyclasses.py:DMP.sqf_list）这条链，真正的重因子合并逻辑在更下层的 dup_sqf_list/dmp_sqf_list 中，因此“两个 (x-2,3)/(x-3,3) 未合并”的缺陷位置不在已读的两个入口函数里。\n- 待验证假设：输出中 (x-3,3) 与 (x-2,3) 顺序颠倒且未合并，提示底层按重数分桶后未对同重数因子做乘积合并，或合并步骤在某个分支（如 ZZ 域 vs 扩展域）被跳过；需读 sympy/polys/polyclasses.py:DMP.sqf_list 与 dup_sqf_list 才能定位。\n- 待验证假设：第二个示例 (x**2-1,2) 正确，说明合并逻辑在部分路径上生效，差异可能来自输入是否已展开/是否含不可约二次因子。\n\n未核验点\n- sympy/polys/polytools.py:sqf_list 的 docstring 已读，但 _generic_factor_list 未读（搜索被预算拦截）。\n- sympy/polys/polyclasses.py:DMP.sqf_list、sympy/polys/rings.py:PolyElement.sqf_list 仅见搜索命中，函数体未读完。\n- dup_sqf_list / dmp_sqf_list 未定位、未读；调用链未穷尽。\n- 未运行任何验证。\n\n最小验证：`python -c \"from sympy import *; x=symbols('x'); print(sqf_list((x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3))\"` 并对照 Poly(...).sqf_list() 输出是否同样未合并。",
+    "entities": [
+      "sympy/polys/polytools.py:sqf_list",
+      "sympy/polys/polytools.py:Poly.sqf_list",
+      "sympy/polys/polyclasses.py:DMP.sqf_list",
+      "sympy/polys/rings.py:PolyElement.sqf_list"
+    ],
+    "files": [
+      "sympy/polys/polytools.py",
+      "sympy/polys/polyclasses.py",
+      "sympy/polys/rings.py"
+    ]
+  }
+}

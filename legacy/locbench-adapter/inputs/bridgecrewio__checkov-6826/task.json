@@ -1,0 +1,6 @@
+{
+  "instance_id": "bridgecrewio__checkov-6826",
+  "repo": "bridgecrewio/checkov",
+  "base_commit": "24535627d7315014328ec034daa3362a72948d09",
+  "problem_statement": "Add EKS 1.31 as a supported version\n**Describe the issue**\r\nEKS 1.31 has been released.  However `CKV_AWS_339` fails as this is not listed as a supported version.\r\n\r\n**Examples**\r\n```\r\nresource \"aws_eks_cluster\" \"eks_cluster\" {\r\n  ...\r\n  version                   = \"1.31\"\r\n```\r\n**Version (please complete the following information):**\r\n - Checkov Version 3.2.256 (latest)\r\n\r\n**Additional context**\r\nhttps://github.com/bridgecrewio/checkov/blob/main/checkov/terraform/checks/resource/aws/EKSPlatformVersion.py seems to be where the fix is needed\n"
+}

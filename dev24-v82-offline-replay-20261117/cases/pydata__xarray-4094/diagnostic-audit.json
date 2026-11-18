@@ -1,0 +1,81 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- xarray/core/dataarray.py:1901-1967：`to_unstacked_dataset` 取 `idx = self.indexes[dim]`，非 MultiIndex 则抛 ValueError；随后 `level_number = idx._get_level_number(level)`、`variables = idx.levels[level_number]`、`variable_dim = idx.names[level_number]`，再对每个 `k in variables` 执行 `self.sel({variable_dim: k}).squeeze(drop=True)` 存入 `data_dict`，最后 `return Dataset(data_dict)`。\n- xarray/core/dataarray.py:1929-1946：docstring 示例中 `b` 是单维变量（`b (x)`），但示例的 sample dim 是 `y`，即单维变量维度与 sample dim 不同，未覆盖本 issue 的“单维变量维度即 sample dim”情形。\n- xarray/core/dataset.py:3443-3468：`to_stacked_array` 先算 `stacking_dims`（非 sample_dims 的维度），校验每个变量都含全部 sample_dims；`ensure_stackable` 对缺失的 stacking dim 用 `assign_coords[dim] = None` 补 NaN 坐标，再 `expand_dims` 并 `stack({new_dim: (variable_dim,) + stacking_dims})`。\n- xarray/core/dataset.py:3432-3440：docstring 输出显示单维变量 `b` 在 `y` 层上取值为 `nan`。\n- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。\n\n推断\n- 待验证假设：`xarray/core/dataarray.py:DataArray.to_unstacked_dataset` 中 `self.sel({variable_dim: k})` 对单维变量会保留 `dim` 上其余层级的坐标（如 `variable` 层），而 `squeeze(drop=True)` 只删长度为 1 的维度、不删标量坐标，导致各变量携带不同的 `variable` 标量坐标值，`Dataset(data_dict)` 合并时报 “conflicting values for variable 'y'”。\n- 待验证假设：修复方向是在 `xarray/core/dataarray.py:DataArray.to_unstacked_dataset` 中先 `drop_vars`/`reset_index` 掉 `dim` 相关坐标（或对每个变量 `drop` 掉 `variable_dim` 与 `dim` 坐标）再构造 Dataset。\n- 待验证假设：`xarray/core/dataset.py:Dataset.to_stacked_array` 的 `assign_coords[dim] = None` 使单维变量在 stacking dim 上产生 NaN 坐标，是 roundtrip 中坐标冲突的上游来源之一。\n\n未核验点\n- 未读 `Dataset.__init__`/merge 逻辑，无法确认冲突具体发生在哪个坐标变量上。\n- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。\n- 未运行任何代码，未复现 MCVE。\n\n最小验证：`python -c \"import numpy as np, xarray as xr; a=xr.DataArray(np.arange(3), coords=[('x',[0,1,2])]); d=xr.Dataset({'a':a,'b':a}); s=d.to_stacked_array('y', sample_dims=['x']); print(s.coords); print(s.to_unstacked_dataset('y'))\"`",
+    "entities": [
+      "xarray/core/dataarray.py:DataArray.to_unstacked_dataset",
+      "xarray/core/dataset.py:Dataset.to_stacked_array"
+    ],
+    "files": [
+      "xarray/core/dataarray.py",
+      "xarray/core/dataset.py",
+      "xarray/tests/test_dataset.py",
+      "xarray/tests/test_dataarray.py"
+    ]
+  },
+  "violations": [
+    "R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055",
+    "R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135",
+    "R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array"
+  ],
+  "violation_count": 3,
+  "rule_counts": {
+    "R1": 1,
+    "R2": 0,
+    "R3": 0,
+    "R4": 2
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [
+    {
+      "rule": "R4",
+      "violation": "R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055",
+      "targets": [
+        "xarray/tests/test_dataset.py:3033-3055"
+      ]
+    },
+    {
+      "rule": "R4",
+      "violation": "R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135",
+      "targets": [
+        "xarray/tests/test_dataarray.py:2132-2135"
+      ]
+    },
+    {
+      "rule": "R1",
+      "violation": "R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array",
+      "targets": [
+        "xarray/core/dataset.py:Dataset.to_stacked_array"
+      ]
+    }
+  ],
+  "disclosure_count": 3,
+  "disclosure_attached": true,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "xarray/core/dataarray.py",
+      1895,
+      1990
+    ],
+    [
+      "xarray/core/dataset.py",
+      3370,
+      3470
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "xarray/core/dataarray.py:DataArray.to_unstacked_dataset": true,
+    "xarray/core/dataset.py:Dataset.to_stacked_array": false
+  },
+  "entity_def_spans": {},
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [
+    "xarray/core/dataset.py:Dataset.to_stacked_array"
+  ],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

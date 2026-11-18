@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-35453",
+  "repo": "huggingface/transformers",
+  "base_commit": "6b550462139655d488d4c663086a63e98713c6b9",
+  "problem_statement": "Support Constant Learning Rate with Cooldown\n### Feature request\n\nIn `transformers.optimization` support `constant learning rate with cooldown` functions.\r\n\n\n### Motivation\n\nThis method will implement that scaling experiments can be performed with significantly reduced compute and GPU hours by utilizing fewer but reusable training runs.\r\n[SmolLM](https://huggingface.co/blog/smollm) had used this method to train a series of SOTA small language models.\r\nPaper: [https://arxiv.org/pdf/2405.18392](https://arxiv.org/pdf/2405.18392)\n\n### Your contribution\n\nI've created a branch, I'm finishing the implementation of these functions, and intend to submit a PR.\n"
+}

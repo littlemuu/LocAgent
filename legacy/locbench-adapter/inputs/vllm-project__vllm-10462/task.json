@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-10462",
+  "repo": "vllm-project/vllm",
+  "base_commit": "2f77b6cfec32c8054f996aee4b021f511630ea6f",
+  "problem_statement": "[help wanted]: add sliding window support for flashinfer \n### Anything you want to discuss about vllm.\n\nflashinfer already supports sliding window in https://github.com/flashinfer-ai/flashinfer/issues/159 , and we should update our code and pass sliding window to flashinfer , to remove this restriction: \r\n\r\nhttps://github.com/vllm-project/vllm/blob/5f8d8075f957d5376b2f1cc451e35a2a757e95a5/vllm/attention/backends/flashinfer.py#L739-L740\n\n### Before submitting a new issue...\n\n- [X] Make sure you already searched for relevant issues, and asked the chatbot living at the bottom right corner of the [documentation page](https://docs.vllm.ai/en/latest/), which can answer lots of frequently asked questions.\n"
+}

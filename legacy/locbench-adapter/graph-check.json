@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "instance_id": "Delgan__loguru-1239",
+      "python_files": 163,
+      "graph_file_nodes": 163,
+      "missing_file_nodes": [],
+      "nodes": 1648,
+      "edges": 5381,
+      "label_count": 1,
+      "mapped_labels": [
+        {
+          "label": "loguru/_better_exceptions.py:ExceptionFormatter._format_list",
+          "node_type": "function"
+        }
+      ],
+      "missing_labels": [],
+      "bm25_built": true
+    },
+    {
+      "instance_id": "networkx__networkx-7721",
+      "python_files": 662,
+      "graph_file_nodes": 662,
+      "missing_file_nodes": [],
+      "nodes": 8253,
+      "edges": 50611,
+      "label_count": 1,
+      "mapped_labels": [
+        {
+          "label": "networkx/algorithms/approximation/traveling_salesman.py:traveling_salesman_problem",
+          "node_type": "function"
+        }
+      ],
+      "missing_labels": [],
+      "bm25_built": true
+    },
+    {
+      "instance_id": "py-pdf__pypdf-2644",
+      "python_files": 81,
+      "graph_file_nodes": 80,
+      "missing_file_nodes": [
+        ".github/scripts/check_pr_title.py"
+      ],
+      "nodes": 1527,
+      "edges": 8060,
+      "label_count": 1,
+      "mapped_labels": [
+        {
+          "label": "pypdf/filters.py:decompress",
+          "node_type": "function"
+        }
+      ],
+      "missing_labels": [],
+      "bm25_built": true
+    }
+  ],
+  "unit_tests": 5,
+  "model_calls": 0,
+  "sample_scope": "3 convenience-sample repositories, not all 560 cases",
+  "source_execution": false,
+  "offline_guard_completed_without_exception": true,
+  "guard_note": "No counter exposed; successful completion of existing offline_engine guard, not an OS-level network audit"
+}

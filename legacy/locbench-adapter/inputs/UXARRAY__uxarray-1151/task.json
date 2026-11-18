@@ -1,0 +1,6 @@
+{
+  "instance_id": "UXARRAY__uxarray-1151",
+  "repo": "UXARRAY/uxarray",
+  "base_commit": "9926057173e143e8170e3337dd1b7d39a4d1a961",
+  "problem_statement": "`edge_node_connectivity` unnecessarily constructed when slicing\nWhen doing `Grid.isel()` with `n_face` or `n_node`, the `edge_node_connectivity` is constructed when the grid does not currently have any edges defined, which is not necessary and impacts the execution time. See also #1138 \n"
+}

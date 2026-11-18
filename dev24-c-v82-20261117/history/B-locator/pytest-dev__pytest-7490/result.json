@@ -1,0 +1,137 @@
+{
+  "actual_model_ids": [
+    "deepseek-flash"
+  ],
+  "budget": {
+    "input_tokens": 128000,
+    "max_output_tokens": 2048,
+    "max_requests": 4,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "completion_tokens": 1022,
+  "cost_upper_cny": 0.065848,
+  "elapsed_seconds": 6.691108246999875,
+  "finished": {
+    "answer": "The regression is in how the xfail marker is resolved at report time. In src/_pytest/skipping.py, pytest_runtest_makereport (line 261) reads the cached value `xfailed = item._store.get(xfailed_key, None)` (line 264) and only converts a failure to skipped when that cached value is truthy (line 279). The cache is populated earlier in the runtest setup phase (pytest_runtest_setup, around lines 200-257), i.e. before the test body executes. A marker added dynamically inside the test via request.node.add_marker therefore arrives too late: the store already holds None, so the failing call is reported as a plain failure rather than xfailed.\n\nNode.add_marker (src/_pytest/nodes.py:261) appends to the node's own_markers/pytestmark list, and store_mark/get_unpacked_marks (src/_pytest/mark/structures.py:370, 344) are the helpers that maintain that list; python.py:291 and 1500 populate own_markers from get_unpacked_marks at collection time. So the marker is stored on the node, but skipping.py never re-reads the node's markers during makereport, relying solely on the pre-computed store entry.\n\nLikely fix direction: in pytest_runtest_makereport, re-evaluate the xfail marker from the item (e.g. via get_unpacked_marks(item) / item.iter_markers) when the cached xfailed value is None, so dynamically added markers take effect. I did not read the setup-phase code that sets xfailed_key, so the exact cache-population site is inferred from the store key usage rather than directly observed.",
+    "entities": [
+      "src/_pytest/skipping.py:pytest_runtest_makereport",
+      "src/_pytest/nodes.py:Node.add_marker",
+      "src/_pytest/mark/structures.py:store_mark",
+      "src/_pytest/mark/structures.py:get_unpacked_marks"
+    ],
+    "files": [
+      "src/_pytest/skipping.py",
+      "src/_pytest/nodes.py",
+      "src/_pytest/mark/structures.py",
+      "src/_pytest/python.py"
+    ]
+  },
+  "prompt_tokens": 28836,
+  "requests": 4,
+  "scripted": false,
+  "source_bytes": 5661,
+  "status": "completed",
+  "system_prompt_sha256": "830348d04a5a93d7a63adca6ee3fd80f8e44af44254010f71a38ac9ffda3e518",
+  "technical_failure": null,
+  "tool_audit": [
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "def pytest_runtest_makereport"
+      },
+      "calls": 1,
+      "result": {
+        "next_offset": null,
+        "text": "src/_pytest/hookspec.py:488: def pytest_runtest_makereport(\nsrc/_pytest/runner.py:319: def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> TestReport:\nsrc/_pytest/skipping.py:261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):\nsrc/_pytest/unittest.py:292: def pytest_runtest_makereport(item: Item, call: CallInfo[None]) -> None:\ntesting/test_resultlog.py:216:         def pytest_runtest_makereport():\ntesting/test_runner.py:798:         def pytest_runtest_makereport():\ntesting/test_unittest.py:147:         def pytest_runtest_makereport(item, call):"
+      },
+      "source_bytes": 619,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "get_unpacked_marks"
+      },
+      "calls": 2,
+      "result": {
+        "next_offset": null,
+        "text": "src/_pytest/mark/structures.py:344: def get_unpacked_marks(obj) -> List[Mark]:\nsrc/_pytest/mark/structures.py:378:     obj.pytestmark = get_unpacked_marks(obj) + [mark]\nsrc/_pytest/python.py:58: from _pytest.mark.structures import get_unpacked_marks\nsrc/_pytest/python.py:291:                 self.own_markers.extend(get_unpacked_marks(self.obj))\nsrc/_pytest/python.py:1500:         self.own_markers.extend(get_unpacked_marks(self.obj))"
+      },
+      "source_bytes": 1089,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 330,
+        "path": "src/_pytest/skipping.py",
+        "start_line": 240
+      },
+      "calls": 3,
+      "result": {
+        "error": "tool_error",
+        "error_type": "ValueError"
+      },
+      "source_bytes": 1137,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 385,
+        "path": "src/_pytest/mark/structures.py",
+        "start_line": 330
+      },
+      "calls": 4,
+      "result": {
+        "end_column": 0,
+        "end_line": 385,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 330,
+        "text": "330:     ) -> \"MarkDecorator\":\n331:         raise NotImplementedError()\n332: \n333:     def __call__(self, *args: object, **kwargs: object):  # noqa: F811\n334:         \"\"\"Call the MarkDecorator.\"\"\"\n335:         if args and not kwargs:\n336:             func = args[0]\n337:             is_class = inspect.isclass(func)\n338:             if len(args) == 1 and (istestfunc(func) or is_class):\n339:                 store_mark(func, self.mark)\n340:                 return func\n341:         return self.with_args(*args, **kwargs)\n342: \n343: \n344: def get_unpacked_marks(obj) -> List[Mark]:\n345:     \"\"\"\n346:     obtain the unpacked marks that are stored on an object\n347:     \"\"\"\n348:     mark_list = getattr(obj, \"pytestmark\", [])\n349:     if not isinstance(mark_list, list):\n350:         mark_list = [mark_list]\n351:     return normalize_mark_list(mark_list)\n352: \n353: \n354: def normalize_mark_list(mark_list: Iterable[Union[Mark, MarkDecorator]]) -> List[Mark]:\n355:     \"\"\"\n356:     normalizes marker decorating helpers to mark objects\n357: \n358:     :type mark_list: List[Union[Mark, Markdecorator]]\n359:     :rtype: List[Mark]\n360:     \"\"\"\n361:     extracted = [\n362:         getattr(mark, \"mark\", mark) for mark in mark_list\n363:     ]  # unpack MarkDecorator\n364:     for mark in extracted:\n365:         if not isinstance(mark, Mark):\n366:             raise TypeError(\"got {!r} instead of Mark\".format(mark))\n367:     return [x for x in extracted if isinstance(x, Mark)]\n368: \n369: \n370: def store_mark(obj, mark: Mark) -> None:\n371:     \"\"\"Store a Mark on an object.\n372: \n373:     This is used to implement the Mark declarations/decorators correctly.\n374:     \"\"\"\n375:     assert isinstance(mark, Mark), mark\n376:     # Always reassign name to avoid updating pytestmark in a reference that\n377:     # was only borrowed.\n378:     obj.pytestmark = get_unpacked_marks(obj) + [mark]\n379: \n380: \n381: # Typing for builtin pytest marks. This is cheating; it gives builtin marks\n382: # special privilege, and breaks modularity. But practicality beats purity...\n383: if TYPE_CHECKING:\n384:     from _pytest.fixtures import _Scope\n385: \n",
+        "total_lines": 558
+      },
+      "source_bytes": 3467,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 300,
+        "path": "src/_pytest/skipping.py",
+        "start_line": 255
+      },
+      "calls": 5,
+      "result": {
+        "end_column": 68,
+        "end_line": 300,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 255,
+        "text": "255:             xfail(\"[NOTRUN] \" + xfailed.reason)\n256: \n257:     yield\n258: \n259: \n260: @hookimpl(hookwrapper=True)\n261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):\n262:     outcome = yield\n263:     rep = outcome.get_result()\n264:     xfailed = item._store.get(xfailed_key, None)\n265:     # unittest special case, see setting of unexpectedsuccess_key\n266:     if unexpectedsuccess_key in item._store and rep.when == \"call\":\n267:         reason = item._store[unexpectedsuccess_key]\n268:         if reason:\n269:             rep.longrepr = \"Unexpected success: {}\".format(reason)\n270:         else:\n271:             rep.longrepr = \"Unexpected success\"\n272:         rep.outcome = \"failed\"\n273:     elif item.config.option.runxfail:\n274:         pass  # don't interfere\n275:     elif call.excinfo and isinstance(call.excinfo.value, xfail.Exception):\n276:         assert call.excinfo.value.msg is not None\n277:         rep.wasxfail = \"reason: \" + call.excinfo.value.msg\n278:         rep.outcome = \"skipped\"\n279:     elif not rep.skipped and xfailed:\n280:         if call.excinfo:\n281:             raises = xfailed.raises\n282:             if raises is not None and not isinstance(call.excinfo.value, raises):\n283:                 rep.outcome = \"failed\"\n284:             else:\n285:                 rep.outcome = \"skipped\"\n286:                 rep.wasxfail = xfailed.reason\n287:         elif call.when == \"call\":\n288:             if xfailed.strict:\n289:                 rep.outcome = \"failed\"\n290:                 rep.longrepr = \"[XPASS(strict)] \" + xfailed.reason\n291:             else:\n292:                 rep.outcome = \"passed\"\n293:                 rep.wasxfail = xfailed.reason\n294: \n295:     if (\n296:         item._store.get(skipped_by_mark_key, True)\n297:         and rep.skipped\n298:         and type(rep.longrepr) is tuple\n299:     ):\n300:         # skipped by mark.skipif; change the location of the failure\n",
+        "total_lines": 315
+      },
+      "source_bytes": 5586,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "def add_marker"
+      },
+      "calls": 6,
+      "result": {
+        "next_offset": null,
+        "text": "src/_pytest/nodes.py:261:     def add_marker("
+      },
+      "source_bytes": 5661,
+      "tool": "search_text"
+    }
+  ],
+  "tool_calls": 6,
+  "tool_schema_sha256": "4f9f105004ff571b15f3bf886e21b46ab3708aa681518d2616e9e4812379bc00"
+}

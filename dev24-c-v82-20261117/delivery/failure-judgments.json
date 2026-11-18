@@ -1,0 +1,188 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "中",
+    "reason": "编码器用复现追到 sinh._eval_is_real → Mod.eval → gcd，多项式抛错位置也更正为 _parallel_poly_from_expr；未见坚持定位包中 _parallel_dict_from_expr 的错误归属。不能据未修复反推受错误诊断影响。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "请求1及7–39共34次重复同一复现，仅改变 tail/head/sed 输出窗口；39次工具调用无源代码编辑，第40次结束为空补丁。",
+    "evidence_requests": [
+      1,
+      2,
+      7,
+      20,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/sympy__sympy-21379/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "wrong_locator_hypothesis_adopted": "是（轨迹对应）",
+    "confidence": "高",
+    "reason": "定位建议把边框索引改为 position_line；编码补丁照此取 self.header.position_line=0，harness 显示首尾实际变成列名而非等号边框，test_write_normal 与 test_rst_with_header_rows 均失败。能确认采纳了同一错误具体方案，不能据此独立证明因果影响大小。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "第4/5次编辑后不再改源码；请求11–35原样重复同一写表命令25次，36–39又重复另一命令4次，直到40次结束。",
+    "evidence_requests": [
+      4,
+      5,
+      11,
+      35,
+      36,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/astropy__astropy-14182/trace.md",
+    "harness_evidence": "completed-snapshot/astropy__astropy-14182/C/harness/logs/run_evaluation/smoke/locagent-deepseek-flash-C/astropy__astropy-14182/test_output.txt",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "中",
+    "reason": "定位猜测 Windows 分隔符/二次过滤缺口；编码器随后读取 expand_modules 并在终答确认过滤链已存在，未实施分隔符修正。最终只加了未接入调用点的 helper，递归当前目录的目标测试仍失败，不能据此判定采纳了定位错误假设。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "请求 12–39 连续 28 次执行完全相同的替换脚本，old 与 new 相同且均未产生源码变化；最终补丁仅保留请求 9 的 helper。",
+    "evidence_requests": [
+      1,
+      2,
+      3,
+      6,
+      7,
+      9,
+      12,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/pylint-dev__pylint-7080/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "wrong_locator_hypothesis_adopted": "不确定",
+    "confidence": "低",
+    "reason": "编码器沿用“prolog 前置影响标题识别”的调查方向，并将定位写的 parse 调用点修正为 decorate；但未复现、未修改代码，现有轨迹不能确定该根因假设是错的，不能将沿用方向直接计为沿用错误假设。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "请求 21–39 连续 19 次执行同一 bof 搜索命令，无源码编辑；终答亦承认重复相同输出，最终为空补丁。",
+    "evidence_requests": [
+      1,
+      4,
+      10,
+      21,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/sphinx-doc__sphinx-11445/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "中",
+    "reason": "沿用了残留标量 y 坐标及 drop_vars 的定位方向，但请求 5 的实际输出支持该窄事实：drop 前有 y=(a,)，drop 后只剩 x。失败的直接轨迹是始终未落地修改，不能把已获得支持的诊断计为错误假设。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "请求 27–39 连续 13 次相同 edit_file 操作，old=new，源码变化为空；此前反复执行无效替换并追加重复打印。最终空补丁，终答承认未真正修改。",
+    "evidence_requests": [
+      2,
+      5,
+      26,
+      27,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/pydata__xarray-4094/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "高",
+    "reason": "沿用了 bytes 方法归一化方向，但 C 自行把 to_native_string 扩展到 PreparedRequest.prepare_method，且放在 None 检查之前，原 harness 的 test_basic_building 因 None.decode 报错；定位并未建议这一扩展。另存在证书及旧测试兼容性干扰，保持原评分。",
+    "used_all_40": false,
+    "loop": "否",
+    "loop_reason": "共 12 次请求；读取、修改、复现及逐步缩小测试范围有推进，未出现前述无进展重复循环。",
+    "evidence_requests": [
+      3,
+      4,
+      5,
+      6,
+      8,
+      10,
+      11,
+      12
+    ],
+    "evidence": "failure-audit/psf__requests-2317/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "高",
+    "reason": "定位猜测低层 dmp/dup 分组决定异常；编码器通过比较模块 sqf_list 与 Poly.sqf_list，明确确认低层算法正常，转而定位 _symbolic_factor_list 按 Mul 参数拆分的差异，未沿用低层归因。最终仍未编辑。",
+    "used_all_40": true,
+    "loop": "是",
+    "loop_reason": "请求 16–39 重复同一 _symbolic_factor_list 核心探针 24 次（少数附带查看其他代码），全程源码变化为空，40 次后交付空补丁。",
+    "evidence_requests": [
+      1,
+      2,
+      4,
+      12,
+      16,
+      39,
+      40
+    ],
+    "evidence": "failure-audit/sympy__sympy-18698/trace.md",
+    "causal_claim": false
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "中",
+    "reason": "按定位区分 None 与空 __all__ 并修改代码；原 harness 日志显示 C 新建 empty_all.py 与评测测试补丁同名，git apply 报 already exists，后续测试文件不存在、pytest exit 4。因此原评分仍为未resolved，但日志不足以判定定位诊断错误。",
+    "used_all_40": false,
+    "loop": "否",
+    "loop_reason": "共14次请求；有源码及测试编辑，重复测试用于改变输出窗口/定位失败，后续继续排查，不属于用满40次的无进展循环。",
+    "evidence_requests": [
+      2,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "evidence": "failure-audit/sphinx-doc__sphinx-8595/trace.md",
+    "causal_claim": false,
+    "harness_caveat": "test fixture name collision; test patch did not fully apply; no rerun/rescore"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "wrong_locator_hypothesis_adopted": "未见明确证据",
+    "confidence": "中",
+    "reason": "编码器读取完整 viewcode.py 后沿用“在 collect_pages 再检查 epub 开关”的方向；原测试总览为4 passed/1 failed，唯一列出的失败是 test_viewcode，但原 harness report 将目标与其他测试记失败，存在输出/评分口径差异。保留原resolved=False，不据此判定定位根因错误。",
+    "used_all_40": false,
+    "loop": "否",
+    "loop_reason": "共10次请求，读取、改源码、加测试、对照基础版本及筛选测试均有推进，没有40次耗尽或重复无效操作。",
+    "evidence_requests": [
+      1,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "evidence": "failure-audit/sphinx-doc__sphinx-8721/trace.md",
+    "causal_claim": false,
+    "harness_caveat": "Raw test output says 4 passed/1 failed with test_viewcode listed; original harness report records target failures. No rescoring."
+  }
+]

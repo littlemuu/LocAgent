@@ -1,0 +1,13 @@
+{
+  "sealed_at": "2026-11-12T15:51:08.173144+00:00",
+  "scores_sha256": {
+    "a": "95c4fe6baf1d10ff4d99c06f6b4b09a1f7eac6306f4e10ad3669b2e9d8e16212",
+    "b": "daaf86a79f0166600779394c6b366413b95c431f70d056d21068e8056a185bd0",
+    "c": "503e4cdeff0cd332ba63498a90428f4c2cf9ad3fcd87c0b28bdfa8024f14f40e"
+  },
+  "all_scores_complete": true,
+  "mapping_not_read_in_this_scoring_workflow": true,
+  "unblinded": false,
+  "disagreements": 1,
+  "decision_rule": "majority of three on disagreement; original agreement otherwise"
+}

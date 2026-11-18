@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18059",
+  "repo": "django/django",
+  "base_commit": "c223d14025dd9ef0d354332c537ed8622a1ec29c",
+  "problem_statement": "AdminEmailHandler wastes work when ADMINS isn’t set\nDescription\n\t \nAdminEmailHandler.emit() does a lot of work to assemble the message it passes to mail_admins. If settings.ADMINS is empty, mail_admins() returns instantly, wasting all the message-creation work. It’s quite common to not configure ADMINS, whether in lieu of more advanced tools like Sentry, or during tests.\nIn a quick benchmark on my M1 Mac Pro on Python 3.11, the overhead is ~2.5ms:\nIn [1]: import logging\nIn [2]: logger = logging.getLogger('django')\nIn [3]: %timeit logger.error(\"Yada\")\n...\n2.78 ms ± 75.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)\nIn [4]: logger = logging.getLogger('example')\nIn [5]: %timeit logger.error(\"Yada\")\n...\n8.37 µs ± 38.9 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)\nThis can be avoided by adding an initial check to AdminEmailHandler.emit().\n"
+}

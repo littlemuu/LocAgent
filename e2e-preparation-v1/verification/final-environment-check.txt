@@ -1,0 +1,5 @@
+Final project-local offline tests: 13 passed (9.002 seconds).
+pip check: No broken requirements found.
+bash -n cloud_setup.sh bootstrap_local.sh: passed.
+Docker running containers at final check: none.
+No paid calls after the stopped smoke. Cloud execution: not run.

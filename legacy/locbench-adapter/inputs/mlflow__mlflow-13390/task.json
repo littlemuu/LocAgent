@@ -1,0 +1,6 @@
+{
+  "instance_id": "mlflow__mlflow-13390",
+  "repo": "mlflow/mlflow",
+  "base_commit": "49e038235f64cee0d6985293b9e5a24d2718abab",
+  "problem_statement": "Remove useless `chunk_dicts`\n### Summary\n\n```diff\r\ndiff --git a/mlflow/openai/_openai_autolog.py b/mlflow/openai/_openai_autolog.py\r\nindex 149e92793..45e486808 100644\r\n--- a/mlflow/openai/_openai_autolog.py\r\n+++ b/mlflow/openai/_openai_autolog.py\r\n@@ -158,7 +158,6 @@ def patched_call(original, self, *args, **kwargs):\r\n                 yield chunk\r\n \r\n             try:\r\n-                chunk_dicts = []\r\n                 chunk_dicts = [chunk.to_dict() for chunk in chunks]\r\n                 if config.log_traces and request_id:\r\n                     mlflow_client.end_trace(\r\n```\n\n### Notes\n\n- Make sure to open a PR from a **non-master** branch.\r\n- Sign off the commit using the `-s` flag when making a commit:\r\n\r\n  ```sh\r\n  git commit -s -m \"...\"\r\n           # ^^ make sure to use this\r\n  ```\r\n\r\n- Include `#{issue_number}` (e.g. `#123`) in the PR description when opening a PR.\r\n\n"
+}

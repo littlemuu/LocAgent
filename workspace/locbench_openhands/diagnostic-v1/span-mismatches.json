@@ -1,0 +1,225 @@
+{
+  "mismatches": [
+    {
+      "node": "tests/test_filesink_rotation.py:tmp_path_local",
+      "span": [
+        18,
+        23
+      ],
+      "expected": [
+        "def tmp_path_local(reset_logger):",
+        "    # Pytest 'tmp_path' creates directories in /tmp, but /tmp does not support xattr,",
+        "    # causing some tests would fail.",
+        "    with tempfile.TemporaryDirectory(dir=\".\") as tmp_path:",
+        "        yield pathlib.Path(tmp_path)",
+        "        logger.remove()  # Deleting file not possible if still in use by Loguru."
+      ],
+      "actual": [
+        "def tmp_path_local(reset_logger):",
+        "    # Pytest 'tmp_path' creates directories in /tmp, but /tmp does not support xattr,",
+        "    # causing some tests would fail.",
+        "    with tempfile.TemporaryDirectory(dir=\".\") as tmp_path:",
+        "        yield pathlib.Path(tmp_path)",
+        "        logger.remove()"
+      ]
+    },
+    {
+      "node": "tests/test_add_option_serialize.py:test_serialize_with_catch_decorator.foo",
+      "span": [
+        116,
+        117
+      ],
+      "expected": [
+        "    def foo():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def foo():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_exception_not_raising.a",
+      "span": [
+        267,
+        268
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_exception_raising.a",
+      "span": [
+        279,
+        280
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_exclude_exception_raising.a",
+      "span": [
+        296,
+        297
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_exclude_exception_not_raising.a",
+      "span": [
+        311,
+        312
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_reraise.a",
+      "span": [
+        322,
+        323
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_onerror.a",
+      "span": [
+        342,
+        343
+      ],
+      "expected": [
+        "    def a():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def a():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_exceptions_catch.py:test_default_with_function.foo",
+      "span": [
+        419,
+        420
+      ],
+      "expected": [
+        "    def foo():",
+        "        1 / 0  # noqa: B018"
+      ],
+      "actual": [
+        "def foo():",
+        "        1 / 0"
+      ]
+    },
+    {
+      "node": "tests/test_locks.py:test_no_error_if_multithreading.sink",
+      "span": [
+        97,
+        100
+      ],
+      "expected": [
+        "    def sink(message):",
+        "        barrier.wait()",
+        "        sys.stderr.write(message)",
+        "        time.sleep(0.5)  # Give time to the other thread to try to acquire the lock."
+      ],
+      "actual": [
+        "def sink(message):",
+        "        barrier.wait()",
+        "        sys.stderr.write(message)",
+        "        time.sleep(0.5)"
+      ]
+    },
+    {
+      "node": "tests/test_locks.py:test_no_error_if_multithreading.worker",
+      "span": [
+        102,
+        104
+      ],
+      "expected": [
+        "    def worker():",
+        "        logger.info(\"Thread message\")",
+        "        barrier.wait()  # Release main thread."
+      ],
+      "actual": [
+        "def worker():",
+        "        logger.info(\"Thread message\")",
+        "        barrier.wait()"
+      ]
+    },
+    {
+      "node": "tests/exceptions/source/diagnose/syntax_highlighting.py:a",
+      "span": [
+        10,
+        11
+      ],
+      "expected": [
+        "def a():",
+        "    1 / 0 + 1 * 0 - 1 % 0 // 1**0 @ 1  # Error"
+      ],
+      "actual": [
+        "def a():",
+        "    1 / 0 + 1 * 0 - 1 % 0 // 1**0 @ 1"
+      ]
+    },
+    {
+      "node": "loguru/_simple_sinks.py:AsyncSink._complete_task",
+      "span": [
+        99,
+        106
+      ],
+      "expected": [
+        "    async def _complete_task(self, task):",
+        "        loop = get_running_loop()",
+        "        if get_task_loop(task) is not loop:",
+        "            return",
+        "        try:",
+        "            await task",
+        "        except Exception:",
+        "            pass  # Handled in \"check_exception()\""
+      ],
+      "actual": [
+        "async def _complete_task(self, task):",
+        "        loop = get_running_loop()",
+        "        if get_task_loop(task) is not loop:",
+        "            return",
+        "        try:",
+        "            await task",
+        "        except Exception:",
+        "            pass"
+      ]
+    }
+  ]
+}

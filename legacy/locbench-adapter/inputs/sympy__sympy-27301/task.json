@@ -1,0 +1,6 @@
+{
+  "instance_id": "sympy__sympy-27301",
+  "repo": "sympy/sympy",
+  "base_commit": "a7719e719c0b43ec1dbb964b01b57c4f3783be8d",
+  "problem_statement": "DOC: outdated information about adaptive sampling in plot() function\nI have recently learned (https://github.com/mgeier/python-audio/issues/4) that SymPy doesn't use adaptive sampling by default anymore.\n\nTherefore, this documentation is outdated:\n\nhttps://github.com/sympy/sympy/blob/a7719e719c0b43ec1dbb964b01b57c4f3783be8d/sympy/plotting/plot.py#L304-L305\n\nhttps://github.com/sympy/sympy/blob/a7719e719c0b43ec1dbb964b01b57c4f3783be8d/sympy/plotting/plot.py#L380-L389\n"
+}

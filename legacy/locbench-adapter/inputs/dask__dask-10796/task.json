@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-10796",
+  "repo": "dask/dask",
+  "base_commit": "3e9ae492934e133547e5eaec5020186fad39898a",
+  "problem_statement": "Deprecate axis in GroupBy cumulative transformers\nDeprecate axis in\r\n\r\n- cumsum\r\n- cumprod\r\n- cumcount\r\n\r\nand please skip tests that test this behaviour for dask-expr\n"
+}

@@ -1,0 +1,1 @@
+PASS: no file URI, macOS wheel, or local home paths; numpy fixed to installed 1.26.4. Linux installation not run.

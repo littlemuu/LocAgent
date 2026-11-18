@@ -1,0 +1,6 @@
+{
+  "instance_id": "UKPLab__sentence-transformers-3104",
+  "repo": "UKPLab/sentence-transformers",
+  "base_commit": "9093aa8e1c9ae4325b424ef97d8c1464050afa5c",
+  "problem_statement": "`CrossEncoder` is not pushed to cuda until predict is called, even if cuda is specified as device.\nHi, this is more like a question rather than a bug or issue.\r\n\r\nWhen I specify the target device during initialization of any CrossEncoder, the model is not pushed to that device until the `predict` or the `fit` method is called, until then the model is kept in cpu.\r\n\r\n```python\r\nfrom sentence_transformers import CrossEncoder\r\n\r\nmodel2 = CrossEncoder(\"mixedbread-ai/mxbai-rerank-large-v1\", device=\"cuda:0\")\r\nprint(model2.model.device)\r\n# cpu\r\n```\r\n\r\nI mean I expect the model to be pushed to the specified device during initialization and until I am calling predict it is taking up my system Ram.\r\nIs there any high level reason(s) why this is the case? \n"
+}

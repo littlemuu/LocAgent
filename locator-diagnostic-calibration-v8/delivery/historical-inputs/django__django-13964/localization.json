@@ -1,0 +1,18 @@
+{
+  "base_commit": "f39634ff229887bf7790c069d0c411b38494ca38",
+  "instance_id": "django__django-13964",
+  "result": {
+    "answer": "Root cause is in ForwardManyToOneDescriptor.__set__ (django/db/models/fields/related_descriptors.py:203-268). At assignment time it copies the related object's PK into the local FK attname: `for lh_field, rh_field in self.field.related_fields: setattr(instance, lh_field.attname, getattr(value, rh_field.attname))` (lines 256-257). When `Product()` is created without a sku, `value.sku` is '' (CharField default), so `order.product_id` is snapshotted as ''. Later setting `order.product.sku = \"foo\"` mutates only the Product instance; the already-copied `product_id` on Order is never refreshed, so `order.save()` writes ''. The descriptor also caches the related object (line 261), so `__get__` returns the in-memory Product and hides the stale FK. In the working case, `Product(sku=\"foo\")` is assigned after the PK exists, so the copy is correct.\n\nA likely fix location is save-time reconciliation: Model._prepare_related_fields_for_save (django/db/models/base.py:911) is where Django validates/refreshes related fields before writing, and it could re-sync local FK values from the cached related object's current PK. Note get_instance_value_for_fields (django/db/models/fields/related.py:652-660) has a special case using `instance.pk` when the field is a primary key, which is relevant to how non-auto PKs are read. I did not read the full bodies of _prepare_related_fields_for_save or get_instance_value_for_fields (investigation closed at the call limit), so the exact fix site and whether the bug is purely the stale copy versus also a PK-fetch issue remain partly unverified.",
+    "entities": [
+      "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__",
+      "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields",
+      "django/db/models/base.py:Model._prepare_related_fields_for_save"
+    ],
+    "files": [
+      "django/db/models/fields/related_descriptors.py",
+      "django/db/models/fields/related.py",
+      "django/db/models/base.py"
+    ]
+  },
+  "version": 1
+}

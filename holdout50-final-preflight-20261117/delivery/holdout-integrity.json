@@ -1,0 +1,50 @@
+{
+  "count": 50,
+  "ids_sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6",
+  "original_lock_sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6",
+  "original_frozen_files": {
+    "data/selection/exposure-audit.json": {
+      "expected": "ad4a38e034d794f004d0d2393c50c984c595da2a40597e7f661542382e5f0946",
+      "actual": "ad4a38e034d794f004d0d2393c50c984c595da2a40597e7f661542382e5f0946"
+    },
+    "data/selection/verified-metadata.json": {
+      "expected": "9592c8699217138891f69dbd5a904744805d3cd855b6607d905a100c231ede7b",
+      "actual": "9592c8699217138891f69dbd5a904744805d3cd855b6607d905a100c231ede7b"
+    },
+    "freezes/holdout-v1/ids.txt": {
+      "expected": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6",
+      "actual": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6"
+    },
+    "freezes/holdout-v1/manifest.json": {
+      "expected": "20432223673864420b132c0ceb45635df56dcbc6ac1ba06f8054bd6828abdbac",
+      "actual": "20432223673864420b132c0ceb45635df56dcbc6ac1ba06f8054bd6828abdbac"
+    },
+    "freezes/holdout-v1/sealed/dataset-download.json": {
+      "expected": "da89f0119d3552104482ea749da0552e9b5ce1e4e12953ca105e1617f498c27f",
+      "actual": "da89f0119d3552104482ea749da0552e9b5ce1e4e12953ca105e1617f498c27f"
+    },
+    "freezes/holdout-v1/sealed/dataset-info.json": {
+      "expected": "6ac2c094255de6b798c5355a69e31403df5a9a1406301a7e53dab60aa923c280",
+      "actual": "6ac2c094255de6b798c5355a69e31403df5a9a1406301a7e53dab60aa923c280"
+    },
+    "freezes/holdout-v1/sealed/verified-test.parquet": {
+      "expected": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd",
+      "actual": "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd"
+    },
+    "scripts/sample_holdout.py": {
+      "expected": "b0cc048b89f56086af917e6c5d49db3956d2088c53c0904d0beffbd06755bc31",
+      "actual": "b0cc048b89f56086af917e6c5d49db3956d2088c53c0904d0beffbd06755bc31"
+    }
+  },
+  "all_original_hashes_match": true,
+  "metadata_reproduction_byte_identical": true,
+  "manifest_order_byte_identical": true,
+  "previous_reproduction_byte_identical": true,
+  "eligible": 407,
+  "dev24_overlap": [],
+  "dev37_overlap": [],
+  "original_exposure_overlap": [],
+  "dev24_repo_commit_overlap": [],
+  "dev37_repo_commit_overlap": [],
+  "sealed_content_decoded": false
+}

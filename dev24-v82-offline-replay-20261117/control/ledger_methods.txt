@@ -1,0 +1,58 @@
+    def observe_search(self, args, result):
+        key = ('search_text', args['query'])
+        stream = self.streams.setdefault(key, {})
+        stream[args.get('offset', 0) or 0] = result.get('text', '')
+        text, offset = '', 0
+        while offset in stream and stream[offset]:
+            chunk = stream[offset]; text += chunk; offset += len(chunk)
+        rows = text.split('\n')
+        # A page ending mid-row does not certify that row. Earlier complete rows
+        # are still retained. No requests are issued to complete a stream.
+        if result.get('next_offset') is not None:
+            rows = rows[:-1]
+        for row in rows:
+            match = re.fullmatch(r'([\w./-]+\.py):(\d+): (.*)', row)
+            if match:
+                key = (match[1], int(match[2]))
+                self.search_hits.setdefault(key, set()).add(match[3])
+
+    def supports_search_fact(self, path, start, end, statement):
+        # Search never credits fragments, complete_line(), covers() or entities.
+        # Even adjacent search hits cannot certify a continuous range.
+        hits = self.search_hits.get((path, start), set())
+        if start != end or not hits:
+            return False
+        text = CITATION.sub('', statement)
+        if re.search(r'整个函数|完整函数|全部|所有|唯一|只覆盖|完全|穷尽|已验证|必然|肯定|entire function|all branches', text, re.I):
+            return False
+        source = '\n'.join(hits)
+        # Explicit literals/defaults and quoted assignments must actually appear.
+        for value in re.findall(r'(?:默认|等于|返回)\s*`?(True|False|None|\d+)\b', text):
+            if not re.search(r'\b' + re.escape(value) + r'\b', source):
+                return False
+        for code in re.findall(r'`([^`\n]+)`', text):
+            if re.search(r'(?<![=!<>])=(?!=)', code):
+                compact = lambda x: re.sub(r'\s+', '', x)
+                if compact(code) not in compact(source):
+                    return False
+        words = set(re.findall(r'[A-Za-z_]\w*', text)) - {'py', 'True', 'False', 'None'}
+        source_words = set(re.findall(r'[A-Za-z_]\w*', source))
+        return bool(words & source_words)
+
+    def validation_complete_entity(self, entity):
+        spans = self.def_spans.get(entity, [])
+        return bool(spans) and all(self.covers(entity.split(':')[0], a, b) for a, b in spans)
+
+    def is_non_body_entity(self, entity):
+        return entity in self.non_body_entities and entity not in self.spans
+
+    @classmethod
+    def from_recorded(cls, audit, tool_audit):
+        """Offline reconstruction with explicit limitations; no fake full source.
+
+        v8.1 persisted complete-line ranges and candidate completeness but not
+        every AST span. Use those observations plus original C retrieval metadata.
+        Unknown spans stay unknown. No manual review labels/B reads are consumed.
+        """
+        return RecordedEvidenceLedger(audit, tool_audit)
+

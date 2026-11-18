@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "instance_id": "sympy__sympy-21379",
+  "base_commit": "624217179aaf8d094e6ff75b7493ad1ee47599b0",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sympy/polys/polytools.py:4397-4399：`for k in opt.gens:` 中若 `isinstance(k, Piecewise)` 就 `raise PolynomialError(\"Piecewise generators do not make sense\")`；这是异常文本的唯一来源（搜索命中）。\n- sympy/polys/polytools.py:4393-4395：gens 由 `_parallel_dict_from_expr(exprs, opt)` 产生，`not opt.gens` 时抛 `PolificationFailed`。\n- sympy/polys/polytools.py:4369-4383：每个 expr 先 `sympify`，`opt.expand` 为真时 `expr.expand()`，再收集。\n- sympy/core/basic.py:879-911：`subs` 把单参数 dict 转成 items，`unordered=True`，逐项 sympify 并丢弃无变化项。\n- sympy/core/basic.py:913-925：unordered 时按 `-_nodes(x)`、`default_sort_key` 排序，注释说明“更复杂者先”。\n- sympy/core/basic.py:927-942：`simultaneous` 分支用 Dummy 与 `_subs` 逐项替换。\n- sympy/core/basic.py:949-952：非 simultaneous 路径循环 `rv = rv._subs(old, new, **kwargs)`。\n- sympy/core/basic.py:1026-1041：`fallback` 对每个 arg 调 `_subs`，命中则 `self.func(*args)` 重建。\n- sympy/core/basic.py:1061-1064：`_subs` 先 `_eval_subs`，返回 None 才走 fallback。\n- sympy/core/function.py:2196-2211：`Subs.__new__` 对 variables/point 做 Tuple 化与重复检查。\n\n推断\n- 待验证假设：异常来自 `sympy/polys/polytools.py:_parallel_dict_from_expr` 的 gens 检查，即某条路径把含 `Piecewise` 的表达式送进 Poly 构造（如 `expand`/`as_poly`/`cancel` 类调用），而非 `subs` 本身直接抛错。\n- 待验证假设：`sympy/core/basic.py:Basic.subs` 的排序（`-_nodes`）使 `{1: 1.0}` 的处理顺序/重建路径随假设（real=True）改变，从而触发不同的 `_eval_subs` 分支。\n- 待验证假设：`sympy/core/basic.py:Basic._subs` 的 fallback 重建 `self.func(*args)` 时，`exp`/`sinh` 的 `_eval_subs` 或重建触发 Poly 化，导致 Piecewise 成为 gens。\n- 待验证假设：缓存（`clear_cache`）影响 `_eval_subs`/`expand` 的命中路径，解释“第二次调用成功”。\n\n未核验点\n- `sympy/core/basic.py:Basic._subs` 未读完（仅 1026-1041、1061-1064 已读，docstring 与 1042-1060 缺失）。\n- `sympy/core/basic.py:Basic.subs` 未读完：分页 cursor `rf1_e05b5bdfccaa95ed8bb81f49ce43fd2d1157d871d8faa36deca72123911aa8ed` 未续读（943-948 缺失）。\n- `sympy/core/function.py:Subs` 未读完（仅 2196-2211 已读）。\n- 未读 `_parallel_dict_from_expr` 函数头与 `expand`/`sinh`/`exp` 的 `_eval_subs`，调用链未穷尽。\n- 未运行任何验证。\n\n最小验证：`python -c \"from sympy import *; x,y,z=symbols('x y z',real=True); e=exp(sinh(Piecewise((x,y>x),(y,True))/z)); import traceback; traceback.print_exc() if False else print(e.subs({1:1.0}))\"`（配合 `SYMPY_USE_CACHE=no` 与开启缓存各跑一次，观察 traceback 是否落在 polytools.py:4399）。",
+    "entities": [
+      "sympy/polys/polytools.py:_parallel_dict_from_expr",
+      "sympy/core/basic.py:Basic.subs",
+      "sympy/core/basic.py:Basic._subs",
+      "sympy/core/function.py:Subs"
+    ],
+    "files": [
+      "sympy/polys/polytools.py",
+      "sympy/core/basic.py",
+      "sympy/core/function.py"
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "requests": 4,
+    "source_bytes": 11767,
+    "status": "completed",
+    "tool_calls": 6
+  },
+  "evidence": [
+    {
+      "name": "search_text",
+      "arguments": {
+        "query": "models.W042",
+        "summary": "Find W042 check definition"
+      },
+      "result": {
+        "next_offset": null,
+        "text": "django/db/models/base.py:1317:                     id='models.W042',\ntests/check_framework/test_model_checks.py:394:                 id='models.W042',"
+      }
+    },
+    {
+      "name": "search_text",
+      "arguments": {
+        "query": "default_auto_field",
+        "summary": "Find default_auto_field usage"
+      },
+      "result": {
+        "next_offset": 4013,
+        "text": "django/apps/config.py:64:     def default_auto_field(self):\ndjango/apps/config.py:69:     def _is_default_auto_field_overridden(self):\ndjango/apps/config.py:70:         return self.__class__.default_auto_field is not AppConfig.default_auto_field\ndjango/contrib/admin/apps.py:10:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/auth/apps.py:14:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/contenttypes/apps.py:15:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/flatpages/apps.py:6:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/gis/apps.py:7:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/redirects/apps.py:6:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/sitemaps/apps.py:6:     default_auto_field = 'django.db.models.AutoField'\ndjango/contrib/sites/apps.py:11:     default_auto_field = 'django.db.models.AutoField'\ndjango/db/models/base.py:1303:             not cls._meta.app_config._is_default_auto_field_overridden\ndjango/db/models/base.py:1313:                         f\"default_auto_field attribute to point to a subclass \"\ndjango/db/models/options.py:224:             'default_auto_field',\ndjango/db/models/options.py:227:         if self.app_config and self.app_config._is_default_auto_field_overridden:\ndjango/db/models/options.py:231:                 f'{app_config_class.__qualname__}.default_auto_field'\ntests/admin_scripts/tests.py:2229:                 \"default_auto_field = 'django.db.models.BigAutoField'\",\ntests/apps/apps.py:38:     default_auto_field = 'django.db.models.BigAutoField'\ntests/apps/tests.py:451:     def test_app_default_auto_field(self):\ntests/apps/tests.py:454:             apps_config.default_auto_field,\ntests/apps/tests.py:457:         self.assertIs(apps_config._is_default_auto_field_overridden, True)\ntests/apps/tests.py:463:     def test_default_auto_field_setting(self):\ntests/apps/tests.py:466:             apps_config.default_auto_field,\ntests/apps/tests.py:469:         self.assertIs(apps_config._is_default_auto_field_overridden, False)\ntests/check_framework/apps.py:10:     default_auto_field = 'django.db.models.BigAutoField'\ntests/check_framework/test_model_checks.py:389:                     \"CheckDefaultPKConfig.default_auto_field attribute to \"\ntests/check_framework/test_model_checks.py:399:     def test_default_auto_field_setting(self):\ntests/check_framework/test_model_checks.py:412:     def test_app_default_auto_field(self, apps):\ntests/model_options/apps.py:10:     default_auto_field = 'django.db.models.SmallAutoField'\ntests/model_options/apps.py:15:     default_auto_field = 'django.db.models.TextField'\ntests/model_options/apps.py:20:     default_auto_field = None\ntests/model_options/apps.py:25:     default_auto_field = 'django.db.models.NonexistentAutoField'\ntests/model_options/test_default_pk.py:10:     def test_default_auto_field_setting_nonexistent(self):\ntests/model_options/test_default_pk.py:21:     def test_app_default_auto_field_nonexistent(self):\ntests/model_options/test_default_pk.py:23:             \"model_options.apps.ModelPKNonexistentConfig.default_auto_field \"\ntests/model_options/test_default_pk.py:32:     def test_default_auto_field_setting_non_auto(self):\ntests/model_options/test_default_pk.py:42:     def test_app_default_auto_field_non_auto(self):\ntests/model_options/test_default_pk.py:45:             \"model_options.apps.ModelPKNonAutoConfig.default_auto_field must \"\ntests/model_options/test_default_pk.py:53:     def test_default_auto_field_setting_none(self):\ntests/model_options/test_default_pk.py:60:     def test_app_default_auto_field_none(self):\ntests/model_options/test_default_pk.py:62:             'model_options.apps.ModelPKNoneConfig.default_auto_field must not '\ntests/model_options/test_default_pk.py:71:     def test_default_auto_field_setting(self):\ntests/model_options/test_default_pk.py:79:     def test_app_default_auto_field(self):\ntests/model_options/test_defaul"
+      }
+    },
+    {
+      "name": "read_file",
+      "arguments": {
+        "path": "django/db/models/base.py",
+        "start_line": 1280,
+        "end_line": 1330,
+        "summary": "Read W042 check implementation"
+      },
+      "result": {
+        "end_column": 30,
+        "end_line": 1330,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 1280,
+        "text": "1280:                 *cls._check_single_primary_key(),\n1281:             )\n1282:             errors.extend(clash_errors)\n1283:             # If there are field name clashes, hide consequent column name\n1284:             # clashes.\n1285:             if not clash_errors:\n1286:                 errors.extend(cls._check_column_name_clashes())\n1287:             errors += [\n1288:                 *cls._check_index_together(),\n1289:                 *cls._check_unique_together(),\n1290:                 *cls._check_indexes(databases),\n1291:                 *cls._check_ordering(),\n1292:                 *cls._check_constraints(databases),\n1293:                 *cls._check_default_pk(),\n1294:             ]\n1295: \n1296:         return errors\n1297: \n1298:     @classmethod\n1299:     def _check_default_pk(cls):\n1300:         if (\n1301:             cls._meta.pk.auto_created and\n1302:             not settings.is_overridden('DEFAULT_AUTO_FIELD') and\n1303:             not cls._meta.app_config._is_default_auto_field_overridden\n1304:         ):\n1305:             return [\n1306:                 checks.Warning(\n1307:                     f\"Auto-created primary key used when not defining a \"\n1308:                     f\"primary key type, by default \"\n1309:                     f\"'{settings.DEFAULT_AUTO_FIELD}'.\",\n1310:                     hint=(\n1311:                         f\"Configure the DEFAULT_AUTO_FIELD setting or the \"\n1312:                         f\"{cls._meta.app_config.__class__.__qualname__}.\"\n1313:                         f\"default_auto_field attribute to point to a subclass \"\n1314:                         f\"of AutoField, e.g. 'django.db.models.BigAutoField'.\"\n1315:                     ),\n1316:                     obj=cls,\n1317:                     id='models.W042',\n1318:                 ),\n1319:             ]\n1320:         return []\n1321: \n1322:     @classmethod\n1323:     def _check_swappable(cls):\n1324:         \"\"\"Check if the swapped model exists.\"\"\"\n1325:         errors = []\n1326:         if cls._meta.swapped:\n1327:             try:\n1328:                 apps.get_model(cls._meta.swapped)\n1329:             except ValueError:\n1330:                 errors.append(\n",
+        "total_lines": 2139
+      }
+    },
+    {
+      "name": "read_file",
+      "arguments": {
+        "path": "django/db/models/options.py",
+        "start_line": 200,
+        "end_line": 245,
+        "summary": "Read auto field resolution in options"
+      },
+      "result": {
+        "end_column": 47,
+        "end_line": 245,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 200,
+        "text": "200:         else:\n201:             self.verbose_name_plural = format_lazy('{}s', self.verbose_name)\n202:         del self.meta\n203: \n204:         # If the db_table wasn't provided, use the app_label + model_name.\n205:         if not self.db_table:\n206:             self.db_table = \"%s_%s\" % (self.app_label, self.model_name)\n207:             self.db_table = truncate_name(self.db_table, connection.ops.max_name_length())\n208: \n209:     def _format_names_with_class(self, cls, objs):\n210:         \"\"\"App label/class name interpolation for object names.\"\"\"\n211:         new_objs = []\n212:         for obj in objs:\n213:             obj = obj.clone()\n214:             obj.name = obj.name % {\n215:                 'app_label': cls._meta.app_label.lower(),\n216:                 'class': cls.__name__.lower(),\n217:             }\n218:             new_objs.append(obj)\n219:         return new_objs\n220: \n221:     def _get_default_pk_class(self):\n222:         pk_class_path = getattr(\n223:             self.app_config,\n224:             'default_auto_field',\n225:             settings.DEFAULT_AUTO_FIELD,\n226:         )\n227:         if self.app_config and self.app_config._is_default_auto_field_overridden:\n228:             app_config_class = type(self.app_config)\n229:             source = (\n230:                 f'{app_config_class.__module__}.'\n231:                 f'{app_config_class.__qualname__}.default_auto_field'\n232:             )\n233:         else:\n234:             source = 'DEFAULT_AUTO_FIELD'\n235:         if not pk_class_path:\n236:             raise ImproperlyConfigured(f'{source} must not be empty.')\n237:         try:\n238:             pk_class = import_string(pk_class_path)\n239:         except ImportError as e:\n240:             msg = (\n241:                 f\"{source} refers to the module '{pk_class_path}' that could \"\n242:                 f\"not be imported.\"\n243:             )\n244:             raise ImproperlyConfigured(msg) from e\n245:         if not issubclass(pk_class, AutoField):\n",
+        "total_lines": 895
+      }
+    },
+    {
+      "name": "read_file",
+      "arguments": {
+        "path": "django/db/models/options.py",
+        "start_line": 245,
+        "end_line": 300,
+        "summary": "Read auto field creation in options"
+      },
+      "result": {
+        "end_column": 54,
+        "end_line": 300,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 245,
+        "text": "245:         if not issubclass(pk_class, AutoField):\n246:             raise ValueError(\n247:                 f\"Primary key '{pk_class_path}' referred by {source} must \"\n248:                 f\"subclass AutoField.\"\n249:             )\n250:         return pk_class\n251: \n252:     def _prepare(self, model):\n253:         if self.order_with_respect_to:\n254:             # The app registry will not be ready at this point, so we cannot\n255:             # use get_field().\n256:             query = self.order_with_respect_to\n257:             try:\n258:                 self.order_with_respect_to = next(\n259:                     f for f in self._get_fields(reverse=False)\n260:                     if f.name == query or f.attname == query\n261:                 )\n262:             except StopIteration:\n263:                 raise FieldDoesNotExist(\"%s has no field named '%s'\" % (self.object_name, query))\n264: \n265:             self.ordering = ('_order',)\n266:             if not any(isinstance(field, OrderWrt) for field in model._meta.local_fields):\n267:                 model.add_to_class('_order', OrderWrt())\n268:         else:\n269:             self.order_with_respect_to = None\n270: \n271:         if self.pk is None:\n272:             if self.parents:\n273:                 # Promote the first parent link in lieu of adding yet another\n274:                 # field.\n275:                 field = next(iter(self.parents.values()))\n276:                 # Look for a local field with the same name as the\n277:                 # first parent link. If a local field has already been\n278:                 # created, use it instead of promoting the parent\n279:                 already_created = [fld for fld in self.local_fields if fld.name == field.name]\n280:                 if already_created:\n281:                     field = already_created[0]\n282:                 field.primary_key = True\n283:                 self.setup_pk(field)\n284:             else:\n285:                 pk_class = self._get_default_pk_class()\n286:                 auto = pk_class(verbose_name='ID', primary_key=True, auto_created=True)\n287:                 model.add_to_class('id', auto)\n288: \n289:     def add_manager(self, manager):\n290:         self.local_managers.append(manager)\n291:         self._expire_cache()\n292: \n293:     def add_field(self, field, private=False):\n294:         # Insert the given field in the order in which it was created, using\n295:         # the \"creation_counter\" attribute of the field.\n296:         # Move many-to-many related fields from self.fields into\n297:         # self.many_to_many.\n298:         if private:\n299:             self.private_fields.append(field)\n300:         elif field.is_relation and field.many_to_many:\n",
+        "total_lines": 895
+      }
+    },
+    {
+      "name": "read_file",
+      "arguments": {
+        "path": "tests/check_framework/test_model_checks.py",
+        "start_line": 370,
+        "end_line": 430,
+        "summary": "Read W042 tests"
+      },
+      "result": {
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    }
+  ]
+}

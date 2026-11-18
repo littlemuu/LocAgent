@@ -1,0 +1,100 @@
+{
+  "arm": "C",
+  "baseline_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "coding_entrypoint": "locagent_e2e.agent.run (byte-identical frozen copy)",
+  "entrypoint": "calibration.locator.run",
+  "execution_status": "offline_acceptance_only_live_C_not_run",
+  "experiment": {
+    "arms": [
+      "A",
+      "B"
+    ],
+    "automatic_retries": 0,
+    "baseline": "v7 selfcheck + unchanged v6 identifier BM25/preview; no dense or retrieval improvement",
+    "checkpoint_api_budget_cny": 50,
+    "checkpoint_stop_empty_rate_above": 0.5,
+    "checkpoint_trial_arm_order": [
+      "A",
+      "B"
+    ],
+    "checkpoint_trial_tasks": 8,
+    "cloud_target": {
+      "architecture": "x86_64",
+      "cpu": 8,
+      "disk_gib_approx": 150,
+      "memory_gib": 16
+    },
+    "coding": {
+      "command_timeout_seconds": 120,
+      "evidence_bytes": 262144,
+      "input_tokens": 1000000,
+      "max_output_tokens": 4096,
+      "max_requests": 40,
+      "output_tokens": 64000,
+      "timeout_seconds": 2700,
+      "tool_output_bytes": 16384
+    },
+    "concurrency": 1,
+    "endpoint": "https://api.deepseek.com/chat/completions",
+    "formal_trial_authorized": false,
+    "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+    "local_image_pull_limit": 2,
+    "locator": {
+      "input_tokens": 128000,
+      "max_output_tokens": 2048,
+      "max_requests": 4,
+      "output_tokens": 8192,
+      "source_bytes": 14336,
+      "timeout_seconds": 300,
+      "wire_request_bytes": 65536
+    },
+    "max_serialized_request_bytes": 524288,
+    "model": "deepseek-flash",
+    "prices_cny_per_million": {
+      "cache_hit_peak": 0.04,
+      "cache_miss_peak": 2,
+      "checked_date": "2026-11-17",
+      "offpeak_multiplier": 0.5,
+      "output_peak": 8,
+      "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/"
+    },
+    "sdk_version": "1.62.0",
+    "seed": 20261117,
+    "smoke_max_cny": 6.85,
+    "smoke_runtime_v1_note": "The halted paid smoke used max_output_tokens=2048; v2 restores stage1 coding limit4096, offline-tested only. Do not merge old and new-budget A/B outcomes.",
+    "supersedes_harness_design_only": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    },
+    "version": "e2e-checkpoint-v4-text-finish-and-edit-metrics"
+  },
+  "holdout_access": false,
+  "immutable_runtime_observations": {
+    "coding": {
+      "Memory": 6442450944,
+      "NanoCpus": 6000000000,
+      "NetworkMode": "none"
+    },
+    "harness": {
+      "Memory": 0,
+      "NanoCpus": 0,
+      "NetworkMode": "bridge"
+    },
+    "stuck_detection": false
+  },
+  "live_execution_authorized": false,
+  "locator_changes": {
+    "body_read_priority": "from request 2, unresolved read cursor or incomplete returned entity blocks further list/search/retrieve; read_file and finish retain availability",
+    "candidate_lists": "unchanged",
+    "chain_completeness": "unverified",
+    "coverage": "delivered characters only; AST spans for completeness, not source evidence",
+    "finish": "three sections; conservative hypotheses; invalid answer replaced locally; raw retained",
+    "prompt_sha256": "83363f6a53e4cf69fd3e3ccda0e51195b8ab78b03fb14c13b8002c222bdb9f8e",
+    "retry_requests": 0,
+    "tool_schema": "unchanged"
+  },
+  "packet_builder": "calibration.locator.build_packet",
+  "retrieval": "unchanged v6 identifier BM25 and source preview; v7 candidate format/selfcheck",
+  "version": "locator-diagnostic-calibration-v8"
+}

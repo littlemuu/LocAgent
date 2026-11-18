@@ -1,0 +1,22 @@
+已读到的事实（附文件:行号）
+- astropy/modeling/separable.py:66-102：`separability_matrix` 先对 `n_inputs == 1 and n_outputs > 1` 特判返回全 True，否则调用 `_separable(transform)` 并把非零转成布尔。
+- astropy/modeling/separable.py:97-99：该特判只覆盖单输入多输出，未涉及嵌套 CompoundModel 的递归展开。
+- astropy/modeling/separable.py:100-102：结果完全由 `_separable` 决定，本函数自身不做任何递归或形状拼接。
+- astropy/modeling/separable.py:105-127：`_compute_n_outputs` 对 Model 取 `n_outputs`，对 ndarray 取 `shape[0]`，说明算子函数既接受模型也接受已算好的 coord_matrix。
+- astropy/modeling/separable.py:130-160：`_arith_oper` 的 docstring 声明算术运算“always returns a nonseparable output”，并校验左右输入/输出数一致。
+- astropy/modeling/separable.py:27-63：`is_separable` 同样依赖 `_separable`，按行求和是否为 1 判定。
+
+推断
+- 待验证假设：`astropy/modeling/separable.py:_separable` 在遇到 `&` 的右操作数是 CompoundModel（如 `Linear1D(10) & Linear1D(5)`）时，可能把该子树当作单个不可分块处理，而不是递归展开其 coord_matrix，从而产生 2x2 全 True 块。
+- 待验证假设：`astropy/modeling/separable.py:_compute_n_outputs` 与 `&` 对应算子对 ndarray 分支的处理可能未按子矩阵形状正确拼接，导致嵌套时行列错位。
+- 待验证假设：`astropy/modeling/separable.py:separability_matrix` 的顶层特判与 `_separable` 的递归入口在嵌套场景下语义不一致。
+
+未核验点
+- `_separable` 函数体未读完（仅知其在 100 行被调用，定义位置与实现未收到）。
+- `&` 对应的算子函数（如 `_separable_bitwise_and` 之类）未读到，无法确认拼接逻辑。
+- 未运行任何代码，未验证上述假设。
+
+最小验证：`python -c "from astropy.modeling import models as m; from astropy.modeling.separable import separability_matrix as s; print(s(m.Pix2Sky_TAN() & (m.Linear1D(10) & m.Linear1D(5))))"` 并对照 `s(m.Pix2Sky_TAN() & m.Linear1D(10) & m.Linear1D(5))` 是否一致。
+
+以下内容未在阅读记录中核验：
+- [R1] astropy/modeling/separable.py:_arith_oper

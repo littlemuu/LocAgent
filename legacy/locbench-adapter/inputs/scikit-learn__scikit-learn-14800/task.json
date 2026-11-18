@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-14800",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "acb8ac5145cfd88fdbd2d381b34883b2c212c8c5",
+  "problem_statement": "Validate MD5 checksum of downloaded ARFF in fetch_openml\n`fetch_openml` downloads the `data_set_description` from openml.org which includes an `md5_checksum` field. This should correspond to the MD5 checksum of the downloaded ARFF data. We should (optionally?) use `hashlib` to verify that the MD5 matches.\n"
+}

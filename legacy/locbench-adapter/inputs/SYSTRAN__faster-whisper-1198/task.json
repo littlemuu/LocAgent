@@ -1,0 +1,6 @@
+{
+  "instance_id": "SYSTRAN__faster-whisper-1198",
+  "repo": "SYSTRAN/faster-whisper",
+  "base_commit": "b568faec40eef1fee88f8aeb27ac3f9d6e006ba4",
+  "problem_statement": "OOM when using VAD\nHi, does somebody else experience issues with memory consumption when transcribing audio files containing a lot of speech (~ 4 hours long)? I am running the latest version of faster-whisper in a Kubernetes pod on a g4dn AWS instance. The server has 4 cores, 1 GPU, and 16GB RAM, but the pod is limited to 2 cores. The base image is `pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime` and as per [this pinned issue](https://github.com/SYSTRAN/faster-whisper/issues/1086) the installed versions should be compatible:\r\n- python 3.11\r\n- torch 2.5.1+cu124\r\n- ctranslate2 4.5.0\r\n- cuda 12.4\r\n- cudnn 9.1.0.7\r\n\r\nThe process gets killed during the transcription phase when VAD is enabled. I tried the solution [described here](https://github.com/snakers4/silero-vad/issues/356), but it doesn't help. See the logs attached. Anyone has any idea what could be the cause of the OOM?\r\n\r\n[libraries.txt](https://github.com/user-attachments/files/18039471/libraries.txt)\r\n[logs on sigkill.txt](https://github.com/user-attachments/files/18039459/logs.on.sigkill.txt)\n"
+}

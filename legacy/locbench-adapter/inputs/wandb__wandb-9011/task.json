@@ -1,0 +1,6 @@
+{
+  "instance_id": "wandb__wandb-9011",
+  "repo": "wandb/wandb",
+  "base_commit": "87070417bcde22e45fc3a662b2dfd73d79981ad9",
+  "problem_statement": "[Bug]: Incorrect order in `runs.histories()`\n### Describe the bug\n\n`Runs` have a `order` attribute. However in the `Runs.histories()` method the order is not respected and the `runid` is used to sort instead (see [Relevant code](https://github.com/wandb/wandb/blob/v0.18.7/wandb/apis/public/runs.py#L236). I don't think this is desirable and also is undocumented behavior. I would recommend that the order specified in the `Runs` object is used or to not reorder  all so that it is preserved to match the order obtained when iterating over the `runs` object via the iterator interface.\n\nwandb: 0.17.3\npython 3.11.8\noperating system: Ubuntu 22.04\n"
+}

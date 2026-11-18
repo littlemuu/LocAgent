@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60518",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "8a286fa16f3160e939b192cbe8e218992a84e6fc",
+  "problem_statement": "DOC: Convert v to conv_val in function for pytables.py\n### Pandas version checks\n\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\n\n\n### Location of the documentation\n\npandas\\pandas\\core\\computation\\pytables.py\n\n### Documentation problem\n\nMany instances of just v in this function. Wanted to clarify throughout\n\n### Suggested fix for documentation\n\nChange v to conv_val\n"
+}

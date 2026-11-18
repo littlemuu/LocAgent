@@ -1,0 +1,8 @@
+{
+  "credential_scan_files": 3037,
+  "credential_matches": 0,
+  "core_code_binding_matches_cloud": true,
+  "round_code_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "source_environment": "Python3.12/OpenHandsSDK1.62.0",
+  "all_16_rows_complete": true
+}

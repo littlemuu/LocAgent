@@ -1,0 +1,8 @@
+{
+  "files": {
+    "control/continue_uncapped.py": "76af2e48d6b8897892ff9a592e00d75153a4a0c61b32f01011208adc22acefe1",
+    "control/launch-continue.sh": "322e0465e166279b2e1066e69a8beb4e7784daa9e2c8ed9d3e367eb83bec9efe",
+    "authorization-amendment.json": "0bfaf09f3ff0f0fe9e315e9baad3dc10a8b2b6b128d8c5c51ec0e1f7c975473c"
+  },
+  "scope": "remaining cases only; original frozen files untouched; total API cap removed by user"
+}

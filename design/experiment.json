@@ -1,0 +1,114 @@
+{
+  "version": "stage1-design-v1",
+  "goal": "Does localization improvement increase Coding Agent end-to-end SWE-bench resolve rate?",
+  "execution_status": "not_run_design_only",
+  "paid_authorization": false,
+  "dataset": {
+    "name": "princeton-nlp/SWE-bench_Verified",
+    "split": "test",
+    "n": 50,
+    "repeats": 3
+  },
+  "coding_agent": {
+    "sdk": "openhands-sdk==1.62.0",
+    "class": "openhands.sdk.Agent",
+    "system_prompt": "design/coding-system.txt",
+    "tool_contract": [
+      "terminal(command,timeout_seconds<=120)",
+      "file_editor(view|create|str_replace|insert)",
+      "finish(summary)"
+    ],
+    "implementation_status": "design_only: coding tools and cloud runner are not yet implemented or validated; all arms must share one frozen implementation before any holdout run",
+    "sandbox": "linux/amd64 x86_64 Docker; fresh base commit per arm and repeat; network disabled; no evaluator secrets or reference/test patches; git diff exported by harness",
+    "model": "deepseek-flash",
+    "provider": "https://api.deepseek.com/chat/completions",
+    "documented_backend_as_of_20261116": "DeepSeek-V4.1-Flash-1017",
+    "model_alias_immutability": false,
+    "version_gate": "verify actual backend immediately before experiment; record response model/system_fingerprint when available; stop on observed drift; absent immutable provider revision is a disclosed limitation; no replacement model without a new preregistration before outcomes",
+    "thinking": {
+      "type": "disabled"
+    },
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "max_output_tokens_per_request": 4096,
+    "max_requests_per_episode": 40,
+    "max_total_input_tokens_per_episode": 1000000,
+    "max_total_output_tokens_per_episode": 64000,
+    "max_cumulative_tool_evidence_utf8_bytes": 262144,
+    "max_tool_output_utf8_bytes_per_event": 16384,
+    "timeout_minutes": 45,
+    "automatic_retries": 0
+  },
+  "locator": {
+    "model": "deepseek-flash",
+    "thinking": {
+      "type": "disabled"
+    },
+    "temperature": 0.2,
+    "top_p": 1.0,
+    "max_requests": 4,
+    "max_output_tokens_per_request": 2048,
+    "max_total_input_tokens": 128000,
+    "max_total_output_tokens": 8192,
+    "source_evidence_utf8_bytes": 14336,
+    "packet_utf8_bytes": 14336,
+    "top_k": 5,
+    "repeat_policy": "independent locator run per task/repeat in B and C; never select best run",
+    "automatic_retries": 0,
+    "timeout_minutes": 5
+  },
+  "arms": {
+    "A": {
+      "name": "no_localization",
+      "packet": null
+    },
+    "B": {
+      "name": "current_localization",
+      "retrieval": "v6 identifier BM25 + v7 finish selfcheck; source previews and exact/path route; no dense",
+      "implementation": "historical workspace/experiments/sdk_finish_selfcheck_v7 and retrieval_evidence_v6 as pinned in stage1-lock",
+      "source_freeze": "vendor/baseline_v7"
+    },
+    "C": {
+      "name": "improved_localization",
+      "retrieval": "v8.1 full function-body BM25 + true dense cosine; per-entity max chunk; weighted RRF 60/1/2; span-bound duplicate definitions",
+      "implementation": "runtime/experiments/sdk_hybrid_v8",
+      "dense_status": "not_ready: present runtime deliberately accepts synthetic offline fixtures only; real-cache adapter must be completed and frozen using dev37 before any holdout run"
+    }
+  },
+  "future_embedding_binding": {
+    "status": "not_authorized_not_frozen",
+    "reason": "input manifest freezes exact texts independently; provider/model revision/dimensions/instruction/token cap require separate binding before real encoding; no synthetic vectors in effectiveness experiment"
+  },
+  "input_envelope": "Same coding system prompt + issue statement + nullable localization_packet; no arm label, gold labels, old answers, or reference patch. No localization retrieval tool available during coding. Coding tools/budgets are identical. Packet tokens count toward coding input budget; A receives no token compensation.",
+  "schedule": {
+    "seed": 20261116,
+    "unit": "instance/repeat block",
+    "arm_order": "seeded permutation within each block",
+    "parallel_workers": 4,
+    "request_failure": "stop experiment, preserve partial evidence, no automatic retry or replacement; independently scheduled repeats are not retries"
+  },
+  "evaluation": {
+    "harness_repo": "SWE-bench/SWE-bench",
+    "harness_commit": "02e7a74ffd0b707aab73d203fe87bdc7c76afc8e",
+    "command": "python -m swebench.harness.run_evaluation --dataset_name princeton-nlp/SWE-bench_Verified --predictions_path PREDICTIONS --max_workers 4 --run_id UNIQUE_ARM_REPEAT",
+    "dataset_policy": "offline pinned dataset revision only, validate SHA before passing local dataset or validated HF cache; never silently use moving main",
+    "architecture": "x86_64 linux/amd64",
+    "timeout_seconds": 1800,
+    "image_status": "not_built; freeze image digests, x86 host environment and coding runner hash before first holdout execution",
+    "primary": "official resolved: reference FAIL_TO_PASS and PASS_TO_PASS checks satisfied",
+    "denominator": "all 50 instances times all 3 planned repeats per arm; failures, empty patches, timeouts and missing outputs count as zero in intention-to-treat; also report technical failures separately",
+    "result_visibility": "sealed until all dev37 tuning and final code lock complete; no early peeking; any holdout result exposure retires this cohort from future tuning claims"
+  },
+  "statistics": {
+    "primary_contrast": "C minus B",
+    "secondary_contrasts": [
+      "C minus A",
+      "B minus A"
+    ],
+    "unit": "instance; average its three binary resolved outcomes",
+    "paired_test": "two-sided paired cluster sign-flip permutation; 100000 Monte Carlo samples; seed 20261116; plus-one correction",
+    "multiplicity": "Holm adjustment across all three contrasts at alpha 0.05",
+    "confidence_interval": "95% paired bootstrap by instance, stratified by repository, 20000 draws; no treating 450 trials as independent",
+    "sensitivity": "exact two-sided McNemar on first predesignated repeat only; report discordant counts; never best-of-three/pass@3 as primary"
+  }
+}

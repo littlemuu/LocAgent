@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-5961",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "6dea923866a3ab77b58e3fd3c8457f6bb67fb254",
+  "problem_statement": "rds_service.py error\n### Steps to Reproduce\n\n1. Running prowler aws -log-level ERROR\r\n2. AWS\r\n3. Single Account\n\n### Expected behavior\n\nTo execute without throwing the error\n\n### Actual Result with Screenshots or Logs\n\n2024-11-28 10:20:18,851 [File: rds_service.py:458] [Module: rds_service] ERROR: eu-west-2 -- KeyError[449]: 'SourceType'\r\n\r\nWe have an postgress RDS 16.3 instance in eu-west-2 and the script is throwing this error\n\n### How did you install Prowler?\n\nFrom pip package (pip install prowler)\n\n### Environment Resource\n\n2. ECS Fargate task\n\n### OS used\n\n3. Alpine Linux\n\n### Prowler version\n\n4.6.0\n\n### Pip version\n\nna\n\n### Context\n\n_No response_\n"
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "base_commit": "657aca1258547d43abae73aee01812e19f13b711",
+  "source_manifest_sha256": "a6a0abb4f12cc6d45fce36a89a384ccd0d92175b94c0246abc9f9b3e14ebf39f",
+  "evaluation": "exposed-development-set-exploration-not-blind",
+  "controls": ["bm25", "dense"],
+  "configurations": [
+    {"name": "rrf60_equal", "k": 60, "bm25_weight": 1, "dense_weight": 1, "top_n_per_arm": null},
+    {"name": "rrf60_dense2", "k": 60, "bm25_weight": 1, "dense_weight": 2, "top_n_per_arm": null},
+    {"name": "rrf10_equal", "k": 10, "bm25_weight": 1, "dense_weight": 1, "top_n_per_arm": null},
+    {"name": "rrf60_top10", "k": 60, "bm25_weight": 1, "dense_weight": 1, "top_n_per_arm": 10}
+  ],
+  "scoring_cutoffs": [1, 3, 5],
+  "entity_aggregation": "max-chunk-score-before-rank-and-truncation",
+  "tie_break": "entity-lexicographic",
+  "bm25_filter": "strictly-positive-score",
+  "dense_candidates": "all-30-entities",
+  "truncation": "top10-after-entity-dedup-in-each-arm-before-fusion; missing-arm-contribution-zero",
+  "extra_parameter_search": false,
+  "change_production_defaults": false,
+  "network_requests": 0
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "item-60b4e01e",
+    "original_review_id": "review-01",
+    "case": "d05_lease"
+  },
+  {
+    "id": "item-dfe16c4b",
+    "original_review_id": "review-02",
+    "case": "d03_access"
+  },
+  {
+    "id": "item-dc9902fd",
+    "original_review_id": "review-03",
+    "case": "d05_lease"
+  },
+  {
+    "id": "item-d462b788",
+    "original_review_id": "review-04",
+    "case": "d02_config"
+  },
+  {
+    "id": "item-0eb46173",
+    "original_review_id": "review-05",
+    "case": "d01_cache"
+  },
+  {
+    "id": "item-c6b4d181",
+    "original_review_id": "review-06",
+    "case": "d06_import"
+  },
+  {
+    "id": "item-4480a5a9",
+    "original_review_id": "review-07",
+    "case": "d06_import"
+  },
+  {
+    "id": "item-17a1492c",
+    "original_review_id": "review-08",
+    "case": "d03_access"
+  },
+  {
+    "id": "item-453e4ae8",
+    "original_review_id": "review-09",
+    "case": "d01_cache"
+  },
+  {
+    "id": "item-21ec8def",
+    "original_review_id": "review-10",
+    "case": "d04_upload"
+  },
+  {
+    "id": "item-5fcca383",
+    "original_review_id": "review-11",
+    "case": "d02_config"
+  },
+  {
+    "id": "item-0adfc0f4",
+    "original_review_id": "review-12",
+    "case": "d04_upload"
+  }
+]

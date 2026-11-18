@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-7400",
+  "repo": "modin-project/modin",
+  "base_commit": "78674005577efea7aa7c5e3e7c6fb53bd0365fe5",
+  "problem_statement": "Avoid unnecessary length checks in `df.squeeze`\nIt is possible that when `axis=1` in squeeze we still check `len(self.index)`, which is never necessary when `axis=1`. Link to code here: https://github.com/modin-project/modin/blob/eac3c77baf456c7bd7e1e5fde81790a4ed3ebb27/modin/pandas/dataframe.py#L2074-L2084\r\n\r\nThis is an easy fix, also see https://github.com/snowflakedb/snowpark-python/pull/1767\n"
+}

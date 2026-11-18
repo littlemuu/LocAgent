@@ -1,0 +1,20 @@
+{
+  "groups": [
+    {
+      "kind": "locator_or_coding",
+      "memory_bytes": 6442450944,
+      "nano_cpus": 6000000000,
+      "network": "none",
+      "observed_containers": 48
+    },
+    {
+      "kind": "harness",
+      "memory_bytes": 0,
+      "nano_cpus": 0,
+      "network": "bridge",
+      "observed_containers": 24
+    }
+  ],
+  "matches_original_v5_observed_settings": true,
+  "observer_errors": []
+}

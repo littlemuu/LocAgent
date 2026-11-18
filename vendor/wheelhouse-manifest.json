@@ -1,0 +1,1244 @@
+[
+  {
+    "name": "agent-client-protocol",
+    "version": "0.12.1",
+    "wheel": "agent_client_protocol-0.12.1-py3-none-any.whl",
+    "sha256": "503b27bc494e3558965e3b5c1dc22e6b948aa48239517e215d22ea6f5c12b253",
+    "verified_payload_files": 45,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "aiofile",
+    "version": "3.12.3",
+    "wheel": "aiofile-3.12.3-py3-none-any.whl",
+    "sha256": "119615f74bbc6d58aa1b0161b264ea4e17eca1467a024c71afea3353cc2e267b",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "aiohappyeyeballs",
+    "version": "2.7.1",
+    "wheel": "aiohappyeyeballs-2.7.1-py3-none-any.whl",
+    "sha256": "3d1965bb1db79a5274b1a582af94565a581d4bf8321d904fa627de21cad547b4",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "aiohttp",
+    "version": "3.14.5",
+    "wheel": "aiohttp-3.14.5-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "b722dff2201a10625928382f74abbaf0ea6c558909e5d68cd4b188b8a8a3cc6f",
+    "verified_payload_files": 74,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "aiosignal",
+    "version": "1.4.0",
+    "wheel": "aiosignal-1.4.0-py3-none-any.whl",
+    "sha256": "b5810a6a157752424918595c8ccbd3930d28ef3971ccdfcc3dfad02af7d4c6f9",
+    "verified_payload_files": 8,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "annotated-types",
+    "version": "0.8.0",
+    "wheel": "annotated_types-0.8.0-py3-none-any.whl",
+    "sha256": "77457110785defb8d5908f7286cef8a99b00c116896cc99232f5f2665b6daea4",
+    "verified_payload_files": 8,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "anyio",
+    "version": "4.16.0",
+    "wheel": "anyio-4.16.0-py3-none-any.whl",
+    "sha256": "ebde142e8a15827168cd8a5d707635b3d66a02660eb58aa57602da321cca2973",
+    "verified_payload_files": 54,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "wheel": "attrs-26.1.0-py3-none-any.whl",
+    "sha256": "9b51b828222a660554a6efdcb0d5799a8af191fc3692d33fbff6765f00f4f7b0",
+    "verified_payload_files": 36,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "Authlib",
+    "version": "1.9.5",
+    "wheel": "authlib-1.9.5-py2.py3-none-any.whl",
+    "sha256": "7d0e4d3f78512e2d8ef2c75475908f7658ca78e0ffa706ec7770e0e893eee4c9",
+    "verified_payload_files": 221,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "beartype",
+    "version": "0.23.1",
+    "wheel": "beartype-0.23.1-py3-none-any.whl",
+    "sha256": "15da3927c26b309761da7de2afffb41667058a62b175451deb9ed8416e5377f3",
+    "verified_payload_files": 487,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "blake3",
+    "version": "1.0.11",
+    "wheel": "blake3-1.0.11-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "d2381fa331e2ef7a92d60b55de78382f7b8b37855d01b93e0221806f83cd3c79",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "bm25s",
+    "version": "0.2.3",
+    "wheel": "bm25s-0.2.3-py3-none-any.whl",
+    "sha256": "101e34f743fbaf05cb98956fbb50f65b23abb46e6168b2b9a8cc63afd894265a",
+    "verified_payload_files": 21,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "boto3",
+    "version": "1.44.1",
+    "wheel": "boto3-1.44.1-py3-none-any.whl",
+    "sha256": "e58501157e3cd0a008b9d4f4ff05e8585a290b0c50cd8999242154b555639aaf",
+    "verified_payload_files": 63,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "botocore",
+    "version": "1.44.1",
+    "wheel": "botocore-1.44.1-py3-none-any.whl",
+    "sha256": "0f5108d693e9b58b3d1a658c228a979c5c308a44ccab696ffa0afd54a55e0b90",
+    "verified_payload_files": 2026,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "cachetools",
+    "version": "8.0.0",
+    "wheel": "cachetools-8.0.0-py3-none-any.whl",
+    "sha256": "996872aa22b13862519bfb299108d86af6c6c6f8eb5f3a73410776113acfa70f",
+    "verified_payload_files": 17,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "caio",
+    "version": "0.12.10",
+    "wheel": "caio-0.12.10-cp312-cp312-macosx_10_13_universal2.whl",
+    "sha256": "c017afaabdc940462b23d32a332977fc3da226ff7451befa2399724e7388b397",
+    "verified_payload_files": 23,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "certifi",
+    "version": "2026.10.23",
+    "wheel": "certifi-2026.10.23-py3-none-any.whl",
+    "sha256": "4340dd1edce4391293229ebf1a7e74628a2edbe61634d65c3f8bf1c627c21561",
+    "verified_payload_files": 13,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "wheel": "cffi-2.1.1-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "929c4af8da5c9ddd698dd5c46a89568f55ecd64795ac08e84c55a2b9b10ba7d3",
+    "verified_payload_files": 32,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "charset-normalizer",
+    "version": "3.5.2",
+    "wheel": "charset_normalizer-3.5.2-cp312-cp312-macosx_10_13_universal2.whl",
+    "sha256": "6b9262fc8791826715aacf31d294ef4b3611c9a309aabd9b84c8c38fe39f5dde",
+    "verified_payload_files": 22,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "click",
+    "version": "8.5.1",
+    "wheel": "click-8.5.1-py3-none-any.whl",
+    "sha256": "818418e70036e556109bb74c692d72daa9820de5bc73de087222ec2e02f612e1",
+    "verified_payload_files": 23,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "wheel": "cryptography-50.0.2-cp311-abi3-macosx_11_0_arm64.whl",
+    "sha256": "e27ac215edf0314efc16ad7a23f6fd3e83917e97cf0dcfa70b1a79676e597bf8",
+    "verified_payload_files": 121,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "cyclopts",
+    "version": "5.4.1",
+    "wheel": "cyclopts-5.4.1-py3-none-any.whl",
+    "sha256": "fdac0572259bb9e756ade2f432a8f1da6e9e37f06d6e78feb065d8e7a5d0c38c",
+    "verified_payload_files": 87,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "deprecation",
+    "version": "2.1.0",
+    "wheel": "deprecation-2.1.0-py2.py3-none-any.whl",
+    "sha256": "583a06469bb0d68af84d40ad4b58a9037f2586c31cceb00d54350385bf19b090",
+    "verified_payload_files": 7,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "distro",
+    "version": "1.9.0",
+    "wheel": "distro-1.9.0-py3-none-any.whl",
+    "sha256": "46e693c9589f7593fff14b1e6c22261bf2227606e8b4bbe8c017d34e3c60875c",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "dnspython",
+    "version": "2.9.2",
+    "wheel": "dnspython-2.9.2-py3-none-any.whl",
+    "sha256": "df889815d0f24a0ebc7ef682fab8552bc52ab74f525410dcf260db349459e241",
+    "verified_payload_files": 167,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "docstring_parser",
+    "version": "0.18.0",
+    "wheel": "docstring_parser-0.18.0-py3-none-any.whl",
+    "sha256": "4a7fa2edef38dba5983bb7eade5d0474a5ee3e850a628221c20188f150e58ee3",
+    "verified_payload_files": 15,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "email-validator",
+    "version": "2.3.0",
+    "wheel": "email_validator-2.3.0-py3-none-any.whl",
+    "sha256": "b7d06d4628ccaf4f8aee5d4348118698dd41e96c7a665761b03c07d843322528",
+    "verified_payload_files": 17,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "exceptiongroup",
+    "version": "1.3.1",
+    "wheel": "exceptiongroup-1.3.1-py3-none-any.whl",
+    "sha256": "f91c7ae8a7b4b31aa61aa1a670a5b35f7c825e6a3080cba98338b38bbd48a89d",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "fakeredis",
+    "version": "2.40.0",
+    "wheel": "fakeredis-2.40.0-py3-none-any.whl",
+    "sha256": "e89f439dfb45101761de869c311bc58408836f223f2a412e812a7d6a35d8e241",
+    "verified_payload_files": 82,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "fastmcp",
+    "version": "4.1.8",
+    "wheel": "fastmcp-4.1.8-py3-none-any.whl",
+    "sha256": "7d0e3bde4f674aa43798d226b2d404535b3cc46af635b20235a68658ed0ea814",
+    "verified_payload_files": 5,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "fastmcp-slim",
+    "version": "4.1.8",
+    "wheel": "fastmcp_slim-4.1.8-py3-none-any.whl",
+    "sha256": "dd6feb83f01688e36d51880d26efc5966e75a186393d6aa13e4bc540ddef02bf",
+    "verified_payload_files": 284,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "fastuuid",
+    "version": "0.14.0",
+    "wheel": "fastuuid-0.14.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "635bc21d0b1882297ed9c20a29952b3eeaa854279f2e7da5b237a1a406bc8b95",
+    "verified_payload_files": 9,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "filelock",
+    "version": "3.32.7",
+    "wheel": "filelock-3.32.7-py3-none-any.whl",
+    "sha256": "edc9993aef90b40e10ea14456c69f98e0ff14c1930e83e2ecf5f610869912bb6",
+    "verified_payload_files": 27,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "frozenlist",
+    "version": "1.8.0",
+    "wheel": "frozenlist-1.8.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "e20014040a8e938fb5885dde142d5320b6406009f1d43327867788bcd7b003ed",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "fsspec",
+    "version": "2026.9.0",
+    "wheel": "fsspec-2026.9.0-py3-none-any.whl",
+    "sha256": "4b50ff907ba64d5c0766a17e24fa448bd475ae698fdfd1bc5123f7d7a8234f29",
+    "verified_payload_files": 63,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "googleapis-common-protos",
+    "version": "1.76.0",
+    "wheel": "googleapis_common_protos-1.76.0-py3-none-any.whl",
+    "sha256": "75508dace93fb7358aa4e9f0985a4f88090a25dec3223416050d82d2a09d24ec",
+    "verified_payload_files": 200,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "griffelib",
+    "version": "2.4.1",
+    "wheel": "griffelib-2.4.1-py3-none-any.whl",
+    "sha256": "47bd6e2b50f8965b4b6bb0a8c15194e14a76e7ba4a299820210300aed06f866d",
+    "verified_payload_files": 52,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "grpcio",
+    "version": "1.85.1",
+    "wheel": "grpcio-1.85.1-cp312-cp312-macosx_11_0_universal2.whl",
+    "sha256": "9e3a3c18fd318c41dad20d01212fc14c8f2dbabd9a3fd46510ab26eebdc5a54a",
+    "verified_payload_files": 67,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "h11",
+    "version": "0.16.0",
+    "wheel": "h11-0.16.0-py3-none-any.whl",
+    "sha256": "5ab7b1668248644f44f0a2688b0cd02f3cb3a4b027029b98dca39de522709320",
+    "verified_payload_files": 18,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "h2",
+    "version": "4.4.1",
+    "wheel": "h2-4.4.1-py3-none-any.whl",
+    "sha256": "5900d94e0b15a232303afefc0f720390daa7184c18d20106a8913ebcc194e6b5",
+    "verified_payload_files": 19,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "hf-xet",
+    "version": "1.8.0",
+    "wheel": "hf_xet-1.8.0-cp38-abi3-macosx_11_0_arm64.whl",
+    "sha256": "7a75f386de6e031d0e026785a9db2b0858f484f1d181cd31d5338103219dca8e",
+    "verified_payload_files": 8,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "hpack",
+    "version": "4.2.0",
+    "wheel": "hpack-4.2.0-py3-none-any.whl",
+    "sha256": "cbe9ab016504df858d0a2c8dbc746d72e88f4aac409101003d399df43ed8b627",
+    "verified_payload_files": 15,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "httpcore",
+    "version": "1.0.9",
+    "wheel": "httpcore-1.0.9-py3-none-any.whl",
+    "sha256": "81af8969effc11230e067bf94224abdf6ef20b53136a753c368cacd2681704e1",
+    "verified_payload_files": 37,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "httpcore2",
+    "version": "2.16.0",
+    "wheel": "httpcore2-2.16.0-py3-none-any.whl",
+    "sha256": "21334a938bff7eb17eb03dcf5c67b7e559f926922ec59d896d8a17a93187aa30",
+    "verified_payload_files": 37,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "httpx",
+    "version": "0.28.1",
+    "wheel": "httpx-0.28.1-py3-none-any.whl",
+    "sha256": "514fd6a0af58ea5cc95cd46752fea1c263ba4b61b09603e01f543e5b307a4f69",
+    "verified_payload_files": 30,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "httpx2",
+    "version": "2.16.0",
+    "wheel": "httpx2-2.16.0-py3-none-any.whl",
+    "sha256": "1b842381d2297db30f3468d36db60ae99ac164d12270d0a7152eb82ce5e25f82",
+    "verified_payload_files": 38,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "huggingface_hub",
+    "version": "1.33.0",
+    "wheel": "huggingface_hub-1.33.0-py3-none-any.whl",
+    "sha256": "326854f9713a2c190bcfab33156762ca8203e41ccc710487aa5b017066e4d96e",
+    "verified_payload_files": 195,
+    "regenerated_console_scripts": 3,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "hyperframe",
+    "version": "6.1.0",
+    "wheel": "hyperframe-6.1.0-py3-none-any.whl",
+    "sha256": "da8f5f608a7489188f2728ec77e4938aaf1eb66d573bc89db723f4336c963093",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "wheel": "idna-3.20-py3-none-any.whl",
+    "sha256": "2e4e91ca0617e8ce0ef3d6aec5bd63bdf45fdbe6ddcf367eb773532b32247254",
+    "verified_payload_files": 17,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "importlib_metadata",
+    "version": "8.9.0",
+    "wheel": "importlib_metadata-8.9.0-py3-none-any.whl",
+    "sha256": "30f2906add61aead5a4d204f834f73282b343839cc31901b16370683c1d85ed3",
+    "verified_payload_files": 19,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "Jinja2",
+    "version": "3.1.6",
+    "wheel": "jinja2-3.1.6-py3-none-any.whl",
+    "sha256": "93a745537a3faec1f5620c71544468f42a783218aff3df8c5691425a8a79d279",
+    "verified_payload_files": 32,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jiter",
+    "version": "0.19.0",
+    "wheel": "jiter-0.19.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "0881fc75b8a2203f76971149b948cb6be37a9842dce47aa7d68077f562dca39f",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jmespath",
+    "version": "1.1.0",
+    "wheel": "jmespath-1.1.0-py3-none-any.whl",
+    "sha256": "4728ba7923ac0a8ba7920dc4b88bbfedb96146fb698c916abe28623c3e6f2003",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "joserfc",
+    "version": "1.8.0",
+    "wheel": "joserfc-1.8.0-py3-none-any.whl",
+    "sha256": "96fc3e46efd5318fd0a90faf07104d11db39951349fb47cc5c803591041920da",
+    "verified_payload_files": 62,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jsonref",
+    "version": "1.1.0",
+    "wheel": "jsonref-1.1.0-py3-none-any.whl",
+    "sha256": "e23c0c9c160496e471a34a7ccdc6a02a3599ed67a84f66c68e4fbdad3c01b0b6",
+    "verified_payload_files": 7,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jsonschema",
+    "version": "4.26.0",
+    "wheel": "jsonschema-4.26.0-py3-none-any.whl",
+    "sha256": "349a659c0867bdb08a01ab431fd36ec941fa0e2cfe3e0cfffa18674dd4cb6a10",
+    "verified_payload_files": 44,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jsonschema-path",
+    "version": "0.5.0",
+    "wheel": "jsonschema_path-0.5.0-py3-none-any.whl",
+    "sha256": "5520be6899568bf8b0566adb7c899b1598d5994eeab3b79af0307b7962b555e0",
+    "verified_payload_files": 24,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "wheel": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+    "sha256": "31e0b13515f94056c474fed81a25a05e19d8b806c1502d3009d74772ccefa064",
+    "verified_payload_files": 29,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "litellm",
+    "version": "1.105.7",
+    "wheel": "litellm-1.105.7-cp310-abi3-macosx_11_0_arm64.whl",
+    "sha256": "3f332957f403365014af8fdcf6c8ee97ac16aa05f415640f7a1035e730bb7eb2",
+    "verified_payload_files": 3673,
+    "regenerated_console_scripts": 3,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "lmnr",
+    "version": "0.7.67",
+    "wheel": "lmnr-0.7.67-py3-none-any.whl",
+    "sha256": "4b6d8e3d26b189a5e41d4be0c982665369358c9d34ddd24a9ebfb76c25a15264",
+    "verified_payload_files": 178,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "lmnr-claude-code-proxy",
+    "version": "0.2.0",
+    "wheel": "lmnr_claude_code_proxy-0.2.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "8d83bcb5d2dd8e7ffef0895f96b0f3d26cc2dae5b1dfc1746ce9d21adf620970",
+    "verified_payload_files": 8,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "lupa",
+    "version": "2.8",
+    "wheel": "lupa-2.8-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "efa6e61a5ec7cb029f58d1d0da9c6eed2d14233b11733f1b37f3b1db3b3e347a",
+    "verified_payload_files": 13,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "markdown-it-py",
+    "version": "4.3.0",
+    "wheel": "markdown_it_py-4.3.0-py3-none-any.whl",
+    "sha256": "5d154c7ca7dbc95b7aabb646fd95b7513e06bdd03866e7bb9a80e7c845aac07d",
+    "verified_payload_files": 75,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "MarkupSafe",
+    "version": "3.0.4",
+    "wheel": "markupsafe-3.0.4-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "31de09c13e06ff31692ee5a4c5c4eec01d03852ec68cb0ca0983071e660b30c5",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "mcp",
+    "version": "2.3.0",
+    "wheel": "mcp-2.3.0-py3-none-any.whl",
+    "sha256": "6d3181766fab26de1b12b96004d1bd5aeff7798fff0079c5554324f76a1bda94",
+    "verified_payload_files": 131,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "mcp-types",
+    "version": "2.3.0",
+    "wheel": "mcp_types-2.3.0-py3-none-any.whl",
+    "sha256": "60b868769300b36a9acfb786196eb7720b62f2f4928e7c5461775a0454639c12",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "mdurl",
+    "version": "0.1.2",
+    "wheel": "mdurl-0.1.2-py3-none-any.whl",
+    "sha256": "e9b8407d9f83b5280831a74433465d3f0e6298c9fe7c28332b06b4691163b857",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "multidict",
+    "version": "7.2.1",
+    "wheel": "multidict-7.2.1-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "434c208f6cda2fdb7072c86a8db0192e00140adea3f5b9c28d24570d77303683",
+    "verified_payload_files": 16,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "numpy",
+    "version": "1.26.4",
+    "wheel": "numpy-1.26.4-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "af1119c2388cfa5c6705764a9059b1cf5e6801517ffc05503b55a6c935655fda",
+    "verified_payload_files": 791,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "openai",
+    "version": "2.54.0",
+    "wheel": "openai-2.54.0-py3-none-any.whl",
+    "sha256": "3801ee1c51ca4df3fec39a00b1649311246c285cf2b149856e84ae4205553242",
+    "verified_payload_files": 1508,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "openapi-pydantic",
+    "version": "0.6.0",
+    "wheel": "openapi_pydantic-0.6.0-py3-none-any.whl",
+    "sha256": "885b33c3b0069c1a9cafea039e4417cc83df864ebadad1bd0ce244e2ae280f57",
+    "verified_payload_files": 78,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "openhands-sdk",
+    "version": "1.62.0",
+    "wheel": "openhands_sdk-1.62.0-py3-none-any.whl",
+    "sha256": "a0f9587704e80b578a1ee018c3079fb307fe17375a6e1916f4f16fe07594c2c7",
+    "verified_payload_files": 328,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-api",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_api-1.45.2-py3-none-any.whl",
+    "sha256": "f3b73112e2781f6e4084c910e4a0473e0aad3f9e99614c6486ea054353d91f9c",
+    "verified_payload_files": 48,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-exporter-http-transport",
+    "version": "0.66b2",
+    "wheel": "opentelemetry_exporter_http_transport-0.66b2-py3-none-any.whl",
+    "sha256": "ca2c65fa8ab197bf815d9d37090dfa3d321f7a6a6a361c401b34c516e8b90aaa",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-exporter-otlp-common",
+    "version": "0.66b2",
+    "wheel": "opentelemetry_exporter_otlp_common-0.66b2-py3-none-any.whl",
+    "sha256": "7b8342d27f40deba688c4eddcdf4d1eee80a1a462d84337335bb79374587af5f",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-exporter-otlp-proto-common",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_exporter_otlp_proto_common-1.45.2-py3-none-any.whl",
+    "sha256": "79bd685d11cbe8e86fdc17d3b427b30cb986f097b625c49d0ea02f799d67bc95",
+    "verified_payload_files": 15,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-exporter-otlp-proto-grpc",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_exporter_otlp_proto_grpc-1.45.2-py3-none-any.whl",
+    "sha256": "bf28da7475e384ebc847fee1a73f8099842010496d3ed707cfd6f02cf4ceb2bd",
+    "verified_payload_files": 13,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-exporter-otlp-proto-http",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_exporter_otlp_proto_http-1.45.2-py3-none-any.whl",
+    "sha256": "330dab0caad5944321b68be0e392c6ce8e49da7a2d76cd30691316ad3b7837f9",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-instrumentation",
+    "version": "0.66b2",
+    "wheel": "opentelemetry_instrumentation-0.66b2-py3-none-any.whl",
+    "sha256": "057534a807bb56a55d0b708b8f99e6bde0bb25e544e24e3f5a82e2c1b2961e59",
+    "verified_payload_files": 25,
+    "regenerated_console_scripts": 2,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-instrumentation-threading",
+    "version": "0.66b2",
+    "wheel": "opentelemetry_instrumentation_threading-0.66b2-py3-none-any.whl",
+    "sha256": "2a1f5516d8c0f92ec3ff702d221e3c44f2715e99430a0146eb6c1b7273f18401",
+    "verified_payload_files": 9,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-proto",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_proto-1.45.2-py3-none-any.whl",
+    "sha256": "8c9dd577d685d1533fc17ce73d02f4e395a3ba09d958456076bce7dc7efda7c8",
+    "verified_payload_files": 45,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-sdk",
+    "version": "1.45.2",
+    "wheel": "opentelemetry_sdk-1.45.2-py3-none-any.whl",
+    "sha256": "6838fc019f5cd97f14bf172d5215fd45753a67fd1280d73b9e23f77c39bc2641",
+    "verified_payload_files": 71,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-semantic-conventions",
+    "version": "0.66b2",
+    "wheel": "opentelemetry_semantic_conventions-0.66b2-py3-none-any.whl",
+    "sha256": "4ef14f2d63e0b4c2b8c092cf1258456f62bb49afb92386c6216e64e116003ae0",
+    "verified_payload_files": 133,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "opentelemetry-semantic-conventions-ai",
+    "version": "0.4.13",
+    "wheel": "opentelemetry_semantic_conventions_ai-0.4.13-py3-none-any.whl",
+    "sha256": "bae8866bb9cea49214aa25b60ad19a1275bdb4eda1867b992ece9cb7df2560cb",
+    "verified_payload_files": 7,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "orjson",
+    "version": "3.13.0",
+    "wheel": "orjson-3.13.0-cp312-cp312-macosx_15_0_arm64.whl",
+    "sha256": "c84dbbc43fee277b3d5662de49875c13bad3e65df32631f9fac6078a1fc3a225",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "packaging",
+    "version": "26.3",
+    "wheel": "packaging-26.3-py3-none-any.whl",
+    "sha256": "c0db228e0a21d8e8ca6a65c29424ed4d2e3aae08c1b08b9ea285752e706146e4",
+    "verified_payload_files": 30,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pathable",
+    "version": "0.6.0",
+    "wheel": "pathable-0.6.0-py3-none-any.whl",
+    "sha256": "2923dfcfbd8a70ed85b119d5af037e6296a5661344a31b98d810f1b7a3028ddd",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pillow",
+    "version": "13.0.0",
+    "wheel": "pillow-13.0.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "32ede696604a9d350a3dff361edd9260104fbce6ae956b807204512341ce7ae1",
+    "verified_payload_files": 139,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "platformdirs",
+    "version": "4.14.5",
+    "wheel": "platformdirs-4.14.5-py3-none-any.whl",
+    "sha256": "5df48f8bfeab23654647e4bd99f8d7a42b5b3cd84dee4033f947bff0a87432e1",
+    "verified_payload_files": 19,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "propcache",
+    "version": "0.5.4",
+    "wheel": "propcache-0.5.4-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "908e4d46bcb2147f92cae58646cc26eba0505203ca1ef7013f300b7c5ae6bbd4",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "protobuf",
+    "version": "7.36.2",
+    "wheel": "protobuf-7.36.2-cp310-abi3-macosx_10_9_universal2.whl",
+    "sha256": "310db12968eaf990cf27c16292242ca35cbfb52309ce7e58468b31cfa80109d7",
+    "verified_payload_files": 64,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "py-key-value-aio",
+    "version": "0.4.6",
+    "wheel": "py_key_value_aio-0.4.6-py3-none-any.whl",
+    "sha256": "4fbe787cbc7292c20ec88acc7e480f58e003ee08cdde6e11daa0f21ff7688d6f",
+    "verified_payload_files": 125,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pycparser",
+    "version": "3.12",
+    "wheel": "pycparser-3.12-py3-none-any.whl",
+    "sha256": "441bfec3fb53cb863b2bf37704d089b154a43e7e4e3e66b595d9e92f61760590",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pydantic",
+    "version": "2.14.3",
+    "wheel": "pydantic-2.14.3-py3-none-any.whl",
+    "sha256": "0fd2890f54a6deaddb701fd69594a8ddaf389297fb150a8bdef6557c00712994",
+    "verified_payload_files": 113,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pydantic_core",
+    "version": "2.50.4",
+    "wheel": "pydantic_core-2.50.4-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "8b82024a9a885c33b6b533340b9cb2a0a19de9e8fd975fb09218654cc40d168e",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pydantic-settings",
+    "version": "2.16.2",
+    "wheel": "pydantic_settings-2.16.2-py3-none-any.whl",
+    "sha256": "0c43839826262fc5e9d5d663f6c75f4a6790cea29437d6654f4dbb14e7ed3c33",
+    "verified_payload_files": 28,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "Pygments",
+    "version": "2.21.0",
+    "wheel": "pygments-2.21.0-py3-none-any.whl",
+    "sha256": "85fa9140fdb4004ca1e017c71f936491379b4dbfb793a7240547499fb6a4a627",
+    "verified_payload_files": 350,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "PyJWT",
+    "version": "2.15.1",
+    "wheel": "pyjwt-2.15.1-py3-none-any.whl",
+    "sha256": "85af9826579367bb9857d03ff20f8728788336bc388717ab185a22dc8a81d3bd",
+    "verified_payload_files": 20,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "pyperclip",
+    "version": "1.11.0",
+    "wheel": "pyperclip-1.11.0-py3-none-any.whl",
+    "sha256": "f42e620253710560547c1db9ed64afe17d4525ef15f116a78874c4ec8519276b",
+    "verified_payload_files": 9,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "PyStemmer",
+    "version": "2.2.0.3",
+    "wheel": "PyStemmer-2.2.0.3-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "6546dcebb6131b50f6cb9b8806cde8db163c6c99547e37a5504dd3a3830487b5",
+    "verified_payload_files": 8,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "python-dateutil",
+    "version": "2.9.0.post0",
+    "wheel": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+    "sha256": "57684a004f05409819b649c8b9fe12b6c972ca03efc05baf441f41a5a2a763eb",
+    "verified_payload_files": 26,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "python-dotenv",
+    "version": "1.2.4",
+    "wheel": "python_dotenv-1.2.4-py3-none-any.whl",
+    "sha256": "9ffd3b1a6fc09505b87a04457c62491164cb83b128f90e75e4cfb632286d60d9",
+    "verified_payload_files": 16,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "python-frontmatter",
+    "version": "1.3.0",
+    "wheel": "python_frontmatter-1.3.0-py3-none-any.whl",
+    "sha256": "70e26274447ca6b6f8be13d82569f11fc5b96ebf0e885e2ea1a80f05f3e8066a",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "python-json-logger",
+    "version": "4.2.0",
+    "wheel": "python_json_logger-4.2.0-py3-none-any.whl",
+    "sha256": "029d41952578c15b8d45e90474236b2c23cff2cc7a8a0fb950be123caa478447",
+    "verified_payload_files": 16,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "python-multipart",
+    "version": "0.0.33",
+    "wheel": "python_multipart-0.0.33-py3-none-any.whl",
+    "sha256": "6895f884a1e7f0babf255a2f6d03a0b223c23f956ea4ffc0ee2c7aa7588f1006",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "PyYAML",
+    "version": "6.0.3",
+    "wheel": "pyyaml-6.0.3-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "db729dba8c2e478018fe26bb9be2b643bb78eb64ac2f333bb67b1c6da8e3a567",
+    "verified_payload_files": 25,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "redis",
+    "version": "8.1.0",
+    "wheel": "redis-8.1.0-py3-none-any.whl",
+    "sha256": "787585df516b8827062014b62eef5d09132d71d0ff1aaf92c046caea875365c9",
+    "verified_payload_files": 126,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "referencing",
+    "version": "0.37.0",
+    "wheel": "referencing-0.37.0-py3-none-any.whl",
+    "sha256": "174754a55dfc7c7374f8f45dc10e7ae09caef4c8d2f91321ead772dbef5f859f",
+    "verified_payload_files": 20,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "regex",
+    "version": "2026.11.9",
+    "wheel": "regex-2026.11.9-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "6dbfc7581d0161b2038dae8564d1ed2ccaab8d4f63da8f6a79d0aff51e323b65",
+    "verified_payload_files": 11,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "requests",
+    "version": "2.34.2",
+    "wheel": "requests-2.34.2-py3-none-any.whl",
+    "sha256": "07946bc944ea82aaaf39427f2388cfc77c597164fa604a15e32c1e751137d9ce",
+    "verified_payload_files": 27,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "rich",
+    "version": "15.0.0",
+    "wheel": "rich-15.0.0-py3-none-any.whl",
+    "sha256": "24ff6a655684dc1dc447ae59b5943dd431cfedd3e0359c94d6ab15134426d0a3",
+    "verified_payload_files": 106,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "rich-rst",
+    "version": "2.2.0",
+    "wheel": "rich_rst-2.2.0-py3-none-any.whl",
+    "sha256": "e2a81dc4843b1b6cfdb50868d282075dde110ea55c5d9d624b8e620381156345",
+    "verified_payload_files": 58,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "rpds-py",
+    "version": "2026.9.1",
+    "wheel": "rpds_py-2026.9.1-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "cd9aa9a1916887cf291309ae0d675a1d67d16ef157eb11ad07a79f7be5ae5c2f",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "s3transfer",
+    "version": "0.19.3",
+    "wheel": "s3transfer-0.19.3-py3-none-any.whl",
+    "sha256": "75eddd4fb697a5b3e6ff70307e9c546ba552c9ae4189b165e530868e842f152b",
+    "verified_payload_files": 23,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "scipy",
+    "version": "1.14.1",
+    "wheel": "scipy-1.14.1-cp312-cp312-macosx_14_0_arm64.whl",
+    "sha256": "ea9606d93f7fc23d2de079c41ba75a7546ddec3d8f093e3bc3720eec30ecef59",
+    "verified_payload_files": 1387,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "six",
+    "version": "1.17.0",
+    "wheel": "six-1.17.0-py2.py3-none-any.whl",
+    "sha256": "25e69952de22b04c53c6cc04d93ca8ba81707ca9f230500875a640bd94f9d4a3",
+    "verified_payload_files": 7,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "sniffio",
+    "version": "1.3.1",
+    "wheel": "sniffio-1.3.1-py3-none-any.whl",
+    "sha256": "d115caead40c64d0a33361886a61c855c9cec20ba4e2ac2971ad9bfa918f4e0b",
+    "verified_payload_files": 14,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "socksio",
+    "version": "1.0.0",
+    "wheel": "socksio-1.0.0-py3-none-any.whl",
+    "sha256": "e7565e4cffd6c73d48152cb35cc6f2e64c55a9966d781f0da4e271767d049c9b",
+    "verified_payload_files": 13,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "sortedcontainers",
+    "version": "2.4.0",
+    "wheel": "sortedcontainers-2.4.0-py2.py3-none-any.whl",
+    "sha256": "793b0171948ef52be3ebb363f8256c17b427e1ea72077d2fec985ec8be09c399",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "sse-starlette",
+    "version": "3.7.0",
+    "wheel": "sse_starlette-3.7.0-py3-none-any.whl",
+    "sha256": "1cdf770edd5e4256dcf030aea4f24939d46d7790dd5a0a31f4d176f28161edbf",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "starlette",
+    "version": "1.10.0",
+    "wheel": "starlette-1.10.0-py3-none-any.whl",
+    "sha256": "9096b70cad66944f278f5ca594f10bd1cd403cc8873e428163bd45685abf3dd5",
+    "verified_payload_files": 42,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tenacity",
+    "version": "9.2.1",
+    "wheel": "tenacity-9.2.1-py3-none-any.whl",
+    "sha256": "3dde0f6e19fcd84908edf4acb953263e496d695cd82d902f30bac58a5e592526",
+    "verified_payload_files": 19,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tiktoken",
+    "version": "0.14.0",
+    "wheel": "tiktoken-0.14.0-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "6fbb3b5bcb733925bfc524dfa93c3feb923d1d862def065a1db96860f13fb163",
+    "verified_payload_files": 15,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tokenizers",
+    "version": "0.23.3",
+    "wheel": "tokenizers-0.23.3-cp310-abi3-macosx_11_0_arm64.whl",
+    "sha256": "4ea5ead293976dbbd0a486c2a0d4ea999c1d79996d49085ce5af15b506158e92",
+    "verified_payload_files": 32,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tqdm",
+    "version": "4.70.1",
+    "wheel": "tqdm-4.70.1-py3-none-any.whl",
+    "sha256": "cee93e322bdadc809659deedaaf2866546f06d0ef463825865d13d566400644c",
+    "verified_payload_files": 40,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tree-sitter",
+    "version": "0.26.1",
+    "wheel": "tree_sitter-0.26.1-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "c449f2bd6a787435ad6c6f74fefc8097a894cbe279a834f94776904b912afb45",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "tree-sitter-bash",
+    "version": "0.25.1",
+    "wheel": "tree_sitter_bash-0.25.1-cp310-abi3-macosx_11_0_arm64.whl",
+    "sha256": "875bb222df929dddffac570450002e09b8b76613c606be3e15f701cd5b8b6712",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "truststore",
+    "version": "0.10.5",
+    "wheel": "truststore-0.10.5-py3-none-any.whl",
+    "sha256": "efc8b8693c7bf55619f30ea16e3c34c23a75d0a94751b1db57f714cd0db5e0bf",
+    "verified_payload_files": 12,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "wheel": "typing_extensions-4.16.0-py3-none-any.whl",
+    "sha256": "256ea210b173eccb328fd1a553c1ca56893a1b9fc077ada8b156d2efdd503237",
+    "verified_payload_files": 6,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "typing-inspection",
+    "version": "0.4.5",
+    "wheel": "typing_inspection-0.4.5-py3-none-any.whl",
+    "sha256": "aa610eb7699d7c77f9edce4a77d9e20b6783f1c85aab5f687413e8b6c95b96ea",
+    "verified_payload_files": 10,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "uncalled-for",
+    "version": "0.6.1",
+    "wheel": "uncalled_for-0.6.1-py3-none-any.whl",
+    "sha256": "c5dec485452aa27a77c0ba9d32fccb5d72707c231a7902514e2eefe1a94e5a24",
+    "verified_payload_files": 16,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "urllib3",
+    "version": "2.8.0",
+    "wheel": "urllib3-2.8.0-py3-none-any.whl",
+    "sha256": "26f3118d31aaf95cb9293dbe5eac29d6af8a2668c43e2d3a53f5261f39bf2548",
+    "verified_payload_files": 43,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "uvicorn",
+    "version": "0.54.0",
+    "wheel": "uvicorn-0.54.0-py3-none-any.whl",
+    "sha256": "3c0d272f8e00c82563bb374473d31190c8cfdf4067f32c7b98e52faac97f624d",
+    "verified_payload_files": 52,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "watchfiles",
+    "version": "1.3.0",
+    "wheel": "watchfiles-1.3.0-cp310-abi3-macosx_11_0_arm64.whl",
+    "sha256": "5f8b0e93fdc6ce0cb94e71a91d000a21aa0d3ea63b71983a1a225333d9d0db43",
+    "verified_payload_files": 17,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "websockets",
+    "version": "17.4",
+    "wheel": "websockets-17.4-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "7be07a3a15d55864e5a9de3c07825cec96710a8e3789dfd3e02d4b4437faf790",
+    "verified_payload_files": 63,
+    "regenerated_console_scripts": 1,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "wrapt",
+    "version": "1.17.3",
+    "wheel": "wrapt-1.17.3-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "940ccb4b51b24ebb1b00a0babd0067db634e593758b9cb43bcfda6b5bda403b0",
+    "verified_payload_files": 15,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "yarl",
+    "version": "1.25.1",
+    "wheel": "yarl-1.25.1-cp312-cp312-macosx_11_0_arm64.whl",
+    "sha256": "08d26b2eb1a99d7638e80f15c7656a41e52080af172f4e94cc6a756fb0377eb2",
+    "verified_payload_files": 18,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  },
+  {
+    "name": "zipp",
+    "version": "4.1.2",
+    "wheel": "zipp-4.1.2-py3-none-any.whl",
+    "sha256": "1d5603a6ea170249b0d679e042a789ff8e475ff0f6cfa59adbdf8ab3ab17cd7e",
+    "verified_payload_files": 13,
+    "regenerated_console_scripts": 0,
+    "origin": "existing installed distribution RECORD verified; repacked, not original PyPI wheel"
+  }
+]

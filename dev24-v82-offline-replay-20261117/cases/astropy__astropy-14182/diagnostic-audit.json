@@ -1,0 +1,57 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- astropy/io/ascii/rst.py:35-66：RST 继承 FixedWidth，__init__ 只调用 super().__init__(delimiter_pad=None, bookend=False)，不接受 header_rows，故 TypeError 与报告一致。\n- astropy/io/ascii/rst.py:63-66：RST.write 先调 super().write(lines)，再把 lines[1] 复制到首尾作为 '=' 分隔行，隐含假设第 1 行是列名行。\n- astropy/io/ascii/rst.py:16-32：SimpleRSTHeader 设 position_line=0、start_line=1；SimpleRSTData 设 start_line=3、end_line=-1，均为固定行号。\n- astropy/io/ascii/fixedwidth.py:339-357：FixedWidth.__init__ 接受 header_rows（默认 [\"name\"]），写入 self.header.header_rows 与 self.data.header_rows，并在 data.start_line 为 None 时设为 len(header_rows)。\n- astropy/io/ascii/fixedwidth.py:261-303：FixedWidthData.write 按 header_rows 逐行生成表头，再在 position_line 非 None 时插入 position_char 行，最后写数据行。\n\n推断\n- 待验证假设：astropy/io/ascii/rst.py:RST.__init__ 需增加 header_rows 参数并透传给 FixedWidth.__init__，否则 header_rows 永远无法到达 astropy/io/ascii/fixedwidth.py:FixedWidthData.write。\n- 待验证假设：astropy/io/ascii/rst.py:RST.write 的 lines[1] 索引在多表头行下会取到错误的行（应为 position_line 所在行），需改为按 header_rows 长度定位分隔行。\n- 待验证假设：astropy/io/ascii/rst.py:SimpleRSTData 的固定 start_line=3 只影响读取，写入路径不受影响，但读取多表头 RST 仍会错位。\n\n未核验点\n- 未读 astropy/io/ascii/fixedwidth.py:1-239 与 421-490（FixedWidthHeader 其余方法、FixedWidthTwoLine 等），未确认 position_line 在写入路径的完整语义。\n- 未读 astropy/io/ascii/core.py 中 _get_writer 与 Basic.write 的调用链，未确认 kwargs 过滤方式。\n- 未读 astropy/io/ascii/tests/test_rst.py，未确认现有测试对行数的断言。\n- 未运行任何验证。\n\n最小验证：`python -c \"from astropy.table import QTable; import astropy.units as u; t=QTable({'wave':[350,950]*u.nm}); t.write(__import__('sys').stdout, format='ascii.rst', header_rows=['name','unit'])\"`",
+    "entities": [
+      "astropy/io/ascii/rst.py:RST.__init__",
+      "astropy/io/ascii/rst.py:RST.write",
+      "astropy/io/ascii/fixedwidth.py:FixedWidth.__init__",
+      "astropy/io/ascii/fixedwidth.py:FixedWidthData.write",
+      "astropy/io/ascii/rst.py:SimpleRSTHeader"
+    ],
+    "files": [
+      "astropy/io/ascii/rst.py",
+      "astropy/io/ascii/fixedwidth.py"
+    ]
+  },
+  "violations": [],
+  "violation_count": 0,
+  "rule_counts": {
+    "R1": 0,
+    "R2": 0,
+    "R3": 0,
+    "R4": 0
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [],
+  "disclosure_count": 0,
+  "disclosure_attached": false,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "astropy/io/ascii/fixedwidth.py",
+      240,
+      420
+    ],
+    [
+      "astropy/io/ascii/rst.py",
+      1,
+      66
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "astropy/io/ascii/rst.py:RST.__init__": true,
+    "astropy/io/ascii/rst.py:RST.write": true,
+    "astropy/io/ascii/fixedwidth.py:FixedWidth.__init__": true,
+    "astropy/io/ascii/fixedwidth.py:FixedWidthData.write": true,
+    "astropy/io/ascii/rst.py:SimpleRSTHeader": true
+  },
+  "entity_def_spans": {},
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "nltk__nltk-3335",
+  "repo": "nltk/nltk",
+  "base_commit": "9a5622f8a5b228df9499cd03181d9f8491e39f17",
+  "problem_statement": "Missing procedure call in line 417\nLine 417 of the file \"nltk/app/wordnet_app.py\" should look like this:\r\n\r\n    elif synset.pos() == wn.ADJ or synset.pos() == wn.ADJ_SAT:\r\n\r\nbut instead looks like this:\r\n\r\n    elif synset.pos() == wn.ADJ or synset.pos == wn.ADJ_SAT:\r\n\r\nwhich will generate this error (complete with spelling mistake) :\r\n\r\n    \"Unhandles synset POS type: s\"\r\n\n"
+}

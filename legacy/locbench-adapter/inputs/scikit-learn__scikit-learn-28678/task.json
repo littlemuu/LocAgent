@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-28678",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "2cbf3345bce979b261f7007616cc3465f33a51d3",
+  "problem_statement": "[WIP] : Added assert_consistent_docs() and related tests\n\r\nFixes #9388 \r\n\r\nAdded a function to check for consistency between docstring of objects.\r\n\r\nIn this approach there is a python dictionary for each of Parameters, Attributes and Returns. Indexed by the name of the parameter/attribute/return with the value being a Python dictionary containing its type definition and description. The function checks for each object if the docstring is identical (excluding whitespaces) for a given parameter/attribute/return in the main dictionary. If a new parameter/attribute/return are found they are added in the main dictionary.\n"
+}

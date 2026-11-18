@@ -1,0 +1,57 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- src/_pytest/skipping.py:200-222：evaluate_xfail_marks 遍历 item.iter_markers(name=\"xfail\")，无 condition 时直接返回 Xfail(reason, run, strict, raises)。\n- src/_pytest/skipping.py:232-244：pytest_runtest_setup 在 setup 阶段把 evaluate_xfail_marks 的结果写入 item._store[xfailed_key]。\n- src/_pytest/skipping.py:247-257：pytest_runtest_call 仅在 item._store.get(xfailed_key) 为 None 时才重新求值，否则沿用 setup 阶段缓存值。\n- src/_pytest/skipping.py:260-293：pytest_runtest_makereport 依据 item._store 中的 xfailed 决定把失败改写为 skipped/wasxfail。\n- src/_pytest/nodes.py:261-283：Node.add_marker 只修改 self.keywords 与 self.own_markers，不触碰 item._store。\n- src/_pytest/nodes.py:293-305：iter_markers_with_node 遍历 listchain 的 own_markers，因此动态添加的 marker 在后续求值时可见。\n\n推断\n- 待验证假设：setup 阶段（src/_pytest/skipping.py:pytest_runtest_setup）已把 xfailed_key 缓存为 None，测试体内 add_marker 之后，src/_pytest/skipping.py:pytest_runtest_call 因缓存非缺失而不重新求值，makereport 中 xfailed 仍为 None，故失败未被改写为 xfail。\n- 待验证假设：修复方向是让 src/_pytest/nodes.py:Node.add_marker 在添加 xfail marker 时使 xfailed_key 失效（或让 pytest_runtest_call 无条件重算），从而恢复 5.x 行为。\n\n未核验点\n- 未读 src/_pytest/skipping.py 1-179 与 315 之后（文件共 315 行，尾部已读）；未读 src/_pytest/nodes.py 1-239 与 331-666，Node.add_marker 的完整上下文（如 keywords 语义）未全读。\n- 未读 Item.iter_markers 之外的 mark 存储实现（src/_pytest/mark 模块）与 5.x 对比 diff，未运行任何测试。\n\n最小验证：`python -m pytest -q testing/test_skipping.py -k xfail` 并新增断言：测试体内 add_marker 后 assert item._store.get(xfailed_key) is not None。",
+    "entities": [
+      "src/_pytest/skipping.py:evaluate_xfail_marks",
+      "src/_pytest/skipping.py:pytest_runtest_setup",
+      "src/_pytest/skipping.py:pytest_runtest_call",
+      "src/_pytest/skipping.py:pytest_runtest_makereport",
+      "src/_pytest/nodes.py:Node.add_marker"
+    ],
+    "files": [
+      "src/_pytest/skipping.py",
+      "src/_pytest/nodes.py"
+    ]
+  },
+  "violations": [],
+  "violation_count": 0,
+  "rule_counts": {
+    "R1": 0,
+    "R2": 0,
+    "R3": 0,
+    "R4": 0
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [],
+  "disclosure_count": 0,
+  "disclosure_attached": false,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "src/_pytest/nodes.py",
+      240,
+      330
+    ],
+    [
+      "src/_pytest/skipping.py",
+      180,
+      315
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "src/_pytest/skipping.py:evaluate_xfail_marks": true,
+    "src/_pytest/skipping.py:pytest_runtest_setup": true,
+    "src/_pytest/skipping.py:pytest_runtest_call": true,
+    "src/_pytest/skipping.py:pytest_runtest_makereport": true,
+    "src/_pytest/nodes.py:Node.add_marker": true
+  },
+  "entity_def_spans": {},
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

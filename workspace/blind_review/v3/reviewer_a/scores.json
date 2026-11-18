@@ -1,0 +1,752 @@
+{
+  "reviewer": "A",
+  "independence_attestation": {
+    "prior_mapping_seen": false,
+    "other_reviewer_seen": false,
+    "only_allowed_inputs_read": true,
+    "group_disclosure_detected": [],
+    "limitations": [
+      "仅读取本目录 REVIEW_POLICY.txt、packets.json 和 sources 内全部 36 个源码文件；未读取映射、其他评审、历史或运行轨迹。",
+      "未执行或修改固定源码，未调用网络或模型 API；仅静态审阅，注入依赖的真实实现无法确认。",
+      "复合标准按全部实质要求判断；对答案内已充分表达的等价逻辑接受，对未提及的独立限制不从源码代补。"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "item-dc9902fd",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "rejects only if job['done'] or (owner is not None and now < deadline) ... increments generation, sets owner to the new worker, sets deadline = now + ttl",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:3-9"
+          ],
+          "reason": "覆盖完成状态、有效持有人、相等时可重新领取及三项状态更新。后文边界结论按此前非 done 前提理解。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "(job['id'], job['owner'], job['generation']) ... the old worker's token no longer matches lease_token(job)",
+          "source_evidence": [
+            "sources/d05_lease/jobs/tokens.py:1-2",
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/completion.py:4",
+            "sources/d05_lease/jobs/leases.py:12"
+          ],
+          "reason": "明确 token 三元组及重新领取后旧代 token 失效。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "at exactly now == deadline both renewals and acknowledgements are rejected (return False)",
+          "source_evidence": [
+            "sources/d05_lease/jobs/completion.py:3-7",
+            "sources/d05_lease/jobs/leases.py:11-15"
+          ],
+          "reason": "相等边界正确，但未完整交代 ack/renew 的 not done 条件，且未说明 ack 将 done 设 True、续约将 deadline 设 now+ttl；领取的 deadline 更新不能替代续约说明。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "there is no locking, compare-and-swap, or atomicity ... Nothing prevents both from doing work",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:3-9",
+            "sources/d05_lease/jobs/api.py:4-5",
+            "sources/d05_lease/jobs/completion.py:3-7"
+          ],
+          "reason": "准确区分 token 检查与实际工作互斥，并限定外部调用方可能提供同步。",
+          "uncertainty": "中：答案对失败 claimant 的后续 token 状态说得过强，另记；不改变缺少互斥保证这一标准的结论。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "the earlier claimant's token becomes stale ... only the later acknowledge/renew would fail",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/tokens.py:1-2"
+          ],
+          "reason": "并非所有并发交错都产生两个不同 token：两个调用可在最后一次状态写入之后才执行 return lease_token(job)，于是获得同一个最终 token。将某个 claimant 必然 stale/失败表述为通则过强。",
+          "uncertainty": "中：该段也可理解为举出一种可能交错。"
+        }
+      ]
+    },
+    {
+      "id": "item-dfe16c4b",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "deny if user['disabled'] or user['tenant'] != document['tenant'] ... deny unless action is 'read' or 'write'",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-9"
+          ],
+          "reason": "明确禁用、跨租户、未知动作检查先于 owner/admin。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "ownership or admin only helps after the tenant and action gates pass ... The shortcut grants both read and write.",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-10"
+          ],
+          "reason": "正确说明同租户启用 owner/admin 在 token 分支前得到读写许可。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "a valid token never authorizes write ... not token['revoked'] ... token['document_id'] == document['id'] ... token['tenant'] == document['tenant']",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-10",
+            "sources/d03_access/docs/shares.py:1-4"
+          ],
+          "reason": "列出 token 条件并明确最后才检查，因此不能越过身份/租户 gate。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "only on success does it call record_access and return document['body'] ... grants no access",
+          "source_evidence": [
+            "sources/d03_access/docs/api.py:4-8",
+            "sources/d03_access/docs/audit.py:1-2",
+            "sources/d03_access/docs/shares.py:1-4"
+          ],
+          "reason": "权限、审计、返回顺序及审计不授权正确；未指出未展示 token 密码学验证及有效期检查。令牌发行/撤销未知不等于说明这两个缺项。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-c6b4d181",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "column count must match headers ... header names are stripped and lowercased ... must be unique and include tenant/invoice/amount ... only tenant/invoice are stripped for identity",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:4-10"
+          ],
+          "reason": "覆盖长度、表头规范化/唯一性/必要字段，以及身份仅 strip 的区别。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 0,
+          "answer_evidence": "must be non-empty ... InvalidOperation mapped to ValueError('amount'), and non-finite or negative amounts rejected",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:9-19"
+          ],
+          "reason": "金额和空身份校验正确；负数拒绝已表达零不因符号被拒绝，但未说明额外的已映射列被忽略。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "calls parse_row then index_invoice ... catches only ValueError and appends the 1-based row number ... the row is skipped, not fatal",
+          "source_evidence": [
+            "sources/d06_import/imports/api.py:8-13",
+            "sources/d06_import/imports/parser.py:3-19",
+            "sources/d06_import/imports/index.py:1-3"
+          ],
+          "reason": "明确先解析后索引、错误整行跳过及只捕获 ValueError；这些答案内的信息已表达无效后续重复行不会进入索引替换旧值。",
+          "uncertainty": "中：无效重复保留旧值是由答案明确描述的跳过和顺序表达，未用该措辞单独复述。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "keys on (tenant, invoice) ... last occurrence wins ... sums over invoices.values() ... counted once, not twice",
+          "source_evidence": [
+            "sources/d06_import/imports/index.py:1-3",
+            "sources/d06_import/imports/totals.py:3-8",
+            "sources/d06_import/imports/api.py:10-13"
+          ],
+          "reason": "结合前述无效行跳过，末次有效行获胜；复合租户键和按 tenant 汇总说明租户隔离，最终 values 只算一次。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-21ec8def",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 0,
+          "answer_evidence": "validates the number is an int in [0, count) ... last write for that number wins",
+          "source_evidence": [
+            "sources/d04_upload/uploads/parts.py:1-6"
+          ],
+          "reason": "索引范围及重复覆盖正确，但遗漏 completed 上传拒绝 receive。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "requires set(session['parts']) == expected ... joins parts in numeric order 0..count-1 ... incomplete uploads fail before any storage write",
+          "source_evidence": [
+            "sources/d04_upload/uploads/parts.py:8-12",
+            "sources/d04_upload/uploads/finalize.py:7-10"
+          ],
+          "reason": "正确覆盖精确索引集合、升序拼接、存储前失败。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "compares sha256(data).hexdigest() to expected_hash ... storage.put(data) ... before session['object_id'], session['completed'], and session['parts'].clear()",
+          "source_evidence": [
+            "sources/d04_upload/uploads/checksum.py:1-4",
+            "sources/d04_upload/uploads/finalize.py:7-13"
+          ],
+          "reason": "哈希对象和期望值、校验失败阻止存储及存储后修改会话的顺序均正确。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "returns the existing object_id if already completed ... whether storage.put is atomic/partially durable is not visible ... no rollback or cleanup path is shown",
+          "source_evidence": [
+            "sources/d04_upload/uploads/finalize.py:4-14"
+          ],
+          "reason": "包含已完成返回、异常保留 parts 及存储副作用未知；但没有说明并发完成不受保证，而且把 object_id 必然 unset 当成异常后状态，源码只保证它未被本次调用赋值。",
+          "uncertainty": "中：关于存储原子性未知已覆盖事务限制的一部分，未覆盖并发限制；object_id 初始化未给出。"
+        }
+      ],
+      "total": 2,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "completed stays False, object_id is unset",
+          "source_evidence": [
+            "sources/d04_upload/uploads/finalize.py:5-13"
+          ],
+          "reason": "未完成会话原先是否含 object_id 不可知；put 抛错只说明该调用没有修改它，不能保证 unset。",
+          "uncertainty": "低"
+        }
+      ]
+    },
+    {
+      "id": "item-0eb46173",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "generation = versions.get((tenant, user), 0) ... (str(tenant), str(user), generation) — tenant and user are stringified, generation is left as-is",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:5-6",
+            "sources/d01_cache/profiles/keys.py:1-2"
+          ],
+          "reason": "答案同时展示原始版本映射身份与字符串化缓存键，正确区分。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "now < entry['expires_at'] ... expires_at = now + TTL, TTL = 30 ... misses, re-reads the DB",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:2-12",
+            "sources/d01_cache/profiles/cleanup.py:1-4"
+          ],
+          "reason": "正确说明严格小于命中、相等过期及 miss 从 DB 读取后缓存 30 单位。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "writes to the DB first, then increments versions[(tenant, user)] ... The old entry is not deleted ... generation is never incremented",
+          "source_evidence": [
+            "sources/d01_cache/profiles/writes.py:1-5",
+            "sources/d01_cache/profiles/cache.py:5-11"
+          ],
+          "reason": "写入先于版本更新、异常不更新，以及成功后后续按新版本访问而旧 entry 保留均齐全。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "There is no locking, no compare-and-set ... A reader that computed the old generation just before the bump can still return the stale value",
+          "source_evidence": [
+            "sources/d01_cache/profiles/api.py:4-8",
+            "sources/d01_cache/profiles/cache.py:4-12",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "并发 stale 及无原子保护正确；未交代跨进程版本/缓存共享假设不受保证。依赖注入实现未知的泛化保留意见未具体表达这一限制。",
+          "uncertainty": "中：结尾说明 versions 实现未知，但没有讨论多进程共享；按完整标准要求判 0。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "stale but self-healing after 30 units ... eventual consistency bounded by TTL",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:4-12",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "源码只定义单条 entry 的过期检查；没有保证 DB 读取新鲜性、持续写入中的收敛、共享版本或时钟条件，不能推出普遍 30 单位自愈或有界最终一致性。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "Reads therefore keep hitting the old key and keep serving the pre-update value until its TTL lapses",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:7-11",
+            "sources/d01_cache/profiles/writes.py:2-4"
+          ],
+          "reason": "异常后版本不变正确，但命中还取决于 entry 存在及未过期；且 DB 抛错是否伴随持久化副作用未知，不能直接断言缓存必然 stale。",
+          "uncertainty": "低"
+        }
+      ]
+    },
+    {
+      "id": "item-17a1492c",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "deny if user['disabled'] or user['tenant'] != document['tenant'] ... deny unless action is 'read' or 'write'",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-9"
+          ],
+          "reason": "正确表达三个先行 gate 和 owner/admin 之后的顺序。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "ownership or admin role only helps after the tenant and action gates pass: it bypasses the share-token requirement",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-10"
+          ],
+          "reason": "结合答案列出的 read/write allowlist 和 owner/admin return True，完整表达同租户启用用户的 owner/admin 无 token 读写许可。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "read only, never write ... not token['revoked'] ... token['document_id'] == document['id'] ... token['tenant'] == document['tenant']",
+          "source_evidence": [
+            "sources/d03_access/docs/access.py:4-10",
+            "sources/d03_access/docs/shares.py:1-4"
+          ],
+          "reason": "完整列举共享条件且明确身份/租户 gate 不可绕过。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "Audit does not grant access ... it is called after the permission check in open_document",
+          "source_evidence": [
+            "sources/d03_access/docs/api.py:4-8",
+            "sources/d03_access/docs/audit.py:1-2",
+            "sources/d03_access/docs/shares.py:1-4"
+          ],
+          "reason": "审计和返回次序正确；没有指出源码未展示 token 密码学验证或有效期检查。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "the audit list is an in-memory append",
+          "source_evidence": [
+            "sources/d03_access/docs/audit.py:1-2",
+            "sources/d03_access/docs/api.py:4-7"
+          ],
+          "reason": "这里只能确认对注入 audit 调用 append；没有构造 audit 对象，不能确定存储后端必然仅在内存中。答案后半句“无可见持久化”是恰当的限定。",
+          "uncertainty": "中"
+        }
+      ]
+    },
+    {
+      "id": "item-4480a5a9",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "column count must match headers ... header names are stripped and lowercased ... tenant and invoice are .strip()ed",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:4-10"
+          ],
+          "reason": "表头唯一且含必要字段也已说明；身份仅 strip 与表头 strip+lower 的对比足以表达不 lower 身份。",
+          "uncertainty": "中：没有单独写“不转小写”，但准确列出的两种规范化操作构成等价表达。"
+        },
+        {
+          "index": 2,
+          "score": 0,
+          "answer_evidence": "must be non-empty ... parsed with Decimal ... non-finite or negative amounts are rejected",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:9-19"
+          ],
+          "reason": "空身份、Decimal 异常、非有限及负数校验齐全；未说明额外映射列忽略。零不属负数这一边界可以从答案本身读出。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "every validation failure raises ValueError, which import_rows catches ... the 1-based row number ... it never reaches indexing or totals",
+          "source_evidence": [
+            "sources/d06_import/imports/api.py:8-13",
+            "sources/d06_import/imports/parser.py:4-18"
+          ],
+          "reason": "行号、跳过及不索引无效行正确；没有说明其他异常类型不捕获。“every validation failure”还掩盖了非字符串字段可能触发 AttributeError 的边界。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "keys on the tuple (tenant, invoice) ... later row with the same normalized key overwrites ... each surviving key contributes exactly once",
+          "source_evidence": [
+            "sources/d06_import/imports/index.py:1-3",
+            "sources/d06_import/imports/totals.py:3-8",
+            "sources/d06_import/imports/api.py:10-13"
+          ],
+          "reason": "结合明确说无效行不进入索引，表达最后有效复合键行获胜、不跨租户替换，按最终字典计数一次。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 2,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "every validation failure raises ValueError",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:4-18",
+            "sources/d06_import/imports/api.py:12-13"
+          ],
+          "reason": "若含非字符串 header/身份/金额，strip/lower 等可产生未捕获 AttributeError/TypeError。所有显式拒绝分支确实用 ValueError，但无条件措辞过宽；此点与第 3 条其他异常边界相关。",
+          "uncertainty": "中：题设 CSV-like 常见输入为字符串；若严格限于字符串该断言较合理。"
+        }
+      ]
+    },
+    {
+      "id": "item-0adfc0f4",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "last-received bytes for that number win ... keys are validated to 0..count-1 ... any part after completion raises 'already complete'",
+          "source_evidence": [
+            "sources/d04_upload/uploads/parts.py:1-6"
+          ],
+          "reason": "重复覆盖、整数且 0..count-1、完成后拒绝均正确。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "requires set(session['parts']) == expected ... joins parts in numeric order 0..count-1 ... neither incomplete nor mismatched uploads reach storage.put",
+          "source_evidence": [
+            "sources/d04_upload/uploads/parts.py:8-12",
+            "sources/d04_upload/uploads/finalize.py:7-10"
+          ],
+          "reason": "精确集合和拼接顺序正确，明确存储前校验失败。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "sha256 hexdigest equality ... before session['object_id'], session['completed'], and session['parts'].clear() are set",
+          "source_evidence": [
+            "sources/d04_upload/uploads/checksum.py:1-4",
+            "sources/d04_upload/uploads/finalize.py:7-13"
+          ],
+          "reason": "组装数据通过 SHA256 相等检查、put 在会话修改前的次序完整。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "session stays pending with all parts retained ... possible duplicate object ... storage.put semantics/atomicity are unknown",
+          "source_evidence": [
+            "sources/d04_upload/uploads/finalize.py:4-14"
+          ],
+          "reason": "保留状态和可能存储副作用正确；遗漏 completed 为真时直接返回 object_id，并未说明并发完成无保证。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-60b4e01e",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "rejects the claim only if job['done'] or (owner is not None and now < deadline) ... increments job['generation'], sets owner ... deadline = now + ttl",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:3-9"
+          ],
+          "reason": "条件、相等时重新领取及接受后的三项更新完整；后文 any worker 仍受前述 done gate。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "(job['id'], job['owner'], job['generation']) ... even if the same worker re-claims (generation still bumps)",
+          "source_evidence": [
+            "sources/d05_lease/jobs/tokens.py:1-2",
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/leases.py:12",
+            "sources/d05_lease/jobs/completion.py:4"
+          ],
+          "reason": "正确说明 token 构成及 generation 防止顺序旧 token 再匹配；同 worker 情形解释了 owner 不变也失效。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "at now == deadline both are rejected (False)",
+          "source_evidence": [
+            "sources/d05_lease/jobs/completion.py:3-7",
+            "sources/d05_lease/jobs/leases.py:11-15"
+          ],
+          "reason": "等号拒绝正确，但未完整描述 ack/renew 的 done gate、ack 的 done=True 和 renew 的 deadline=now+ttl 更新。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "no lock, CAS, or atomic compare-and-set ... there is no fencing token passed to the work itself",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:3-9",
+            "sources/d05_lease/jobs/api.py:4-5",
+            "sources/d05_lease/jobs/completion.py:3-7"
+          ],
+          "reason": "充分说明无并发互斥和副作用 fencing，后续 token 检查不能确保只执行一次。",
+          "uncertainty": "中：对哪一个并发 token 必然失效的断言过强，另记。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "Only the last writer's token matches lease_token, so the loser's later acknowledge/renew fails",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/tokens.py:1-2"
+          ],
+          "reason": "两个调用可以都在最后状态写入后读取 token 并返回同一最终值，故不能保证只有一个调用获得匹配 token。该过强断言不推翻答案无互斥保证的正确结论。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "the token changes in two components at once — owner and generation",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9"
+          ],
+          "reason": "若同 worker 重新领取，owner 不变；答案后面自己说明同 worker 依靠 generation，故前一句并非普适表述。题设“另一 worker”场景下两字段变化成立。",
+          "uncertainty": "中"
+        }
+      ]
+    },
+    {
+      "id": "item-d462b788",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "request > project > defaults ... only None is skipped ... any key not in DEFAULTS is never copied",
+          "source_evidence": [
+            "sources/d02_config/runner/settings.py:4-11",
+            "sources/d02_config/runner/defaults.py:1"
+          ],
+          "reason": "层优先级、None 不覆盖、仅默认键三项完整。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "enabled=False or attempts=0 is accepted ... non-int or non-positive timeout",
+          "source_evidence": [
+            "sources/d02_config/runner/settings.py:8-9",
+            "sources/d02_config/runner/validation.py:2-7"
+          ],
+          "reason": "保留 False/0，并正确以非正 timeout 校验表达 timeout=0 失败；attempts=0 允许。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "bools are rejected for attempts/timeout ... a bad project value can be masked by a valid request value ... start_worker is never invoked",
+          "source_evidence": [
+            "sources/d02_config/runner/validation.py:1-7",
+            "sources/d02_config/runner/settings.py:6-11",
+            "sources/d02_config/runner/api.py:4-6"
+          ],
+          "reason": "精确类型、仅校验最终值、低层坏值可被覆盖、失败不进 worker 全部明确。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "start_worker ... only reads enabled/attempts/timeout and returns started=False when disabled",
+          "source_evidence": [
+            "sources/d02_config/runner/worker.py:1-4",
+            "sources/d02_config/runner/settings.py:5-9",
+            "sources/d02_config/runner/api.py:4-6"
+          ],
+          "reason": "禁用返回及有限配置层/未知键不传递已说明，但没有清楚说明 enabled=True 时返回 started=True 并使用解析后的 attempts/timeout；“only reads”不足以表达成功分支行为。",
+          "uncertainty": "中：可宽泛理解为读取并使用全部字段；按标准要求的工作分支行为未明确而判 0。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "runner/reports.py only contains a docstring-like string",
+          "source_evidence": [
+            "sources/d02_config/runner/reports.py:1-2"
+          ],
+          "reason": "实际包含可调用的 report_defaults 函数，返回字符串，并非仅含文档字符串；与四项核心行为无关。",
+          "uncertainty": "低"
+        }
+      ]
+    },
+    {
+      "id": "item-453e4ae8",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "(str(tenant), str(user), generation) ... versions.get((tenant, user), 0)",
+          "source_evidence": [
+            "sources/d01_cache/profiles/keys.py:1-2",
+            "sources/d01_cache/profiles/cache.py:5-6"
+          ],
+          "reason": "准确给出字符串化缓存键和原始版本映射键，区别已在答案中呈现。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "now < entry['expires_at'] ... expires_at = now + TTL ... first call misses, reads db.read(tenant, user)",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:2-12",
+            "sources/d01_cache/profiles/cleanup.py:1-4"
+          ],
+          "reason": "命中边界、相等失效、miss DB 读取及 30 单位缓存完整。额外“first call”前提过强另记。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "writes to the DB first, then increments ... old generation entry is not deleted ... exception propagates and the generation is not incremented",
+          "source_evidence": [
+            "sources/d01_cache/profiles/writes.py:1-5",
+            "sources/d01_cache/profiles/cache.py:5-11"
+          ],
+          "reason": "写入/版本顺序、异常不增版本及新版本不访问旧键三部分正确。失败是否改变 DB 的额外断言另记，不改变这些明确陈述。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "Freshness under concurrency: not guaranteed ... There is no locking ... Whether versions is shared across processes is also unverified.",
+          "source_evidence": [
+            "sources/d01_cache/profiles/api.py:4-8",
+            "sources/d01_cache/profiles/cache.py:4-12",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "明确并发 stale、无同步，以及跨进程共享版本未知。",
+          "uncertainty": "中：先声称 versions 是进程内 dict，后又说共享未知；以明确的不确定性说明作为该项边界，但将此前过强断言另记。"
+        }
+      ],
+      "total": 4,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "which still matches the DB, since the write failed. No rollback or invalidation is needed",
+          "source_evidence": [
+            "sources/d01_cache/profiles/writes.py:1-5",
+            "sources/d01_cache/profiles/cache.py:7-11"
+          ],
+          "reason": "db 是注入对象，write 抛错并不证明未持久化或不存在部分副作用；缓存可能原先已 stale，故一致和无需处理不能证明。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "first call misses ... stores under generation 0",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:5-11"
+          ],
+          "reason": "仅当版本键缺失且没有有效缓存时成立；源码允许调用方注入已有版本和缓存。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "versions is an in-process dict, so multi-process deployments would not share generations",
+          "source_evidence": [
+            "sources/d01_cache/profiles/api.py:4-8",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "versions 是传入的映射接口，没有展示其构造/进程模型；结尾承认未核实共享是必要限定。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "at the boundary the entry is treated as expired and deleted",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:8-11",
+            "sources/d01_cache/profiles/cleanup.py:1-4"
+          ],
+          "reason": "fetch 的相等边界走 miss 并覆写该键；只有显式执行 discard_expired 才删除。答案上下文谈 cleanup，若理解为该 helper 的条件则正确。",
+          "uncertainty": "中：可能只是在描述 cleanup，而非 fetch 自动删除。"
+        }
+      ]
+    },
+    {
+      "id": "item-5fcca383",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "request wins over project, which wins over defaults ... explicit `None` value falls through ... keys outside DEFAULTS ... silently dropped",
+          "source_evidence": [
+            "sources/d02_config/runner/settings.py:4-11",
+            "sources/d02_config/runner/defaults.py:1"
+          ],
+          "reason": "完整说明优先级、仅已知键和 None 不覆盖。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "`False` and `0` are NOT treated as missing ... `attempts: 0` ... non-int or non-positive `timeout`",
+          "source_evidence": [
+            "sources/d02_config/runner/settings.py:8-9",
+            "sources/d02_config/runner/validation.py:2-7"
+          ],
+          "reason": "False retained、零 attempts 允许和 timeout 非正拒绝含零，全部表达。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "request wins over project ... `validate_settings(merged)` is called on the merged result ... `bool` values for `attempts`/`timeout` are rejected ... `start_worker` is never invoked",
+          "source_evidence": [
+            "sources/d02_config/runner/settings.py:5-11",
+            "sources/d02_config/runner/validation.py:1-7",
+            "sources/d02_config/runner/api.py:4-6"
+          ],
+          "reason": "答案明确先覆盖、再只校验 merged，已表达被更高层有效值替换的低层错误不参与最终校验；精确类型和失败阻止 worker 也明确。",
+          "uncertainty": "中：没有单独举坏 project 被好 request 覆盖的例子，但其先合并后校验的完整描述是等价表达，不依赖替答案读取源码补全。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "`start_worker` ... trusts its input and only branches on `enabled`",
+          "source_evidence": [
+            "sources/d02_config/runner/worker.py:1-4",
+            "sources/d02_config/runner/settings.py:5-9",
+            "sources/d02_config/runner/api.py:4-6"
+          ],
+          "reason": "未知键不传递及仅列出的配置层正确；但只说按 enabled 分支，未说明 False 返回 started=False、True 返回 started=True 并使用解析后的 attempts/timeout。",
+          "uncertainty": "低：相关分支在固定源码中明确可见。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "C_frozen_files_rechecked": 57,
+  "AB_binding_recomputed_and_verified": true,
+  "v5_shared_files_byte_equal": 42,
+  "original_holdout_hashes_match": true,
+  "reproduction_byte_equal": true,
+  "historical_scan_errors": 0,
+  "historical_overlap": [],
+  "execution_order_valid": true,
+  "runtime_entrypoint_test": "未运行（存在已报告的dev24限定冲突）",
+  "cloud_live_verification": "未运行（未开机）",
+  "model_API_calls": 0
+}

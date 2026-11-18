@@ -1,0 +1,17 @@
+{
+  "base_commit": "a59de6e89e8dc1f3e71c9a5a5bbceb373ea5247e",
+  "instance_id": "django__django-13033",
+  "result": {
+    "answer": "This is a genuine bug, not a misunderstanding. The root cause is in SQLCompiler.find_ordering_name (django/db/models/sql/compiler.py:715-749). After resolving the join path, it checks whether the final field is a relation with model-level ordering: `if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk'`. For `record__root_id`, the resolved field is the self-referencing FK `root`, whose attname is `root_id`; the comparison `attname != name` compares `'root_id'` against the full lookup string `'record__root_id'`, so it is unequal and the branch is wrongly taken. Django then appends OneModel.Meta.ordering (`-id`) relative to the joined alias, producing the extra LEFT OUTER JOIN to T3 and the unexpected DESC. The `-record__root_id` case flips the inherited direction via get_order_dir (query.py:2302-2313), explaining the ASC result. The `record__root__id` form works because the final piece is the pk `id`, not the relation, so the ordering-inheritance branch is skipped. The annotate(F(...)) workaround also avoids it since the ordering target is an annotation. The fix should compare the last path segment (or the field's name) rather than the whole dotted name, so that `record__root_id` is recognized as targeting the FK's attname and does not inherit Meta.ordering. I did not read get_order_by (compiler.py:271) or the full setup_joins path, so the exact minimal patch is unconfirmed.",
+    "entities": [
+      "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name",
+      "django/db/models/sql/query.py:get_order_dir",
+      "django/db/models/sql/compiler.py:SQLCompiler._setup_joins"
+    ],
+    "files": [
+      "django/db/models/sql/compiler.py",
+      "django/db/models/sql/query.py"
+    ]
+  },
+  "version": 1
+}

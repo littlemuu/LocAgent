@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-16328",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "b60fc0c3288befd1a052a3743a315374da766ecb",
+  "problem_statement": "`TimedOut` task has no duration or end time\n### Bug summary\r\n\r\n Using the following sample flow to produce a `TimedOut` task and flow, the flow run receives a duration and end time but the task run does not.\r\n\r\n```python\r\nfrom prefect import flow, task\r\nimport requests\r\n\r\n@task(timeout_seconds=5)\r\ndef timeout_task():\r\n    requests.get(\"http://httpbin.org/delay/10\")\r\n\r\n@flow\r\ndef timeout_flow():\r\n    timeout_task()\r\n\r\n\r\nif __name__ == \"__main__\":\r\n    timeout_flow()\r\n```\r\n\r\n<img width=\"2159\" alt=\"image\" src=\"https://github.com/user-attachments/assets/a3fab759-1f78-40c9-ad94-f930b681dcfc\">\r\n\r\n<img width=\"416\" alt=\"image\" src=\"https://github.com/user-attachments/assets/4c37ae94-bf54-48ae-9e29-8102901c4414\">\r\n\r\n\r\n### Version info\r\n\r\n```Text\r\nVersion:             3.1.0\r\nAPI version:         0.8.4\r\nPython version:      3.12.4\r\nGit commit:          a83ba39b\r\nBuilt:               Thu, Oct 31, 2024 12:43 PM\r\nOS/Arch:             darwin/arm64\r\nProfile:             default\r\nServer type:         cloud\r\nPydantic version:    2.9.1\r\n```\r\n\r\n\r\n### Additional context\r\n\r\n_No response_\n"
+}

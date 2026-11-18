@@ -1,0 +1,181 @@
+{
+  "basis": "Archived dev24 observations and historical price quotation only; offline, no current price/account/disk query. Planning ranges are assumptions, not confidence intervals or fees caps.",
+  "arms": {
+    "A": {
+      "historical_tasks": 24,
+      "planning_tasks": 50,
+      "tokens_linear_proxy": 13754358.333333334,
+      "historical_mixed_price_cost_linear_proxy_cny": 2.898937166666667,
+      "peak_no_cache_at_historical_token_volume_cny": 28.49592916666667,
+      "stage_hours_linear_proxy": 1.6332597931226094
+    },
+    "B": {
+      "historical_tasks": 24,
+      "planning_tasks": 50,
+      "tokens_linear_proxy": 9850089.583333334,
+      "historical_mixed_price_cost_linear_proxy_cny": 3.0736093333333336,
+      "peak_no_cache_at_historical_token_volume_cny": 20.913441666666667,
+      "stage_hours_linear_proxy": 1.9117945305727149
+    },
+    "C": {
+      "historical_tasks": 24,
+      "planning_tasks": 50,
+      "tokens_linear_proxy": 14811460.416666668,
+      "historical_mixed_price_cost_linear_proxy_cny": 2.7849457083333338,
+      "peak_no_cache_at_historical_token_volume_cny": 31.276708333333335,
+      "stage_hours_linear_proxy": 2.0617101992721913
+    }
+  },
+  "API": {
+    "historical_mixed_price_linear_proxy_cny": 8.757492208333334,
+    "same_cache_all_offpeak_cny": 7.066431125,
+    "same_cache_all_peak_cny": 14.13286225,
+    "peak_no_cache_at_historical_tokens_cny": 80.68607916666667,
+    "ordinary_planning_range_cny": [
+      10,
+      25
+    ],
+    "nominal_full_token_budget_peak_no_cache_cny": 408.9536,
+    "full_budget_amount_caveat": "Arithmetic stress scenario using configured token budgets; not a billing guarantee or financial stopping gate.",
+    "max_coding_calls": 6000,
+    "max_locator_calls": 400,
+    "total_financial_cap": null,
+    "prices_snapshot_cny_per_million": {
+      "input_cache_hit_peak": 0.04,
+      "input_cache_miss_peak": 2,
+      "output_peak": 8,
+      "offpeak_multiplier": 0.5
+    }
+  },
+  "time": {
+    "stage_linear_proxy_hours": 5.606764522967516,
+    "planning_stage_hours": [
+      5.5,
+      8
+    ],
+    "new_image_download_decompression_hours_assumption": [
+      0.5,
+      2
+    ],
+    "boot_environment_transfer_cleanup_hours_assumption": [
+      0.5,
+      1
+    ],
+    "total_planning_hours": [
+      6.5,
+      11
+    ],
+    "C_historical_stage_seconds": 3562.635224342346,
+    "C_historical_image_seconds": 328.88391757011414,
+    "C_historical_other_including_budget_handoff_seconds": 183.3655822277069,
+    "C_other_not_scaled_into_new_run": true,
+    "timeout_risk": "Long tests/provider delays can exceed planning range; no total time cap imposed."
+  },
+  "cloud": {
+    "archived_running_compute_plus_150GiB_disk_cny_per_hour": 4.09,
+    "planning_running_cost_cny": [
+      26.585,
+      44.989999999999995
+    ],
+    "archived_public_egress_cny_per_GB": 0.67,
+    "egress_volume": "not_measured_not_estimated",
+    "stopped_disk_retention_fee": "not_estimated_current_disk_unit_quote_unavailable",
+    "combined_ordinary_API_and_running_cloud_cny": [
+      36.585,
+      69.99
+    ],
+    "current_quote_checked": false
+  },
+  "disk": {
+    "disk_capacity_archived_GiB": 150,
+    "last_measured_free_bytes": 95961354240,
+    "last_measurement_scope": "Before dev24 C(v8.2), with 18 task images cached; not a shutdown/current measurement.",
+    "last_measured_free_GiB": 89.37097549438477,
+    "six_subsequent_images_logical_sum_GiB": 8.32785323355347,
+    "dev24_24_images_logical_sum_GiB": 32.320832232013345,
+    "dev24_image_logical_size_range_GiB": [
+      0.9455871684476733,
+      2.9507284620776772
+    ],
+    "holdout_repository_counts": {
+      "astropy/astropy": 4,
+      "django/django": 5,
+      "matplotlib/matplotlib": 5,
+      "mwaskom/seaborn": 2,
+      "pallets/flask": 1,
+      "psf/requests": 5,
+      "pydata/xarray": 4,
+      "pylint-dev/pylint": 5,
+      "pytest-dev/pytest": 5,
+      "scikit-learn/scikit-learn": 4,
+      "sphinx-doc/sphinx": 5,
+      "sympy/sympy": 5
+    },
+    "dev24_sizes_by_repository_GiB": {
+      "pytest-dev/pytest": [
+        0.9563497873023152,
+        0.9562502466142178
+      ],
+      "astropy/astropy": [
+        1.0557506792247295,
+        1.0593872722238302,
+        1.060431188903749
+      ],
+      "psf/requests": [
+        0.9455871684476733
+      ],
+      "pydata/xarray": [
+        1.9088017363101244
+      ],
+      "matplotlib/matplotlib": [
+        2.9246085165068507,
+        2.861369678750634,
+        2.9507284620776772
+      ],
+      "sphinx-doc/sphinx": [
+        1.0315000489354134,
+        1.0222345292568207,
+        1.0223914729431272
+      ],
+      "django/django": [
+        1.0780147733166814,
+        1.0782599356025457,
+        1.110809437930584,
+        1.110618474893272
+      ],
+      "scikit-learn/scikit-learn": [
+        1.3929506856948137,
+        1.392708352766931,
+        1.3731145905330777
+      ],
+      "sympy/sympy": [
+        1.0102248191833496,
+        1.0158625459298491,
+        0.9948676954954863
+      ],
+      "pylint-dev/pylint": [
+        1.0080101331695914
+      ]
+    },
+    "unrepresented_holdout_repositories": {
+      "mwaskom/seaborn": 2,
+      "pallets/flask": 1
+    },
+    "50_images_repository_weighted_logical_proxy_GiB": [
+      64.99568662823488,
+      71.01111050912489
+    ],
+    "50_images_planning_increment_GiB": [
+      50,
+      90
+    ],
+    "working_reserve_GiB": 25,
+    "free_space_planning_requirement_GiB": [
+      75,
+      115
+    ],
+    "assessment": "Capacity not cleared. Upper planning requirement exceeds even the last measured free space. Full 50-image retention cannot be guaranteed on the existing disk. No automatic expansion or cache deletion.",
+    "caveat": "Docker Size is logical uncompressed size, not unique layer disk consumption. Missing per-image manifests/layer inventory, version differences, decompression temporaries, logs, and current df prevent exact prediction.",
+    "alternative_for_user_review": "Preserve the old 24 cached images; optionally remove only each new holdout task image after its A/B/C evaluation and evidence collection. This policy is not authorized or implemented."
+  }
+}

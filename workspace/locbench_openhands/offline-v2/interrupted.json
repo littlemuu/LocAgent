@@ -1,0 +1,109 @@
+{
+  "reason": "retrieval_chain_not_verified",
+  "records": [
+    {
+      "case": "Delgan__loguru-1239",
+      "arm": "baseline",
+      "simulation": true,
+      "live_calls": 0,
+      "localization_score": null,
+      "actual_cost_cny": 0,
+      "status": "completed",
+      "quality_not_scored_reason": "scripted_connectivity_fixture",
+      "failure": null,
+      "requests": 4,
+      "tool_calls": 3,
+      "source_bytes": 9821,
+      "network_attempts": 0,
+      "observability": {
+        "simulation": true,
+        "retrieval_offered": false,
+        "retrieval_calls": 0,
+        "normal_finish": true,
+        "invocations": [],
+        "all_invocations_verified": false,
+        "live_auto_selection_observed": false,
+        "outcome": "not_selected",
+        "response_evidence_issues": [],
+        "claims_retrieval_benefit": false,
+        "interpretation": "Evidence delivery and path overlap do not prove causal use or retrieval benefit.",
+        "arm": "baseline",
+        "plan_hash": "1af8ca43e0270d565a743bd6164eeb458c9aba4542bff1d52cb50f02fb249005",
+        "ledger_sha256": "b8f7bf67edfe8eb24a35821ae2f889157da1cf6ce5f004206294f2d467ad07f9",
+        "trace_sha256": "9139bb5f85340615f2b27e2669c3b8d160f0e1070cf83808835d9a967f337284",
+        "artifact_bindings_verified": true
+      },
+      "simulated_cost_upper_micro_cny": 11200,
+      "elapsed_wall_seconds": 1.8692589169950224
+    },
+    {
+      "case": "Delgan__loguru-1239",
+      "arm": "retrieval",
+      "simulation": true,
+      "live_calls": 0,
+      "localization_score": null,
+      "actual_cost_cny": 0,
+      "status": "failed",
+      "quality_not_scored_reason": "scripted_connectivity_fixture",
+      "failure": "retrieval_chain_not_verified",
+      "requests": 4,
+      "tool_calls": 3,
+      "source_bytes": 5774,
+      "network_attempts": 0,
+      "observability": {
+        "simulation": true,
+        "retrieval_offered": true,
+        "retrieval_calls": 1,
+        "normal_finish": true,
+        "invocations": [
+          {
+            "call_id": "fixture-2",
+            "request_number": 2,
+            "query": "traceback",
+            "offset": 0,
+            "tool_was_offered": true,
+            "selection_category": "scripted_fixture",
+            "wire_tool_choice": "auto",
+            "sdk_action_matches_response": true,
+            "sdk_observation_linked": true,
+            "tool_succeeded": true,
+            "source_evidence_found": false,
+            "pagination_remaining": false,
+            "observation_sha256": "b5fd978a815a628ef2997e1a04cec118a2ac1eda6aff792d6d8b8fc097d00ccc",
+            "observation_bytes": 49,
+            "in_immediate_next_request": true,
+            "next_request_number": 3,
+            "returned_path_mentions_in_final": [],
+            "chain_verified": false
+          }
+        ],
+        "all_invocations_verified": false,
+        "live_auto_selection_observed": false,
+        "outcome": "observed",
+        "response_evidence_issues": [],
+        "claims_retrieval_benefit": false,
+        "interpretation": "Evidence delivery and path overlap do not prove causal use or retrieval benefit.",
+        "arm": "retrieval",
+        "plan_hash": "1af8ca43e0270d565a743bd6164eeb458c9aba4542bff1d52cb50f02fb249005",
+        "ledger_sha256": "cbc1f06568f648e09a448b730068e47f12ab0eaf216d3ef8cf21d8f766da9b6a",
+        "trace_sha256": "9aabc235c6fe2c4bdfd148dfee28c939b373a2348a2ad242955a324b808ced06",
+        "artifact_bindings_verified": true
+      },
+      "simulated_cost_upper_micro_cny": 11200,
+      "elapsed_wall_seconds": 4.530418457987253
+    }
+  ],
+  "not_run": [
+    {
+      "case": "tobymao__sqlglot-3417",
+      "arm": "retrieval",
+      "raw_score": null
+    },
+    {
+      "case": "tobymao__sqlglot-3417",
+      "arm": "baseline",
+      "raw_score": null
+    }
+  ],
+  "live_calls": 0
+}

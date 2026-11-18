@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18846",
+  "repo": "django/django",
+  "base_commit": "857b1048d53ebf5fc5581c110e85c212b81ca83a",
+  "problem_statement": "sqlmigrate prevents normal colorization of system checks\nDescription\n\t \nsqlmigrate forces no_color=True for the sake of not colorizing the sql keywords BEGIN; and COMMIT;, but this has the side effect of preventing system check output from being colorized.\n(To reproduce, begin with a project that will emit a system check, and run sqlmigrate.)\nSuggesting a small ​PR to preserve the non-colorization of BEGIN; and COMMIT; while still colorizing system checks.\n"
+}

@@ -1,0 +1,98 @@
+181: def collect_pages(app: Sphinx) -> Generator[Tuple[str, Dict[str, Any], str], None, None]:
+182:     env = app.builder.env
+183:     if not hasattr(env, '_viewcode_modules'):
+184:         return
+185:     highlighter = app.builder.highlighter  # type: ignore
+186:     urito = app.builder.get_relative_uri
+187: 
+188:     modnames = set(env._viewcode_modules)  # type: ignore
+189: 
+190:     for modname, entry in status_iterator(
+191:             sorted(env._viewcode_modules.items()),  # type: ignore
+192:             __('highlighting module code... '), "blue",
+193:             len(env._viewcode_modules),  # type: ignore
+194:             app.verbosity, lambda x: x[0]):
+195:         if not entry:
+196:             continue
+197:         if not should_generate_module_page(app, modname):
+198:             continue
+199: 
+200:         code, tags, used, refname = entry
+201:         # construct a page name for the highlighted source
+202:         pagename = posixpath.join(OUTPUT_DIRNAME, modname.replace('.', '/'))
+203:         # highlight the source using the builder's highlighter
+204:         if env.config.highlight_language in ('python3', 'default', 'none'):
+205:             lexer = env.config.highlight_language
+206:         else:
+207:             lexer = 'python'
+208:         highlighted = highlighter.highlight_block(code, lexer, linenos=False)
+209:         # split the code into lines
+210:         lines = highlighted.splitlines()
+211:         # split off wrap markup from the first line of the actual code
+212:         before, after = lines[0].split('<pre>')
+213:         lines[0:1] = [before + '<pre>', after]
+214:         # nothing to do for the last line; it always starts with </pre> anyway
+215:         # now that we have code lines (starting at index 1), insert anchors for
+216:         # the collected tags (HACK: this only works if the tag boundaries are
+217:         # properly nested!)
+218:         maxindex = len(lines) - 1
+219:         for name, docname in used.items():
+220:             type, start, end = tags[name]
+221:             backlink = urito(pagename, docname) + '#' + refname + '.' + name
+222:             lines[start] = (
+223:                 '<div class="viewcode-block" id="%s"><a class="viewcode-back" '
+224:                 'href="%s">%s</a>' % (name, backlink, _('[docs]')) +
+225:                 lines[start])
+226:             lines[min(end, maxindex)] += '</div>'
+227:         # try to find parents (for submodules)
+228:         parents = []
+229:         parent = modname
+230:         while '.' in parent:
+231:             parent = parent.rsplit('.', 1)[0]
+232:             if parent in modnames:
+233:                 parents.append({
+234:                     'link': urito(pagename,
+235:                                   posixpath.join(OUTPUT_DIRNAME, parent.replace('.', '/'))),
+236:                     'title': parent})
+237:         parents.append({'link': urito(pagename, posixpath.join(OUTPUT_DIRNAME, 'index')),
+238:                         'title': _('Module code')})
+239:         parents.reverse()
+240:         # putting it all together
+241:         context = {
+242:             'parents': parents,
+243:             'title': modname,
+244:             'body': (_('<h1>Source code for %s</h1>') % modname +
+245:                      '\n'.join(lines)),
+246:         }
+247:         yield (pagename, context, 'page.html')
+248: 
+249:     if not modnames:
+250:         return
+251: 
+252:     html = ['\n']
+253:     # the stack logic is needed for using nested lists for submodules
+254:     stack = ['']
+255:     for modname in sorted(modnames):
+256:         if modname.startswith(stack[-1]):
+257:             stack.append(modname + '.')
+258:             html.append('<ul>')
+259:         else:
+260:             stack.pop()
+261:             while not modname.startswith(stack[-1]):
+262:                 stack.pop()
+263:                 html.append('</ul>')
+264:             stack.append(modname + '.')
+265:         html.append('<li><a href="%s">%s</a></li>\n' % (
+266:             urito(posixpath.join(OUTPUT_DIRNAME, 'index'),
+267:                   posixpath.join(OUTPUT_DIRNAME, modname.replace('.', '/'))),
+268:             modname))
+269:     html.append('</ul>' * (len(stack) - 1))
+270:     context = {
+271:         'title': _('Overview: module code'),
+272:         'body': (_('<h1>All modules for which code is available</h1>') +
+273:                  ''.join(html)),
+274:     }
+275: 
+276:     yield (posixpath.join(OUTPUT_DIRNAME, 'index'), context, 'page.html')
+277: 
+278: 

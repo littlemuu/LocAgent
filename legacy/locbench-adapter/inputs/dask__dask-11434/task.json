@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-11434",
+  "repo": "dask/dask",
+  "base_commit": "091f4e9bd226836faeaf30bdc3b5182ba14d22a6",
+  "problem_statement": "`array.broadcast_shapes` to return a tuple of `int`, not a tuple of NumPy scalars\n<!-- Please do a quick search of existing issues to make sure that this has not been asked before. -->\r\n\r\nBefore NumPy v2, the `repr` of NumPy scalars returned a plain number. This changed in [NEP 51](https://numpy.org/neps/nep-0051-scalar-representation.html), which changes how the result of `broadcast_shapes()` is printed:\r\n\r\n- Before: `(240, 37, 49)`\r\n- After: `(np.int64(240), np.int64(37), np.int64(49))`\r\n\r\nThere is no functional difference here, but it is much less intuitive to read - especially problematic for documentation/notebooks.\r\n\r\nWhat does everyone think of adding a line into `broadcast_shapes` to ensure that only plain integers are returned? Would this have any unintended consequences? Many thanks.\n"
+}

@@ -1,0 +1,271 @@
+{
+  "root": "source",
+  "source_files": [
+    "benchmarks/bench.py",
+    "pdoc/cli.py",
+    "setup.py",
+    "sqlglot/__init__.py",
+    "sqlglot/__main__.py",
+    "sqlglot/_typing.py",
+    "sqlglot/dataframe/__init__.py",
+    "sqlglot/dataframe/sql/__init__.py",
+    "sqlglot/dataframe/sql/_typing.py",
+    "sqlglot/dataframe/sql/column.py",
+    "sqlglot/dataframe/sql/dataframe.py",
+    "sqlglot/dataframe/sql/functions.py",
+    "sqlglot/dataframe/sql/group.py",
+    "sqlglot/dataframe/sql/normalize.py",
+    "sqlglot/dataframe/sql/operations.py",
+    "sqlglot/dataframe/sql/readwriter.py",
+    "sqlglot/dataframe/sql/session.py",
+    "sqlglot/dataframe/sql/transforms.py",
+    "sqlglot/dataframe/sql/types.py",
+    "sqlglot/dataframe/sql/util.py",
+    "sqlglot/dataframe/sql/window.py",
+    "sqlglot/dialects/__init__.py",
+    "sqlglot/dialects/athena.py",
+    "sqlglot/dialects/bigquery.py",
+    "sqlglot/dialects/clickhouse.py",
+    "sqlglot/dialects/databricks.py",
+    "sqlglot/dialects/dialect.py",
+    "sqlglot/dialects/doris.py",
+    "sqlglot/dialects/drill.py",
+    "sqlglot/dialects/duckdb.py",
+    "sqlglot/dialects/hive.py",
+    "sqlglot/dialects/mysql.py",
+    "sqlglot/dialects/oracle.py",
+    "sqlglot/dialects/postgres.py",
+    "sqlglot/dialects/presto.py",
+    "sqlglot/dialects/prql.py",
+    "sqlglot/dialects/redshift.py",
+    "sqlglot/dialects/snowflake.py",
+    "sqlglot/dialects/spark.py",
+    "sqlglot/dialects/spark2.py",
+    "sqlglot/dialects/sqlite.py",
+    "sqlglot/dialects/starrocks.py",
+    "sqlglot/dialects/tableau.py",
+    "sqlglot/dialects/teradata.py",
+    "sqlglot/dialects/trino.py",
+    "sqlglot/dialects/tsql.py",
+    "sqlglot/diff.py",
+    "sqlglot/errors.py",
+    "sqlglot/executor/__init__.py",
+    "sqlglot/executor/context.py",
+    "sqlglot/executor/env.py",
+    "sqlglot/executor/python.py",
+    "sqlglot/executor/table.py",
+    "sqlglot/expressions.py",
+    "sqlglot/generator.py",
+    "sqlglot/helper.py",
+    "sqlglot/jsonpath.py",
+    "sqlglot/lineage.py",
+    "sqlglot/optimizer/__init__.py",
+    "sqlglot/optimizer/annotate_types.py",
+    "sqlglot/optimizer/canonicalize.py",
+    "sqlglot/optimizer/eliminate_ctes.py",
+    "sqlglot/optimizer/eliminate_joins.py",
+    "sqlglot/optimizer/eliminate_subqueries.py",
+    "sqlglot/optimizer/isolate_table_selects.py",
+    "sqlglot/optimizer/merge_subqueries.py",
+    "sqlglot/optimizer/normalize.py",
+    "sqlglot/optimizer/normalize_identifiers.py",
+    "sqlglot/optimizer/optimize_joins.py",
+    "sqlglot/optimizer/optimizer.py",
+    "sqlglot/optimizer/pushdown_predicates.py",
+    "sqlglot/optimizer/pushdown_projections.py",
+    "sqlglot/optimizer/qualify.py",
+    "sqlglot/optimizer/qualify_columns.py",
+    "sqlglot/optimizer/qualify_tables.py",
+    "sqlglot/optimizer/scope.py",
+    "sqlglot/optimizer/simplify.py",
+    "sqlglot/optimizer/unnest_subqueries.py",
+    "sqlglot/parser.py",
+    "sqlglot/planner.py",
+    "sqlglot/schema.py",
+    "sqlglot/serde.py",
+    "sqlglot/time.py",
+    "sqlglot/tokens.py",
+    "sqlglot/transforms.py",
+    "sqlglot/trie.py",
+    "tests/__init__.py",
+    "tests/dataframe/__init__.py",
+    "tests/dataframe/integration/__init__.py",
+    "tests/dataframe/integration/dataframe_validator.py",
+    "tests/dataframe/integration/test_dataframe.py",
+    "tests/dataframe/integration/test_grouped_data.py",
+    "tests/dataframe/integration/test_session.py",
+    "tests/dataframe/unit/__init__.py",
+    "tests/dataframe/unit/dataframe_sql_validator.py",
+    "tests/dataframe/unit/dataframe_test_base.py",
+    "tests/dataframe/unit/test_column.py",
+    "tests/dataframe/unit/test_dataframe.py",
+    "tests/dataframe/unit/test_dataframe_writer.py",
+    "tests/dataframe/unit/test_functions.py",
+    "tests/dataframe/unit/test_session.py",
+    "tests/dataframe/unit/test_session_case_sensitivity.py",
+    "tests/dataframe/unit/test_types.py",
+    "tests/dataframe/unit/test_window.py",
+    "tests/dialects/__init__.py",
+    "tests/dialects/test_athena.py",
+    "tests/dialects/test_bigquery.py",
+    "tests/dialects/test_clickhouse.py",
+    "tests/dialects/test_databricks.py",
+    "tests/dialects/test_dialect.py",
+    "tests/dialects/test_doris.py",
+    "tests/dialects/test_drill.py",
+    "tests/dialects/test_duckdb.py",
+    "tests/dialects/test_hive.py",
+    "tests/dialects/test_mysql.py",
+    "tests/dialects/test_oracle.py",
+    "tests/dialects/test_postgres.py",
+    "tests/dialects/test_presto.py",
+    "tests/dialects/test_prql.py",
+    "tests/dialects/test_redshift.py",
+    "tests/dialects/test_snowflake.py",
+    "tests/dialects/test_spark.py",
+    "tests/dialects/test_sqlite.py",
+    "tests/dialects/test_starrocks.py",
+    "tests/dialects/test_tableau.py",
+    "tests/dialects/test_teradata.py",
+    "tests/dialects/test_trino.py",
+    "tests/dialects/test_tsql.py",
+    "tests/gen_fixtures.py",
+    "tests/helpers.py",
+    "tests/test_build.py",
+    "tests/test_diff.py",
+    "tests/test_docs.py",
+    "tests/test_executor.py",
+    "tests/test_expressions.py",
+    "tests/test_generator.py",
+    "tests/test_helper.py",
+    "tests/test_jsonpath.py",
+    "tests/test_lineage.py",
+    "tests/test_optimizer.py",
+    "tests/test_parser.py",
+    "tests/test_schema.py",
+    "tests/test_serde.py",
+    "tests/test_time.py",
+    "tests/test_tokens.py",
+    "tests/test_transforms.py",
+    "tests/test_transpile.py"
+  ],
+  "issue": "SET TAG identifier containing dots is parsed as Command\nWould love for an identifier containing dots to be parsed as a `SetItem` ie: like an identifier without dots. \r\n\r\nWithout dots, is parsed as SetItem:\r\n```\r\n❯ sqlglot.parse_one(\"ALTER TABLE table1 SET TAG foo='baz'\", read=\"snowflake\")\r\nAlterTable(\r\n  this=Table(\r\n    this=Identifier(this=table1, quoted=False)),\r\n  actions=[\r\n    Set(\r\n      expressions=[\r\n        SetItem(\r\n          this=EQ(\r\n            this=Identifier(this=foo, quoted=False),\r\n            expression=Literal(this=baz, is_string=True)))],\r\n      unset=False,\r\n      tag=True)])\r\n```\r\n\r\nvs with dots:\r\n \r\n```\r\n❯ sqlglot.parse_one(\"ALTER TABLE table1 SET TAG foo.bar='baz'\", read=\"snowflake\")\r\nAlterTable(\r\n  this=Table(\r\n    this=Identifier(this=table1, quoted=False)),\r\n  actions=[\r\n    Command(this=TAG, expression=foo.bar='baz')])\r\n```\r\n\r\nIn sqlglot 15 this was parsed as SetTag:\r\n```\r\n❯ python -c 'import sqlglot; print(repr(sqlglot.parse_one(\"ALTER TABLE table1 SET TAG foo.bar=''baz''\", read=\"snowflake\")));'\r\n(ALTERTABLE this: \r\n  (TABLE this: \r\n    (IDENTIFIER this: table1, quoted: False)), actions: \r\n  (SETTAG expressions: \r\n    (EQ this: \r\n      (COLUMN this: \r\n        (IDENTIFIER this: bar, quoted: False), table: \r\n        (IDENTIFIER this: foo, quoted: False)), expression: \r\n      (LITERAL this: baz, is_string: True)), unset: False))\r\n``` \r\n\n",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-1",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-2",
+            "name": "search_text",
+            "input": {
+              "query": "SetItem",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-3",
+            "name": "read_file",
+            "input": {
+              "path": "benchmarks/bench.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-4",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Scripted connectivity fixture only; no model judgment or localization score."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-1",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-2",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "SetItem",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-3",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "benchmarks/bench.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-4",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Scripted connectivity fixture only; no model judgment or localization score."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

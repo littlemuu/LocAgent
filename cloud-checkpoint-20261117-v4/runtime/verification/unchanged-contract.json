@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "coding_budget": {
+    "max_requests": 40,
+    "max_output_tokens": 4096,
+    "input_tokens": 1000000,
+    "output_tokens": 64000,
+    "evidence_bytes": 262144,
+    "tool_output_bytes": 16384,
+    "timeout_seconds": 2700,
+    "command_timeout_seconds": 120
+  },
+  "locator_budget": {
+    "max_requests": 4,
+    "max_output_tokens": 2048,
+    "input_tokens": 128000,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "prompt_and_retrieval_unchanged": true
+}

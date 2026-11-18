@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-29130",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "abbaed326c8f0e4a8083979701f01ce581612713",
+  "problem_statement": "Weekly CI run with NVidia GPU hardware\nNow that #22554 was merged in `main`, it would be great to find a a way  to run a weekly scheduled job to run the scikit-learn `main` test on a CI worker with an NVidia GPU and CuPy.\r\n\r\nIn case of failure, it could create a report as [dedicated issues](https://github.com/scikit-learn/scikit-learn/issues?q=is%3Aissue+%22%E2%9A%A0%EF%B8%8F+ci+failed+on%22+) as we do for other scheduled jobs:\r\n\r\n- https://github.com/scikit-learn/scikit-learn/blob/main/maint_tools/update_tracking_issue.py\r\n\r\nMaybe @betatim has a plan and connections to do that? ;)\n"
+}

@@ -1,0 +1,22 @@
+已读到的事实（附文件:行号）
+- sympy/polys/polytools.py:4393-4399：`_parallel_dict_from_expr` 返回后遍历 `opt.gens`，任一 gen 是 `Piecewise` 即 `raise PolynomialError("Piecewise generators do not make sense")`。
+- sympy/polys/polytools.py:4369-4383：该函数先 `sympify(expr)`，`opt.expand` 为真时调用 `expr.expand()`，再收集 `_exprs`/`_polys`。
+- sympy/polys/polytools.py:4388-4395：`_polys` 中的表达式被 `as_expr()` 还原；若 `opt.gens` 为空则抛 `PolificationFailed`。
+- sympy/core/basic.py:1058-1064：`_subs` 先判 `_aresame(self, old)`，否则调 `self._eval_subs(old, new)`，返回 None 时走 `fallback`。
+- sympy/core/basic.py:1026-1056：`fallback` 逐个对 `self.args` 调 `arg._subs`，命中则 `self.func(*args)` 重建。
+- sympy/core/basic.py:949-952：`subs` 对序列逐项 `rv._subs(old, new, **kwargs)`，非 Basic 结果即 break。
+
+推断
+- 待验证假设：报错来自 `sympy/polys/polytools.py:_parallel_dict_from_expr` 的 gens 检查，即某条路径把含 `Piecewise` 的表达式送进了多项式化（`Poly`/`parallel_poly_from_expr`），而非 `subs` 本身直接抛错。
+- 待验证假设：`sympy/core/basic.py:Basic._subs` 的 `fallback` 重建 `exp(sinh(Piecewise(...)/z))` 时触发求值/展开，使 `Piecewise` 成为多项式生成元；real 假设改变 `Piecewise` 的化简结果，从而决定是否走到该分支。
+- 待验证假设：缓存（`clear_cache`）影响中间化简结果，故第二次调用成功，说明存在依赖缓存状态的求值路径。
+
+未核验点
+- `sympy/core/basic.py:Basic.subs` 与 `Basic._subs` 的 docstring 段（761-873、890-948）未读完；`sympy/core/function.py:Subs` 仅读到 2196-2211，其余未读完。
+- 未读到 `Piecewise._eval_subs`、`sinh`/`exp` 的 `_eval_subs`，也未读到 `parallel_poly_from_expr` 的调用方，调用链不完整。
+- 未运行任何复现或验证。
+
+最小验证：`python -c "from sympy import *; x,y,z=symbols('x y z',real=True); print(exp(sinh(Piecewise((x,y>x),(y,True))/z)).subs({1:1.0}))"`（建议，未执行）
+
+以下内容未在阅读记录中核验：
+- [R1] sympy/polys/polytools.py:_parallel_dict_from_expr

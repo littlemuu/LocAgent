@@ -1,0 +1,89 @@
+{
+  "A": {
+    "resolved": false,
+    "tests": {
+      "FAIL_TO_PASS": {
+        "success": 7,
+        "failure": 1
+      },
+      "PASS_TO_PASS": {
+        "success": 129,
+        "failure": 4
+      },
+      "FAIL_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      },
+      "PASS_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      }
+    },
+    "ssl_certificate_verify_failed": true,
+    "pytest_summary": [
+      "============ 6 failed, 137 passed, 3 warnings in 456.74s (0:07:36) ============="
+    ]
+  },
+  "B": {
+    "resolved": false,
+    "tests": {
+      "FAIL_TO_PASS": {
+        "success": 7,
+        "failure": 1
+      },
+      "PASS_TO_PASS": {
+        "success": 129,
+        "failure": 4
+      },
+      "FAIL_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      },
+      "PASS_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      }
+    },
+    "ssl_certificate_verify_failed": true,
+    "pytest_summary": [
+      "============ 6 failed, 137 passed, 3 warnings in 460.39s (0:07:40) ============="
+    ]
+  },
+  "C": {
+    "resolved": false,
+    "tests": {
+      "FAIL_TO_PASS": {
+        "success": 7,
+        "failure": 1
+      },
+      "PASS_TO_PASS": {
+        "success": 128,
+        "failure": 5
+      },
+      "FAIL_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      },
+      "PASS_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      }
+    },
+    "ssl_certificate_verify_failed": true,
+    "pytest_summary": [
+      "============ 7 failed, 136 passed, 3 warnings in 459.40s (0:07:39) ============="
+    ],
+    "report_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-c-v82-20261117/evidence/run/trial/psf__requests-2317/C/harness/logs/run_evaluation/smoke/locagent-deepseek-flash-C/psf__requests-2317/report.json",
+    "test_output_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-c-v82-20261117/evidence/run/trial/psf__requests-2317/C/harness/logs/run_evaluation/smoke/locagent-deepseek-flash-C/psf__requests-2317/test_output.txt",
+    "additional_patch_regression": {
+      "test": "RequestsTestCase.test_basic_building",
+      "observed": true,
+      "reason": "C additionally changed PreparedRequest.prepare_method to call to_native_string(method) before its None guard; original harness records None.decode AttributeError. This is separate from certificate failures."
+    }
+  },
+  "historical_source": {
+    "path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/environment-observations.json",
+    "sha256": "99d95e4bf43348fb52bf413aa87cfc11bab5ae0e5211b8710b8e12c734268d7a"
+  },
+  "policy": "Preserve original harness resolved scoring; no rerun, certificate change, or rescoring. Environment signals do not prove exclusive cause."
+}

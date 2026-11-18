@@ -1,0 +1,15 @@
+{
+  "basis": "User explicitly approved only remaining Astropy A/B supplement after offline Git compatibility fix, at most 6.85 new API CNY; temporary key transfer approved; delete key and shutdown without compute fees afterward.",
+  "allowed_ids": [
+    "astropy__astropy-14182"
+  ],
+  "arms": [
+    "A",
+    "B"
+  ],
+  "new_api_limit_cny": 6.85,
+  "prior_api_conservative_upper_cny": 3.143694,
+  "cumulative_api_upper_limit_cny": 9.993694,
+  "automatic_retries": 0,
+  "formal_trial_authorized": false
+}

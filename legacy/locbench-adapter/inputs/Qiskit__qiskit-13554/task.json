@@ -1,0 +1,6 @@
+{
+  "instance_id": "Qiskit__qiskit-13554",
+  "repo": "Qiskit/qiskit",
+  "base_commit": "b7b26e000cd4baf3dcd28ca2f4607404bf736e2b",
+  "problem_statement": "Doc string of `operation` in ParameterExpression._apply_operation\nIt says\n```\noperation: One of operator.{add,sub,mul,truediv}.\n```\nBut the function is already called also with other operations, for example `pow` in `ParameterExpression.__pow__`.\n"
+}

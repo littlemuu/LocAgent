@@ -1,0 +1,5 @@
+{
+  "STRONG": "已确认|确认.{0,8}根因|根因(?:就是|是|在)|不是\\s*(?:bug|缺陷|问题)|无需(?:修改|修复)|不(?:需要|应)(?:修改|修复)|确定.{0,8}(?:原因|错误)|必然|肯定|毫无疑问|\\b(?:root cause|confirmed|definitely|certainly|not a bug|no bug|not a misunderstanding|misunderstanding|no (?:code )?(?:change|fix|modification) (?:is )?(?:needed|required|warranted)|(?:does not|doesn.t) need (?:a )?(?:fix|change)|correct(?:ly)?|unrelated)\\b",
+  "CITATION": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+  "ENTITY": "[\\w./-]+\\.py:(?!\\d)\\w+(?:\\.(?!\\d)\\w+)*"
+}

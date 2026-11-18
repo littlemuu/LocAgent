@@ -1,0 +1,6 @@
+{
+  "instance_id": "cupy__cupy-3730",
+  "repo": "cupy/cupy",
+  "base_commit": "4c81aebbec5d481ddee8685d982b24372e5f272b",
+  "problem_statement": "Reuse cufft plan objects\nReusing a plan object have a significant impact in the complete fft performance. I measured a ~500us time drop.\r\n\r\nWe should try to create a `PlanAllocator` or a pool of plans to reuse objects according to the requested size.\r\n\r\n(Plans allocate gpu memory so we have to be careful when reusing them).\r\n\r\nCC @leofang @asi1024 @grlee77 \n"
+}

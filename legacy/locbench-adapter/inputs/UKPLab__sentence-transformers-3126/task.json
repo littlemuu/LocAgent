@@ -1,0 +1,6 @@
+{
+  "instance_id": "UKPLab__sentence-transformers-3126",
+  "repo": "UKPLab/sentence-transformers",
+  "base_commit": "58d68ac7c6153112b4abe925ba7be1a9dad640be",
+  "problem_statement": "CrossEncoder .rank condition error in CrossEncoder.py\nI get the following error when I use .rank method:\r\n\r\n```\r\nFile /usr/local/lib/python3.12/dist-packages/sentence_transformers/cross_encoder/CrossEncoder.py:551, in CrossEncoder.rank(self, query, documents, top_k, return_documents, batch_size, show_progress_bar, num_workers, activation_fct, apply_softmax, convert_to_numpy, convert_to_tensor)\r\n    548     if return_documents:\r\n    549         results[-1].update({\"text\": documents[i]})\r\n--> 551 results = sorted(results, key=lambda x: x[\"score\"], reverse=True)\r\n    552 return results[:top_k]\r\n\r\nValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()\r\n```\r\nI use sentence_transformers v3.3.0.\r\n\r\nA snippet:\r\n```python\r\n\r\ncross_encoder = sentence_transformers.CrossEncoder(\"amberoad/bert-multilingual-passage-reranking-msmarco\", device='cpu', max_length=256)\r\ncross_encoder.rank(query, docs)\r\n```\r\n\n"
+}

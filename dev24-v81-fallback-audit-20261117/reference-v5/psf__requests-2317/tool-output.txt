@@ -1,0 +1,89 @@
+B TOOL 1: search_text
+ARGS: {"offset": 0, "query": "builtin_str"}
+requests/compat.py:96:     builtin_str = str
+requests/compat.py:111:     builtin_str = str
+requests/models.py:34:     is_py2, chardet, json, builtin_str, basestring)
+requests/models.py:443:                 self.headers['Content-Length'] = builtin_str(length)
+requests/models.py:469:             self.headers['Content-Length'] = builtin_str(body.tell())
+requests/models.py:474:                 self.headers['Content-Length'] = builtin_str(l)
+requests/sessions.py:16: from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str
+requests/sessions.py:428:         method = builtin_str(method)
+requests/utils.py:27:                      builtin_str, getproxies, proxy_bypass, urlunparse)
+requests/utils.py:663:     if isinstance(string, builtin_str):
+test_requests.py:19:     Morsel, cookielib, getproxies, str, urljoin, urlparse, is_py3, builtin_str)
+test_requests.py:999:         assert isinstance(s, builtin_str)
+
+B TOOL 2: search_text
+ARGS: {"offset": 0, "query": "method = builtin_str(method)"}
+requests/sessions.py:428:         method = builtin_str(method)
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 120, "path": "requests/compat.py", "start_line": 85}
+
+
+B TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 445, "path": "requests/sessions.py", "start_line": 415}
+415:         :type timeout: float or tuple
+416:         :param allow_redirects: (optional) Set to True by default.
+417:         :type allow_redirects: bool
+418:         :param proxies: (optional) Dictionary mapping protocol to the URL of
+419:             the proxy.
+420:         :param stream: (optional) whether to immediately download the response
+421:             content. Defaults to ``False``.
+422:         :param verify: (optional) if ``True``, the SSL cert will be verified.
+423:             A CA_BUNDLE path can also be provided.
+424:         :param cert: (optional) if String, path to ssl client cert file (.pem).
+425:             If Tuple, ('cert', 'key') pair.
+426:         """
+427: 
+428:         method = builtin_str(method)
+429: 
+430:         # Create the Request.
+431:         req = Request(
+432:             method = method.upper(),
+433:             url = url,
+434:             headers = headers,
+435:             files = files,
+436:             data = data or {},
+437:             json = json,
+438:             params = params or {},
+439:             auth = auth,
+440:             cookies = cookies,
+441:             hooks = hooks,
+442:         )
+443:         prep = self.prepare_request(req)
+444: 
+445:         proxies = proxies or {}
+
+
+B TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 115, "path": "requests/compat.py", "start_line": 88}
+88:     from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, getproxies, proxy_bypass
+89:     from urlparse import urlparse, urlunparse, urljoin, urlsplit, urldefrag
+90:     from urllib2 import parse_http_list
+91:     import cookielib
+92:     from Cookie import Morsel
+93:     from StringIO import StringIO
+94:     from .packages.urllib3.packages.ordered_dict import OrderedDict
+95: 
+96:     builtin_str = str
+97:     bytes = str
+98:     str = unicode
+99:     basestring = basestring
+100:     numeric_types = (int, long, float)
+101: 
+102: 
+103: elif is_py3:
+104:     from urllib.parse import urlparse, urlunparse, urljoin, urlsplit, urlencode, quote, unquote, quote_plus, unquote_plus, urldefrag
+105:     from urllib.request import parse_http_list, getproxies, proxy_bypass
+106:     from http import cookiejar as cookielib
+107:     from http.cookies import Morsel
+108:     from io import StringIO
+109:     from collections import OrderedDict
+110: 
+111:     builtin_str = str
+112:     str = str
+113:     bytes = bytes
+114:     basestring = (str, bytes)
+115:     numeric_types = (int, float)
+

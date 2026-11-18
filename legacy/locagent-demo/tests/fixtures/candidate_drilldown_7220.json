@@ -1,0 +1,152 @@
+{
+  "provenance": {
+    "result_file": "pytest-7220-on-result.json",
+    "result_sha256": "4a1a912e3d42b891a8a5edd2d4a4cd6990c83f87b41ad0d64000ff0f4a5b08cf",
+    "source_archive_sha256": "56ab5df6573cba42f4ac8c38986dc3ae30998829dd9d7b084c5c15ad2486e6d9",
+    "source_member": "pytest-56bf819c2f4eaf8b36bd8c42c06bb59d5a3bfc0f/src/_pytest/nodes.py",
+    "source_sha256": "0a8f2600bee9054f788f9e0517416dacc9a506bee63f8a1f3ebad37f0cee2b3f",
+    "purpose": "Recorded delivery replay and explicit scripted counterfactual, not live model evidence; no labels used"
+  },
+  "output": {
+    "arguments": {
+      "file_path_or_pattern": "src/_pytest/_code/code.py",
+      "search_terms": [
+        "cwd_relative_nodeid",
+        "def _getcrashline",
+        "def repr_failure",
+        "def _getreprcrash"
+      ]
+    },
+    "candidate_spans": [
+      {
+        "end_offset": 293,
+        "offset": 141,
+        "payload": {
+          "entities": [
+            "src/_pytest/config/__init__.py:Config.cwd_relative_nodeid"
+          ],
+          "files": [
+            "src/_pytest/config/__init__.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 972,
+        "offset": 830,
+        "payload": {
+          "entities": [
+            "src/_pytest/terminal.py:TerminalReporter._getcrashline"
+          ],
+          "files": [
+            "src/_pytest/terminal.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 1587,
+        "offset": 1458,
+        "payload": {
+          "entities": [
+            "src/_pytest/python.py:Function.repr_failure"
+          ],
+          "files": [
+            "src/_pytest/python.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 1788,
+        "offset": 1654,
+        "payload": {
+          "entities": [
+            "src/_pytest/doctest.py:DoctestItem.repr_failure"
+          ],
+          "files": [
+            "src/_pytest/doctest.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 1969,
+        "offset": 1846,
+        "payload": {
+          "entities": [
+            "src/_pytest/nodes.py:Node.repr_failure"
+          ],
+          "files": [
+            "src/_pytest/nodes.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 2160,
+        "offset": 2032,
+        "payload": {
+          "entities": [
+            "src/_pytest/nodes.py:Collector.repr_failure"
+          ],
+          "files": [
+            "src/_pytest/nodes.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      },
+      {
+        "end_offset": 2571,
+        "offset": 2428,
+        "payload": {
+          "entities": [
+            "src/_pytest/_code/code.py:ExceptionInfo._getreprcrash"
+          ],
+          "files": [
+            "src/_pytest/_code/code.py"
+          ]
+        },
+        "repeated": false,
+        "type": "function"
+      }
+    ],
+    "raw": "##Searching for term \"cwd_relative_nodeid\"...\n### Search Result:\nFound function `src/_pytest/config/__init__.py:Config.cwd_relative_nodeid`.\nFinish target (type=function): {\"files\": [\"src/_pytest/config/__init__.py\"], \"entities\": [\"src/_pytest/config/__init__.py:Config.cwd_relative_nodeid\"]}.\nSource: Match found for entity name `cwd_relative_nodeid`.\n```\n908 | def cwd_relative_nodeid(self, nodeid):\n909 |         # nodeid's are relative to the rootpath, compute relative to cwd\n910 |         if self.invocation_dir != self.rootdir:\n911 |             fullpath = self.rootdir.join(nodeid)\n912 |             nodeid = self.invocation_dir.bestrelpath(fullpath)\n913 |         return nodeid\n```\n\n\n\n##Searching for term \"def _getcrashline\"...\n### Search Result:\nFound function `src/_pytest/terminal.py:TerminalReporter._getcrashline`.\nFinish target (type=function): {\"files\": [\"src/_pytest/terminal.py\"], \"entities\": [\"src/_pytest/terminal.py:TerminalReporter._getcrashline\"]}.\nSource: Match found for entity name `def _getcrashline`.\n```\n805 | def _getcrashline(self, rep):\n806 |         try:\n807 |             return str(rep.longrepr.reprcrash)\n808 |         except AttributeError:\n809 |             try:\n810 |                 return str(rep.longrepr)[:50]\n811 |             except AttributeError:\n812 |                 return \"\"\n```\n\n\n\n##Searching for term \"def repr_failure\"...\n### Search Result:\nFound function `src/_pytest/python.py:Function.repr_failure`.\nFinish target (type=function): {\"files\": [\"src/_pytest/python.py\"], \"entities\": [\"src/_pytest/python.py:Function.repr_failure\"]}.\nFound function `src/_pytest/doctest.py:DoctestItem.repr_failure`.\nFinish target (type=function): {\"files\": [\"src/_pytest/doctest.py\"], \"entities\": [\"src/_pytest/doctest.py:DoctestItem.repr_failure\"]}.\nFound function `src/_pytest/nodes.py:Node.repr_failure`.\nFinish target (type=function): {\"files\": [\"src/_pytest/nodes.py\"], \"entities\": [\"src/_pytest/nodes.py:Node.repr_failure\"]}.\nFound function `src/_pytest/nodes.py:Collector.repr_failure`.\nFinish target (type=function): {\"files\": [\"src/_pytest/nodes.py\"], \"entities\": [\"src/_pytest/nodes.py:Collector.repr_failure\"]}.\nSource: Match found for entity name `def repr_failure`.\nHint: Use more detailed query to get the full content of some if needed.\n\n\n\n##Searching for term \"def _getreprcrash\"...\n### Search Result:\nFound function `src/_pytest/_code/code.py:ExceptionInfo._getreprcrash`.\nFinish target (type=function): {\"files\": [\"src/_pytest/_code/code.py\"], \"entities\": [\"src/_pytest/_code/code.py:ExceptionInfo._getreprcrash\"]}.\nSource: Match found for entity name `def _getreprcrash`.\n```\n563 | def _getreprcrash(self) -> \"ReprFileLocation\":\n564 |         exconly = self.exconly(tryshort=True)\n565 |         entry = self.traceback.getcrashentry()\n566 |         path, lineno = entry.frame.code.raw.co_filename, entry.lineno\n567 |         return ReprFileLocation(path, lineno + 1, exconly)\n```\n",
+    "tool": "search_code_snippets"
+  },
+  "audit": {
+    "content_utf8_bytes": 2133,
+    "end_offset": 1970,
+    "message_json_bytes": 2334,
+    "offset": 0,
+    "output_id": "output-3",
+    "raw_utf8_bytes": 2936,
+    "tool": "search_code_snippets",
+    "tool_call_id": "call_01_1oD6PEuEiux3bGBnXNrO1341",
+    "truncation_reason": "total_tool_message_byte_limit"
+  },
+  "nodes": {
+    "src/_pytest/nodes.py:Node._repr_failure_py": {
+      "type": "function",
+      "code": "    def _repr_failure_py(\n        self, excinfo: ExceptionInfo[BaseException], style=None,\n    ) -> Union[str, ReprExceptionInfo, ExceptionChainRepr, FixtureLookupErrorRepr]:\n        if isinstance(excinfo.value, ConftestImportFailure):\n            excinfo = ExceptionInfo(excinfo.value.excinfo)\n        if isinstance(excinfo.value, fail.Exception):\n            if not excinfo.value.pytrace:\n                style = \"value\"\n        if isinstance(excinfo.value, FixtureLookupError):\n            return excinfo.value.formatrepr()\n        if self.config.getoption(\"fulltrace\", False):\n            style = \"long\"\n        else:\n            tb = _pytest._code.Traceback([excinfo.traceback[-1]])\n            self._prunetraceback(excinfo)\n            if len(excinfo.traceback) == 0:\n                excinfo.traceback = tb\n            if style == \"auto\":\n                style = \"long\"\n        # XXX should excinfo.getrepr record all data and toterminal() process it?\n        if style is None:\n            if self.config.getoption(\"tbstyle\", \"auto\") == \"short\":\n                style = \"short\"\n            else:\n                style = \"long\"\n\n        if self.config.getoption(\"verbose\", 0) > 1:\n            truncate_locals = False\n        else:\n            truncate_locals = True\n\n        try:\n            os.getcwd()\n            abspath = False\n        except OSError:\n            abspath = True\n\n        return excinfo.getrepr(\n            funcargs=True,\n            abspath=abspath,\n            showlocals=self.config.getoption(\"showlocals\", False),\n            style=style,\n            tbfilter=False,  # pruned already, or in --fulltrace mode.\n            truncate_locals=truncate_locals,\n        )",
+      "start_line": 333,
+      "end_line": 377
+    },
+    "src/_pytest/nodes.py:Node.repr_failure": {
+      "type": "function",
+      "code": "    def repr_failure(\n        self, excinfo, style=None\n    ) -> Union[str, ReprExceptionInfo, ExceptionChainRepr, FixtureLookupErrorRepr]:\n        \"\"\"\n        Return a representation of a collection or test failure.\n\n        :param excinfo: Exception information for the failure.\n        \"\"\"\n        return self._repr_failure_py(excinfo, style)",
+      "start_line": 379,
+      "end_line": 387
+    }
+  },
+  "historical_attempts": [],
+  "final_tools": [
+    "finish"
+  ]
+}

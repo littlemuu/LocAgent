@@ -1,0 +1,22 @@
+已读到的事实（附文件:行号）
+- requests/sessions.py:378-392 定义 Session.request(method, url, ...)，method 为第一个位置参数，无类型约束。
+- requests/sessions.py:428 执行 method = builtin_str(method)，随后 requests/sessions.py:432 以 method.upper() 构造 Request。
+- requests/sessions.py:360-376 prepare_request 中再次调用 request.method.upper() 传给 PreparedRequest.prepare。
+- 搜索命中（未读正文）：requests/compat.py:96 与 requests/compat.py:111 均为 builtin_str = str；requests/models.py:34 从 compat 导入 builtin_str；requests/utils.py:663 用 isinstance(string, builtin_str) 判断。
+
+推断
+- 待验证假设：在 Python 3 下 requests/compat.py:111 的 builtin_str 绑定为内建 str，因此 requests/sessions.py:Session.request 对 bytes 调用 str(b'GET') 得到 "b'GET'"，而非解码为 'GET'，与用户观察一致。
+- 待验证假设：Python 2 下 builtin_str 绑定为 str（bytes 别名），str(b'GET') 返回 'GET'，可解释 2.6 与 3.4 的行为差异。
+- 待验证假设：修复点应在 requests/sessions.py:Session.request 的 428 行附近，对 bytes 先 decode 再 upper，而非依赖 builtin_str。
+- 待验证假设：neutronclient 的 safe_encode_list 把 method 变成 bytes 是触发条件，requests 侧缺少 bytes 归一化是放大因素。
+
+未核验点
+- requests/compat.py 的 builtin_str 定义函数体未读完（两次读取均返回 ValueError，仅见搜索命中行）。
+- requests/models.py 中 Request/PreparedRequest 对 method 的处理未读。
+- requests/utils.py:663 附近 safe_* 函数未读，无法确认 neutronclient 路径。
+- 未运行任何验证，调用链未穷尽。
+
+最小验证：`python -c "import requests; print(requests.Session().prepare_request(requests.Request(method=b'GET', url='http://x/')).method)"`
+
+以下内容未在阅读记录中核验：
+- [R1] requests/sessions.py:Session.prepare_request

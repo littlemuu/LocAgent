@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "instance_id": "sphinx-doc__sphinx-8721",
+  "base_commit": "82ef497a8c88f0f6e50d84520e7276bfbf65025d",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sphinx/ext/viewcode.py:53-60：doctree_read 在 builder.name 以 \"epub\" 开头且 viewcode_enable_epub 为假时直接 return，即不收集模块、不加 [source] 链接。\n- sphinx/ext/viewcode.py:181-198：collect_pages 只检查 env 是否有 _viewcode_modules，并对每个 modname 调 should_generate_module_page，未见任何 epub 或 viewcode_enable_epub 判断。\n- sphinx/ext/viewcode.py:160-178：should_generate_module_page 仅比较模块文件与 _modules 页面 mtime，无 builder 类型过滤。\n- sphinx/ext/viewcode.py:126-134：env_merge_info 把子进程的 _viewcode_modules 合并进主环境，无 builder 条件。\n- sphinx/ext/viewcode.py:281：viewcode_enable_epub 默认 False。\n\n推断\n- 待验证假设：`make html epub` 时 html 构建先填充 env._viewcode_modules（sphinx/ext/viewcode.py:doctree_read 在 html builder 下不返回），该环境被 epub 复用/合并（sphinx/ext/viewcode.py:env_merge_info），于是 epub 的 collect_pages（sphinx/ext/viewcode.py:collect_pages）仍为这些模块生成 _modules 页面，绕过 epub 的开关。\n- 待验证假设：修复方向是在 sphinx/ext/viewcode.py:collect_pages 或 should_generate_module_page 中按 builder 名与 viewcode_enable_epub 提前返回，与 doctree_read 的判定保持一致。\n\n未核验点\n- sphinx/ext/viewcode.py:204-291 未读完（分页 cursor=rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67 未续读），collect_pages 尾部与 setup 的 connect 注册（collect_pages 是否对 epub 注册）未确认。\n- 未读 sphinx/builders/epub3.py 与 sphinx/builders/__init__.py，无法确认 epub builder 是否复用 html 环境或独立读取。\n- 未运行任何构建验证。\n\n最小验证：`python -m pytest -q tests/test_ext_viewcode.py`（或断言 epub 构建后 outdir/_modules 不存在）\n",
+    "entities": [
+      "sphinx/ext/viewcode.py:doctree_read",
+      "sphinx/ext/viewcode.py:collect_pages",
+      "sphinx/ext/viewcode.py:should_generate_module_page",
+      "sphinx/ext/viewcode.py:get_module_filename",
+      "sphinx/ext/viewcode.py:env_merge_info"
+    ],
+    "files": [
+      "sphinx/ext/viewcode.py"
+    ]
+  }
+}

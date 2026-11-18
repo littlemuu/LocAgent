@@ -1,0 +1,8 @@
+{
+  "status": "blocked_on_user_wechat_verification",
+  "observed_at": 1794948644.2267892,
+  "instance": "ins-1njewmmg",
+  "still_running": true,
+  "stop_charging_confirmed": false,
+  "screenshot": "shutdown-verification-required.jpg"
+}

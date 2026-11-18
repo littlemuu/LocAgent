@@ -1,0 +1,52 @@
+{
+  "status": "passed_with_local_scope_limit",
+  "counts": {
+    "file_paths_scanned": 78861,
+    "text_files_scanned_by_rg": 71997,
+    "archive_members_scanned": 46936,
+    "archive_text_members_scanned": 39707,
+    "credential_files_excluded": 2,
+    "sealed_files_excluded_from_content_scan": 3
+  },
+  "archives_checked": 117,
+  "historical_run_overlap": [],
+  "all_matches_classified": true,
+  "match_classification": [
+    {
+      "path": "freezes/holdout-v1/ids.txt",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "freezes/holdout-v1/manifest.json",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "verification/holdout-reproduction/ids.txt",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "verification/holdout-reproduction/manifest.json",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "data/selection/verified-metadata.json",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "e2e-preparation-v1/archive/smoke-runtime-v1/data/selection-metadata.json",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    },
+    {
+      "path": "e2e-preparation-v1/data/selection-metadata.json",
+      "class": "frozen_or_reproduced_metadata_only",
+      "matched_holdout_ids": 50
+    }
+  ],
+  "note": "No run/prompt/response/prediction/evaluation evidence matched any holdout ID, related GitHub issue/PR URL or base_commit. Metadata tables checked to contain only instance_id/repo/base_commit/created_at. Sealed data was only hashed. Local project scope; no claim about external histories or pretraining."
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "conan-io__conan-17369",
+  "repo": "conan-io/conan",
+  "base_commit": "7f88c7ef4e063489f087623fca6644eb420b4963",
+  "problem_statement": "[bug] git.fetch_commit() throws an error when downloading sources to subfolder\n### Describe the bug\n\n`conan.tools.scm.Git.fetch_commit()` method throws an error when `folder` argument is passed to Git class constructor:\r\n\r\n```python\r\ndef source(self):\r\n    git = Git(self, folder=\"myFolder\")\r\n    git.fetch_commit(url, commit=self.conan_data[\"sources\"][\"commit\"])\r\n``` \r\n\r\nError message:\r\n```bash\r\nERROR: mypackage/1.2.3: Error in source() method, line 65\r\n        git.fetch_commit(url, commit=self.conan_data[\"sources\"][\"commit\"])\r\n        FileNotFoundError: [Errno 2] No such file or directory: 'myFolder'\r\n```\r\n\r\nIt seems that `mkdir(self.folder)` is missing in the body of `fetch_commit()` method - similarly as it is done in `clone()` method.\n\n### How to reproduce it\n\n_No response_\n"
+}

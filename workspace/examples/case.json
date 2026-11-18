@@ -1,0 +1,15 @@
+{
+  "root": "source",
+  "source_files": ["src/greeting.py"],
+  "issue": "Locate the function that constructs the greeting.",
+  "scripts": {
+    "baseline": [
+      {"stop_reason": "tool_use", "content": [{"type": "tool_use", "id": "b1", "name": "search_text", "input": {"query": "hello", "offset": 0}}]},
+      {"stop_reason": "tool_use", "content": [{"type": "tool_use", "id": "b2", "name": "finish", "input": {"files": ["src/greeting.py"], "entities": ["src/greeting.py:greeting"], "answer": "The greeting function constructs the hello string; scripted protocol fixture."}}]}
+    ],
+    "retrieval": [
+      {"stop_reason": "tool_use", "content": [{"type": "tool_use", "id": "r1", "name": "locagent_retrieve", "input": {"query": "greeting", "offset": 0}}]},
+      {"stop_reason": "tool_use", "content": [{"type": "tool_use", "id": "r2", "name": "finish", "input": {"files": ["src/greeting.py"], "entities": ["src/greeting.py:greeting"], "answer": "The greeting entity constructs the hello string; scripted protocol fixture."}}]}
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "ray-project__ray-48756",
+  "repo": "ray-project/ray",
+  "base_commit": "e70b37a435122609f88e02ce3377b8dd7f780e6b",
+  "problem_statement": "[ray metrics launch-prometheus] Incorrect download URL generation for aarch64 architecture\n### What happened + What you expected to happen\n\n<img width=\"802\" alt=\"image\" src=\"https://github.com/user-attachments/assets/e370ab29-db28-432b-b2c5-4c50e8e2dcf6\">\r\n\r\n- When executing the \"ray metrics launch-prometheus\" command on an aarch64 architecture system, the download URL is incorrectly generated, leading to a \"not found\" error. \r\n- This occurs because the command attempts to download the Prometheus build file from the GitHub releases page (https://github.com/prometheus/prometheus/releases) using \"aarch64\" in the URL, while Prometheus classifies this architecture as \"arm64\".\n\n### Versions / Dependencies\n\n- Ray: rayproject/ray:nightly-aarch64\n\n### Reproduction script\n\n1. Run \"ray metrics launch-prometheus\" on an aarch64 system\r\n2. Observe that the command attempts to download a file with \"aarch64\" in the URL\n\n### Issue Severity\n\nLow: It annoys or frustrates me.\n"
+}

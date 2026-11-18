@@ -1,0 +1,94 @@
+"""Adapter over the existing LocAgent graph/entity BM25 tools.
+
+The host must import its reviewed LocAgent installation, supply a source-only
+graph in memory, and run each case in a fresh process. No pickle or repo code
+is loaded here. Corpus BM25, embeddings and graph expansion are not enabled yet.
+"""
+import ast
+from copy import deepcopy
+
+
+def source_entity_segments(source):
+    """Bind graph IDs and spans to exact AST segments, not whole source lines.
+
+    ast.get_source_segment omits a final inline comment and leading indentation
+    on the first line. Reconstruct with the same documented AST boundary while
+    retaining exact characters inside the entity, including string whitespace.
+    A single initial UTF-8 signature is encoding metadata, not an AST character.
+    Remove it only from this parser view; Snapshot and file-node bytes stay exact.
+    """
+    source = source[1:] if source.startswith('\ufeff') else source
+    segments = {}
+    def visit(node, prefix=''):
+        for child in ast.iter_child_nodes(node):
+            if isinstance(child, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                name = prefix + child.name
+                kind = 'class' if isinstance(child, ast.ClassDef) else 'function'
+                segments[(kind, name, child.lineno, child.end_lineno)] = ast.get_source_segment(source, child)
+                visit(child, name + '.')
+            else:
+                visit(child, prefix)
+    visit(ast.parse(source))
+    return segments
+
+
+class LocAgentRetriever:
+    def __init__(self, snapshot, graph):
+        from dependency_graph import RepoEntitySearcher
+        from plugins.location_tools.retriever.bm25_retriever import build_module_retriever_from_graph
+
+        self.snapshot_id = snapshot.identity
+        self._graph = deepcopy(graph)
+        graph_files = {n for n, d in self._graph.nodes(data=True) if d.get('type') == 'file'}
+        if not graph_files or not graph_files <= set(snapshot.files):
+            raise ValueError('graph_source_scope_mismatch')
+        if {p for p in snapshot.files if p.endswith('.py')} - graph_files:
+            raise ValueError('graph_missing_source_files')
+        source_entities = {}
+        for node, data in self._graph.nodes(data=True):
+            kind = data.get('type')
+            if kind == 'directory':
+                continue
+            path = node.partition(':')[0]
+            if path not in graph_files:
+                raise ValueError('graph_entity_outside_source')
+            if kind == 'file' and data.get('code') != snapshot.files[path]:
+                raise ValueError('graph_source_content_mismatch')
+            if kind in ('function', 'class'):
+                start, end = data.get('start_line'), data.get('end_line')
+                if type(start) is not int or type(end) is not int or not 1 <= start <= end:
+                    raise ValueError('invalid_entity_span')
+                if path not in source_entities:
+                    source_entities[path] = source_entity_segments(snapshot.files[path])
+                key = (kind, node.partition(':')[2], start, end)
+                expected = source_entities[path].get(key)
+                if expected is None or data.get('code') != expected:
+                    raise ValueError('graph_entity_content_mismatch')
+        for path in graph_files:
+            try:
+                segments = source_entity_segments(snapshot.files[path])
+            except SyntaxError:
+                raise ValueError('source_syntax_not_supported') from None
+            if any(path + ':' + name not in self._graph for kind, name, start, end in segments):
+                raise ValueError('graph_missing_source_entities')
+        self._lexical = build_module_retriever_from_graph(
+            entity_searcher=RepoEntitySearcher(self._graph), similarity_top_k=5)
+
+    def retrieve(self, query):
+        from util.localizer import _ENGINE_LOCK, _graph_session
+
+        if not _ENGINE_LOCK.acquire(blocking=False):
+            raise RuntimeError('locagent_session_busy')
+        try:
+            task = {'instance_id': 'readonly-' + self.snapshot_id[:16],
+                    'repo': 'source/snapshot', 'base_commit': self.snapshot_id,
+                    'problem_statement': ''}
+            with _graph_session(self._graph, task, None, self._lexical) as ops:
+                if query in self._graph:
+                    return ops.get_entity_contents([query])
+                # Reuse real module BM25 and graph-backed snippet formatting;
+                # no fallback corpus loader, filesystem setup, or model call.
+                candidates = ops.bm25_module_retrieve(query, similarity_top_k=5)
+                return ops.get_entity_contents(candidates[:5]) if candidates else 'No locations found.'
+        finally:
+            _ENGINE_LOCK.release()

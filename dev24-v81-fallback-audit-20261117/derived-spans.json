@@ -1,0 +1,42 @@
+[
+  {
+    "case_index": 5,
+    "path": "sklearn/ensemble/voting.py",
+    "name": "fit",
+    "definition_start": 64,
+    "definition_end": 101,
+    "definition_length": 38,
+    "proof": "continuous same-base C/B tool source with next same-level definition boundary; AST parse only",
+    "uses_B_reference": true
+  },
+  {
+    "case_index": 13,
+    "path": "astropy/modeling/separable.py",
+    "name": "_arith_oper",
+    "definition_start": 130,
+    "definition_end": 168,
+    "definition_length": 39,
+    "proof": "continuous same-base C/B tool source with next same-level definition boundary; AST parse only",
+    "uses_B_reference": true
+  },
+  {
+    "case_index": 18,
+    "path": "sphinx/ext/viewcode.py",
+    "name": "collect_pages",
+    "definition_start": 181,
+    "definition_end": 276,
+    "definition_length": 96,
+    "proof": "continuous same-base C/B tool source with next same-level definition boundary; AST parse only",
+    "uses_B_reference": true
+  },
+  {
+    "case_index": 19,
+    "path": "lib/matplotlib/figure.py",
+    "name": "align_xlabels",
+    "definition_start": 1335,
+    "definition_end": 1394,
+    "definition_length": 60,
+    "proof": "continuous same-base C/B tool source with next same-level definition boundary; AST parse only",
+    "uses_B_reference": false
+  }
+]

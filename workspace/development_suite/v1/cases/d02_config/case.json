@@ -1,0 +1,130 @@
+{
+  "root": "source",
+  "source_files": [
+    "runner/api.py",
+    "runner/defaults.py",
+    "runner/reports.py",
+    "runner/settings.py",
+    "runner/validation.py",
+    "runner/worker.py"
+  ],
+  "issue": "A task starts with default settings, a project mapping, and a request mapping. Explain which values win, whether false and zero are treated as missing, what happens to unknown keys, and whether invalid overridden values reach the worker. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "search_text",
+            "input": {
+              "query": "settings",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "runner/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "one",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "two",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "settings",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "three",
+            "name": "read_file",
+            "input": {
+              "path": "runner/api.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "end",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Offline scripted protocol fixture; no model-quality answer."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

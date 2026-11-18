@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-59900",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "8d2ca0bf84bcf44a800ac19bdb4ed7ec88c555e2",
+  "problem_statement": "ENH: increase verbosity on error\n### Feature Type\n\n- [ ] Adding new functionality to pandas\n\n- [X] Changing existing functionality in pandas\n\n- [ ] Removing existing functionality in pandas\n\n\n### Problem Description\n\nOn a specific type error the error causing type is not logged in the error\n\n### Feature Description\n\nBy replacing:\r\n`raise AttributeError(\"Can only use .str accessor with string values!\")`\r\nwith\r\n`raise AttributeError(f\"Can only use .str accessor with string values! Inferred dType: {inferred_dtype}\")`\r\nthe problem would be solved\r\n\r\nDetails can be found in [here](https://github.com/pandas-dev/pandas/pull/59649/files)\n\n### Alternative Solutions\n\nUse a debugger and set a break point\n\n### Additional Context\n\n_No response_\n"
+}

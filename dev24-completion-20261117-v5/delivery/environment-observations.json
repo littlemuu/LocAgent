@@ -1,0 +1,52 @@
+{
+  "A": {
+    "resolved": false,
+    "tests": {
+      "FAIL_TO_PASS": {
+        "success": 7,
+        "failure": 1
+      },
+      "PASS_TO_PASS": {
+        "success": 129,
+        "failure": 4
+      },
+      "FAIL_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      },
+      "PASS_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      }
+    },
+    "ssl_certificate_verify_failed": true,
+    "pytest_summary": [
+      "============ 6 failed, 137 passed, 3 warnings in 456.74s (0:07:36) ============="
+    ]
+  },
+  "B": {
+    "resolved": false,
+    "tests": {
+      "FAIL_TO_PASS": {
+        "success": 7,
+        "failure": 1
+      },
+      "PASS_TO_PASS": {
+        "success": 129,
+        "failure": 4
+      },
+      "FAIL_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      },
+      "PASS_TO_FAIL": {
+        "success": 0,
+        "failure": 0
+      }
+    },
+    "ssl_certificate_verify_failed": true,
+    "pytest_summary": [
+      "============ 6 failed, 137 passed, 3 warnings in 460.39s (0:07:40) ============="
+    ]
+  }
+}

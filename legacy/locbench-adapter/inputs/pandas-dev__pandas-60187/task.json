@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60187",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "dbeeb1f05bca199b3c1aed979e6ae72074a82243",
+  "problem_statement": "DOC: Distinguish between Series.round and Series.dt.round\n### Pandas version checks\n\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\n\n\n### Location of the documentation\n\nhttps://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.round.html#pandas.Series.round\n\n### Documentation problem\n\nWhen using Series.round, it does not work on date data.\n\n### Suggested fix for documentation\n\nAdding Series.dt.round in the \"See also\" section would make it more convenient for users to find the relevant documentation.\r\nhttps://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.dt.round.html\n"
+}

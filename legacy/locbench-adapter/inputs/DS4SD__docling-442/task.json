@@ -1,0 +1,6 @@
+{
+  "instance_id": "DS4SD__docling-442",
+  "repo": "DS4SD/docling",
+  "base_commit": "6666d9ec070650df35a8b156643a78c32dcfefb5",
+  "problem_statement": "Image location in Word Document is wrong\n### Bug\r\nThe image placeholder in parsed docx documents is wrong. An incorrect index is used resulting in a wrong location for images in downstream export formats like markdown.\r\n\r\n\r\n### Steps to reproduce\r\nParsing a simple .docx with docling\r\n[image_within_text.docx](https://github.com/user-attachments/files/17919742/image_within_text.docx)\r\n\r\n\r\n### Docling version\r\nDocling version: 2.7.0\r\nDocling Core version: 2.4.1\r\nDocling IBM Models version: 2.0.6\r\nDocling Parse version: 2.1.2\r\n\r\n\r\n### Python version\r\n3.12.4\r\n\r\n\r\n<!-- ⚠️ ATTENTION: When sharing screenshots, attachments, or other data make sure not to include any sensitive information. -->\r\n\n"
+}

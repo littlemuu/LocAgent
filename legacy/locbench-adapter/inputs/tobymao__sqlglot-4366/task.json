@@ -1,0 +1,6 @@
+{
+  "instance_id": "tobymao__sqlglot-4366",
+  "repo": "tobymao/sqlglot",
+  "base_commit": "79c675a49fb44a6a7a97ea0de79822d8571724be",
+  "problem_statement": "BUG(duckdb): Compiling STRUCTs throws away field name info, which is sometimes needed\n**Fully reproducible code snippet**\r\n```python\r\nimport sqlglot\r\nprint(sqlglot.__version__)\r\n# 25.28.1.dev12\r\n\r\ninp = \"\"\"SELECT CAST({'i':1, 's':'foo'} AS STRUCT(\"s\" TEXT, \"i\" INT));\"\"\"\r\ne = sqlglot.parse_one(inp, \"duckdb\")\r\nactual = e.sql(\"duckdb\")\r\nprint(actual)\r\n# SELECT CAST(ROW(1, 'foo') AS STRUCT(\"s\" TEXT, \"i\" INT));\r\n```\r\n\r\nIf you run `actual` on https://shell.duckdb.org/, you get \"Conversion Error: Could not convert string 'foo' to INT32\".\r\nThis is because the names of the fields is important, and the simple `(ROW(1, 'foo')` that is currently given as output isn't adequate for this usage.\r\n\r\nI would expect that `actual == inp`. I think this should work even if the struct values are columns instead of literals, eg `{'i':my_int_col, 's':my_str_col}` should roundtrip exactly.\r\n\r\nI originally found this in [this ibis issue](https://github.com/ibis-project/ibis/issues/10417), but I think this should be fixed at the sqlglot level. Curious if you will agree.\r\n\n"
+}

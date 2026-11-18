@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "target": 50,
+  "diagnostic_exclusions": [
+    "blinker-pr-148",
+    "blinker-pr-149"
+  ],
+  "source": "real GitHub issue (not PR) explicitly linked by merged fix PR",
+  "query": "issue original title reconstructed from rename events when available; otherwise captured title marked history-unverified; never fix PR title/body/patch",
+  "eligibility": [
+    "issue created before fix merge; PR merged",
+    "production Python change and complete base snapshot",
+    "no overlapping repo:function targets across accepted primary tasks",
+    "no duplicate issue or normalized query",
+    "exclude pallets/itsdangerous and previously exposed target repos/tasks when unresolved",
+    "max 10 per repository; source/budget failures logged, no target-file pruning"
+  ],
+  "ordering": "repository round-robin in alphabetical order, candidate PR number descending; issue number ascending for multi-link PR; first eligible 50; eligibility evaluated without computing any rank",
+  "candidate": "all existing rag_offline.allowed Python files per base commit, tests/docs retained; static AST function regions max_chars12000, no project execution; reject unsupported whole snapshot",
+  "metrics": "fixed BM25,dense,RRF60 dense2:BM251; max entity; lexical ties; k1=1.5 b=.75 english; K1/3/5; multi-gold macro Hit and Recall distinct; partial function gold NA, file metric separate; missing results eligible=>0; report repo, symbol hint, gold multiplicity and query source/history certainty",
+  "price": "verify official Beijing sync rate; no model calls; preserve old held1.277952 unknown.557056; full131072tokens per input reservation unchanged",
+  "dedup": "identical complete final input text plus endpoint/role/model/dim/instruct/preprocess/chunker; no old vectors used",
+  "safety": "bounded source archive, no extraction, reject links/submodules/LFS; CPU/time/memory limits static parser; not full sandbox",
+  "freeze": "all sample membership, source content, labels, batch input bodies, config, engine/package hashes before any ranking; no replacing by results; no main benchmark execution authorized"
+}

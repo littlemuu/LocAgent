@@ -1,0 +1,6 @@
+{
+  "instance_id": "Chainlit__chainlit-1441",
+  "repo": "Chainlit/chainlit",
+  "base_commit": "beb44ca74f18b352fa078baf7038c2dc6b729e0c",
+  "problem_statement": "fix(security): add auth to /project/file get endpoint\nfixes https://github.com/Chainlit/chainlit/issues/1101\n"
+}

@@ -1,0 +1,869 @@
+{
+  "unblinded_at": "2026-11-12T15:51:41.967050+00:00",
+  "score_seal_path": "operator/final_scores_seal.json",
+  "score_files_sha256": {
+    "a": "95c4fe6baf1d10ff4d99c06f6b4b09a1f7eac6306f4e10ad3669b2e9d8e16212",
+    "b": "daaf86a79f0166600779394c6b366413b95c431f70d056d21068e8056a185bd0",
+    "c": "503e4cdeff0cd332ba63498a90428f4c2cf9ad3fcd87c0b28bdfa8024f14f40e"
+  },
+  "mapping_sha256": "b337d003ef1b166c42f78951b73bfe27dbf09749e329a78085c05a2e80fbd984",
+  "grading": "Two fresh-context AI reviewers, third fresh-context disagreement adjudication; frozen criteria; majority rule frozen before scores",
+  "agreement_count": 47,
+  "criterion_count": 48,
+  "agreement_rate": 0.9791666666666666,
+  "disagreements": [
+    {
+      "id": "item-d462b788",
+      "case": "d02_config",
+      "arm": "retrieval",
+      "criterion": 4,
+      "a": 0,
+      "b": 1,
+      "c": 1,
+      "final": 1,
+      "a_reason": "禁用返回及有限配置层/未知键不传递已说明，但没有清楚说明 enabled=True 时返回 started=True 并使用解析后的 attempts/timeout；“only reads”不足以表达成功分支行为。",
+      "b_reason": "答案说明 worker 读取解析后的三项并在禁用时返回 false；完整列举的两覆盖层排除了环境层，未知项不会传播。",
+      "c_reason": "答案明确给出禁用时 started=False；其跨文件叙述先说明 resolve_settings 的结果进入 start_worker，再说明 worker 读取 enabled/attempts/timeout，合起来传达有效启用时使用已解析的 attempts/timeout。答案完整列出默认值以及 project、request 两层的解析过程，传达没有环境层，并明确排除未知键进入 worker。按允许等价表述的政策，第 4 条的各项实质要求均已传达。",
+      "c_uncertainty": "中等：答案没有单独写出 enabled=True 的返回分支，而用“解析后调用 worker”与“worker 读取 attempts/timeout”两句表达该数据流。本裁决接受这种跨句等价表达；依据是答案本身的调用链和读取描述，不是代答案补写源码中的返回结构。没有环境层也通过完整列举解析来源表达，而非直接使用该措辞。"
+    }
+  ],
+  "groups": {
+    "baseline": {
+      "answers": 6,
+      "maximum": 24,
+      "a_total": 17,
+      "b_total": 17,
+      "final_total": 17,
+      "final_mean_per_answer": 2.8333333333333335,
+      "criterion_totals": [
+        5,
+        5,
+        5,
+        2
+      ]
+    },
+    "retrieval": {
+      "answers": 6,
+      "maximum": 24,
+      "a_total": 18,
+      "b_total": 19,
+      "final_total": 19,
+      "final_mean_per_answer": 3.1666666666666665,
+      "criterion_totals": [
+        6,
+        5,
+        4,
+        4
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "item-0eb46173",
+      "case": "d01_cache",
+      "arm": "baseline",
+      "original_review_id": "review-05",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "stale but self-healing after 30 units ... eventual consistency bounded by TTL",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:4-12",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "源码只定义单条 entry 的过期检查；没有保证 DB 读取新鲜性、持续写入中的收敛、共享版本或时钟条件，不能推出普遍 30 单位自愈或有界最终一致性。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "Reads therefore keep hitting the old key and keep serving the pre-update value until its TTL lapses",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:7-11",
+            "sources/d01_cache/profiles/writes.py:2-4"
+          ],
+          "reason": "异常后版本不变正确，但命中还取决于 entry 存在及未过期；且 DB 抛错是否伴随持久化副作用未知，不能直接断言缓存必然 stale。",
+          "uncertainty": "低"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "stale but self-healing after 30 units; eventual consistency bounded by TTL",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "失败未必改变数据库，旧缓存未必因失败而变旧；若数据库有副作用、读隔离未知或并发读长期阻塞，也无法由这些文件保证 30 单位内恢复。影响标准 4。"
+        },
+        {
+          "answer_evidence": "repopulate the old key with pre-write data, extending staleness by a further TTL",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "后续读取新代次不再访问旧键；此外 expires_at 使用调用提供的 now，非完成时刻。旧键被重填本身不证明正常新代读取额外陈旧一个 TTL。"
+        }
+      ]
+    },
+    {
+      "id": "item-453e4ae8",
+      "case": "d01_cache",
+      "arm": "retrieval",
+      "original_review_id": "review-09",
+      "a_total": 4,
+      "b_total": 4,
+      "final_total": 4,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "which still matches the DB, since the write failed. No rollback or invalidation is needed",
+          "source_evidence": [
+            "sources/d01_cache/profiles/writes.py:1-5",
+            "sources/d01_cache/profiles/cache.py:7-11"
+          ],
+          "reason": "db 是注入对象，write 抛错并不证明未持久化或不存在部分副作用；缓存可能原先已 stale，故一致和无需处理不能证明。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "first call misses ... stores under generation 0",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:5-11"
+          ],
+          "reason": "仅当版本键缺失且没有有效缓存时成立；源码允许调用方注入已有版本和缓存。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "versions is an in-process dict, so multi-process deployments would not share generations",
+          "source_evidence": [
+            "sources/d01_cache/profiles/api.py:4-8",
+            "sources/d01_cache/profiles/writes.py:1-5"
+          ],
+          "reason": "versions 是传入的映射接口，没有展示其构造/进程模型；结尾承认未核实共享是必要限定。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "at the boundary the entry is treated as expired and deleted",
+          "source_evidence": [
+            "sources/d01_cache/profiles/cache.py:8-11",
+            "sources/d01_cache/profiles/cleanup.py:1-4"
+          ],
+          "reason": "fetch 的相等边界走 miss 并覆写该键；只有显式执行 discard_expired 才删除。答案上下文谈 cleanup，若理解为该 helper 的条件则正确。",
+          "uncertainty": "中：可能只是在描述 cleanup，而非 fetch 自动删除。"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "which still matches the DB, since the write failed. No rollback or invalidation is needed",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "db.write 抛错不证明底层完全未写，也不证明缓存此前与数据库一致；数据库实现未提供，不能保证无需回滚或失效。"
+        },
+        {
+          "answer_evidence": "versions is an in-process dict, so multi-process deployments would not share generations",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "versions 是注入参数，源码未限定具体类型或共享机制；答案末段承认未知，但正文断言仍过强。"
+        },
+        {
+          "answer_evidence": "first call misses ... stores under generation 0",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "首次调用只有缓存为空且版本映射无该身份时才如此；注入状态可能已有项或非零代次。"
+        }
+      ]
+    },
+    {
+      "id": "item-5fcca383",
+      "case": "d02_config",
+      "arm": "baseline",
+      "original_review_id": "review-11",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [],
+      "b_accuracy_notes": []
+    },
+    {
+      "id": "item-d462b788",
+      "case": "d02_config",
+      "arm": "retrieval",
+      "original_review_id": "review-04",
+      "a_total": 3,
+      "b_total": 4,
+      "final_total": 4,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 1,
+          "c": 1,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "runner/reports.py only contains a docstring-like string",
+          "source_evidence": [
+            "sources/d02_config/runner/reports.py:1-2"
+          ],
+          "reason": "实际包含可调用的 report_defaults 函数，返回字符串，并非仅含文档字符串；与四项核心行为无关。",
+          "uncertainty": "低"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "runner/reports.py only contains a docstring-like string",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/reports.py",
+              "lines": "1-2",
+              "excerpt": "def report_defaults(): return 'Defaults are documentation, not a runtime override.'"
+            }
+          ],
+          "reason": "该文件实际定义了一个返回字符串的函数，不是只有类似文档字符串的内容；与四项核心评分无关。"
+        }
+      ]
+    },
+    {
+      "id": "item-dfe16c4b",
+      "case": "d03_access",
+      "arm": "baseline",
+      "original_review_id": "review-02",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [],
+      "b_accuracy_notes": []
+    },
+    {
+      "id": "item-17a1492c",
+      "case": "d03_access",
+      "arm": "retrieval",
+      "original_review_id": "review-08",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "the audit list is an in-memory append",
+          "source_evidence": [
+            "sources/d03_access/docs/audit.py:1-2",
+            "sources/d03_access/docs/api.py:4-7"
+          ],
+          "reason": "这里只能确认对注入 audit 调用 append；没有构造 audit 对象，不能确定存储后端必然仅在内存中。答案后半句“无可见持久化”是恰当的限定。",
+          "uncertainty": "中"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "audit list is an in-memory append with no persistence",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/audit.py",
+              "lines": "1-2",
+              "excerpt": "audit.append((user_id, document_id, action))"
+            },
+            {
+              "path": "sources/d03_access/docs/api.py",
+              "lines": "4-8",
+              "excerpt": "if not permitted(user, document, action, token): raise PermissionError('denied'); record_access(audit, user['id'], document['id'], action); return document['body']"
+            }
+          ],
+          "reason": "源码显示注入 audit 对象的 append 调用，未提供对象实现；可说未展示持久化，不能确认一定仅在内存。"
+        }
+      ]
+    },
+    {
+      "id": "item-21ec8def",
+      "case": "d04_upload",
+      "arm": "baseline",
+      "original_review_id": "review-10",
+      "a_total": 2,
+      "b_total": 2,
+      "final_total": 2,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "completed stays False, object_id is unset",
+          "source_evidence": [
+            "sources/d04_upload/uploads/finalize.py:5-13"
+          ],
+          "reason": "未完成会话原先是否含 object_id 不可知；put 抛错只说明该调用没有修改它，不能保证 unset。",
+          "uncertainty": "低"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "object_id is unset",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "源码只保证 object_id 在 put 抛错时不被本函数赋值，未提供会话初始化，不能保证此前没有 object_id。应表述为保持原值。"
+        }
+      ]
+    },
+    {
+      "id": "item-0adfc0f4",
+      "case": "d04_upload",
+      "arm": "retrieval",
+      "original_review_id": "review-12",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        }
+      ],
+      "a_accuracy_notes": [],
+      "b_accuracy_notes": []
+    },
+    {
+      "id": "item-60b4e01e",
+      "case": "d05_lease",
+      "arm": "baseline",
+      "original_review_id": "review-01",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 4,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "Only the last writer's token matches lease_token, so the loser's later acknowledge/renew fails",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/tokens.py:1-2"
+          ],
+          "reason": "两个调用可以都在最后状态写入后读取 token 并返回同一最终值，故不能保证只有一个调用获得匹配 token。该过强断言不推翻答案无互斥保证的正确结论。",
+          "uncertainty": "低"
+        },
+        {
+          "answer_evidence": "the token changes in two components at once — owner and generation",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9"
+          ],
+          "reason": "若同 worker 重新领取，owner 不变；答案后面自己说明同 worker 依靠 generation，故前一句并非普适表述。题设“另一 worker”场景下两字段变化成立。",
+          "uncertainty": "中"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "Only the last writer's token matches lease_token, so the loser's later acknowledge/renew fails",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            }
+          ],
+          "reason": "只是某些交错下成立：两个 claim 可能在写完后读取相同最终状态，拿到同一 token；不能保证只有一个调用返回匹配 token。无工作互斥的主结论仍正确。"
+        },
+        {
+          "answer_evidence": "claim check is only against the deadline",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            }
+          ],
+          "reason": "若单独理解不准确，因为还检查 done 和 owner 是否为空；前文已列出完整条件，故视为局部措辞问题，不另影响标准 1。"
+        }
+      ]
+    },
+    {
+      "id": "item-dc9902fd",
+      "case": "d05_lease",
+      "arm": "retrieval",
+      "original_review_id": "review-03",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 4,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "the earlier claimant's token becomes stale ... only the later acknowledge/renew would fail",
+          "source_evidence": [
+            "sources/d05_lease/jobs/leases.py:6-9",
+            "sources/d05_lease/jobs/tokens.py:1-2"
+          ],
+          "reason": "并非所有并发交错都产生两个不同 token：两个调用可在最后一次状态写入之后才执行 return lease_token(job)，于是获得同一个最终 token。将某个 claimant 必然 stale/失败表述为通则过强。",
+          "uncertainty": "中：该段也可理解为举出一种可能交错。"
+        }
+      ],
+      "b_accuracy_notes": [
+        {
+          "answer_evidence": "the last writer's owner/generation wins, so the earlier claimant's token becomes stale",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            }
+          ],
+          "reason": "这是可能的交错，不是所有交错的必然结果：两个调用也可能在写入后读取同一最终 job 状态并返回相同令牌。主结论无互斥保证仍正确。"
+        },
+        {
+          "answer_evidence": "only the later acknowledge/renew would fail",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            }
+          ],
+          "reason": "失败的是当时令牌失配、done 或到期的调用，并非按调用先后决定；此处措辞容易误导。"
+        }
+      ]
+    },
+    {
+      "id": "item-c6b4d181",
+      "case": "d06_import",
+      "arm": "baseline",
+      "original_review_id": "review-06",
+      "a_total": 3,
+      "b_total": 3,
+      "final_total": 3,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 3,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 4,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [],
+      "b_accuracy_notes": []
+    },
+    {
+      "id": "item-4480a5a9",
+      "case": "d06_import",
+      "arm": "retrieval",
+      "original_review_id": "review-07",
+      "a_total": 2,
+      "b_total": 2,
+      "final_total": 2,
+      "criteria": [
+        {
+          "index": 1,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        },
+        {
+          "index": 2,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 3,
+          "a": 0,
+          "b": 0,
+          "c": null,
+          "final": 0
+        },
+        {
+          "index": 4,
+          "a": 1,
+          "b": 1,
+          "c": null,
+          "final": 1
+        }
+      ],
+      "a_accuracy_notes": [
+        {
+          "answer_evidence": "every validation failure raises ValueError",
+          "source_evidence": [
+            "sources/d06_import/imports/parser.py:4-18",
+            "sources/d06_import/imports/api.py:12-13"
+          ],
+          "reason": "若含非字符串 header/身份/金额，strip/lower 等可产生未捕获 AttributeError/TypeError。所有显式拒绝分支确实用 ValueError，但无条件措辞过宽；此点与第 3 条其他异常边界相关。",
+          "uncertainty": "中：题设 CSV-like 常见输入为字符串；若严格限于字符串该断言较合理。"
+        }
+      ],
+      "b_accuracy_notes": []
+    }
+  ],
+  "review_failures": 0,
+  "independence_limitations": [
+    "Same underlying assistant environment/model family; not independent human reviewers.",
+    "Reviewers did not receive prior history/mapping; access scope was instructed, not OS-enforced.",
+    "Root/operator had seen prior results and did not assign or change criterion scores.",
+    "No explicit tool/group names detected; subtle wording can still allow group inference.",
+    "Composite binary criteria make small omissions affect an entire point; retain reviewer uncertainty."
+  ],
+  "real_model_api_requests": 0,
+  "claims_retrieval_benefit": false
+}

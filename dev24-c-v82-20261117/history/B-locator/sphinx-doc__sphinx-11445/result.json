@@ -1,0 +1,136 @@
+{
+  "actual_model_ids": [
+    "deepseek-flash"
+  ],
+  "budget": {
+    "input_tokens": 128000,
+    "max_output_tokens": 2048,
+    "max_requests": 4,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "completion_tokens": 1005,
+  "cost_upper_cny": 0.04297,
+  "elapsed_seconds": 7.254683012999976,
+  "finished": {
+    "answer": "Root cause is in `prepend_prolog` (sphinx/util/rst.py:78-97). It decides where to insert the prolog by scanning leading lines with `docinfo_re = re.compile(':\\w+:.*?')` (sphinx/util/rst.py:28) and treating any matching line as docinfo. A title line like `:mod:`mypackage2`` matches that regex, so `pos` advances past it and the prolog is inserted *before* the title instead of after it. The prolog text (e.g. a `.. |psf| replace::` substitution definition) then sits between the prolog and the title, and the following `=====` underline no longer directly follows the title line, so docutils fails to recognize the section title. That explains why the heading is missing from the rendered page and the toctree, and why it only happens when `rst_prolog` is set and the title begins with a domain role.\n\nCall chain: `RSTParser.parse` (sphinx/parsers.py:61) calls `self.decorate(inputlines)` (line 79), which calls `prepend_prolog(content, self.config.rst_prolog)` (sphinx/parsers.py:85). `rst_prolog` is registered in sphinx/config.py:128. The i18n transform temporarily clears `rst_prolog` (sphinx/transforms/i18n.py:60-79), which is unrelated to this bug.\n\nLikely fix: make the docinfo detection stricter so it does not match a line that is a section title (e.g. require the following line not to be an underline, or restrict to actual docinfo field syntax). I did not read the full regex context or tests, so the exact minimal fix is uncertain; tests in tests/test_util_rst.py and tests/test_parser.py cover prolog insertion and would need updating.",
+    "entities": [
+      "sphinx/util/rst.py:prepend_prolog",
+      "sphinx/parsers.py:RSTParser.decorate",
+      "sphinx/parsers.py:RSTParser.parse"
+    ],
+    "files": [
+      "sphinx/util/rst.py",
+      "sphinx/parsers.py",
+      "sphinx/config.py",
+      "sphinx/transforms/i18n.py"
+    ]
+  },
+  "prompt_tokens": 17465,
+  "requests": 4,
+  "scripted": false,
+  "source_bytes": 9036,
+  "status": "completed",
+  "system_prompt_sha256": "830348d04a5a93d7a63adca6ee3fd80f8e44af44254010f71a38ac9ffda3e518",
+  "technical_failure": null,
+  "tool_audit": [
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "rst_prolog"
+      },
+      "calls": 1,
+      "result": {
+        "next_offset": null,
+        "text": "sphinx/config.py:128:         'rst_prolog': (None, 'env', [str]),\nsphinx/parsers.py:85:         prepend_prolog(content, self.config.rst_prolog)\nsphinx/transforms/i18n.py:60:         # clear rst_prolog temporarily\nsphinx/transforms/i18n.py:61:         rst_prolog = config.rst_prolog\nsphinx/transforms/i18n.py:62:         config.rst_prolog = None  # type: ignore[attr-defined]\nsphinx/transforms/i18n.py:79:         config.rst_prolog = rst_prolog  # type: ignore[attr-defined]\nsphinx/util/rst.py:95:             content.insert(pos + lineno, line, '<rst_prolog>', lineno)\ntests/roots/test-prolog/conf.py:9: rst_prolog = '*Hello world*.\\n\\n'\ntests/test_build_latex.py:1012:                    'rst_prolog': '.. |URL| replace:: `text <http://www.example.com/>`__'})\ntests/test_markup.py:521: def test_rst_prolog(app, status, warning):\ntests/test_markup.py:526:     # rst_prolog\ntests/test_markup.py:539:     # rst_prolog & rst_epilog on exlucding reST parser\ntests/test_parser.py:28:     # with rst_prolog\ntests/test_parser.py:29:     app.env.config.rst_prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_parser.py:32:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_parser.py:33:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_parser.py:39:     app.env.config.rst_prolog = None\ntests/test_parser.py:50:     app.env.config.rst_prolog = None\ntests/test_util_rst.py:31:     prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_util_rst.py:43:                                       ('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:44:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_util_rst.py:53:     prolog = 'this is rst_prolog\\nhello reST!\\n'\ntests/test_util_rst.py:59:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:60:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_util_rst.py:68:     prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_util_rst.py:74:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:75:                                       ('<rst_prolog>', 1, 'hello reST!'),"
+      },
+      "source_bytes": 2333,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "prolog"
+      },
+      "calls": 2,
+      "result": {
+        "next_offset": null,
+        "text": "sphinx/config.py:128:         'rst_prolog': (None, 'env', [str]),\nsphinx/parsers.py:17: from sphinx.util.rst import append_epilog, prepend_prolog\nsphinx/parsers.py:85:         prepend_prolog(content, self.config.rst_prolog)\nsphinx/transforms/i18n.py:60:         # clear rst_prolog temporarily\nsphinx/transforms/i18n.py:61:         rst_prolog = config.rst_prolog\nsphinx/transforms/i18n.py:62:         config.rst_prolog = None  # type: ignore[attr-defined]\nsphinx/transforms/i18n.py:79:         config.rst_prolog = rst_prolog  # type: ignore[attr-defined]\nsphinx/util/rst.py:78: def prepend_prolog(content: StringList, prolog: str) -> None:\nsphinx/util/rst.py:79:     \"\"\"Prepend a string to content body as prolog.\"\"\"\nsphinx/util/rst.py:80:     if prolog:\nsphinx/util/rst.py:93:         # insert prolog (after docinfo if exists)\nsphinx/util/rst.py:94:         for lineno, line in enumerate(prolog.splitlines()):\nsphinx/util/rst.py:95:             content.insert(pos + lineno, line, '<rst_prolog>', lineno)\nsphinx/writers/html.py:41:                      'footer', 'html_prolog', 'html_head', 'html_title',\ntests/roots/test-prolog/conf.py:7: extensions = ['prolog_markdown_parser']\ntests/roots/test-prolog/conf.py:9: rst_prolog = '*Hello world*.\\n\\n'\ntests/test_build_latex.py:1012:                    'rst_prolog': '.. |URL| replace:: `text <http://www.example.com/>`__'})\ntests/test_markup.py:520: @pytest.mark.sphinx('dummy', testroot='prolog')\ntests/test_markup.py:521: def test_rst_prolog(app, status, warning):\ntests/test_markup.py:526:     # rst_prolog\ntests/test_markup.py:539:     # rst_prolog & rst_epilog on exlucding reST parser\ntests/test_parser.py:13: def test_RSTParser_prolog_epilog(RSTStateMachine, app):\ntests/test_parser.py:28:     # with rst_prolog\ntests/test_parser.py:29:     app.env.config.rst_prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_parser.py:32:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_parser.py:33:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_parser.py:39:     app.env.config.rst_prolog = None\ntests/test_parser.py:50:     app.env.config.rst_prolog = None\ntests/test_util_rst.py:6: from sphinx.util.rst import append_epilog, escape, heading, prepend_prolog, textwidth\ntests/test_util_rst.py:30: def test_prepend_prolog(app):\ntests/test_util_rst.py:31:     prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_util_rst.py:38:     prepend_prolog(content, prolog)\ntests/test_util_rst.py:43:                                       ('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:44:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_util_rst.py:51: def test_prepend_prolog_with_CR(app):\ntests/test_util_rst.py:52:     # prolog having CR at tail\ntests/test_util_rst.py:53:     prolog = 'this is rst_prolog\\nhello reST!\\n'\ntests/test_util_rst.py:57:     prepend_prolog(content, prolog)\ntests/test_util_rst.py:59:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:60:                                       ('<rst_prolog>', 1, 'hello reST!'),\ntests/test_util_rst.py:66: def test_prepend_prolog_without_CR(app):\ntests/test_util_rst.py:67:     # prolog not having CR at tail\ntests/test_util_rst.py:68:     prolog = 'this is rst_prolog\\nhello reST!'\ntests/test_util_rst.py:72:     prepend_prolog(content, prolog)\ntests/test_util_rst.py:74:     assert list(content.xitems()) == [('<rst_prolog>', 0, 'this is rst_prolog'),\ntests/test_util_rst.py:75:                                       ('<rst_prolog>', 1, 'hello reST!'),"
+      },
+      "source_bytes": 6068,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 100,
+        "path": "sphinx/util/rst.py",
+        "start_line": 70
+      },
+      "calls": 3,
+      "result": {
+        "end_column": 60,
+        "end_line": 100,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 70,
+        "text": "70:         else:\n71:             logger.warning(__('default role %s not found'), name, location=docname)\n72: \n73:     yield\n74: \n75:     docutils.unregister_role('')\n76: \n77: \n78: def prepend_prolog(content: StringList, prolog: str) -> None:\n79:     \"\"\"Prepend a string to content body as prolog.\"\"\"\n80:     if prolog:\n81:         pos = 0\n82:         for line in content:\n83:             if docinfo_re.match(line):\n84:                 pos += 1\n85:             else:\n86:                 break\n87: \n88:         if pos > 0:\n89:             # insert a blank line after docinfo\n90:             content.insert(pos, '', '<generated>', 0)\n91:             pos += 1\n92: \n93:         # insert prolog (after docinfo if exists)\n94:         for lineno, line in enumerate(prolog.splitlines()):\n95:             content.insert(pos + lineno, line, '<rst_prolog>', lineno)\n96: \n97:         content.insert(pos + lineno + 1, '', '<generated>', 0)\n98: \n99: \n100: def append_epilog(content: StringList, epilog: str) -> None:\n",
+        "total_lines": 110
+      },
+      "source_bytes": 7220,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 100,
+        "path": "sphinx/parsers.py",
+        "start_line": 60
+      },
+      "calls": 4,
+      "result": {
+        "error": "tool_error",
+        "error_type": "ValueError"
+      },
+      "source_bytes": 7268,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 95,
+        "path": "sphinx/parsers.py",
+        "start_line": 60
+      },
+      "calls": 5,
+      "result": {
+        "end_column": 36,
+        "end_line": 95,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 60,
+        "text": "60: \n61:     def parse(self, inputstring: str | StringList, document: nodes.document) -> None:\n62:         \"\"\"Parse text and generate a document tree.\"\"\"\n63:         self.setup_parse(inputstring, document)  # type: ignore\n64:         self.statemachine = states.RSTStateMachine(\n65:             state_classes=self.state_classes,\n66:             initial_state=self.initial_state,\n67:             debug=document.reporter.debug_flag)\n68: \n69:         # preprocess inputstring\n70:         if isinstance(inputstring, str):\n71:             lines = docutils.statemachine.string2lines(\n72:                 inputstring, tab_width=document.settings.tab_width,\n73:                 convert_whitespace=True)\n74: \n75:             inputlines = StringList(lines, document.current_source)\n76:         else:\n77:             inputlines = inputstring\n78: \n79:         self.decorate(inputlines)\n80:         self.statemachine.run(inputlines, document, inliner=self.inliner)\n81:         self.finish_parse()\n82: \n83:     def decorate(self, content: StringList) -> None:\n84:         \"\"\"Preprocess reST content before parsing.\"\"\"\n85:         prepend_prolog(content, self.config.rst_prolog)\n86:         append_epilog(content, self.config.rst_epilog)\n87: \n88: \n89: def setup(app: Sphinx) -> dict[str, Any]:\n90:     app.add_source_parser(RSTParser)\n91: \n92:     return {\n93:         'version': 'builtin',\n94:         'parallel_read_safe': True,\n95:         'parallel_write_safe': True,\n",
+        "total_lines": 96
+      },
+      "source_bytes": 8882,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "docinfo_re"
+      },
+      "calls": 6,
+      "result": {
+        "next_offset": null,
+        "text": "sphinx/util/rst.py:28: docinfo_re = re.compile(':\\\\w+:.*?')\nsphinx/util/rst.py:83:             if docinfo_re.match(line):"
+      },
+      "source_bytes": 9036,
+      "tool": "search_text"
+    }
+  ],
+  "tool_calls": 6,
+  "tool_schema_sha256": "4f9f105004ff571b15f3bf886e21b46ab3708aa681518d2616e9e4812379bc00"
+}

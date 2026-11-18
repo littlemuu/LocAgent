@@ -1,0 +1,1598 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "source_bytes": 14325,
+    "remaining": 11,
+    "global_cap_closed": true,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 138,
+        "cumulative": 138,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "Piecewise generators do not make sense"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 4096,
+        "cumulative": 4234,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sympy/core/basic.py Basic.subs"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4083,
+        "cumulative": 8317,
+        "error": null,
+        "next_cursor": "rf1_3c73ede6f5621532b26b3ed21be5fea5e62fb94a52ee9de36045924d5270234d",
+        "requested": {
+          "cursor": null,
+          "end_line": 1064,
+          "path": "sympy/core/basic.py",
+          "start_line": 761
+        },
+        "returned_start": 761,
+        "returned_end": 859
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1979,
+        "cumulative": 10296,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 4420,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 4360
+        },
+        "returned_start": 4360,
+        "returned_end": 4420
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4040,
+        "charged_bytes": 4029,
+        "cumulative": 14325,
+        "error": null,
+        "next_cursor": "rf1_e05b5bdfccaa95ed8bb81f49ce43fd2d1157d871d8faa36deca72123911aa8ed",
+        "requested": {
+          "cursor": "rf1_3c73ede6f5621532b26b3ed21be5fea5e62fb94a52ee9de36045924d5270234d",
+          "end_line": null,
+          "path": "sympy/core/basic.py",
+          "start_line": null
+        },
+        "returned_start": 860,
+        "returned_end": 942
+      },
+      {
+        "tool_index": 6,
+        "tool": "read_file",
+        "capacity_before": 11,
+        "charged_bytes": 0,
+        "cumulative": 14325,
+        "error": "investigation_closed",
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1064,
+          "path": "sympy/core/basic.py",
+          "start_line": 955
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "source_bytes": 9771,
+    "remaining": 4565,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 366,
+        "cumulative": 366,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def set_visible"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 3410,
+        "cumulative": 3776,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "Axes3D draw set_visible"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2584,
+        "cumulative": 6360,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 444,
+          "path": "lib/mpl_toolkits/mplot3d/axes3d.py",
+          "start_line": 389
+        },
+        "returned_start": 389,
+        "returned_end": 444
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 422,
+        "cumulative": 6782,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1018,
+          "path": "lib/matplotlib/artist.py",
+          "start_line": 1008
+        },
+        "returned_start": 1008,
+        "returned_end": 1018
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2875,
+        "cumulative": 9657,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 3060,
+          "path": "lib/matplotlib/axes/_base.py",
+          "start_line": 3000
+        },
+        "returned_start": 3000,
+        "returned_end": 3060
+      },
+      {
+        "tool_index": 6,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 9771,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "get_visible()"
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "source_bytes": 11201,
+    "remaining": 3135,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1331,
+        "cumulative": 1331,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "VotingClassifier.fit"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 115,
+        "cumulative": 1446,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "class VotingClassifier"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1645,
+        "cumulative": 3091,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 275,
+          "path": "sklearn/ensemble/voting.py",
+          "start_line": 240
+        },
+        "returned_start": 240,
+        "returned_end": 275
+      },
+      {
+        "tool_index": 4,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 4096,
+        "cumulative": 7187,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sample_weight"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4014,
+        "cumulative": 11201,
+        "error": null,
+        "next_cursor": "rf1_c8957b2c39a1085cf503830f60179a951e7a537289c00842799eaa5156baa65f",
+        "requested": {
+          "cursor": null,
+          "end_line": 137,
+          "path": "sklearn/ensemble/voting.py",
+          "start_line": 1
+        },
+        "returned_start": 1,
+        "returned_end": 94
+      }
+    ]
+  },
+  {
+    "instance_id": "django__django-13033",
+    "source_bytes": 5200,
+    "remaining": 9136,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 145,
+        "cumulative": 145,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def find_ordering_name"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 715,
+        "cumulative": 860,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def get_ordering"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4064,
+        "cumulative": 4924,
+        "error": null,
+        "next_cursor": "rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca",
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "django/db/models/sql/compiler.py",
+          "start_line": 700
+        },
+        "returned_start": 700,
+        "returned_end": 767
+      },
+      {
+        "tool_index": 4,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 5038,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def get_order_dir"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 5086,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca",
+          "end_line": 749,
+          "path": "django/db/models/sql/compiler.py",
+          "start_line": 715
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 6,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 5200,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def get_order_dir"
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "source_bytes": 14285,
+    "remaining": 51,
+    "global_cap_closed": true,
+    "requests": 4,
+    "pending_count": 2,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 1159,
+        "cumulative": 1159,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "ignore_paths"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 4096,
+        "cumulative": 5255,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "recursive"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4073,
+        "cumulative": 9328,
+        "error": null,
+        "next_cursor": "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2",
+        "requested": {
+          "cursor": null,
+          "end_line": 700,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 580
+        },
+        "returned_start": 580,
+        "returned_end": 661
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2110,
+        "cumulative": 11438,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 760
+        },
+        "returned_start": 760,
+        "returned_end": 800
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 2898,
+        "charged_bytes": 2847,
+        "cumulative": 14285,
+        "error": null,
+        "next_cursor": "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 661
+        },
+        "returned_start": 661,
+        "returned_end": 714
+      },
+      {
+        "tool_index": 6,
+        "tool": "search_text",
+        "capacity_before": 51,
+        "charged_bytes": 0,
+        "cumulative": 14285,
+        "error": "investigation_closed",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def _is_ignored_file"
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "source_bytes": 7316,
+    "remaining": 7020,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 2333,
+        "cumulative": 2333,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "rst_prolog"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 3735,
+        "cumulative": 6068,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "prolog"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1152,
+        "cumulative": 7220,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/util/rst.py",
+          "start_line": 70
+        },
+        "returned_start": 70,
+        "returned_end": 100
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 7268,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 110,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 7316,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 110,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "source_bytes": 9703,
+    "remaining": 4633,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 1104,
+        "cumulative": 1104,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "to_unstacked_dataset"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 84,
+        "cumulative": 1188,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def to_stacked_array"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 3988,
+        "cumulative": 5176,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1990,
+          "path": "xarray/core/dataarray.py",
+          "start_line": 1895
+        },
+        "returned_start": 1895,
+        "returned_end": 1990
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4064,
+        "cumulative": 9240,
+        "error": null,
+        "next_cursor": "rf1_f371c96a1a4e5a9385e1f1b23628cb72dc3772ec7f3542d43fda4f74676f2221",
+        "requested": {
+          "cursor": null,
+          "end_line": 3470,
+          "path": "xarray/core/dataset.py",
+          "start_line": 3370
+        },
+        "returned_start": 3370,
+        "returned_end": 3461
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 463,
+        "cumulative": 9703,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_f371c96a1a4e5a9385e1f1b23628cb72dc3772ec7f3542d43fda4f74676f2221",
+          "end_line": null,
+          "path": "xarray/core/dataset.py",
+          "start_line": null
+        },
+        "returned_start": 3462,
+        "returned_end": 3470
+      }
+    ]
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "source_bytes": 10171,
+    "remaining": 4165,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 966,
+        "cumulative": 966,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "builtin_str"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "list_files",
+        "capacity_before": 4096,
+        "charged_bytes": 3228,
+        "cumulative": 4194,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 3218,
+        "cumulative": 7412,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 470,
+          "path": "requests/sessions.py",
+          "start_line": 400
+        },
+        "returned_start": 400,
+        "returned_end": 470
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 7460,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 125,
+          "path": "requests/compat.py",
+          "start_line": 80
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 7508,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 6,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2663,
+        "cumulative": 10171,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 400,
+          "path": "requests/sessions.py",
+          "start_line": 340
+        },
+        "returned_start": 340,
+        "returned_end": 400
+      }
+    ]
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "source_bytes": 3195,
+    "remaining": 11141,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 713,
+        "cumulative": 713,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sqf_list"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 426,
+        "cumulative": 1139,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def sqf_list"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 586,
+        "cumulative": 1725,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 6218,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 6204
+        },
+        "returned_start": 6204,
+        "returned_end": 6218
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1242,
+        "cumulative": 2967,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 3240,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 3210
+        },
+        "returned_start": 3210,
+        "returned_end": 3240
+      },
+      {
+        "tool_index": 5,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 3081,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def _generic_factor_list"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 6,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 3195,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def dup_sqf_list"
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "source_bytes": 7332,
+    "remaining": 7004,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 984,
+        "cumulative": 984,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "astropy/modeling/separable.py:separability_matrix"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 99,
+        "cumulative": 1083,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "def separability_matrix"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4056,
+        "cumulative": 5139,
+        "error": null,
+        "next_cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+        "requested": {
+          "cursor": null,
+          "end_line": 160,
+          "path": "astropy/modeling/separable.py",
+          "start_line": 1
+        },
+        "returned_start": 1,
+        "returned_end": 99
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2193,
+        "cumulative": 7332,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+          "end_line": null,
+          "path": "astropy/modeling/separable.py",
+          "start_line": null
+        },
+        "returned_start": 100,
+        "returned_end": 160
+      }
+    ]
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "source_bytes": 11668,
+    "remaining": 2668,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 3234,
+        "cumulative": 3234,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "__all__"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1597,
+        "cumulative": 4831,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sphinx/ext/autodoc/importer.py:get_object_members"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2712,
+        "cumulative": 7543,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 245,
+          "path": "sphinx/ext/autodoc/importer.py",
+          "start_line": 184
+        },
+        "returned_start": 184,
+        "returned_end": 245
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4077,
+        "cumulative": 11620,
+        "error": null,
+        "next_cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+        "requested": {
+          "cursor": null,
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 985
+        },
+        "returned_start": 985,
+        "returned_end": 1066
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 2716,
+        "charged_bytes": 48,
+        "cumulative": 11668,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 1066
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "source_bytes": 6976,
+    "remaining": 7360,
+    "global_cap_closed": false,
+    "requests": 3,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 423,
+        "cumulative": 423,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "_i_over"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1583,
+        "cumulative": 2006,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "lib/matplotlib/colors.py:Colormap.__call__"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 3865,
+        "cumulative": 5871,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 683
+        },
+        "returned_start": 683,
+        "returned_end": 760
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1105,
+        "cumulative": 6976,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 682,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 660
+        },
+        "returned_start": 660,
+        "returned_end": 682
+      }
+    ]
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "source_bytes": 9504,
+    "remaining": 4832,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 234,
+        "cumulative": 234,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "viewcode_enable_epub"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1303,
+        "cumulative": 1537,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sphinx/ext/viewcode.py"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 3860,
+        "cumulative": 5397,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 40
+        },
+        "returned_start": 40,
+        "returned_end": 120
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4059,
+        "cumulative": 9456,
+        "error": null,
+        "next_cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+        "requested": {
+          "cursor": null,
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 120
+        },
+        "returned_start": 120,
+        "returned_end": 204
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 48,
+        "cumulative": 9504,
+        "error": "tool_error",
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 204
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "source_bytes": 14311,
+    "remaining": 25,
+    "global_cap_closed": true,
+    "requests": 4,
+    "pending_count": 1,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 1198,
+        "cumulative": 1198,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "align_labels"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 3588,
+        "cumulative": 4786,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "weakref"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4084,
+        "cumulative": 8870,
+        "error": null,
+        "next_cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+        "requested": {
+          "cursor": null,
+          "end_line": 1480,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": 1330
+        },
+        "returned_start": 1330,
+        "returned_end": 1410
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 3208,
+        "cumulative": 12078,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 860,
+          "path": "lib/matplotlib/cbook.py",
+          "start_line": 780
+        },
+        "returned_start": 780,
+        "returned_end": 860
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 2258,
+        "charged_bytes": 2233,
+        "cumulative": 14311,
+        "error": null,
+        "next_cursor": "rf1_2f332b37f601f51727179ef283dc096e93b2773699f82ad1ebf6d0a8e3fd8d2d",
+        "requested": {
+          "cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+          "end_line": null,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": null
+        },
+        "returned_start": 1411,
+        "returned_end": 1452
+      }
+    ]
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "source_bytes": 8044,
+    "remaining": 6292,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 258,
+        "cumulative": 258,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "Unrecognized QDP line"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1109,
+        "cumulative": 1367,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "astropy/io/ascii/qdp.py"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 4093,
+        "cumulative": 5460,
+        "error": null,
+        "next_cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+        "requested": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": 20
+        },
+        "returned_start": 20,
+        "returned_end": 133
+      },
+      {
+        "tool_index": 4,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 114,
+        "cumulative": 5574,
+        "error": "candidate_body_read_priority",
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "READ SERR"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2470,
+        "cumulative": 8044,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "end_line": null,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": null
+        },
+        "returned_start": 134,
+        "returned_end": 200
+      }
+    ]
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "source_bytes": 4751,
+    "remaining": 9585,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 388,
+        "cumulative": 388,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "cotm"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "locagent_retrieve",
+        "capacity_before": 4096,
+        "charged_bytes": 1278,
+        "cumulative": 1666,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "sympy/functions/elementary/hyperbolic.py:coth.eval"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1966,
+        "cumulative": 3632,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 607,
+          "path": "sympy/functions/elementary/hyperbolic.py",
+          "start_line": 557
+        },
+        "returned_start": 557,
+        "returned_end": 607
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 1119,
+        "cumulative": 4751,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1320,
+          "path": "sympy/functions/elementary/trigonometric.py",
+          "start_line": 1295
+        },
+        "returned_start": 1295,
+        "returned_end": 1320
+      }
+    ]
+  },
+  {
+    "instance_id": "django__django-13925",
+    "source_bytes": 11290,
+    "remaining": 3046,
+    "global_cap_closed": false,
+    "requests": 4,
+    "pending_count": 0,
+    "timeline": [
+      {
+        "tool_index": 1,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 181,
+        "cumulative": 181,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "models.W042"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 2,
+        "tool": "search_text",
+        "capacity_before": 4096,
+        "charged_bytes": 4096,
+        "cumulative": 4277,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "default_auto_field"
+        },
+        "returned_start": null,
+        "returned_end": null
+      },
+      {
+        "tool_index": 3,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2371,
+        "cumulative": 6648,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1330,
+          "path": "django/db/models/base.py",
+          "start_line": 1280
+        },
+        "returned_start": 1280,
+        "returned_end": 1330
+      },
+      {
+        "tool_index": 4,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2388,
+        "cumulative": 9036,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 250,
+          "path": "django/db/models/options.py",
+          "start_line": 200
+        },
+        "returned_start": 200,
+        "returned_end": 250
+      },
+      {
+        "tool_index": 5,
+        "tool": "read_file",
+        "capacity_before": 4096,
+        "charged_bytes": 2013,
+        "cumulative": 11049,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "cursor": null,
+          "end_line": 1280,
+          "path": "django/db/models/base.py",
+          "start_line": 1240
+        },
+        "returned_start": 1240,
+        "returned_end": 1280
+      },
+      {
+        "tool_index": 6,
+        "tool": "search_text",
+        "capacity_before": 3287,
+        "charged_bytes": 241,
+        "cumulative": 11290,
+        "error": null,
+        "next_cursor": null,
+        "requested": {
+          "offset": 0,
+          "query": "auto_created = True"
+        },
+        "returned_start": null,
+        "returned_end": null
+      }
+    ]
+  }
+]

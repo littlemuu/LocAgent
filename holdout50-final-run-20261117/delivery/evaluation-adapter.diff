@@ -1,0 +1,29 @@
+--- frozen/v5/evaluation.py
++++ control/evaluation_adapter.py
+@@ -1,19 +1,13 @@
+-"""Isolated evaluator entry: only this module reads selected dev test patches/labels."""
++"""Authorized holdout dataset adapter; evaluation function body byte-identical to v5."""
+ import json,os,time,subprocess,hashlib
+ from unittest.mock import patch
+ from pathlib import Path
+-from .common import ROOT,CONFIG,allow,write_json
+-
+-def dataset_row(identifier):
+- allow(identifier)
+- source=ROOT/'data/dev24/content/evaluator.json'
+- receipt=json.loads((ROOT/'data/dev24/content/receipt.json').read_text())
+- if hashlib.sha256(source.read_bytes()).hexdigest()!=receipt['files']['evaluator.json']:raise PermissionError('evaluator_content_changed')
+- rows=json.loads(source.read_text())
+- # This file is independently checked to contain only the 24 exposed IDs.
+- allowed={x['instance_id'] for x in json.loads((ROOT/'data/dev24/manifest.json').read_text())['instances']}
+- if len(rows)!=24 or {r['instance_id'] for r in rows}!=allowed:raise PermissionError('evaluator_dataset_membership_changed')
+- return next(r for r in rows if r['instance_id']==identifier)
++from support import P,F
++from locagent_e2e.common import CONFIG,write_json
++from data_adapter import active
++DATA=active()
++def allow(identifier,smoke=False):return DATA.allow(identifier,smoke=smoke)
++def dataset_row(identifier):return DATA.row(identifier)
+ def spec_for(identifier):
+  from swebench.harness.test_spec.test_spec import make_test_spec
+  spec=make_test_spec(dataset_row(identifier),namespace='swebench');spec.arch='x86_64';return spec

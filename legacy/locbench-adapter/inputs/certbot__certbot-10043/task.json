@@ -1,0 +1,6 @@
+{
+  "instance_id": "certbot__certbot-10043",
+  "repo": "certbot/certbot",
+  "base_commit": "0e225dcba293441e7b8d420c9a210480f8c707d8",
+  "problem_statement": "Fix regex in finish_release.py\n```\r\n(venv) certbot [3.0.0] » python3 tools/finish_release.py \r\ncertbot/tools/finish_release.py:114: SyntaxWarning: invalid escape sequence '\\s'\r\n  pattern = f'^\\s+{channel}\\s+{version}\\s+(\\d+)\\s*'\r\ncertbot/tools/finish_release.py:114: SyntaxWarning: invalid escape sequence '\\s'\r\n  pattern = f'^\\s+{channel}\\s+{version}\\s+(\\d+)\\s*'\r\ncertbot/tools/finish_release.py:114: SyntaxWarning: invalid escape sequence '\\s'\r\n  pattern = f'^\\s+{channel}\\s+{version}\\s+(\\d+)\\s*'\r\n```\n"
+}

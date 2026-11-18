@@ -1,0 +1,23 @@
+已读到的事实（附文件:行号）
+- lib/matplotlib/colors.py:673-675：`_i_under = self.N`、`_i_over = self.N + 1`、`_i_bad = self.N + 2`，三者都超出合法索引范围 `[0, N)`，仅作为 LUT 末尾的哨兵索引使用。
+- lib/matplotlib/colors.py:712：`xa = np.array(X, copy=True)` 保留输入 dtype；复现用例传入 `np.uint8` 空数组，因此 `xa.dtype.kind == "u"`。
+- lib/matplotlib/colors.py:717-727：只有 `xa.dtype.kind == "f"` 时才做 `*N`、裁剪与 `astype(int)`；整数输入完全跳过该分支，`xa` 仍是 uint8。
+- lib/matplotlib/colors.py:730-732：`xa[xa > self.N - 1] = self._i_over`、`xa[xa < 0] = self._i_under`、`xa[mask_bad] = self._i_bad` 直接向 uint8 数组写入 257/256/258，正是告警文本中的三行。
+- lib/matplotlib/colors.py:738：`lut.take(xa, axis=0, mode='clip')` 依赖这些哨兵值落在 LUT 末尾，说明哨兵语义本身是有意设计。
+- lib/matplotlib/colors.py:736：`bytes=True` 时 `lut` 被转成 uint8，但 `xa` 的 dtype 未随之调整。
+
+推断
+- 待验证假设：根因是 `lib/matplotlib/colors.py:Colormap.__call__` 在整数输入路径上未把 `xa` 提升为可容纳 `N+2` 的整型（如 `intp`/`int64`），导致哨兵赋值触发 NumPy 1.24 的越界转换弃用告警；修复方向是在 730 行前对非浮点输入做 `xa = xa.astype(int)` 或等价提升。
+- 待验证假设：`lib/matplotlib/colors.py:Colormap.__init__` 中哨兵值取 `N+1`/`N+2` 而非 `N`/`N+1` 并非缺陷，因为 `_i_under` 与 `_i_bad` 需区分且 LUT 长度按 `N+3` 分配（该分配处未读，属未核验）。
+- 待验证假设：空数组用例仍触发告警，说明告警来自赋值语句的 dtype 检查而非元素数量，因此非空 uint8 输入同样会告警。
+
+未核验点
+- 未读 `Colormap._init`（LUT 分配长度与 `_i_*` 的对应关系），无法确认 `N+3` 行 LUT 假设。
+- 未读 `Colormap.set_over`/`set_under`/`set_bad`（colors.py:808、844-846 附近仅见搜索命中，未读正文）。
+- 未追踪 `plt.get_cmap()` 到 `Colormap.__call__` 的完整调用链，也未检查 `ListedColormap`/`LinearSegmentedColormap` 是否覆写 `__call__`。
+- 未运行任何代码，未验证告警是否消失或 `bytes=True` 路径是否另有问题。
+
+最小验证：`python -W error::DeprecationWarning -c "import matplotlib.pyplot as plt, numpy as np; plt.get_cmap()(np.array([0, 5, 300], dtype=np.uint8))"`
+
+以下内容未在阅读记录中核验：
+- [R1] lib/matplotlib/colors.py:Colormap.__init__

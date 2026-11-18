@@ -1,0 +1,6 @@
+{
+  "instance_id": "roboflow__supervision-1739",
+  "repo": "roboflow/supervision",
+  "base_commit": "6f55d9de9e0f5469f11f768fb993de133f7d5af3",
+  "problem_statement": "`move_masks` only supports movement in positive direction\nIf you compare the code of `move_masks`, `move_detections` and `move_oriented_boxes`, you'll find that only mask code restricts offset direction:\r\n\r\n```python\r\n    if offset[0] < 0 or offset[1] < 0:\r\n        raise ValueError(f\"Offset values must be non-negative integers. Got: {offset}\")\r\n```\r\n\r\nIt should be possible to move masks in either direction, even if it results in cropping.\r\n\r\nTo complete this:\r\n- [ ] Change the code so masks can be moved with negative offset\r\n- [ ] Create a unit test suite for `move_masks`\r\n\r\n---\r\n\r\nIt would help us immensely and speed up the review process if you could create a [Colab](https://colab.research.google.com/) showcasing the changes, but for this task it is optional. You may use the [Starter Template](https://colab.research.google.com/drive/1rin7WrS-UvVIe-_Gfxmu-yVslGphOq89?usp=sharing).\n"
+}

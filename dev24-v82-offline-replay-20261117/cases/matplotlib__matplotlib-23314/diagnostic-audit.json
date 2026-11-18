@@ -1,0 +1,127 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- lib/matplotlib/artist.py:1008-1018：Artist.set_visible 只设置 self._visible = b，然后 pchanged() 与 stale = True，不做任何绘制期判断。\n- lib/matplotlib/axes/_base.py:3018-3023：_AxesBase.draw 开头有 `if not self.get_visible(): return`，即二维 Axes 在 draw 入口处自行短路。\n- lib/mpl_toolkits/mplot3d/axes3d.py:389-444：Axes3D.draw 重写了 draw，开头只调用 _unstale_viewLim()，随后直接 self.patch.draw(renderer)（393 行），没有 get_visible() 检查；之后才在 444 行调用 super().draw(renderer)。\n- lib/mpl_toolkits/mplot3d/axes3d.py:411-414：collections/patches 的筛选只检查子 artist 的 get_visible()，不检查 Axes 自身可见性。\n- lib/mpl_toolkits/mplot3d/axes3d.py:435-441：_axis3don 为真时直接绘制 pane 与 axis，同样无 Axes 自身可见性判断。\n\n推断\n- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。\n- 待验证假设：lib/matplotlib/artist.py:Artist.set_visible 本身行为正确（仅置标志），问题在于 Axes3D.draw 未消费该标志，故修复点应在 Axes3D.draw 入口处提前返回。\n\n未核验点\n- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。\n- 未读完：lib/matplotlib/widgets.py:ToolLineHandles.set_visible、lib/matplotlib/widgets.py:_SelectorWidget.set_visible（与本问题相关性低，仅作排除）。\n- 未核验 Axes3D 是否另有 set_visible 覆写或 _axis3don 相关分支；未运行任何渲染验证。\n\n最小验证：`python -c \"import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; f,a=plt.subplots(1,2,subplot_kw={'projection':'3d'}); a[0].set_visible(False); f.canvas.draw(); print(a[0].get_visible())\"` 并配合检查渲染输出中左侧区域是否仍出现 3D 背景。",
+    "entities": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+      "lib/matplotlib/axes/_base.py:AxesBase.draw",
+      "lib/matplotlib/artist.py:Artist.set_visible"
+    ],
+    "files": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py",
+      "lib/matplotlib/axes/_base.py",
+      "lib/matplotlib/artist.py"
+    ]
+  },
+  "violations": [
+    "R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw"
+  ],
+  "violation_count": 1,
+  "rule_counts": {
+    "R1": 1,
+    "R2": 0,
+    "R3": 0,
+    "R4": 0
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [
+    {
+      "rule": "R1",
+      "violation": "R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw",
+      "targets": [
+        "lib/matplotlib/axes/_base.py:AxesBase.draw"
+      ]
+    }
+  ],
+  "disclosure_count": 1,
+  "disclosure_attached": true,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "lib/matplotlib/artist.py",
+      1008,
+      1018
+    ],
+    [
+      "lib/matplotlib/axes/_base.py",
+      3000,
+      3060
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2054,
+      2054
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2056,
+      2058
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2669,
+      2669
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2671,
+      2672
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2761,
+      2762
+    ],
+    [
+      "lib/mpl_toolkits/mplot3d/axes3d.py",
+      389,
+      444
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw": true,
+    "lib/matplotlib/axes/_base.py:AxesBase.draw": false,
+    "lib/matplotlib/artist.py:Artist.set_visible": true
+  },
+  "entity_def_spans": {
+    "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw": [
+      [
+        389,
+        444
+      ]
+    ],
+    "lib/matplotlib/artist.py:Artist.set_visible": [
+      [
+        1008,
+        1018
+      ]
+    ],
+    "lib/matplotlib/widgets.py:ToolHandles.set_visible": [
+      [
+        2761,
+        2762
+      ]
+    ],
+    "lib/matplotlib/widgets.py:ToolLineHandles.set_visible": [
+      [
+        2669,
+        2672
+      ]
+    ],
+    "lib/matplotlib/widgets.py:_SelectorWidget.set_visible": [
+      [
+        2054,
+        2058
+      ]
+    ]
+  },
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [
+    "lib/matplotlib/axes/_base.py:AxesBase.draw"
+  ],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

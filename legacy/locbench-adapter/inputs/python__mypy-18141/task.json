@@ -1,0 +1,6 @@
+{
+  "instance_id": "python__mypy-18141",
+  "repo": "python/mypy",
+  "base_commit": "3b00002acdf098e7241df8f2e1843f8b8260b168",
+  "problem_statement": "Positional subpattern of a built-in type subclass with __match_args__ causes type confusion\nGiven\r\n\r\n```python\r\nclass PrintableKey(bytes):\r\n    __match_args__ = ('ch', )\r\n\r\n    @property\r\n    def ch(self) -> str:\r\n        return self.decode('UTF-8')\r\n```\r\n\r\nnow\r\n\r\n```python\r\nmatch event:\r\n    case PrintableKey(ch):\r\n        reveal_type(ch)  # mypy thinks it's PrintableKey\r\n```\r\n\r\nversus\r\n\r\n```python\r\nmatch event:\r\n    case PrintableKey(ch=ch):\r\n        reveal_type(ch)  # mypy correctly deduces it's str\r\n```\r\n\r\n_Originally posted by @mgedmin in https://github.com/python/mypy/issues/13804#issuecomment-2466177933_\n"
+}

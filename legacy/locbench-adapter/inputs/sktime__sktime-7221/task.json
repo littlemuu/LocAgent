@@ -1,0 +1,6 @@
+{
+  "instance_id": "sktime__sktime-7221",
+  "repo": "sktime/sktime",
+  "base_commit": "0f75b7ad0dce8b722c81fe49bb9624de20cc4923",
+  "problem_statement": "[ENH] `polars` schema checks - address performance warnings\nThe current schema checks for lazy `polars` based data types raise performance warnings, e.g.,\r\n\r\n```\r\nsktime/datatypes/tests/test_check.py::test_check_metadata_inference[Table-polars_lazy_table-fixture:1]\r\n  /home/runner/work/sktime/sktime/sktime/datatypes/_adapter/polars.py:234: PerformanceWarning: Determining the width of a LazyFrame requires resolving its schema, which is a potentially expensive operation. Use `LazyFrame.collect_schema().len()` to get the width without this warning.\r\n    metadata[\"n_features\"] = obj.width - len(index_cols)\r\n```\r\n\r\nThese should be addressed.\r\n\r\nThe tests to execute to check whether these warnings persist are those in the `datatypes` module - these are automatically executed for a change in the impacted file, on remote CI.\n"
+}

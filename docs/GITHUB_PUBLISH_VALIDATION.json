@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "base_commit": "4935b557326c154bad8e8dcf3747cc8d32d1f387",
+  "changes": {
+    "M": 2,
+    "A": 13548
+  },
+  "final_frozen_hashes_verified": 57,
+  "deployment_hashes_verified": 81,
+  "live_credential_patterns_found": 0,
+  "ignored_artifacts_not_staged": true,
+  "whitespace_diagnostics_lines": 10215,
+  "no_model_or_harness_execution": true,
+  "validation_scope": "Code publication only; no model calls, harness executions, experiment reruns or source rewrites.",
+  "tracked_files_before_this_receipt": 13638,
+  "tracked_bytes_before_this_receipt": 155552907,
+  "credential_assignment_candidates_review": "Matches were upstream test fixtures, documentation placeholders and mocked test-only values; no live credential identified.",
+  "historical_whitespace_diagnostics": {
+    "trailing whitespace.": 5002,
+    "new blank line at EOF.": 201,
+    "leftover conflict marker": 6,
+    "space before tab in indent.": 2
+  },
+  "historical_whitespace_action": "Preserved byte-for-byte, especially frozen source and CSV records. Only publication README, .gitignore and new documentation were edited.",
+  "conflict_marker_review": "All 6 reported markers are seven-equals reStructuredText headings inside upstream NetworkX Python docstrings; no unresolved merge conflicts."
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "freedomofpress__securedrop-client-944",
+  "repo": "freedomofpress/securedrop-client",
+  "base_commit": "bd94b7c2d0e6a4da01504b532e91cbb07716b333",
+  "problem_statement": "Client starts with blacked out / blocked UI with many sources\nSteps to reproduce:\r\n\r\n1. Create a server with 1000 source (`$ NUM_SOURCES=1000 make dev`)\r\n2. Start the client and let it download the sources.\r\n3. Stop the client.\r\n4. Restart the client.\r\n\r\nAt step 4 the drawing of the UI appears to be blocked (I speculate this is perhaps the client loading locally stored sources and associated messages in a blocking manner). Once the UI is drawn it is completely responsive. See the following screenie for an example of this behaviour:\r\n\r\n![blocked_startup](https://user-images.githubusercontent.com/37602/75795529-5e67d100-5d6a-11ea-8f48-a904833df6e6.gif)\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "matplotlib__matplotlib-29265",
+  "repo": "matplotlib/matplotlib",
+  "base_commit": "0406a56b051a371ccf81d2946126580651a645f2",
+  "problem_statement": "Improve LineCollection docstring further\n              (M, 2)\r\n\r\nI would perhaps completely drop the \"list of points\" and just write\r\n```\r\nA sequence ``[line0, line1, ...]`` where each line is a (N, 2)-shape\r\narray-like of points::\r\n\r\n    line0 = [(x0, y0), (x1, y1), ...]\r\n\r\nEach line can...\r\n```\r\n\r\n_Originally posted by @anntzer in https://github.com/matplotlib/matplotlib/pull/26676#discussion_r1313026557_\r\n\r\n\r\n            \n"
+}

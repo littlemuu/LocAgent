@@ -1,0 +1,286 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "best_indices_C = best_indices % len(self.Cs_)"}
+META: {"next_offset": null}
+sklearn/linear_model/logistic.py:2180:                 best_indices_C = best_indices % len(self.Cs_)
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "sklearn/linear_model/logistic.py:LogisticRegressionCV.fit"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 sklearn/linear_model/logistic.py:LogisticRegressionCV.fit [exact_id]
+path=sklearn/linear_model/logistic.py; lines=1936-2212; implementation_start=1956; read_file(path="sklearn/linear_model/logistic.py", start_line=1936, end_line=2212)
+Docstring lines 1937-1955; preview prioritizes implementation. read_file preserves complete text.
+1936:     def fit(self, X, y, sample_weight=None):
+... lines 1937-1955 omitted ...
+1956:         solver = _check_solver(self.solver, self.penalty, self.dual)
+1957: 
+1958:         if not isinstance(self.max_iter, numbers.Number) or self.max_iter < 0:
+1959:             raise ValueError("Maximum number of iteration must be positive;"
+1960:                              " got (max_iter=%r)" % self.max_iter)
+1961:         if not isinstance(self.tol, numbers.Number) or self.tol < 0:
+1962:             raise ValueError("Tolerance for stopping criteria must be "
+1963:                              "positive; got (tol=%r)" % self.tol)
+1964:         if self.penalty == 'elasticnet':
+1965:             if self.l1_ratios is None or len(self.l1_ratios) == 0 or any(
+1966:                     (not isinstance(l1_ratio, numbers.Number) or l1_ratio < 0
+1967:                      or l1_ratio > 1) for l1_ratio in self.l1_ratios):
+1968:                 raise ValueError("l1_ratios must be a list of numbers between "
+1969:                                  "0 and 1; got (l1_ratios=%r)" %
+1970:                                  self.l1_ratios)
+1971:             l1_ratios_ = self.l1_ratios
+... lines 1972-2208 omitted ...
+2209:             self.n_iter_ = self.n_iter_.reshape(
+2210:                 (-1, len(folds), self.Cs_.size, self.l1_ratios_.size))
+2211: 
+2212:         return self
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 2212, "path": "sklearn/linear_model/logistic.py", "start_line": 2100}
+META: {"end_column": 69, "end_line": 2175, "next_cursor": "rf1_af30f3076d46f820c44cd342e7ee9d23057939b83791114de623dbc16323dee0", "start_column": 0, "start_line": 2100, "total_lines": 2246}
+2100:             scores = np.tile(scores, (n_classes, 1, 1))
+2101:         else:
+2102:             coefs_paths = np.reshape(
+2103:                 coefs_paths,
+2104:                 (n_classes, len(folds), len(self.Cs_) * len(l1_ratios_),
+2105:                  -1)
+2106:             )
+2107:             self.n_iter_ = np.reshape(
+2108:                 n_iter_,
+2109:                 (n_classes, len(folds), len(self.Cs_) * len(l1_ratios_))
+2110:             )
+2111:         scores = np.reshape(scores, (n_classes, len(folds), -1))
+2112:         self.scores_ = dict(zip(classes, scores))
+2113:         self.coefs_paths_ = dict(zip(classes, coefs_paths))
+2114: 
+2115:         self.C_ = list()
+2116:         self.l1_ratio_ = list()
+2117:         self.coef_ = np.empty((n_classes, X.shape[1]))
+2118:         self.intercept_ = np.zeros(n_classes)
+2119:         for index, (cls, encoded_label) in enumerate(
+2120:                 zip(iter_classes, iter_encoded_labels)):
+2121: 
+2122:             if multi_class == 'ovr':
+2123:                 scores = self.scores_[cls]
+2124:                 coefs_paths = self.coefs_paths_[cls]
+2125:             else:
+2126:                 # For multinomial, all scores are the same across classes
+2127:                 scores = scores[0]
+2128:                 # coefs_paths will keep its original shape because
+2129:                 # logistic_regression_path expects it this way
+2130: 
+2131:             if self.refit:
+2132:                 # best_index is between 0 and (n_Cs . n_l1_ratios - 1)
+2133:                 # for example, with n_cs=2 and n_l1_ratios=3
+2134:                 # the layout of scores is
+2135:                 # [c1, c2, c1, c2, c1, c2]
+2136:                 #   l1_1 ,  l1_2 ,  l1_3
+2137:                 best_index = scores.sum(axis=0).argmax()
+2138: 
+2139:                 best_index_C = best_index % len(self.Cs_)
+2140:                 C_ = self.Cs_[best_index_C]
+2141:                 self.C_.append(C_)
+2142: 
+2143:                 best_index_l1 = best_index // len(self.Cs_)
+2144:                 l1_ratio_ = l1_ratios_[best_index_l1]
+2145:                 self.l1_ratio_.append(l1_ratio_)
+2146: 
+2147:                 if multi_class == 'multinomial':
+2148:                     coef_init = np.mean(coefs_paths[:, :, best_index, :],
+2149:                                         axis=1)
+2150:                 else:
+2151:                     coef_init = np.mean(coefs_paths[:, best_index, :], axis=0)
+2152: 
+2153:                 # Note that y is label encoded and hence pos_class must be
+2154:                 # the encoded label / None (for 'multinomial')
+2155:                 w, _, _ = _logistic_regression_path(
+2156:                     X, y, pos_class=encoded_label, Cs=[C_], solver=solver,
+2157:                     fit_intercept=self.fit_intercept, coef=coef_init,
+2158:                     max_iter=self.max_iter, tol=self.tol,
+2159:                     penalty=self.penalty,
+2160:                     class_weight=class_weight,
+2161:                     multi_class=multi_class,
+2162:                     verbose=max(0, self.verbose - 1),
+2163:                     random_state=self.random_state,
+2164:                     check_input=False, max_squared_sum=max_squared_sum,
+2165:                     sample_weight=sample_weight,
+2166:                     l1_ratio=l1_ratio_)
+2167:                 w = w[0]
+2168: 
+2169:             else:
+2170:                 # Take the best scores across every fold and the average of
+2171:                 # all coefficients corresponding to the best scores.
+2172:                 best_indices = np.argmax(scores, axis=1)
+2173:                 if self.multi_class == 'ovr':
+2174:                     w = np.mean([coefs_paths[i, best_indices[i], :]
+2175:                                  for i in range(len(folds))], axis=0)
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 2099, "path": "sklearn/linear_model/logistic.py", "start_line": 1972}
+META: {"end_column": 71, "end_line": 2056, "next_cursor": "rf1_87251744acb05a113c0c143968a00c5fcf14bed6270ae8260e7dde0ca8c4b49a", "start_column": 0, "start_line": 1972, "total_lines": 2246}
+1972:         else:
+1973:             if self.l1_ratios is not None:
+1974:                 warnings.warn("l1_ratios parameter is only used when penalty "
+1975:                               "is 'elasticnet'. Got (penalty={})".format(
+1976:                                   self.penalty))
+1977: 
+1978:             l1_ratios_ = [None]
+1979: 
+1980:         if self.penalty == 'none':
+1981:             raise ValueError(
+1982:                 "penalty='none' is not useful and not supported by "
+1983:                 "LogisticRegressionCV."
+1984:             )
+1985: 
+1986:         X, y = check_X_y(X, y, accept_sparse='csr', dtype=np.float64,
+1987:                          order="C",
+1988:                          accept_large_sparse=solver != 'liblinear')
+1989:         check_classification_targets(y)
+1990: 
+1991:         class_weight = self.class_weight
+1992: 
+1993:         # Encode for string labels
+1994:         label_encoder = LabelEncoder().fit(y)
+1995:         y = label_encoder.transform(y)
+1996:         if isinstance(class_weight, dict):
+1997:             class_weight = {label_encoder.transform([cls])[0]: v
+1998:                             for cls, v in class_weight.items()}
+1999: 
+2000:         # The original class labels
+2001:         classes = self.classes_ = label_encoder.classes_
+2002:         encoded_labels = label_encoder.transform(label_encoder.classes_)
+2003: 
+2004:         multi_class = _check_multi_class(self.multi_class, solver,
+2005:                                          len(classes))
+2006: 
+2007:         if solver in ['sag', 'saga']:
+2008:             max_squared_sum = row_norms(X, squared=True).max()
+2009:         else:
+2010:             max_squared_sum = None
+2011: 
+2012:         # init cross-validation generator
+2013:         cv = check_cv(self.cv, y, classifier=True)
+2014:         folds = list(cv.split(X, y))
+2015: 
+2016:         # Use the label encoded classes
+2017:         n_classes = len(encoded_labels)
+2018: 
+2019:         if n_classes < 2:
+2020:             raise ValueError("This solver needs samples of at least 2 classes"
+2021:                              " in the data, but the data contains only one"
+2022:                              " class: %r" % classes[0])
+2023: 
+2024:         if n_classes == 2:
+2025:             # OvR in case of binary problems is as good as fitting
+2026:             # the higher label
+2027:             n_classes = 1
+2028:             encoded_labels = encoded_labels[1:]
+2029:             classes = classes[1:]
+2030: 
+2031:         # We need this hack to iterate only once over labels, in the case of
+2032:         # multi_class = multinomial, without changing the value of the labels.
+2033:         if multi_class == 'multinomial':
+2034:             iter_encoded_labels = iter_classes = [None]
+2035:         else:
+2036:             iter_encoded_labels = encoded_labels
+2037:             iter_classes = classes
+2038: 
+2039:         # compute the class weights for the entire dataset y
+2040:         if class_weight == "balanced":
+2041:             class_weight = compute_class_weight(class_weight,
+2042:                                                 np.arange(len(self.classes_)),
+2043:                                                 y)
+2044:             class_weight = dict(enumerate(class_weight))
+2045: 
+2046:         path_func = delayed(_log_reg_scoring_path)
+2047: 
+2048:         # The SAG solver releases the GIL so it's more efficient to use
+2049:         # threads for this solver.
+2050:         if self.solver in ['sag', 'saga']:
+2051:             prefer = 'threads'
+2052:         else:
+2053:             prefer = 'processes'
+2054: 
+2055:         fold_coefs_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose,
+2056:                                **_joblib_parallel_args(prefer=prefer))(
+
+
+TOOL 5: read_file
+ARGS: {"cursor": "rf1_af30f3076d46f820c44cd342e7ee9d23057939b83791114de623dbc16323dee0", "end_line": null, "path": "sklearn/linear_model/logistic.py", "start_line": null}
+META: {"end_column": 19, "end_line": 2212, "next_cursor": null, "start_column": 0, "start_line": 2176, "total_lines": 2246}
+2176:                 else:
+2177:                     w = np.mean([coefs_paths[:, i, best_indices[i], :]
+2178:                                  for i in range(len(folds))], axis=0)
+2179: 
+2180:                 best_indices_C = best_indices % len(self.Cs_)
+2181:                 self.C_.append(np.mean(self.Cs_[best_indices_C]))
+2182: 
+2183:                 best_indices_l1 = best_indices // len(self.Cs_)
+2184:                 self.l1_ratio_.append(np.mean(l1_ratios_[best_indices_l1]))
+2185: 
+2186:             if multi_class == 'multinomial':
+2187:                 self.C_ = np.tile(self.C_, n_classes)
+2188:                 self.l1_ratio_ = np.tile(self.l1_ratio_, n_classes)
+2189:                 self.coef_ = w[:, :X.shape[1]]
+2190:                 if self.fit_intercept:
+2191:                     self.intercept_ = w[:, -1]
+2192:             else:
+2193:                 self.coef_[index] = w[: X.shape[1]]
+2194:                 if self.fit_intercept:
+2195:                     self.intercept_[index] = w[-1]
+2196: 
+2197:         self.C_ = np.asarray(self.C_)
+2198:         self.l1_ratio_ = np.asarray(self.l1_ratio_)
+2199:         self.l1_ratios_ = np.asarray(l1_ratios_)
+2200:         # if elasticnet was used, add the l1_ratios dimension to some
+2201:         # attributes
+2202:         if self.l1_ratios is not None:
+2203:             for cls, coefs_path in self.coefs_paths_.items():
+2204:                 self.coefs_paths_[cls] = coefs_path.reshape(
+2205:                     (len(folds), self.Cs_.size, self.l1_ratios_.size, -1))
+2206:             for cls, score in self.scores_.items():
+2207:                 self.scores_[cls] = score.reshape(
+2208:                     (len(folds), self.Cs_.size, self.l1_ratios_.size))
+2209:             self.n_iter_ = self.n_iter_.reshape(
+2210:                 (-1, len(folds), self.Cs_.size, self.l1_ratios_.size))
+2211: 
+2212:         return self
+
+
+TOOL 6: read_file
+ARGS: {"cursor": "rf1_87251744acb05a113c0c143968a00c5fcf14bed6270ae8260e7dde0ca8c4b49a", "end_line": null, "path": "sklearn/linear_model/logistic.py", "start_line": null}
+META: {"end_column": 40, "end_line": 2086, "next_cursor": "rf1_f8f0f1fe42926b6df3860f230d2eb04a241c10f4e9b562a4a5516512362fbfa4", "start_column": 0, "start_line": 2057, "total_lines": 2246}
+2057:             path_func(X, y, train, test, pos_class=label, Cs=self.Cs,
+2058:                       fit_intercept=self.fit_intercept, penalty=self.penalty,
+2059:                       dual=self.dual, solver=solver, tol=self.tol,
+2060:                       max_iter=self.max_iter, verbose=self.verbose,
+2061:                       class_weight=class_weight, scoring=self.scoring,
+2062:                       multi_class=multi_class,
+2063:                       intercept_scaling=self.intercept_scaling,
+2064:                       random_state=self.random_state,
+2065:                       max_squared_sum=max_squared_sum,
+2066:                       sample_weight=sample_weight,
+2067:                       l1_ratio=l1_ratio
+2068:                       )
+2069:             for label in iter_encoded_labels
+2070:             for train, test in folds
+2071:             for l1_ratio in l1_ratios_)
+2072: 
+2073:         # _log_reg_scoring_path will output different shapes depending on the
+2074:         # multi_class param, so we need to reshape the outputs accordingly.
+2075:         # Cs is of shape (n_classes . n_folds . n_l1_ratios, n_Cs) and all the
+2076:         # rows are equal, so we just take the first one.
+2077:         # After reshaping,
+2078:         # - scores is of shape (n_classes, n_folds, n_Cs . n_l1_ratios)
+2079:         # - coefs_paths is of shape
+2080:         #  (n_classes, n_folds, n_Cs . n_l1_ratios, n_features)
+2081:         # - n_iter is of shape
+2082:         #  (n_classes, n_folds, n_Cs . n_l1_ratios) or
+2083:         #  (1, n_folds, n_Cs . n_l1_ratios)
+2084:         coefs_paths, Cs, scores, n_iter_ = zip(*fold_coefs_)
+2085:         self.Cs_ = Cs[0]
+2086:         if multi_class == 'multinomial':
+

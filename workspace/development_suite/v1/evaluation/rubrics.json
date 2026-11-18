@@ -1,0 +1,126 @@
+[
+  {
+    "id": "d01_cache",
+    "title": "租户缓存：版本、过期和写入失败",
+    "gold_files": [
+      "profiles/cache.py",
+      "profiles/keys.py",
+      "profiles/writes.py"
+    ],
+    "gold_entities": [
+      "profiles/keys.py:cache_key",
+      "profiles/cache.py:fetch_profile",
+      "profiles/writes.py:replace_profile"
+    ],
+    "answer_criteria": [
+      "Key is a tuple of stringified tenant, user and current generation; distinguish raw version-map identity from stringified key.",
+      "Hit requires now < expires_at; equality misses; a miss reads db and caches for 30 units.",
+      "DB write occurs before generation increment; exception leaves generation unchanged; successful increment makes old key unreachable for later generation lookups without deleting old entries.",
+      "No locking/atomic transaction with reader; concurrent stale returns and cross-process shared-state assumptions are not guaranteed."
+    ]
+  },
+  {
+    "id": "d02_config",
+    "title": "配置覆盖：优先级、假值和校验",
+    "gold_files": [
+      "runner/settings.py",
+      "runner/validation.py",
+      "runner/worker.py"
+    ],
+    "gold_entities": [
+      "runner/settings.py:resolve_settings",
+      "runner/validation.py:validate_settings",
+      "runner/worker.py:start_worker"
+    ],
+    "answer_criteria": [
+      "Priority defaults < project < request, only known default keys, None does not override.",
+      "False and zero are not missing: false enabled is retained; zero attempts allowed, zero timeout invalid.",
+      "Exact types enforced: bool cannot stand in for integer; invalid final value raises before worker call; an invalid lower value may be replaced by a valid higher value.",
+      "Enabled false returns started false; valid enabled true uses resolved attempts/timeout; no environment layer or arbitrary unknown setting propagation."
+    ]
+  },
+  {
+    "id": "d03_access",
+    "title": "共享文档：租户边界和只读链接",
+    "gold_files": [
+      "docs/access.py",
+      "docs/api.py",
+      "docs/shares.py"
+    ],
+    "gold_entities": [
+      "docs/access.py:permitted",
+      "docs/shares.py:valid_share",
+      "docs/api.py:open_document"
+    ],
+    "answer_criteria": [
+      "Disabled or cross-tenant user is denied before owner/admin privileges; unknown action denied.",
+      "Same-tenant enabled owner or admin can read/write without share token.",
+      "Other user gets read only with nonrevoked token matching document id and tenant; token does not bypass tenant or disabled checks.",
+      "API checks permission before appending audit and returning body; audit is recording, not a grant. Token cryptographic validation/expiry is not shown."
+    ]
+  },
+  {
+    "id": "d04_upload",
+    "title": "分片上传：替换、缺片及完成顺序",
+    "gold_files": [
+      "uploads/checksum.py",
+      "uploads/finalize.py",
+      "uploads/parts.py"
+    ],
+    "gold_entities": [
+      "uploads/parts.py:record_part",
+      "uploads/parts.py:assemble_parts",
+      "uploads/checksum.py:checksum_matches",
+      "uploads/finalize.py:complete_upload"
+    ],
+    "answer_criteria": [
+      "Duplicate number replaces earlier bytes; allowed integer index is 0 through count-1; completed uploads reject receive.",
+      "Require exact set of indices; concatenate ascending number order regardless of arrival; mismatches raise before storage.",
+      "SHA256 of assembled bytes must equal expected; storage.put precedes object_id/completed/parts mutation.",
+      "Storage exception leaves completion state/parts unchanged in shown code, though storage may have side effects; later completed calls return object id. No atomic cross-storage transaction/concurrency guarantee."
+    ]
+  },
+  {
+    "id": "d05_lease",
+    "title": "任务租约：代次、截止时间及旧确认",
+    "gold_files": [
+      "jobs/completion.py",
+      "jobs/leases.py",
+      "jobs/tokens.py"
+    ],
+    "gold_entities": [
+      "jobs/leases.py:claim_lease",
+      "jobs/leases.py:renew_lease",
+      "jobs/tokens.py:lease_token",
+      "jobs/completion.py:acknowledge"
+    ],
+    "answer_criteria": [
+      "Claim refused if done or a current owner before deadline; equality permits reclaim; accepted claim increments generation and sets owner/deadline.",
+      "Token includes job id, owner and generation, so a previous generation token is rejected after reclaim.",
+      "Ack and renewal require not done, exact token, and now < deadline; equality rejects; ack marks done, renewal sets now+ttl.",
+      "Plain mutable dictionary lacks locking/CAS or external fencing of side effects; sequential stale-token checks do not prove exclusive concurrent work."
+    ]
+  },
+  {
+    "id": "d06_import",
+    "title": "账目导入：行错误、重复替换及汇总",
+    "gold_files": [
+      "imports/api.py",
+      "imports/index.py",
+      "imports/parser.py",
+      "imports/totals.py"
+    ],
+    "gold_entities": [
+      "imports/parser.py:parse_row",
+      "imports/index.py:index_invoice",
+      "imports/totals.py:tenant_totals",
+      "imports/api.py:import_rows"
+    ],
+    "answer_criteria": [
+      "Headers trimmed/lowercased, duplicate or missing required headers and wrong row length rejected; identities trimmed but not lowercased.",
+      "Empty identity or malformed/nonfinite/negative Decimal amount rejected; zero allowed; extra columns ignored after mapping.",
+      "ValueError records one-based row number and continues; invalid later duplicate does not replace prior valid row; other exception types are not caught.",
+      "Key is tenant plus invoice, last valid row wins; totals computed from final dictionary values so replacements are not double-counted; different tenants remain separate."
+    ]
+  }
+]

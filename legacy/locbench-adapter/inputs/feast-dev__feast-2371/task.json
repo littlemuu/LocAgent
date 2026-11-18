@@ -1,0 +1,6 @@
+{
+  "instance_id": "feast-dev__feast-2371",
+  "repo": "feast-dev/feast",
+  "base_commit": "45db6dcdf064688c55a7a465aa6717887e6cae34",
+  "problem_statement": "DynamoDB batch retrieval does slow sequential gets (online_read)\nThe current DynamoDB implementation does sequential gets (https://github.com/feast-dev/feast/blob/master/sdk/python/feast/infra/online_stores/dynamodb.py#L163)\r\n\r\n## Possible Solution\r\nA better approach is to do some multi-get operation or at least run these queries in parallel and collect the results.\r\n\n"
+}

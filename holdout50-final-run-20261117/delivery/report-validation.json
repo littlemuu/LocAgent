@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "markdown_links_checked": true,
+  "fixed50_and_complete_pair_statistics_rechecked": true,
+  "manual_coverage": 89,
+  "provider_402_balance_bodies_verified": 14,
+  "raw_scores_not_changed": true,
+  "no_model_or_harness_execution": true,
+  "shutdown_stop_charging_verified": true,
+  "shutdown_observed_at_shanghai": "2026-11-18 06:24:12 +08:00",
+  "post_shutdown_markdown_links_checked": true,
+  "frozen_deployment_hashes_unchanged": true
+}

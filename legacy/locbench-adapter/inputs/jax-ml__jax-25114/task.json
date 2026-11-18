@@ -1,0 +1,6 @@
+{
+  "instance_id": "jax-ml__jax-25114",
+  "repo": "jax-ml/jax",
+  "base_commit": "df6758f021167b1c0b85f5d6e4986f6f0d2a1169",
+  "problem_statement": "Allow specifying `exec_time_optimization_effort` and `memory_fitting_effort` via CLI.\nNew compiler options (see title) have recently been [exposed](https://github.com/jax-ml/jax/issues/24625) in JAX.\r\n\r\nTo use them users have to change their Python code like this:\r\n\r\n```\r\njax.jit(f, compiler_options={\r\n  \"exec_time_optimization_effort\": 0.5, # change here\r\n })\r\n``` \r\n\r\nIt would be very convenient to not modify the code but rely on CLI instead. For example:\r\n\r\n```\r\nJAX_EXEC_TIME_OPTIMIZATION_EFFORT=0.5 python3 jax_program.py\r\n```\n"
+}

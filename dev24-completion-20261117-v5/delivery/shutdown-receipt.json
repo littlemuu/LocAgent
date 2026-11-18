@@ -1,0 +1,14 @@
+{
+  "instance_id": "ins-1njewmmg",
+  "observed_state": "已关机",
+  "shutdown_mode": "关机不计费模式",
+  "billing_state": "按量计费-部分停止计费",
+  "public_ip_released": true,
+  "credential_deleted": true,
+  "credential_evidence": "final-cloud-audit.json",
+  "screenshot": "关机最终状态.jpg",
+  "observed_at": "2026-11-17T14:46:41.512223+08:00",
+  "compute_billing_stopped": true,
+  "disk_storage_still_chargeable": true,
+  "extra_repetitions_run": false
+}

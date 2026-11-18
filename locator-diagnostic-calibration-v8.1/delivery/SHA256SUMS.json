@@ -1,0 +1,11 @@
+{
+  "FREEZE.json": "ac5a05fb1e2261a55ded68967189d18fb84972e8d82293204c2d8917f3bfc2dd",
+  "delivery/B-C-COMPARISON.json": "7c8a41c0d1ba14db219f69a38e258a080831ce88ede2895f0742942a49ff05c1",
+  "delivery/REPORT_ZH.md": "77ac20d34583788781c837556a567d85d1d3b8b9e27091015a2bf14cafbda625",
+  "delivery/V8.1-CHANGE-AUDIT.json": "5094bacd66fb72558a41afd2008d494482e4c009bc109a3b544538e759203e23",
+  "delivery/baseline-tests.json": "bd0716e3085b0e7a3727a718b9e5b5a45e7d1665989cec3e05f2968364bbba4f",
+  "delivery/coding-contract-evidence.json": "8e6d1cf01959179499d645895763317960b694431e930f8d7857b9f39318faa9",
+  "delivery/locator-contract-evidence.json": "53db58069778de933626aa6854bf2c566e0abaa0c60da89bb2f5c71d2b0b9d54",
+  "delivery/new-tests.json": "a0c165d6c7d81656f5876d2d0a3ff480cc3977b8524ea15fb86bae255b36cf3c",
+  "delivery/sympy-21379-replay.json": "24c4b70dc0a734dfd38d5d77ebaf278b4cba3252d123aa22d6f2e6458bfe7686"
+}

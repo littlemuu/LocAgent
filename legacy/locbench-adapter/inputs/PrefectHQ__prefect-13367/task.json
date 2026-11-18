@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-13367",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "a0630c10580b78e6d7d41fe1b469cb5cb1a0bca2",
+  "problem_statement": "Remove `prefect deployment apply` CLI from the `main` branch\nRemove the `prefect.cli.deployment.apply` function and any references to it. Any private code that was used solely for that function should also be deleted. This CLI command will be included in 2.x releases, but will not be included in the 3.0 release.\n"
+}

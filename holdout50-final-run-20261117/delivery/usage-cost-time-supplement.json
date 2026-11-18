@@ -1,0 +1,172 @@
+{
+  "arms": {
+    "A": {
+      "total_cost": {
+        "cache_hit_tokens": 11698176,
+        "cache_miss_tokens": 1027367,
+        "input_tokens": 12725543,
+        "metered_cny": 1.9299265199999998,
+        "output_tokens": 167149,
+        "peak_cache_adjusted_cny": 3.859853039999999,
+        "received_requests": 1060,
+        "requests": 1064,
+        "total_tokens": 12892692,
+        "uncertain_requests": 4,
+        "uncertain_reservation_cny": 8.51968,
+        "upper_cny": 26.788278,
+        "cache_usage_complete": true
+      },
+      "localization_cost": {
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 0,
+        "input_tokens": 0,
+        "metered_cny": 0,
+        "output_tokens": 0,
+        "peak_cache_adjusted_cny": 0.0,
+        "received_requests": 0,
+        "requests": 0,
+        "total_tokens": 0,
+        "uncertain_requests": 0,
+        "uncertain_reservation_cny": 0.0,
+        "upper_cny": 0.0,
+        "cache_usage_complete": true
+      },
+      "coding_cost": {
+        "cache_hit_tokens": 11698176,
+        "cache_miss_tokens": 1027367,
+        "input_tokens": 12725543,
+        "metered_cny": 1.9299265199999998,
+        "output_tokens": 167149,
+        "peak_cache_adjusted_cny": 3.859853039999999,
+        "received_requests": 1060,
+        "requests": 1064,
+        "total_tokens": 12892692,
+        "uncertain_requests": 4,
+        "uncertain_reservation_cny": 8.51968,
+        "upper_cny": 26.788278,
+        "cache_usage_complete": true
+      },
+      "stage_seconds": {
+        "locator": 0,
+        "coding": 2959.690720319748,
+        "evaluation": 2366.115212202072
+      },
+      "coding_never_started": 0,
+      "coding_first_request_rejected_without_actions": 4
+    },
+    "B": {
+      "total_cost": {
+        "cache_hit_tokens": 9253888,
+        "cache_miss_tokens": 1181853,
+        "input_tokens": 10435741,
+        "metered_cny": 2.1669787599999997,
+        "output_tokens": 200012,
+        "peak_cache_adjusted_cny": 4.333957519999999,
+        "received_requests": 1062,
+        "requests": 1067,
+        "total_tokens": 10635753,
+        "uncertain_requests": 5,
+        "uncertain_reservation_cny": 10.56768,
+        "upper_cny": 22.471577999999997,
+        "cache_usage_complete": true
+      },
+      "localization_cost": {
+        "cache_hit_tokens": 345472,
+        "cache_miss_tokens": 350726,
+        "input_tokens": 696198,
+        "metered_cny": 0.51986744,
+        "output_tokens": 40558,
+        "peak_cache_adjusted_cny": 1.03973488,
+        "received_requests": 173,
+        "requests": 178,
+        "total_tokens": 736756,
+        "uncertain_requests": 5,
+        "uncertain_reservation_cny": 10.56768,
+        "upper_cny": 1.7168599999999996,
+        "cache_usage_complete": true
+      },
+      "coding_cost": {
+        "cache_hit_tokens": 8908416,
+        "cache_miss_tokens": 831127,
+        "input_tokens": 9739543,
+        "metered_cny": 1.6471113199999998,
+        "output_tokens": 159454,
+        "peak_cache_adjusted_cny": 3.2942226399999996,
+        "received_requests": 889,
+        "requests": 889,
+        "total_tokens": 9898997,
+        "uncertain_requests": 0,
+        "uncertain_reservation_cny": 0.0,
+        "upper_cny": 20.754718,
+        "cache_usage_complete": true
+      },
+      "stage_seconds": {
+        "locator": 1104.723671913147,
+        "coding": 2285.256336450577,
+        "evaluation": 2283.839843273163
+      },
+      "coding_never_started": 5,
+      "coding_first_request_rejected_without_actions": 0
+    },
+    "C": {
+      "total_cost": {
+        "cache_hit_tokens": 10369280,
+        "cache_miss_tokens": 1295229,
+        "input_tokens": 11664509,
+        "metered_cny": 2.379722600000001,
+        "output_tokens": 219277,
+        "peak_cache_adjusted_cny": 4.759445200000002,
+        "received_requests": 1121,
+        "requests": 1126,
+        "total_tokens": 11883786,
+        "uncertain_requests": 5,
+        "uncertain_reservation_cny": 10.56768,
+        "upper_cny": 25.083233999999997,
+        "cache_usage_complete": true
+      },
+      "localization_cost": {
+        "cache_hit_tokens": 409728,
+        "cache_miss_tokens": 400110,
+        "input_tokens": 809838,
+        "metered_cny": 0.6402685600000001,
+        "output_tokens": 57991,
+        "peak_cache_adjusted_cny": 1.2805371200000002,
+        "received_requests": 174,
+        "requests": 179,
+        "total_tokens": 867829,
+        "uncertain_requests": 5,
+        "uncertain_reservation_cny": 10.56768,
+        "upper_cny": 2.0836039999999993,
+        "cache_usage_complete": true
+      },
+      "coding_cost": {
+        "cache_hit_tokens": 9959552,
+        "cache_miss_tokens": 895119,
+        "input_tokens": 10854671,
+        "metered_cny": 1.73945404,
+        "output_tokens": 161286,
+        "peak_cache_adjusted_cny": 3.47890808,
+        "received_requests": 947,
+        "requests": 947,
+        "total_tokens": 11015957,
+        "uncertain_requests": 0,
+        "uncertain_reservation_cny": 0.0,
+        "upper_cny": 22.99963,
+        "cache_usage_complete": true
+      },
+      "stage_seconds": {
+        "locator": 1286.1673789024353,
+        "coding": 2697.7783710956573,
+        "evaluation": 2283.2737703323364
+      },
+      "coding_never_started": 5,
+      "coding_first_request_rejected_without_actions": 0
+    }
+  },
+  "actual_account_bill_observed": false,
+  "uncertain_reservations_are_not_charges": true,
+  "run_seconds": 23315.786210536957,
+  "image_seconds": 5980.296417713165,
+  "run_started_at": 1794925183.421162,
+  "run_finished_at": 1794948499.2073724
+}

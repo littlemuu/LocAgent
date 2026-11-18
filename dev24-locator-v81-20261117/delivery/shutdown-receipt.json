@@ -1,0 +1,16 @@
+{
+  "status": "verified_stopped",
+  "observed_at": 1794909060.864876,
+  "instance": "ins-1njewmmg",
+  "mode": "STOP_CHARGING",
+  "visible_status": "已关机",
+  "visible_mode": "关机不计费模式",
+  "visible_billing": "按量计费-部分停止计费",
+  "public_ip_released": true,
+  "user_performed_MFA_and_shutdown": true,
+  "temporary_API_key_deleted": true,
+  "running_containers": 0,
+  "cached_images": 18,
+  "evidence": "关机最终状态.jpg",
+  "note": "CPU and memory stopped charging; cloud disk persists and remains billable"
+}

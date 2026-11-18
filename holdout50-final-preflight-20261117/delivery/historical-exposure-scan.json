@@ -1,0 +1,878 @@
+{
+  "method": "All project file paths and text plus tar/zip members; exact IDs, GitHub issue/PR URLs, base commits; no sealed parquet decoding. Hidden/ignored files included, virtualenv/git/node_modules/own output excluded. Archive binary bodies and nested archives are not decoded.",
+  "counts": {
+    "file_paths_scanned": 78861,
+    "text_files_scanned_by_rg": 71997,
+    "archive_members_scanned": 46936,
+    "archive_text_members_scanned": 39707,
+    "credential_files_excluded": 2,
+    "sealed_files_excluded_from_content_scan": 3
+  },
+  "hits": [
+    {
+      "path": "freezes/holdout-v1/ids.txt",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6"
+    },
+    {
+      "path": "freezes/holdout-v1/manifest.json",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "20432223673864420b132c0ceb45635df56dcbc6ac1ba06f8054bd6828abdbac"
+    },
+    {
+      "path": "verification/holdout-reproduction/ids.txt",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6"
+    },
+    {
+      "path": "verification/holdout-reproduction/manifest.json",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "20432223673864420b132c0ceb45635df56dcbc6ac1ba06f8054bd6828abdbac"
+    },
+    {
+      "path": "data/selection/verified-metadata.json",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "9592c8699217138891f69dbd5a904744805d3cd855b6607d905a100c231ede7b"
+    },
+    {
+      "path": "e2e-preparation-v1/archive/smoke-runtime-v1/data/selection-metadata.json",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "9592c8699217138891f69dbd5a904744805d3cd855b6607d905a100c231ede7b"
+    },
+    {
+      "path": "e2e-preparation-v1/data/selection-metadata.json",
+      "matched_ids": [
+        "astropy__astropy-14096",
+        "astropy__astropy-7166",
+        "astropy__astropy-7336",
+        "astropy__astropy-8872",
+        "django__django-13821",
+        "django__django-14539",
+        "django__django-15380",
+        "django__django-15572",
+        "django__django-15629",
+        "matplotlib__matplotlib-24177",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26208",
+        "matplotlib__matplotlib-26291",
+        "matplotlib__matplotlib-26342",
+        "mwaskom__seaborn-3069",
+        "mwaskom__seaborn-3187",
+        "pallets__flask-5014",
+        "psf__requests-1142",
+        "psf__requests-1724",
+        "psf__requests-1766",
+        "psf__requests-2931",
+        "psf__requests-5414",
+        "pydata__xarray-4075",
+        "pydata__xarray-4695",
+        "pydata__xarray-6721",
+        "pydata__xarray-6938",
+        "pylint-dev__pylint-4661",
+        "pylint-dev__pylint-4970",
+        "pylint-dev__pylint-6903",
+        "pylint-dev__pylint-7277",
+        "pylint-dev__pylint-8898",
+        "pytest-dev__pytest-10081",
+        "pytest-dev__pytest-5631",
+        "pytest-dev__pytest-5787",
+        "pytest-dev__pytest-7236",
+        "pytest-dev__pytest-7521",
+        "scikit-learn__scikit-learn-11578",
+        "scikit-learn__scikit-learn-12973",
+        "scikit-learn__scikit-learn-25973",
+        "scikit-learn__scikit-learn-26323",
+        "sphinx-doc__sphinx-8035",
+        "sphinx-doc__sphinx-8265",
+        "sphinx-doc__sphinx-8269",
+        "sphinx-doc__sphinx-8551",
+        "sphinx-doc__sphinx-9281",
+        "sympy__sympy-13091",
+        "sympy__sympy-13757",
+        "sympy__sympy-13877",
+        "sympy__sympy-15809",
+        "sympy__sympy-22914"
+      ],
+      "sha256": "9592c8699217138891f69dbd5a904744805d3cd855b6607d905a100c231ede7b"
+    }
+  ],
+  "archives": [
+    {
+      "path": "dev24-completion-20261117-v5/delivery/remaining16-evidence-v5.tar.gz",
+      "sha256": "b0c7869fc806975f39f512b98fba4be1c1a90af396d954cd4652dd2dfec82c87"
+    },
+    {
+      "path": "dev24-completion-20261117-v5/delivery/unchanged-core-runtime-v4.zip",
+      "sha256": "b85416b3f296408bab2ff5cabff211d7007e8108672c623bc99202ce591e61f2"
+    },
+    {
+      "path": "dev24-completion-20261117-v5/delivery/first8-evidence-v4.tar.gz",
+      "sha256": "087d37e8f1b0028afae37161413970b4ce1dff10173e606af464e571d38d1bc5"
+    },
+    {
+      "path": "dev24-c-v8-20261117/controls.tar.gz",
+      "sha256": "c606d6e5b478ebfb4375eaf7df2daa660b0ea052ebff07acbf2cacb617085412"
+    },
+    {
+      "path": "dev24-c-v8-20261117/deployment.tar.gz",
+      "sha256": "67b27296d06b170bd03bbb106f2a6d0fbaa2fba6b7f35c6eacf899b8be4cb0af"
+    },
+    {
+      "path": "dev24-c-v8-20261117/evidence.tar.gz",
+      "sha256": "a7cf5e448689964c01a47242489e7f6b2716b8e517243d6558677eb380788aa9"
+    },
+    {
+      "path": "legacy/locbench-adapter/samples/networkx__networkx-7721/source.tar.gz",
+      "sha256": "394f0366428dbc608234a365d643aea10013a00233f2b55adf77815da6fe96dc"
+    },
+    {
+      "path": "legacy/locbench-adapter/samples/Delgan__loguru-1239/source.tar.gz",
+      "sha256": "b4e02a665b5c669d4868c90f168d2901896012ce2c3dc5ff266ae2267550940f"
+    },
+    {
+      "path": "legacy/locbench-adapter/samples/py-pdf__pypdf-2644/source.tar.gz",
+      "sha256": "24d1b6f15f088eb3c7852d77cb15b1c642f3a029900dff4e0beb33e9b0e2086f"
+    },
+    {
+      "path": "legacy/locagent-demo/verification/large-eval-output-20261110T133343/public-archive.tar.gz",
+      "sha256": "059b1a9034a1f1c40c148f1fc6128464b1b82aa10ef4a92665b1d91cad72b365"
+    },
+    {
+      "path": "cloud-validation-20261117/delivery/cloud-runtime-v3.zip",
+      "sha256": "3fae459b0ec27977650546b0bf5f107a00cf3b9d91ef12c1a3deb56ebb4fa9e6"
+    },
+    {
+      "path": "cloud-validation-20261117/delivery/cloud-smoke-v3-evidence.tar.gz",
+      "sha256": "3a3c2bcc6d4d9d699e30583e23540e01b99f8e2fa366ea1f716666f902d9571b"
+    },
+    {
+      "path": "cloud-validation-20261117/delivery/cloud-smoke-v2-evidence.tar.gz",
+      "sha256": "3a9ad8438c18a6406b7bb8df47f6fe099cb10477ea40065e625767ff4c312137"
+    },
+    {
+      "path": "dev24-locator-v81-20261117/deployment.tar.gz",
+      "sha256": "8a304d8719a379e6cae6d2020c9b8f481ee668fbc4b9399649a148b09f6240fc"
+    },
+    {
+      "path": "dev24-locator-v81-20261117/evidence.tar.gz",
+      "sha256": "22cf29d6307561fda30563277ab947c0c0d5e34c1f5dd5d22e36ee39167ba821"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/locagent-vector-evidence-20261116.zip",
+      "sha256": "13633fbde3a41d30c7e096c12a3e3183d7ffbd70c4c76ddcdce689f75cac6f92"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/codeload-probe.tar.gz",
+      "sha256": "dc2ba9fe4cae61becfe96e9800c171f1d7ef187a2bd471808bd3f328ba02cfa1"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-0e366be90424816156802b41997b37b5dadd0851.tar.gz",
+      "sha256": "3ec51b8e75251b6e5e4bc33d1c15ff64ec324b465c1fbce4074794b2d2eb7b33"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-60e7eb97e65947a83fa290010f3dde71be8fed84.tar.gz",
+      "sha256": "c97fa13be7045aa06893fd1914f3bd678e612bc0f384b9bdd4a7a1a245311045"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-270e974975984f662f998c8f6eb0ebebd964de82.tar.gz",
+      "sha256": "bd39ecd7d5355d25dc723a592b4703e8f9870fd303c15f0376f8ea6c94c9ef61"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-103d51f6efa36efcc7be4adecfd571da3f63291c.tar.gz",
+      "sha256": "b8c3567868c134118fe71dfe3f5710518beaa5aa7aef50e7e292c0ac45f7ef7d"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-471cd9b3492318ef639973d29ba929ca458068db.tar.gz",
+      "sha256": "b740855f65f5ad276da178ad644ce6da19170cfd1e471bf32671a300d4c6fc7c"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-475462811ea4f9dea23c8af4cc2b6ead2dc03845.tar.gz",
+      "sha256": "d43570a69b3175313cec809443d3a427f489eb5b74cbb9e6ad715353b94d782b"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-c0ed9d187906d202b9276a0750b3c377584cb75f.tar.gz",
+      "sha256": "8db0d494f4cdd09adff017c34ec0b9adfcfe05bf318a5ab040cf3718d16788e7"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-2c541395b2f7cc62e699c2eb77e5065280da6aa5.tar.gz",
+      "sha256": "d282a9152ea04467f62c97734a3f7c0c9fa062d7b9877ca96f2b3e554215f91e"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-a00cb2eed0704cd6d2071b2004c37e95ccc86ee5.tar.gz",
+      "sha256": "bd4ee6515740417c1e8ff645c0931149d3f3fed8dce04907d600470cad4fd2b0"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-c834d6e4a0c4280b7b7750cb0de8dd8acb3d4c2c.tar.gz",
+      "sha256": "0b9af0effcee34ece45b1f0673b2b11ae611bd0b7bd2b92909debe22306d4d66"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-f3bcc37c3d2dc3199715f825a86b748c3b3805f9.tar.gz",
+      "sha256": "e715a52b438c6f2c34afe36b36bfe7b6a01046abca2836531edb585b5546f538"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-6a363e6c4837a2cca606eba5903ea6f4ae83d745.tar.gz",
+      "sha256": "665940b2d7cf542d7509c84040d36ba5c670a883f41eb93725c6fd55dc6902b1"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-a743120d9663cecedb9a215f42b7bd6893591690.tar.gz",
+      "sha256": "3c6a156ea373d16810a64835f1f3c887729fa771422fc4ef50ada89da515fd18"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-50a413af6b3d3e052f1f631728ecae2267df6523.tar.gz",
+      "sha256": "e2e895d78588de361f605d085e601e2d8b817e5b2f7f9c3777a419016518b8e7"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-b2f3aff7633057d234ec9186c18a53f4df306d08.tar.gz",
+      "sha256": "b54e07f143e46b2d67258e759f8ada18b8247d1ef39d17918b56ae098458c453"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-ee0f19b696c60064c58cdc08b3265aef56d49ff8.tar.gz",
+      "sha256": "4ea9256764a90c65e0465689cc2237f2660186c117cb8fe50d4f4c084d2caa36"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-9c99fd6e4a345803a43003284cd2aed8a772eb01.tar.gz",
+      "sha256": "6adbc859379345a4f463783b76c4b59b4e7e76cb7f1aec77afe87c220e2985bb"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-4b0fac94edd71df63ce511bec1e8100a3bbf1049.tar.gz",
+      "sha256": "a9ed30463af84d9d556c7f114b39f7c09d3f25d0525b3b793644217195b52cad"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-8c1a0a7abbc1c36f70d1f65f3604acc46c5ce6ab.tar.gz",
+      "sha256": "de6384139b16a758da3ae6a2fb4bf3170689a45d500344c5d6af93c9e2678eed"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-814a5a7c6e27fcb52c524ca4fe2b05108903058c.tar.gz",
+      "sha256": "025c427d1fc0c9560a99c8f0cb76ba97b3a5126541a779794a8f9e05bd1198d2"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-9ed3dbb0ae527230cd156d91d0af305478558fba.tar.gz",
+      "sha256": "704093de311378b3cfc157dd1a1cc3db80bf3470e72184fd9bb2f10906c88723"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-000c563473400aa086f6486a9c38ace0e77ea219.tar.gz",
+      "sha256": "208c321f5d782027caf16f708a677d9386ab13ea859761df06d572dae8154dfe"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-75723b7720952ac0a4c7d3e277b6714ba55ded18.tar.gz",
+      "sha256": "03ee37c2e6acf248271f24e691084a071ceff62ba93107b9639d6815a68e2af6"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-9ac29c01860f5732de260326f272da2346c50003.tar.gz",
+      "sha256": "f42c9dcf3ad903d0c1cacc7b05c2357d77a2e66cde7f3ab9624298ff04bdcaae"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-6bdf86adb2b8e3d9e3031b3a81f24851c8bfca0e.tar.gz",
+      "sha256": "98b55c15260b1fab5e11acf56946e705e8a1c1f3113ed7f711effb9eecc3ddb4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-828bdfe5ba91b736b545561ebb53326f1f88f6e5.tar.gz",
+      "sha256": "0b1853ed377282211ff821c684b946f31eafc56022cb92e50926dcfc2bd666a1"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-3a68d4913221abc6f8ad3be50937f7ae49300a98.tar.gz",
+      "sha256": "f9705829612e234242fb3450fa7d39641f57288934807bada6f580bc3b7e873d"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-3f29964b23a278f5cef8b72a1d7ede8ea0a28ae1.tar.gz",
+      "sha256": "f56fa36f50e688290c4693cfb0b15da6a8df6c749c1046fe21b9fc525b346941"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-c650fb45204635f07910948d5fc59a8c551ffdda.tar.gz",
+      "sha256": "23de05e93057d3b781ffb9aa4014dc84be66956ddf33f38d402f8bbcf59b6fa3"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-3e705a4e11fd73b4f201e03c907618df12a91c2d.tar.gz",
+      "sha256": "4804539c703436d7e1872d9da16121a5a32020ef307594a383e11264ef4cc1fc"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-58f2d7c112235b347040bb5cb579d4ebc0a0ad91.tar.gz",
+      "sha256": "d1b0e210b15cb23ed7aee5ff9e4461939e1084048af9b0e2d319be9d86f7bb64"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-6bde3618237cdae312e4e7fb006690be2a3ee0f6.tar.gz",
+      "sha256": "f452b7984209033f258f135782f995a9b0740416e3bc2385f4ea2ea9c842b956"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-6ca2e2ab399c7e41be276bc830f21af3092f5d28.tar.gz",
+      "sha256": "c950bcbc9d8a336dae6af119b0e78c43ad894255e26e4f9fc7d0ade9802e5cfd"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-3c12ce7050bf63c9fa522e5d7b95543037da0f63.tar.gz",
+      "sha256": "0de344d84a76576f53c1bc14d8df07c242e54865eb380548b63a25d52eb310b5"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-d42f15b71757de791a5781fb179fd972da9169f5.tar.gz",
+      "sha256": "4ac3d5ad8558995b198518b7386e271ecf84e1d84994ee4af80ae159432030fb"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-a5f5aa6d4012d256ccca24638f2642fc371e9f77.tar.gz",
+      "sha256": "002e0327669a9a60fade94d754c55713a763ac0e89712772f98302725a43bf80"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/tkem__cachetools-f4f288579dc3c8f82f62d0eaca7774303d9d3768.tar.gz",
+      "sha256": "9150e1986cbbd621ce6bd67ae02357b44c823cd076adfb5ff2616db1a822856e"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-b5e3886a37209bb880f17d82fbf4ba00ece0e41e.tar.gz",
+      "sha256": "1fe5788d36b4a5ff77565c9f96289b6f33581b0166add5ada5603789b17d65cf"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-967864f89791509f9eb36b22b4579d36b72a6df2.tar.gz",
+      "sha256": "e020cc46e239cb8331b76b262c873a56faaf55e8b672d8760c62d2f913a58ea4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-94caa57142c057ce52504cdf239ae0ed3168f9b5.tar.gz",
+      "sha256": "886174e796698143f1562351998d3aea65c10137e735ca9960a3fdcaf8cb685e"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-38c99686b9c9e211a3e27c5e1ad99bfdc8e82f04.tar.gz",
+      "sha256": "9e818b1cf722e5e75b1d4e48ef9a582741293754c1ae8d4b8749f8130b242be3"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-eb202520e5933c9daf42501e1e42fdb0144002c8.tar.gz",
+      "sha256": "f00e6285c6558cb3457cd566c2565022c4c7152f0d8fc215bdb7cae3e01ca938"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-a0602c70bb6e11322107b51114333bab7adab021.tar.gz",
+      "sha256": "7c2ec6546fbe68e103b693f91a109c2eb109123ff3d5f40bc91f61da953cb03f"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-b8b9ffeb5d012f5d041685c81152636bf596cf72.tar.gz",
+      "sha256": "249e58e0617e609dd9ef5db624d78d0ef948f08f089f60c504a4455179a4a091"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-b62954b62d04f58a939d2856c67ebe4de32cdb5d.tar.gz",
+      "sha256": "382034294e3d690f4ec07dc858084e40b9f81f26da169ae007386bfd3efde281"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-6879ffd11d9c382782008a515e78765e46c178d6.tar.gz",
+      "sha256": "a90b058b2aa588063409287238b6d2d162d3fa5b58ab0effacb2d0a60df8eb99"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-8779333a4759e56427b5d7ba23cacd3fe6054d61.tar.gz",
+      "sha256": "32363544d517b5013b86138f03fc9cf49d1431f47e23471e8178ae54d17a820b"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-666984de9a730a54438362b1adedd09bb1e9f5c7.tar.gz",
+      "sha256": "127c58d9ca8adce4fb9937b4435ef13c39187837e5bf91b9a16bc9f6f39cab2b"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-f75103c655f71015fbc0b90a399133149b17f58c.tar.gz",
+      "sha256": "88cb859db833b2656e97b67b1b9e59b8be7ae424776af9285d1404d1a2507cb0"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-fa4e6a90b45428212452afc6ee0d5c8103b9301d.tar.gz",
+      "sha256": "cb1b9335731bd3d362bc4f5c761fb40b79c7343b756bf9e76434118bddcf4ecc"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-976484a655df046aa6849f440a4f0cd44fc4918c.tar.gz",
+      "sha256": "4b6b08b3deba82d75ff3082ebc19903ba62d5dfd6bd87b75ae33b7b291b66de4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-20262cf73c9a3b55eea0ce305fb5a8111911ef3c.tar.gz",
+      "sha256": "2e2e1605e0914e7bab0fd8df63b7bad0079fd80189d956ab5afc74f605ea8d45"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-c2b04b4cb16410d7bf9ff781c78dee3ca908dc32.tar.gz",
+      "sha256": "33afba29bced7235e5174038acb030bdd50f04c835c9170bb90532e659191a82"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-905c90c1eb8c77dede11899194ca4b0f5eaf188d.tar.gz",
+      "sha256": "f4939cc2787544653ecce6389a0c87d49ca389c5d45d924dbc527180e0d72715"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-e4bbb8a2aa881409af6fb92933c18e2af6609da8.tar.gz",
+      "sha256": "f6504afff23ab91c65367bf6cd646be40ebf29ffdbda0c20b930921fd4ad9cd9"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/tkem__cachetools-11153c947675edae9da06a5295bfa4a54b8a4f53.tar.gz",
+      "sha256": "749fd0066bfa52e6a039693f4a867c3e92725e43ca8916e0010f51245f078ca7"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-1e61524a798ea73632029a013a7686036d5c126f.tar.gz",
+      "sha256": "4c20c1b72dffa9f317fff41dba10d00a22e042d458ca29a3ed846588fcfb2f0a"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-9420cfeb3b1eb270fad876d002bf92567e619b0c.tar.gz",
+      "sha256": "d0421598e868e0b72445c4faab9fffd23366ee4f9db0b9462534086955433e04"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-af0026cff97a8f28d165d6ac4afb58b2cdc8ffc5.tar.gz",
+      "sha256": "83ffd2919b13c6c49457a271139eb5c5da179b376c0271243f9c8fa1bdf5db44"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-25269993e7ef021edaba620c96827ca21cc13d7e.tar.gz",
+      "sha256": "c555ec55e8becd03e8d92a35067231b5bfb65eb56784272eeead616189f64d41"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-b74f397c4e41492d4fb8d123ddb2da54094c2a6b.tar.gz",
+      "sha256": "9275d40b1578f8c5dc085f47ca2e625090bb291448a73d520d5c0e6352afa215"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/tkem__cachetools-0985ec0d8fefdce90bcbba2dfe88117dad9bb6f6.tar.gz",
+      "sha256": "ba80cd02eecc493d1f8a44f6c623b26c3d8bb159bd324590c7ca76e66954cda4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-e7b42de39c79a2d7cada1b7a4f9ce124905bf9c4.tar.gz",
+      "sha256": "e68bfc85310b04a699ac7ef5941e9c7cc5c3a15cbefe382f7e1a847fa2035cd3"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-3dfa387edf5f20d5b6e483c7ba7260fbe9930537.tar.gz",
+      "sha256": "edad05235a4ff8738abc43d0c9cbf5b5c437dca80128c3f2311a6ab62c8dabde"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-30824d9e3b33372a81af5e7a1d7e2ceb95e348c6.tar.gz",
+      "sha256": "f4bc63ec7b718a0bf8c8b7c2af60af2ada4a1979ee00ca553c043a96c6b800d1"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-c8baa10e66de18662114b71edcfa32f5dfdd2881.tar.gz",
+      "sha256": "0df2a820edaab8667b8cf1b58c99fa9e45c9568d31347322a3cbbdb617d26861"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-2b8635b79f1aa15cade0950117d4e7d12c298766.tar.gz",
+      "sha256": "11f649be4061d038ad8ddc4d93b94466acbcea062988e2ed8ad521fb7e77f960"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-1ae91eb4ff6ee9c326bc1ceb52e2d6edbdb0c3a8.tar.gz",
+      "sha256": "755da07f9ad9d6790019c4b47122affd296d68ea77d66573ba36a96d3a2883a0"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-e1041169ebe9698539770dad5a815ee288a4aef5.tar.gz",
+      "sha256": "ecf8ae866d81106e33acec37f40bc4e222d3fba8b9fbac79138057e1e7de1fb3"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-0a85b41e24c9b55b83f05ae696d73e8294a5b094.tar.gz",
+      "sha256": "efbbd20fe7cf73034a5a8a15b88ab80feb3b233e9372997ed3154ef5e016871e"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-7de169f7ad39eb1f95f8358225476e6f1a59d3d7.tar.gz",
+      "sha256": "3583e7ea610d53520a6e0130c6e00665c0ee38f4239264ae4f34dc11b99f02cb"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-37c44e554b1b05f8cec09424ad6057b79a0d88b0.tar.gz",
+      "sha256": "d4490b538164aa1e723dd4eb8b00af36cce47deb2e9bcfc6bd95732ddacd8d43"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-e0d1678ebc10cc663f2bc1973e0399b31415f8db.tar.gz",
+      "sha256": "7fedf67c0d3bc06b53d6bf8ed797862848909b8127dd6b1cc2ed1b6f6c0054a7"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-b2cd0274c67610d615019ab4745f521504a0576d.tar.gz",
+      "sha256": "2d0260899c8892d10a28fc77f4e0fe10f751c2ff86e4441569f29682c46429fb"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-eefa5ee60461fc16463385f8fcc546a0c1233465.tar.gz",
+      "sha256": "514bc1561a7666e5a8a9d4ca9cb9bee2d320261d12be2246d43f745a00c94bbf"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-254f5c7320c183bf725e692082e34420a1f3e137.tar.gz",
+      "sha256": "01b3b92bac20cc4c4811d38660de3563178585068903c9ce1ecb98a989c6e8a8"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-c4fb81ff6eba16fdd24d50e9d9d002fdbece6dd4.tar.gz",
+      "sha256": "04252660d47c6c2283f7b0d4c41e28d08869ebe6fcdb552d12827e1db258c323"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/theskumar__python-dotenv-751f8c148222e58aa173c83c4e5e6cfccb2cc124.tar.gz",
+      "sha256": "691dacd7fecd675d0a1cc5f7f3f078711bc562a05bce0450912f90cdc9db3f8f"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-1a994adbb114d402275a614942e2f838a654e648.tar.gz",
+      "sha256": "0dfdaa8cf35162a2b68b7f60a63418bd26c19040dd85d849ff2d9a5d4e995719"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-910ffffbcc991f5bc38345bb7134844700504db5.tar.gz",
+      "sha256": "07ed0db64d02a4eec934ca3f8455748d086ca4b2642f98dd68fe7e7b238db9f2"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-84833cc16be84bc7f1d9f64e2818afe0dd48aade.tar.gz",
+      "sha256": "c232ba5439c7a982720f68a334052770517fcb28d98a74095ce6b5d51d610a00"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-73e6a4886564a554c4a19983d29c97f9fc95457d.tar.gz",
+      "sha256": "2355ca9c807df30ebf5965a222ffe746e5bd2812a99c42e2d54e3655279a86b2"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__click-b551fe85714c906565303fae98136d7c72b252ea.tar.gz",
+      "sha256": "8a15eeabfe91e9a411112e554a61d6a32ec333deeede141963a81d85d2643ce1"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-humanize__humanize-de8b8a124c5209918ac0f2921d7cf58b1f6c1060.tar.gz",
+      "sha256": "dbae75a96fe27c0189862c8e57e4e2811bf30de5d13f6670f8d093f7408f74b4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets-eco__blinker-bf5f8f0968552670744fee7960419b8aea27c5b5.tar.gz",
+      "sha256": "a9c460c27f267c5a58b5ed83dcbc5e14f29f739c668e74dab788a1f0a7ac1ee8"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pallets__markupsafe-b5291646cbabf945069db07c34b08fb1f623134d.tar.gz",
+      "sha256": "1c6925e02c33d65c05a49802e435911fd95ac9bcb59f7811b1049972afe480a3"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-4213bad9560479e71ce294b52501765068e38f80.tar.gz",
+      "sha256": "23a76a7aaa17c1f0fecadff7af8278e53ad132f3533dd9ce82b9ba84619be5d4"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-8191b0ff3c56f1389a860f0c5124611c53c7f595.tar.gz",
+      "sha256": "8beb418bb1fe1934e36071aa87a49e2b58ab2eeeaa7b400ed97fa7af1a7eb162"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/jd__tenacity-cb884173f9f63d9dd609dc01d3aafe89cb32ba92.tar.gz",
+      "sha256": "57395dd8585ef4f747027d41c33e29fdcc2ab1804388725880aac67605cb9e35"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-ce7c7d2b15ea189c1284a48d742a7862bfae8606.tar.gz",
+      "sha256": "8c13a604802c2e0521fb23ae689b53d42db3ba3f0e6cb068bf19adfecd85bc0c"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/pypa__packaging-d2fa92384821919d48eab89bae087b950637d52a.tar.gz",
+      "sha256": "90b149e2a6fc5c35858d86f563690032a041bfdcbc9afee26777fe2d306179b7"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-19943b775d40c018e844f2cb1728442f58112a3b.tar.gz",
+      "sha256": "15af4fdee4d79f6bdfec12a68584b13efd62996b25c0344d668dc3a1b335d619"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/mahmoud__boltons-daa5371e90767aec1892dab9c121720a84134b39.tar.gz",
+      "sha256": "13115d66d83ab7984338e69a58cb171bd8c58baa88db9e5aa1404b6ecb347b4a"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/more-itertools__more-itertools-247e15b3a489d5805375c95dfa79486c9bd0eb1b.tar.gz",
+      "sha256": "a02e6fedbef8c9f27155249609fe73324b7581bd5f1ffb03d5678a7c9f0e225e"
+    },
+    {
+      "path": "assets/embedding-evidence/20261016-recovered-20261116/restored/outputs/bailian-expanded50-20261016/archives/python-attrs__attrs-6851ab593cd25f3c14393e9355d57d22bec2a074.tar.gz",
+      "sha256": "2fee71bce0e13de590d5666b376817ad8621f59189b40e74562f5f2e9f1074be"
+    },
+    {
+      "path": "dev24-c-v82-20261117/completed-snapshot.tar.gz",
+      "sha256": "e6852ce21eb6c30f7c3fffbe4c76424314eeeacc14757b339accaff40bf41c2c"
+    },
+    {
+      "path": "dev24-c-v82-20261117/deployment.tar.gz",
+      "sha256": "592d59acd972628a70708a95f3a3646781aaf2416875404a7a46c469a0503f29"
+    },
+    {
+      "path": "dev24-c-v82-20261117/evidence.tar.gz",
+      "sha256": "12e7dbfefc79ff3c86ee042ad5d1f5f01d403895e1489f4d7fb73fa91fa6221d"
+    },
+    {
+      "path": "cloud-checkpoint-20261117-v4/delivery/checkpoint-v4-runtime.zip",
+      "sha256": "b85416b3f296408bab2ff5cabff211d7007e8108672c623bc99202ce591e61f2"
+    },
+    {
+      "path": "cloud-checkpoint-20261117-v4/delivery/e2e-checkpoint-v4-evidence.tar.gz",
+      "sha256": "087d37e8f1b0028afae37161413970b4ce1dff10173e606af464e571d38d1bc5"
+    }
+  ],
+  "errors": [],
+  "symlinks_not_followed": [],
+  "scope_limit": "Local project evidence only; absence does not establish external history or model pretraining non-exposure."
+}

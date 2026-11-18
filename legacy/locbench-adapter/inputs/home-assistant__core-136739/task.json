@@ -1,0 +1,6 @@
+{
+  "instance_id": "home-assistant__core-136739",
+  "repo": "home-assistant/core",
+  "base_commit": "a8c382566cae06c43a33c4d3d44c9bc92ef7b4d8",
+  "problem_statement": "Fritz!box sockets switch very slowly\n### The problem\n\nIf I want to switch on a Fritz!Box socket via Home Assistant, it takes a very long time until it is switched on and the entity is updated.\n\n### What version of Home Assistant Core has the issue?\n\ncore-2024.2.5\n\n### What was the last working version of Home Assistant Core?\n\n_No response_\n\n### What type of installation are you running?\n\nHome Assistant OS\n\n### Integration causing the issue\n\nAVM FRITZ!SmartHome\n\n### Link to integration documentation on our website\n\nhttps://www.home-assistant.io/integrations/fritzbox/\n\n### Diagnostics information\n\n_No response_\n\n### Example YAML snippet\n\n_No response_\n\n### Anything in the logs that might be useful for us?\n\n_No response_\n\n### Additional information\n\n_No response_\n"
+}

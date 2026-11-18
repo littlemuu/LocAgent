@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "active_source_files_scanned": 39,
+  "historical_absolute_paths_in_active_source": [],
+  "venv_is_real_directory": true,
+  "base_python_external_system_dependency": "configured once in project_config.json",
+  "fresh_install": "pip --no-index --require-hashes; 138 repacked RECORD-verified wheels",
+  "sampling_reproduced_in_new_python": true,
+  "original37_overlap": 0,
+  "paid_calls": 0
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "intelowlproject__GreedyBear-397",
+  "repo": "intelowlproject/GreedyBear",
+  "base_commit": "a7912a75e28a43e1d5c10751c111948a96faaf5b",
+  "problem_statement": "Feed API slow\nQuerying the API, e.g. `/api/feeds/all/all/recent.json`, takes a while. Requesting the feed on my GreedyBear instancees with `curl -so /dev/null -w '%{time_total}\\n' http://HOSTNAME/api/feeds/all/all/recent.json` takes about 6 seconds. This also produces significant CPU load on the server. However the Honeynet instance seems to be much quicker. Is it just an issue of my installations?\n"
+}

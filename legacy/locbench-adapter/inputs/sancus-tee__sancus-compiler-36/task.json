@@ -1,0 +1,6 @@
+{
+  "instance_id": "sancus-tee__sancus-compiler-36",
+  "repo": "sancus-tee/sancus-compiler",
+  "base_commit": "dc3910192f99374c91ac5f12187dbc460454fa1f",
+  "problem_statement": "Check for integer overflow in sancus_is_outside_sm macro\n\n"
+}

@@ -1,0 +1,17 @@
+{
+  "sealed_at": "2026-11-12T15:49:33.677263+00:00",
+  "scores_sha256": {
+    "a": "95c4fe6baf1d10ff4d99c06f6b4b09a1f7eac6306f4e10ad3669b2e9d8e16212",
+    "b": "daaf86a79f0166600779394c6b366413b95c431f70d056d21068e8056a185bd0"
+  },
+  "disputes": [
+    {
+      "id": "item-d462b788",
+      "criterion_index": 4,
+      "a": 0,
+      "b": 1
+    }
+  ],
+  "agreement_count": 47,
+  "unblinded": false
+}

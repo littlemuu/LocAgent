@@ -1,0 +1,20 @@
+{
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "disable_thinking": true,
+  "model": "deepseek-flash",
+  "response_models": [
+    "deepseek-flash"
+  ],
+  "credential_env": "DEEPSEEK_API_KEY",
+  "currency": "CNY",
+  "input_per_million": "2",
+  "output_per_million": "8",
+  "budget": "2.20",
+  "input_bound": "full-context",
+  "context_tokens": 1048576,
+  "output_tokens": 512,
+  "max_calls": 3,
+  "request_bytes": 65536,
+  "timeout_seconds": 60,
+  "pricing_confirmation": "REPLACE: Historical reference only, copied from non-secret configuration verified on 2026-11-07. Recheck current model, response model, context and all-in account prices at https://api-docs.deepseek.com/zh-cn/quick_start/pricing/; choose your budget, update all affected fields, then replace this text with verification date and source. No paid authorization is carried forward."
+}

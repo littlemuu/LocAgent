@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-7183",
+  "repo": "dask/dask",
+  "base_commit": "adb58fa7949eb673d49c45a7215e19deaaa34217",
+  "problem_statement": "Use tree reduction in `da.bincount`\nCurrently `da.bincount` does a [reduction over `np.bincount`s from each chunk]( https://github.com/dask/dask/blob/2f308e72a46de818055819108429e8f7ce7ba03b/dask/array/routines.py#L549 ). It would be nice to change this to use [a tree reduction]( https://github.com/dask/dask/blob/master/dask/array/reductions.py ) instead.\n"
+}

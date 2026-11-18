@@ -1,0 +1,22 @@
+{
+  "status": "inspection_and_reuse_regressions_complete_not_integrated",
+  "tests_passed": 45,
+  "network_attempts": 0,
+  "real_model_requests": 0,
+  "credentials_read": false,
+  "files": {
+    "workspace/readonly_agent/locagent.py": "c93d1e8bed69037da9ca798d20e30cb65215685ffbca56dc78ee09947e461f18",
+    "workspace/readonly_agent/openhands_tools.py": "d06fb23bdea00ab984bf8f86bb13b807fe2e651a8517b850a8f85c62a0d6f822",
+    "workspace/experiments/sdk_finish_selfcheck_v7/worker.py": "0cf8512503b6f30e1fef76cf8a65a5211351f15158801e217ae175f383d46eb3",
+    "workspace/experiments/sdk_finish_selfcheck_v7/run.py": "5fe60b8894c252a837e4327da61bc034f6de919e6ba8337c9cefc67fe07404f9",
+    "workspace/experiments/retrieval_evidence_v6/retriever.py": "40a1f183a39aa3d8bcf5d1a409379b6ef48ea2cd44a4c7a0bc8a89a85a180e57",
+    "workspace/experiments/cohort_finish_v5/worker.py": "1d50d6c6df81c4785782c5fa052d28c701cd6ee5b933db7a70ca25ed36e5ded6",
+    "legacy/locagent-demo/locagent_service/rag_graph_adapter.py": "b18203bf094c7484c1fdc06d34f674918ba2349b610ba9b19a09bc5e26318435",
+    "legacy/locagent-demo/locagent_service/rag_offline.py": "8d471879162ba217b9c44a0ca0311994a3f352ad2077a14b0318043acbf9b4f3",
+    "legacy/locagent-demo/locagent_service/rag_http.py": "a916e7d46a9926ca0fb347b186313e9c59c246bf905de2ae052f4ffb3c8314b3",
+    "legacy/locagent-demo/scripts/offline_bailian_rrf.py": "af61d1faa40a29b0236a977185e16921b0267af6817fbb0cf20d152dd0110ac6",
+    "legacy/locagent-demo/scripts/evaluate_expanded_resumed.py": "93f1bd43fbf4adbb6069eab4a18573b063f7dabe6546253a9092eba4553654df",
+    "legacy/locagent-demo/scripts/prepare_expanded50.py": "0ed75bcd05af9becb490b750e4a1dcc512fe756e5a085b5eb1e1057aaf564d64"
+  },
+  "report_sha256": "0006b7951d6bd7c34289a09b2fdf616704c94cb861938f40c558df66d24ed664"
+}

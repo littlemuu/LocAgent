@@ -1,0 +1,56 @@
+{
+  "request_time_beijing": [
+    "2026-11-17T00:40:50.554890+08:00",
+    "2026-11-17T00:43:41.350677+08:00"
+  ],
+  "stages": [
+    {
+      "stage": "locator",
+      "requests": 4,
+      "prompt_tokens": 13882,
+      "completion_tokens": 1129,
+      "cached_input_tokens": 5504,
+      "uncached_input_tokens": 8378,
+      "peak_all_miss_upper_cny": 0.036796,
+      "offpeak_cache_metered_estimate_cny": 0.01300408
+    },
+    {
+      "stage": "B",
+      "requests": 40,
+      "prompt_tokens": 431145,
+      "completion_tokens": 5426,
+      "cached_input_tokens": 392960,
+      "uncached_input_tokens": 38185,
+      "peak_all_miss_upper_cny": 0.905698,
+      "offpeak_cache_metered_estimate_cny": 0.06774820000000001
+    },
+    {
+      "stage": "A",
+      "requests": 21,
+      "prompt_tokens": 131135,
+      "completion_tokens": 4904,
+      "cached_input_tokens": 121472,
+      "uncached_input_tokens": 9663,
+      "peak_all_miss_upper_cny": 0.301502,
+      "offpeak_cache_metered_estimate_cny": 0.031708440000000004
+    }
+  ],
+  "provider_bill_deduction": "not_observed",
+  "metered_offpeak_cache_estimate_cny": 0.11246072000000001,
+  "peak_all_miss_upper_cny": 1.243996,
+  "full_B_wall_seconds": 169.53171372413635,
+  "full_B_stage_seconds": {
+    "localization_with_source_index": 51.900288105010986,
+    "coding_with_container": 85.83760476112366,
+    "harness_subprocess": 31.79382085800171
+  },
+  "A_sdk_seconds": 43.41980037500616,
+  "formal_scenario_not_measurement": {
+    "assumption": "all 48 coding/evaluation episodes equal the one completed B episode; add 24 same-cost locators; A is truncated and not a complete comparison sample",
+    "cache_offpeak_cny": 3.56401152,
+    "all_miss_peak_cny": 44.356608,
+    "local_emulation_serial_hours_excluding_images": 1.9144209289550782,
+    "cloud_x86_hours": "未运行，不能直接由Mac仿真保证",
+    "configured_max_token_cost_cny": 128.29286399999998
+  }
+}

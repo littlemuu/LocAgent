@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60247",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "5f23aced2f97f2ed481deda4eaeeb049d6c7debe",
+  "problem_statement": "DOC: Improve documentation df.interpolate() for methods   ‘time’, ‘index’ and ‘values’\n### Pandas version checks\n\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\n\n\n### Location of the documentation\n\nhttps://pandas.pydata.org/docs/reference/api/pandas.DataFrame.interpolate.html\n\n### Documentation problem\n\nIt is not possible to understand what exactly the method `interpolate` does from reading the documentation. See e.g. this SE post for more details\r\n\r\nhttps://stackoverflow.com/questions/65511992/pandas-interpolation-type-when-method-index\n\n### Suggested fix for documentation\n\nRewrite doctstring and documentation page for the method\n"
+}

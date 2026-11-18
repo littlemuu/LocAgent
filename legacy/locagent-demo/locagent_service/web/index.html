@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LocAgent · 代码定位工作台</title>
+<style>
+:root{color-scheme:light;--ink:#172b45;--muted:#677890;--line:#e0e7ef;--blue:#2859db;--bg:#f3f6fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line)}.bar{max-width:1240px;margin:auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--blue);color:#fff;border-radius:10px;padding:7px 10px;font-weight:800;letter-spacing:-1px}.brand strong{font-size:19px}.brand small{margin-left:12px;color:var(--muted)}
+main{max-width:1240px;margin:32px auto;padding:0 28px}h1{font-size:28px;letter-spacing:-.8px;margin:0 0 6px}h2{font-size:17px;margin:0}h3{font-size:14px;margin:0 0 10px}.lead{color:var(--muted);margin:0 0 26px}.layout{display:grid;grid-template-columns:350px minmax(0,1fr);gap:24px;align-items:start}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:23px;margin-bottom:20px;box-shadow:0 3px 16px #152d4e03}.section-head{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:18px}.step{font:12px ui-monospace,monospace;color:var(--muted)}label{display:block;font-weight:600;margin:16px 0 6px}input,textarea,select,button{font:inherit}input,textarea,select{width:100%;border:1px solid #cfd9e5;border-radius:8px;padding:10px 11px;background:#fff;color:var(--ink)}input:disabled{background:#f4f6f9;color:var(--muted)}textarea{resize:vertical;min-height:130px}input:focus,textarea:focus,select:focus{outline:2px solid #a7c2ff;outline-offset:1px;border-color:var(--blue)}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{color:var(--muted);font-size:12px;margin:7px 0 0}.notice{background:#eef4ff;border:1px solid #dce8ff;color:#315682;padding:11px 13px;border-radius:9px;font-size:12px;margin:16px 0}.button{border:0;border-radius:8px;padding:10px 15px;background:var(--blue);color:white;font-weight:600;cursor:pointer}.button:disabled{opacity:.5;cursor:default}.primary{width:100%;margin-top:20px}.secondary{background:#fff;color:var(--ink);border:1px solid #cfd9e5}.badge{display:inline-flex;align-items:center;gap:7px;background:#f0f4f8;color:#61718a;border-radius:20px;padding:4px 10px;font-size:12px;white-space:nowrap}.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.badge.good{background:#e8f6ef;color:#177249}.badge.active{background:#eaf1ff;color:var(--blue)}.badge.bad{background:#fff0ed;color:#ad3d2a}.empty{min-height:260px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted)}.empty strong{display:block;color:#314763;font-size:17px;margin-bottom:8px}.empty-symbol{font-size:32px;color:#8aa6d2;margin-bottom:12px}.task-id{font:12px ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere;margin-top:10px}.status-title{font-size:24px;font-weight:650;letter-spacing:-.5px;margin-bottom:6px}.meta{color:var(--muted);font-size:13px}.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}.pill{font-size:12px;background:#f1f4f9;padding:4px 9px;border-radius:6px}.actions{display:flex;gap:10px;align-items:center;margin-top:16px}a{color:var(--blue)}.error{background:#fff1ee;border:1px solid #f2cfc5;color:#a33c29;padding:12px;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere;margin:16px 0}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}code{font-size:12px;overflow-wrap:anywhere}ul.locations{padding-left:18px;margin:8px 0 18px}li{margin:5px 0}details{border-top:1px solid var(--line);padding:13px 0}summary{cursor:pointer;overflow-wrap:anywhere;font-weight:600}summary small{font-weight:400;color:var(--muted);margin-left:8px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f8fc;border:1px solid #e5eaf2;border-radius:9px;padding:15px;max-height:440px;overflow:auto;font-size:12px;line-height:1.6}.restore{display:flex;gap:8px}.restore input{min-width:0}.restore button{flex-shrink:0}.muted{color:var(--muted)}footer{color:var(--muted);font-size:12px;padding:6px 0 28px}[hidden]{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.bar,main{padding-left:18px;padding-right:18px}.brand small{display:none}main{margin-top:23px}.card{padding:19px}h1{font-size:25px}.empty{min-height:200px}}
+</style>
+</head>
+<body>
+<header><div class="bar"><div class="brand"><span class="logo">LA</span><strong>LocAgent</strong><small>代码定位工作台</small></div><span id="health" class="badge">连接本地服务…</span></div></header>
+<main>
+<h1>从问题出发，找到代码证据。</h1>
+<p class="lead">提交一次定位任务，查看执行状态、相关实体与检索内容。</p>
+<div class="layout">
+<aside>
+<section class="card"><div class="section-head"><h2>新建定位任务</h2><span class="step">01 / INPUT</span></div>
+<form id="task-form">
+<label for="source">任务来源</label><select id="source"><option value="demo-v1">离线演示 · demo/demo</option><option value="github-v1">公共 GitHub 仓库预览</option></select>
+<label for="repository">仓库地址</label><input id="repository" type="url" placeholder="https://github.com/owner/repository" value="https://github.com/demo/demo" disabled>
+<div id="ref-wrap" hidden><label for="ref">分支 / commit <span class="muted">（可选）</span></label><input id="ref" placeholder="留空使用默认分支" maxlength="200"></div>
+<label for="issue">Issue 正文</label><textarea id="issue" required maxlength="8000" placeholder="粘贴问题描述，而不是 issue 链接">定位负责渲染输入值的函数。</textarea>
+<label for="mode">检索模式</label><select id="mode"><option value="hybrid">Hybrid · BM25 + 向量融合</option><option value="dense">Dense · 向量检索</option><option value="bm25">BM25 · 关键词检索</option></select>
+<div id="cache-wrap" hidden><label for="cache">已有向量缓存 ID</label><input id="cache" pattern="[a-f0-9]{64}" maxlength="64" placeholder="64 位 SHA256"><p class="hint">仅使用本机已有缓存；缺少向量时会明确报错。</p></div>
+<div id="source-note" class="notice">离线演示使用固定代码、合成向量与脚本模型。任务、检索算法和数据库持久化真实执行；不评估输入问题的定位准确率。</div>
+<button id="submit" class="button primary" type="submit">开始定位 →</button>
+</form></section>
+<section class="card"><h3>继续查看已有任务</h3><div class="restore"><input id="restore-id" aria-label="任务 ID" placeholder="粘贴任务 UUID"><button id="restore" class="button secondary">查看</button></div><p class="hint">刷新页面会恢复当前任务，不会重新提交。</p></section>
+</aside>
+<div>
+<section class="card"><div class="section-head"><h2>任务状态</h2><span id="state" class="badge">尚未提交</span></div>
+<div id="empty" class="empty"><div><div class="empty-symbol">⌕</div><strong>准备好追踪一个问题</strong>先运行离线演示，验证检索与任务恢复。</div></div>
+<div id="task" hidden aria-live="polite"><div id="status-title" class="status-title"></div><div id="status-detail" class="meta"></div><div id="task-id" class="task-id"></div><div id="pills" class="pills"></div><div class="actions"><a id="permalink" href="#">当前任务链接</a><button id="cancel" class="button secondary" hidden>取消任务</button></div></div>
+<div id="error" class="error" role="alert" hidden></div>
+</section>
+<section id="result" class="card" hidden><div class="section-head"><h2>定位结果</h2><span class="step">02 / RESULT</span></div><div id="result-note" class="notice"></div><div id="locations"></div></section>
+<section id="evidence" class="card" hidden><div class="section-head"><h2>检索证据</h2><span id="evidence-count" class="step"></span></div><p class="hint">展示实际返回的代码内容；最终位置与中间检索证据分别保留。</p><div id="records"></div></section>
+</div></div>
+<footer>本地开发预览 · 任务保存在当前 PostgreSQL 数据卷中。停止容器并保留数据卷后，可继续查询。</footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), terminal=new Set(['completed','failed','cancelled','needs_review']);
+const labels={queued:'等待执行',running:'正在执行',completed:'执行完成',failed:'执行失败',cancelled:'已取消',needs_review:'需要检查'};
+const stages={starting:'准备任务',resolving:'解析仓库版本',resolved:'版本已固定',waiting_for_index:'等待索引',downloading:'下载公开源码',extracting:'读取源码快照',building_index:'构建代码索引',index_ready:'索引已就绪',localizing:'执行定位',completed:'执行完成'};
+let current=null, timer=null, generation=0, submitting=false, lastStatus=null;
+const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch{}},remove:k=>{try{localStorage.removeItem(k)}catch{}}};
+function error(message){$('error').textContent=message||'';$('error').hidden=!message}
+function pill(text){const span=document.createElement('span');span.className='pill';span.textContent=text;$('pills').append(span)}
+function sourceChanged(){const pub=$('source').value==='github-v1';$('repository').disabled=!pub;$('repository').required=pub;$('ref-wrap').hidden=!pub;
+ if(pub&&$('repository').value==='https://github.com/demo/demo')$('repository').value='';
+ if(!pub)$('repository').value='https://github.com/demo/demo';
+ const cached=pub&&$('mode').value!=='bm25';$('cache-wrap').hidden=!cached;$('cache').required=cached;$('cache').disabled=!cached;
+ $('source-note').textContent=pub?'公开仓库模式需服务端启用预览。当前使用脚本模型；Dense / Hybrid 需要已有向量缓存，不会自动调用 embedding 或付费模型。':'离线演示使用固定代码、合成向量与脚本模型。任务、检索算法和数据库持久化真实执行；不评估输入问题的定位准确率。';}
+async function request(path,options={}){const response=await fetch(path,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});let body;try{body=await response.json()}catch{throw new Error('服务返回了无法读取的响应。')}
+ if(!response.ok){const code=body.error?.code||String(response.status);const help={database_unavailable:'数据库暂不可用，请稍后查询原任务。',invalid_source:'公共仓库预览未启用，或源码快照不可用。可先运行离线演示。',idempotency_conflict:'此提交编号已用于另一个请求，请检查原任务。',not_found:'没有找到这个任务，请检查 ID 和当前数据库。',invalid_request:'输入格式不正确，请检查仓库地址、正文与缓存 ID。'};throw new Error(help[code]||`${code}: ${body.error?.message||'请求未成功'}`)}return body;}
+function resultView(row){const result=row.result;$('result').hidden=!result;$('evidence').hidden=!result;if(!result)return;
+ const trace=result.diagnostics?.retrieval;let note=row.request.source_id==='demo-v1'?'离线夹具结果 · 合成模型与向量，不代表真实定位准确率。':result.diagnostics?.provider==='fake-only'?'脚本模型预览 · 中间检索真实执行，最终位置不是准确率证明。':'结果来自当前任务。';
+ if(trace){note+=` 请求 ${trace.requested_mode}；实际执行 ${trace.executed_modes.join(' / ')||'未触发向量检索'}。`;if(trace.degraded)note+=' 已显式降级为 BM25，请留意检索模式。'}
+ $('result-note').textContent=note;$('locations').replaceChildren();
+ for(const [name,values] of [['相关文件',result.found_files],['相关实体',result.found_entities]]){const h=document.createElement('h3');h.textContent=name;$('locations').append(h);const ul=document.createElement('ul');ul.className='locations';for(const value of values||[]){const li=document.createElement('li'),code=document.createElement('code');code.textContent=value;li.append(code);ul.append(li)}if(!ul.children.length){const li=document.createElement('li');li.className='muted';li.textContent='没有返回最终位置';ul.append(li)}$('locations').append(ul)}
+ $('records').replaceChildren();let count=0;for(const [id,entries] of Object.entries(result.return_records||{})){if(!Array.isArray(entries))continue;const rows=entries.filter(e=>e&&typeof e.content==='string');if(!rows.length)continue;count++;const detail=document.createElement('details'),summary=document.createElement('summary'),small=document.createElement('small');summary.textContent=id;small.textContent=`${rows.length} 次返回`;summary.append(small);const pre=document.createElement('pre');pre.textContent=rows[0].content;detail.append(summary,pre);detail.open=count===1;$('records').append(detail)}
+ $('evidence-count').textContent=`${count} 个实体`;if(!count){const p=document.createElement('p');p.className='muted';p.textContent='本次任务没有保留检索内容。';$('records').append(p)}}
+function render(row){current=row.id;lastStatus=row.status;$('empty').hidden=true;$('task').hidden=false;$('state').textContent=labels[row.status]||row.status;$('state').className='badge '+(row.status==='completed'?'good':row.status==='failed'||row.status==='needs_review'?'bad':terminal.has(row.status)?'':'active');
+ $('status-title').textContent=row.status==='completed'&&row.result?.status==='empty'?'执行结束 · 无最终位置':row.status==='completed'&&row.result?.status==='iteration_limit'?'执行结束 · 达到迭代上限':labels[row.status]||row.status;
+ $('status-detail').textContent=stages[row.progress?.stage]||(row.status==='queued'?'任务已存入数据库，等待 worker 领取。':row.status==='running'?'worker 正在执行任务，可刷新页面继续查看。':'当前状态已保存在数据库。');$('task-id').textContent=`任务 ${row.id}`;$('restore-id').value=row.id;
+ $('pills').replaceChildren();pill(row.request.source_id==='demo-v1'?'离线演示':'公共仓库预览');pill(`请求模式 ${(row.request.retrieval?.mode||'bm25').toUpperCase()}`);pill(`尝试 ${row.attempt||0}`);
+ $('cancel').hidden=terminal.has(row.status);$('submit').disabled=submitting||!terminal.has(row.status);
+ if(row.error)error(`${row.error.code}: ${row.error.message}`);else error(null);resultView(row);}
+async function poll(id,token){try{const row=await request('/tasks/'+encodeURIComponent(id));if(token!==generation)return;render(row);if(!terminal.has(row.status))timer=setTimeout(()=>poll(id,token),1200)}catch(e){if(token!==generation)return;error(e.message+' 刷新或点击“查看”可重新查询；不会自动提交新任务。');$('submit').disabled=false}}
+function follow(id){if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)){error('请输入有效的任务 UUID。');return}clearTimeout(timer);generation++;current=id;const url=new URL(location.href);url.searchParams.set('task',id);history.replaceState(null,'',url);$('permalink').href=url.toString();storage.set('locagent.lastTask.v1',id);error(null);poll(id,generation)}
+$('task-form').addEventListener('submit',async event=>{event.preventDefault();if(submitting)return;const body={source_id:$('source').value,problem_statement:$('issue').value,retrieval:{mode:$('mode').value}};if(body.source_id==='github-v1'){body.repository_url=$('repository').value.trim();if($('ref').value.trim())body.ref=$('ref').value.trim();if(body.retrieval.mode!=='bm25')body.retrieval.index_id=$('cache').value.trim()}
+ const encoded=JSON.stringify(body);let saved;try{saved=JSON.parse(storage.get('locagent.pending.v1'))}catch{}const key=saved?.body===encoded?saved.key:crypto.randomUUID();storage.set('locagent.pending.v1',JSON.stringify({body:encoded,key}));submitting=true;$('submit').disabled=true;error(null);
+ try{const row=await request('/tasks',{method:'POST',headers:{'Idempotency-Key':key},body:encoded});storage.remove('locagent.pending.v1');lastStatus='queued';follow(row.id)}catch(e){error(e.message+' 若响应中断，保留原输入再次点击会复用提交编号。')}finally{submitting=false;$('submit').disabled=!!(current&&lastStatus&&!terminal.has(lastStatus))}});
+$('restore').addEventListener('click',()=>follow($('restore-id').value.trim()));$('source').addEventListener('change',sourceChanged);$('mode').addEventListener('change',sourceChanged);
+$('cancel').addEventListener('click',async()=>{if(!current)return;try{await request('/tasks/'+encodeURIComponent(current)+'/cancel',{method:'POST'});follow(current)}catch(e){error(e.message)}});
+request('/health').then(()=>{$('health').textContent='本地服务在线';$('health').className='badge good'}).catch(()=>{$('health').textContent='本地服务未就绪';$('health').className='badge bad'});
+sourceChanged();const initial=new URL(location.href).searchParams.get('task')||storage.get('locagent.lastTask.v1');if(initial)follow(initial);
+</script>
+</body></html>

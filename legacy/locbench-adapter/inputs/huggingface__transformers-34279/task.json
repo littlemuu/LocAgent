@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-34279",
+  "repo": "huggingface/transformers",
+  "base_commit": "93352e81f5019abaa52f7bdc2e3284779e864367",
+  "problem_statement": "Limit number of parametes logged with `MLflowCallback`\n### Feature request\r\n\r\nAdd a new environment variable, such as `MLFLOW_MAX_LOG_PARAMS`, which can limit the number of parameters logged by the `MLflowCallback`.\r\n\r\n### Motivation\r\n\r\nWhen using mlflow in Azure ML, there is a limit of 200 parameters that can be logged in a single run, meaning that when attempting to run a training job, the callback needs to be disabled entirely, or the module needs to be \"monkeypatched\" to limit the number of params logged.\r\n\r\n### Your contribution\r\n\r\nI will submit a PR\n"
+}

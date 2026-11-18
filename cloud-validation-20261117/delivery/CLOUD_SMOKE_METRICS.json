@@ -1,0 +1,153 @@
+{
+  "date": "2026-11-17",
+  "instance_id": "ins-1njewmmg",
+  "shutdown_verified": "已关机 / 关机不计费模式 / 按量计费-部分停止计费",
+  "credential_deleted": true,
+  "formal_trial_run": false,
+  "holdout_content_read": false,
+  "calls": 102,
+  "prompt_tokens": 1019760,
+  "completion_tokens": 19788,
+  "cache_hit_tokens": 907776,
+  "cache_miss_tokens": 111984,
+  "peak_cache_adjusted_cny": 0.41858304,
+  "cost_upper_cny": 2.197824,
+  "actual_model_ids": [
+    "deepseek-flash"
+  ],
+  "unknown_requests": 0,
+  "groups": {
+    "astropy__astropy-14182:B": {
+      "requests": 14,
+      "prompt_tokens": 118841,
+      "completion_tokens": 2126,
+      "cache_adjusted_cny": 0.049219280000000004,
+      "upper_cny": 0.25469
+    },
+    "astropy__astropy-14182:locator": {
+      "requests": 4,
+      "prompt_tokens": 17766,
+      "completion_tokens": 988,
+      "cache_adjusted_cny": 0.02813232,
+      "upper_cny": 0.043436
+    },
+    "sympy__sympy-21379:A": {
+      "requests": 40,
+      "prompt_tokens": 458204,
+      "completion_tokens": 9732,
+      "cache_adjusted_cny": 0.19696736,
+      "upper_cny": 0.994264
+    },
+    "sympy__sympy-21379:B": {
+      "requests": 40,
+      "prompt_tokens": 411330,
+      "completion_tokens": 5959,
+      "cache_adjusted_cny": 0.12546928,
+      "upper_cny": 0.870332
+    },
+    "sympy__sympy-21379:locator": {
+      "requests": 4,
+      "prompt_tokens": 13619,
+      "completion_tokens": 983,
+      "cache_adjusted_cny": 0.0187948,
+      "upper_cny": 0.035102
+    }
+  },
+  "episodes": [
+    {
+      "id": "sympy__sympy-21379",
+      "arm": "A",
+      "agent_status": "completed",
+      "technical_failure": null,
+      "sdk_seconds": 84.55995898799995,
+      "patch_bytes": 0,
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "elapsed_seconds": 31.075916796,
+        "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+        "report_path": "logs/run_evaluation/smoke/locagent-deepseek-flash-A/sympy__sympy-21379/report.json",
+        "resolved": false,
+        "status": "completed",
+        "technical_failure": null
+      },
+      "system_prompt_sha256": "3f506e5eb91c541b3d8382586e110dd08418f5e121adb243fadfcd84128d1567",
+      "tool_schema_sha256": "cd757b1718d62ec236aecf9172e8753775be2c03168b629c75c751f8ea5b8864",
+      "budget": {
+        "command_timeout_seconds": 120,
+        "evidence_bytes": 262144,
+        "input_tokens": 1000000,
+        "max_output_tokens": 4096,
+        "max_requests": 40,
+        "output_tokens": 64000,
+        "timeout_seconds": 2700,
+        "tool_output_bytes": 16384
+      }
+    },
+    {
+      "id": "sympy__sympy-21379",
+      "arm": "B",
+      "agent_status": "completed",
+      "technical_failure": null,
+      "sdk_seconds": 79.05544835299997,
+      "patch_bytes": 0,
+      "patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "elapsed_seconds": 31.278616286999977,
+        "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+        "report_path": "logs/run_evaluation/smoke/locagent-deepseek-flash-B/sympy__sympy-21379/report.json",
+        "resolved": false,
+        "status": "completed",
+        "technical_failure": null
+      },
+      "system_prompt_sha256": "3f506e5eb91c541b3d8382586e110dd08418f5e121adb243fadfcd84128d1567",
+      "tool_schema_sha256": "cd757b1718d62ec236aecf9172e8753775be2c03168b629c75c751f8ea5b8864",
+      "budget": {
+        "command_timeout_seconds": 120,
+        "evidence_bytes": 262144,
+        "input_tokens": 1000000,
+        "max_output_tokens": 4096,
+        "max_requests": 40,
+        "output_tokens": 64000,
+        "timeout_seconds": 2700,
+        "tool_output_bytes": 16384
+      }
+    },
+    {
+      "id": "astropy__astropy-14182",
+      "arm": "A",
+      "status": "未运行"
+    },
+    {
+      "id": "astropy__astropy-14182",
+      "arm": "B",
+      "agent_status": "failed",
+      "technical_failure": "ConversationRunError: Conversation run failed for id=7408a6ba-d188-45ff-a8db-35241a877ba9: missing_tool_or_truncated_response\n\nConversation logs are stored at: /home/ubuntu/e2e-cloud-smoke-v3/verification/astropy-supplement/astropy__astropy-14182/B/agent/events/7408a6bad1",
+      "sdk_seconds": 44.49999115200012,
+      "patch_bytes": 1540,
+      "patch_sha256": "6755d24b087aaa6509739f4b76bdc9b89a65a2b5387a284f10f97df604452751",
+      "evaluation": {
+        "elapsed_seconds": 20.642693682000072,
+        "harness_commit": "d83e1001739f4d96add351d9ec0d56f4594a0d82",
+        "report_path": "logs/run_evaluation/smoke/locagent-deepseek-flash-B/astropy__astropy-14182/report.json",
+        "resolved": true,
+        "status": "completed",
+        "technical_failure": null
+      },
+      "system_prompt_sha256": "3f506e5eb91c541b3d8382586e110dd08418f5e121adb243fadfcd84128d1567",
+      "tool_schema_sha256": "cd757b1718d62ec236aecf9172e8753775be2c03168b629c75c751f8ea5b8864",
+      "budget": {
+        "command_timeout_seconds": 120,
+        "evidence_bytes": 262144,
+        "input_tokens": 1000000,
+        "max_output_tokens": 4096,
+        "max_requests": 40,
+        "output_tokens": 64000,
+        "timeout_seconds": 2700,
+        "tool_output_bytes": 16384
+      }
+    }
+  ],
+  "ab_contract_same": true,
+  "cumulative_smoke_cost_upper_cny": 3.4418200000000003,
+  "cumulative_cache_adjusted_estimate_cny": 0.53104376
+}

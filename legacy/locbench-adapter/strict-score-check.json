@@ -1,0 +1,68 @@
+[
+  {
+    "instance_id": "Delgan__loguru-1239",
+    "strict_eligible": true,
+    "synthetic_gold_answer_check_only": {
+      "k": 5,
+      "hits": [
+        "loguru/_better_exceptions.py:ExceptionFormatter._format_list"
+      ],
+      "true_positive_unique": 1,
+      "reference_count": 1,
+      "recall_at_k": 1.0,
+      "precision_at_k": 0.2,
+      "precision_denominator": 5,
+      "submitted_slot_precision_at_k": 1.0,
+      "submitted_slot_denominator": 1,
+      "missing_slots": 4,
+      "invalid_slots": 0,
+      "duplicate_slots": 0,
+      "valid_non_function_slots": 0,
+      "beyond_k_count": 0
+    }
+  },
+  {
+    "instance_id": "networkx__networkx-7721",
+    "strict_eligible": true,
+    "synthetic_gold_answer_check_only": {
+      "k": 5,
+      "hits": [
+        "networkx/algorithms/approximation/traveling_salesman.py:traveling_salesman_problem"
+      ],
+      "true_positive_unique": 1,
+      "reference_count": 1,
+      "recall_at_k": 1.0,
+      "precision_at_k": 0.2,
+      "precision_denominator": 5,
+      "submitted_slot_precision_at_k": 1.0,
+      "submitted_slot_denominator": 1,
+      "missing_slots": 4,
+      "invalid_slots": 0,
+      "duplicate_slots": 0,
+      "valid_non_function_slots": 0,
+      "beyond_k_count": 0
+    }
+  },
+  {
+    "instance_id": "py-pdf__pypdf-2644",
+    "strict_eligible": true,
+    "synthetic_gold_answer_check_only": {
+      "k": 5,
+      "hits": [
+        "pypdf/filters.py:decompress"
+      ],
+      "true_positive_unique": 1,
+      "reference_count": 1,
+      "recall_at_k": 1.0,
+      "precision_at_k": 0.2,
+      "precision_denominator": 5,
+      "submitted_slot_precision_at_k": 1.0,
+      "submitted_slot_denominator": 1,
+      "missing_slots": 4,
+      "invalid_slots": 0,
+      "duplicate_slots": 0,
+      "valid_non_function_slots": 0,
+      "beyond_k_count": 0
+    }
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-31566",
+  "repo": "huggingface/transformers",
+  "base_commit": "c54a8ca48eb1b85785f7fdbefb5311f172d19726",
+  "problem_statement": "SiqlipVisionModel does not support \"device map= auto\": no split modules`attribute\n### Feature request\n\nHow to make SiglipVisionModel can support Auto map to map to multiple GPUs.\n\n### Motivation\n\nCurrently, using MLLM with siglip, the whole model might need automap, since the vision encoder part is SiglipVisionModel, if it doesn;t support , would be a big problme\r\n\r\nAlso, would consider add flashattention support for Siglip?\n\n### Your contribution\n\nNone for now\n"
+}

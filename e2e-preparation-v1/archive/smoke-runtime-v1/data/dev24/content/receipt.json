@@ -1,0 +1,36 @@
+{
+  "method": "HF exact single-row offsets from pinned metadata; revision checked before/after; expected ID checked; no full dataset download",
+  "revision": "c104f840cc67f8b6eec6f759ebc8b2693d585d4a",
+  "ids": [
+    "astropy__astropy-12907",
+    "astropy__astropy-14182",
+    "astropy__astropy-14365",
+    "django__django-13033",
+    "django__django-13158",
+    "django__django-13925",
+    "django__django-13964",
+    "matplotlib__matplotlib-23314",
+    "matplotlib__matplotlib-24970",
+    "matplotlib__matplotlib-25332",
+    "psf__requests-2317",
+    "pydata__xarray-4094",
+    "pylint-dev__pylint-7080",
+    "pytest-dev__pytest-7432",
+    "pytest-dev__pytest-7490",
+    "scikit-learn__scikit-learn-10297",
+    "scikit-learn__scikit-learn-13779",
+    "scikit-learn__scikit-learn-14087",
+    "sphinx-doc__sphinx-11445",
+    "sphinx-doc__sphinx-8595",
+    "sphinx-doc__sphinx-8721",
+    "sympy__sympy-13480",
+    "sympy__sympy-18698",
+    "sympy__sympy-21379"
+  ],
+  "fetched_rows": 24,
+  "files": {
+    "evaluator.json": "65942c4c5eb8657866e0300dfbb7a4a77eadde269dabea374b1f3c2ec53b9f23",
+    "public.json": "8b6281d8e6471b5ee52333e1a1032695f695ce24c75ee4833ea1b058fa7c06f3"
+  },
+  "response_revision_header": "not supplied; moving viewer revision is checked against pinned repository before/after, row repo/base_commit/created_at cross-checked"
+}

@@ -1,0 +1,9 @@
+{
+  "observed_at": 1794915090.575105,
+  "instance_id": "ins-1njewmmg",
+  "observed_state": "运行中",
+  "public_ip": "43.154.206.220",
+  "billing": "按量计费",
+  "explicit_user_authorization": "确认本轮 v8.2 完整运行开机授权",
+  "scope": "dev24 C(v8.2) once API <=15 CNY"
+}

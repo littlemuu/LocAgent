@@ -1,0 +1,25 @@
+﻿instance_id,locator_status,raw_compliant,raw_rule_codes,raw_marks_unread,fallback_attempted,fallback_delivered,coding_status,evaluation_status,adopted_incorrect_hypothesis
+sympy__sympy-21379,技术失败,False,R1;R3,True,True,回退自身校验失败，未交付,未运行,未运行,无法判断：Coding Agent 未运行
+astropy__astropy-14182,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+matplotlib__matplotlib-23314,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+pytest-dev__pytest-7432,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+scikit-learn__scikit-learn-13779,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+django__django-13033,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+pylint-dev__pylint-7080,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+sphinx-doc__sphinx-11445,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+pydata__xarray-4094,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+psf__requests-2317,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+pytest-dev__pytest-7490,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+sympy__sympy-18698,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+astropy__astropy-12907,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+sphinx-doc__sphinx-8595,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+django__django-13158,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+matplotlib__matplotlib-24970,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+scikit-learn__scikit-learn-14087,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+sphinx-doc__sphinx-8721,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+matplotlib__matplotlib-25332,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+scikit-learn__scikit-learn-10297,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+django__django-13964,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+astropy__astropy-14365,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+sympy__sympy-13480,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行
+django__django-13925,未运行,未运行,未运行,未运行,未运行,未运行,未运行,未运行,无法判断：Coding Agent 未运行

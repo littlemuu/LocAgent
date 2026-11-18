@@ -1,0 +1,28 @@
+{
+  "execution_status": "stopped_on_first_locator_technical_failure",
+  "dev24_C_completed": false,
+  "evidence_audit": "passed",
+  "live_locator_attempts": 1,
+  "live_coding_episodes": 0,
+  "live_evaluation_episodes": 0,
+  "unattempted_locators": 23,
+  "API_requests": 4,
+  "received_and_settled": 4,
+  "automatic_retries": 0,
+  "API_budget_cny": 20,
+  "usage_cost_cny": 0.03489776,
+  "upper_cost_cny": 0.04694,
+  "v8_binding": "c072f4f8c9764f0311fabb7f52dfabbcdc04ba0369473296cba75547d54edf3a",
+  "frozen_files_unchanged": 51,
+  "pairing_p_values_unavailable": true,
+  "cloud_stopped_without_compute_billing": true,
+  "remote_temporary_keys_deleted": true,
+  "AB_rerun": false,
+  "holdout_read": false,
+  "cloud_tests": {
+    "baseline": 22,
+    "calibration": 22
+  },
+  "exact_mcnemar_325_combinations_checked": true,
+  "synthetic_defect_reproduction_not_benchmark": true
+}

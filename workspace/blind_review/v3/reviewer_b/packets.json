@@ -1,0 +1,329 @@
+[
+  {
+    "id": "item-5fcca383",
+    "question": "A task starts with default settings, a project mapping, and a request mapping. Explain which values win, whether false and zero are treated as missing, what happens to unknown keys, and whether invalid overridden values reach the worker. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d02_config",
+    "answer": {
+      "answer": "Precedence: `resolve_settings(project, request)` (runner/settings.py:4-11) starts from `merged = dict(DEFAULTS)` (line 5) and iterates layers in the order `(project, request)` (line 6), so request wins over project, which wins over defaults. Defaults are `{'attempts': 3, 'timeout': 10, 'enabled': True}` (runner/defaults.py:1).\n\nFalse/zero: the guard is `if key in layer and layer[key] is not None` (settings.py:8). It tests identity against None, not truthiness, so `False` and `0` are NOT treated as missing — they override. E.g. `enabled: False` or `attempts: 0` in the request layer replaces the default. Only an absent key or an explicit `None` value falls through to the lower layer.\n\nUnknown keys: the inner loop iterates `for key in DEFAULTS` (settings.py:7), not over the layer's keys, so keys outside DEFAULTS are never copied into `merged` and are silently dropped — no error, no passthrough. Note this also means a layer key not in DEFAULTS cannot be validated or reach the worker.\n\nInvalid overrides: `validate_settings(merged)` is called on the merged result before returning (settings.py:10), and `launch` only calls `start_worker(settings)` after `resolve_settings` returns (runner/api.py:4-6). Validation raises `ValueError` for non-int or negative `attempts`, non-int or non-positive `timeout`, and non-bool `enabled` (runner/validation.py:2-7). So invalid overridden values do not reach the worker — the exception propagates out of `launch` and `start_worker` is never invoked. `start_worker` (runner/worker.py:1-4) trusts its input and only branches on `enabled`.\n\nUncertainty: validation uses `type(x) is not int` / `is not bool`, so `bool` values for `attempts`/`timeout` are rejected (bool is not int by identity) and `True`/`False` for `enabled` pass; whether that strictness is intended is not documented in these files. Also, `validate_settings` mutates nothing and returns None, so it is purely a gate. No tests or callers beyond `launch` were found in the allowlisted paths, so I cannot confirm other entry points that might bypass `resolve_settings`.",
+      "entities": [
+        "runner/settings.py:resolve_settings",
+        "runner/validation.py:validate_settings",
+        "runner/api.py:launch",
+        "runner/worker.py:start_worker"
+      ],
+      "files": [
+        "runner/settings.py",
+        "runner/defaults.py",
+        "runner/validation.py",
+        "runner/api.py",
+        "runner/worker.py"
+      ]
+    },
+    "criteria": [
+      "Priority defaults < project < request, only known default keys, None does not override.",
+      "False and zero are not missing: false enabled is retained; zero attempts allowed, zero timeout invalid.",
+      "Exact types enforced: bool cannot stand in for integer; invalid final value raises before worker call; an invalid lower value may be replaced by a valid higher value.",
+      "Enabled false returns started false; valid enabled true uses resolved attempts/timeout; no environment layer or arbitrary unknown setting propagation."
+    ]
+  },
+  {
+    "id": "item-c6b4d181",
+    "question": "A batch imports CSV-like rows containing tenant, invoice identifier and amount. Explain the normalization and validation path, how malformed rows are reported, which value wins for repeated invoice keys, and whether replacement rows are added twice to the final totals. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d06_import",
+    "answer": {
+      "answer": "Path: import_rows (imports/api.py:5-14) iterates rows with enumerate(rows, 1), calls parse_row then index_invoice, and finally returns {'totals': tenant_totals(invoices), 'errors': errors}.\n\nNormalization/validation (imports/parser.py:3-19): column count must match headers (ValueError 'column count'); header names are stripped and lowercased, must be unique and include tenant/invoice/amount ('headers'); tenant and invoice are .strip()ed and must be non-empty ('empty identity'); amount is .strip()ed and parsed with Decimal, with InvalidOperation mapped to ValueError('amount'), and non-finite or negative amounts rejected ('amount'). Note: only tenant/invoice are stripped for identity; amount is not otherwise normalized (no rounding/quantization), and header case/whitespace normalization means 'Tenant'/' tenant ' map to the same key.\n\nMalformed rows: import_rows catches only ValueError and appends the 1-based row number to errors (api.py:12-13); the row is skipped, not fatal. The error list holds positions only, not messages or offending values. reports.error_count (imports/reports.py:1-2) just returns len(result['errors']).\n\nRepeated keys: index_invoice (imports/index.py:1-3) keys on (tenant, invoice) and assigns invoices[key] = invoice, so the last occurrence wins (last-write-wins); earlier duplicates are silently discarded with no error recorded.\n\nDouble counting: no. tenant_totals (imports/totals.py:3-8) sums over invoices.values(), i.e. the deduplicated dict, so a replacement row is counted once, not twice. Uncertainty: I did not inspect imports/preview.py beyond its 3-row slice, and no caller of import_rows was seen, so upstream header/row construction and any external error formatting are unverified.",
+      "entities": [
+        "imports/api.py:import_rows",
+        "imports/parser.py:parse_row",
+        "imports/index.py:index_invoice",
+        "imports/totals.py:tenant_totals",
+        "imports/reports.py:error_count"
+      ],
+      "files": [
+        "imports/api.py",
+        "imports/parser.py",
+        "imports/index.py",
+        "imports/totals.py",
+        "imports/reports.py"
+      ]
+    },
+    "criteria": [
+      "Headers trimmed/lowercased, duplicate or missing required headers and wrong row length rejected; identities trimmed but not lowercased.",
+      "Empty identity or malformed/nonfinite/negative Decimal amount rejected; zero allowed; extra columns ignored after mapping.",
+      "ValueError records one-based row number and continues; invalid later duplicate does not replace prior valid row; other exception types are not caught.",
+      "Key is tenant plus invoice, last valid row wins; totals computed from final dictionary values so replacements are not double-counted; different tenants remain separate."
+    ]
+  },
+  {
+    "id": "item-dc9902fd",
+    "question": "A job lease expires and another worker claims the same job. Explain how the claim token changes, which acknowledgements and renewals are accepted at the exact deadline, and whether the implementation prevents two concurrent claimants from both performing work. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d05_lease",
+    "answer": {
+      "answer": "Token shape: lease_token(job) returns the tuple (job['id'], job['owner'], job['generation']) (jobs/tokens.py:1-2), so the token is derived from mutable job state rather than stored separately.\n\nClaim after expiry: claim_lease (jobs/leases.py:3-9) rejects only if job['done'] or (owner is not None and now < deadline). Once now >= deadline the guard passes, so it increments generation, sets owner to the new worker, sets deadline = now + ttl, and returns the new token. Because generation increments and owner changes, the new claimant's token differs from the old one; the old worker's token no longer matches lease_token(job).\n\nExact deadline: both renew_lease (jobs/leases.py:12) and acknowledge (jobs/completion.py:4) use `now >= job['deadline']` as a rejection condition, so at exactly now == deadline both renewals and acknowledgements are rejected (return False). Meanwhile claim_lease's guard uses `now < deadline`, so at exactly now == deadline a new claim is accepted. The boundary is therefore consistent: the lease is exclusive for now < deadline and claimable at now == deadline, with no window where an old holder can renew/ack while a new claim succeeds.\n\nConcurrency: there is no locking, compare-and-swap, or atomicity in claim_lease; it is a plain read-modify-write on a shared dict (jobs/leases.py:4-9), and api.acquire (jobs/api.py:4-5) just forwards to it. Two workers calling claim_lease concurrently on the same expired job can both pass the guard before either writes, both increment generation, and both receive tokens; the last writer's owner/generation wins, so the earlier claimant's token becomes stale but it may already be performing work. Nothing prevents both from doing work; only the later acknowledge/renew would fail. Uncertainty: I did not inspect jobs/metrics.py or jobs/reports.py, so any external locking or single-threaded execution assumption there is unverified; the guarantee depends on the caller serializing access.",
+      "entities": [
+        "jobs/leases.py:claim_lease",
+        "jobs/leases.py:renew_lease",
+        "jobs/tokens.py:lease_token",
+        "jobs/completion.py:acknowledge",
+        "jobs/api.py:acquire"
+      ],
+      "files": [
+        "jobs/leases.py",
+        "jobs/tokens.py",
+        "jobs/completion.py",
+        "jobs/api.py"
+      ]
+    },
+    "criteria": [
+      "Claim refused if done or a current owner before deadline; equality permits reclaim; accepted claim increments generation and sets owner/deadline.",
+      "Token includes job id, owner and generation, so a previous generation token is rejected after reclaim.",
+      "Ack and renewal require not done, exact token, and now < deadline; equality rejects; ack marks done, renewal sets now+ttl.",
+      "Plain mutable dictionary lacks locking/CAS or external fencing of side effects; sequential stale-token checks do not prove exclusive concurrent work."
+    ]
+  },
+  {
+    "id": "item-21ec8def",
+    "question": "An upload receives parts out of order and receives one part number twice. Explain which bytes are eventually assembled, what prevents incomplete or checksum-mismatched uploads from finishing, and what state remains if durable object storage raises during completion. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d04_upload",
+    "answer": {
+      "answer": "Out-of-order and duplicate parts: receive() (api.py:4-5) delegates to record_part (parts.py:1-6), which validates the number is an int in [0, count) and stores it as session['parts'][number] = data. Because parts are keyed by number in a dict, arrival order is irrelevant, and a repeated part number simply overwrites the earlier bytes — the last write for that number wins. So the duplicate's earlier payload is silently discarded, not concatenated or rejected; there is no duplicate detection.\n\nAssembly: assemble_parts (parts.py:8-12) builds expected = set(range(count)) and requires set(session['parts']) == expected, raising ValueError('missing or extra parts') otherwise. It then joins parts in numeric order 0..count-1, so the assembled bytes are the final stored value per index in ascending order. Note the set comparison means a duplicate key cannot produce an 'extra' error (dict keys are unique), and a missing index blocks assembly.\n\nCompletion guards: complete_upload (finalize.py:4-14) returns the existing object_id if already completed (idempotent), calls assemble_parts (so incomplete uploads fail before any storage write), then checksum_matches (checksum.py:3-4) compares sha256(data).hexdigest() to expected_hash and raises ValueError('checksum') on mismatch — again before storage.put. Thus neither incomplete nor mismatched uploads reach durable storage.\n\nStorage failure: storage.put(data) at finalize.py:10 runs before session['object_id'], session['completed'], and session['parts'].clear() are set (lines 11-13). If put raises, the exception propagates and no session mutation occurs: completed stays False, object_id is unset, and all parts remain, so the upload is still 'pending' (reports.py) with part_count unchanged (progress.py) and can be retried. Uncertainty: whether storage.put is atomic/partially durable is not visible in these files, and no rollback or cleanup path is shown.",
+      "entities": [
+        "uploads/parts.py:record_part",
+        "uploads/parts.py:assemble_parts",
+        "uploads/finalize.py:complete_upload",
+        "uploads/checksum.py:checksum_matches",
+        "uploads/api.py:finish"
+      ],
+      "files": [
+        "uploads/parts.py",
+        "uploads/finalize.py",
+        "uploads/checksum.py",
+        "uploads/api.py",
+        "uploads/progress.py"
+      ]
+    },
+    "criteria": [
+      "Duplicate number replaces earlier bytes; allowed integer index is 0 through count-1; completed uploads reject receive.",
+      "Require exact set of indices; concatenate ascending number order regardless of arrival; mismatches raise before storage.",
+      "SHA256 of assembled bytes must equal expected; storage.put precedes object_id/completed/parts mutation.",
+      "Storage exception leaves completion state/parts unchanged in shown code, though storage may have side effects; later completed calls return object id. No atomic cross-storage transaction/concurrency guarantee."
+    ]
+  },
+  {
+    "id": "item-0adfc0f4",
+    "question": "An upload receives parts out of order and receives one part number twice. Explain which bytes are eventually assembled, what prevents incomplete or checksum-mismatched uploads from finishing, and what state remains if durable object storage raises during completion. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d04_upload",
+    "answer": {
+      "answer": "Out-of-order parts are fine because record_part (uploads/parts.py:1-6) stores each part into a dict keyed by number (session['parts'][number] = data), so arrival order is irrelevant. A duplicate part number simply overwrites the earlier entry for that key; the last-received bytes for that number win, and no error is raised for a repeat (only non-int or out-of-range numbers raise 'part number', and any part after completion raises 'already complete').\n\nAssembly (assemble_parts, parts.py:8-11) builds expected = set(range(count)) and requires set(session['parts']) == expected, so a missing part raises 'missing or extra parts'; because keys are validated to 0..count-1, 'extra' can only arise from a corrupted session. It then joins parts in numeric order 0..count-1, so the assembled bytes are the last-written data per part number, concatenated in order.\n\ncomplete_upload (finalize.py:4-13) calls assemble_parts, then checksum_matches (checksum.py:3-4, sha256 hexdigest equality) and raises 'checksum' on mismatch, so neither incomplete nor mismatched uploads reach storage.put. If storage.put raises, the exception propagates before session['object_id'], session['completed'], and session['parts'].clear() are set, so the session stays pending with all parts retained and can be retried; a retry re-assembles and re-puts. Note complete_upload is not idempotent against a put that succeeded but raised afterward (possible duplicate object).\n\nUncertainty: session initialization (count, parts, completed) is not in the read files, and storage.put semantics/atomicity are unknown; progress.part_count counts distinct keys, so duplicates don't inflate it.",
+      "entities": [
+        "uploads/parts.py:record_part",
+        "uploads/parts.py:assemble_parts",
+        "uploads/finalize.py:complete_upload",
+        "uploads/checksum.py:checksum_matches",
+        "uploads/api.py:finish"
+      ],
+      "files": [
+        "uploads/parts.py",
+        "uploads/finalize.py",
+        "uploads/checksum.py",
+        "uploads/api.py",
+        "uploads/progress.py"
+      ]
+    },
+    "criteria": [
+      "Duplicate number replaces earlier bytes; allowed integer index is 0 through count-1; completed uploads reject receive.",
+      "Require exact set of indices; concatenate ascending number order regardless of arrival; mismatches raise before storage.",
+      "SHA256 of assembled bytes must equal expected; storage.put precedes object_id/completed/parts mutation.",
+      "Storage exception leaves completion state/parts unchanged in shown code, though storage may have side effects; later completed calls return object id. No atomic cross-storage transaction/concurrency guarantee."
+    ]
+  },
+  {
+    "id": "item-0eb46173",
+    "question": "A profile is fetched repeatedly for one tenant, then updated. Explain the cache key, the exact expiry boundary, how an update changes subsequent reads, and what happens if the database write fails. Does this guarantee fresh reads under concurrent operations? Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d01_cache",
+    "answer": {
+      "answer": "Cache key: fetch_profile builds it via cache_key(tenant, user, generation), where generation = versions.get((tenant, user), 0) (cache.py:5-6). keys.py:2 returns the tuple (str(tenant), str(user), generation) — tenant and user are stringified, generation is left as-is, so the key is per-tenant, per-user and per-version.\n\nExpiry boundary: a hit requires entry is not None and now < entry['expires_at'] (cache.py:8); entries are stored with expires_at = now + TTL, TTL = 30 (cache.py:2, 11). So an entry is live strictly before expires_at and is already stale at exactly now == expires_at. discard_expired uses the matching boundary, deleting when expires_at <= now (cleanup.py:3), so expiry is consistent between read and sweep. Note the TTL is measured from the read that populated the entry, not from the write.\n\nUpdate path: replace_profile writes to the DB first, then increments versions[(tenant, user)] and returns the new generation (writes.py:2-5). Because the generation is part of the key, the next fetch computes a different key, misses, re-reads the DB and caches under the new key (cache.py:6-11). The old entry is not deleted; it lingers until discard_expired or is simply orphaned, so cache_report's entry count (reports.py:2) can overstate live data.\n\nDB write failure: db.write is called before any version bump (writes.py:2-4), so an exception propagates out of put_profile (api.py:8) and the generation is never incremented. Reads therefore keep hitting the old key and keep serving the pre-update value until its TTL lapses — stale but self-healing after 30 units. No rollback or invalidation is attempted.\n\nFreshness under concurrency: no. There is no locking, no compare-and-set, and no invalidation of the old key; the version map and cache are plain dicts mutated in place. A reader that computed the old generation just before the bump can still return the stale value, and two concurrent writers can interleave write/bump so the last bump does not necessarily correspond to the last DB write. A read racing a write may also repopulate the old key with pre-write data, extending staleness by a further TTL. So the design gives eventual consistency bounded by TTL, not guaranteed fresh reads. Uncertainty: db, cache and versions are injected and their implementations are not in the reviewed files, so any internal locking or transactional behavior in db.write/db.read is unknown and could change these conclusions.",
+      "entities": [
+        "profiles/cache.py:fetch_profile",
+        "profiles/keys.py:cache_key",
+        "profiles/writes.py:replace_profile",
+        "profiles/cleanup.py:discard_expired",
+        "profiles/api.py:get_profile"
+      ],
+      "files": [
+        "profiles/cache.py",
+        "profiles/keys.py",
+        "profiles/writes.py",
+        "profiles/cleanup.py",
+        "profiles/api.py"
+      ]
+    },
+    "criteria": [
+      "Key is a tuple of stringified tenant, user and current generation; distinguish raw version-map identity from stringified key.",
+      "Hit requires now < expires_at; equality misses; a miss reads db and caches for 30 units.",
+      "DB write occurs before generation increment; exception leaves generation unchanged; successful increment makes old key unreachable for later generation lookups without deleting old entries.",
+      "No locking/atomic transaction with reader; concurrent stale returns and cross-process shared-state assumptions are not guaranteed."
+    ]
+  },
+  {
+    "id": "item-d462b788",
+    "question": "A task starts with default settings, a project mapping, and a request mapping. Explain which values win, whether false and zero are treated as missing, what happens to unknown keys, and whether invalid overridden values reach the worker. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d02_config",
+    "answer": {
+      "answer": "Precedence: request > project > defaults. resolve_settings (runner/settings.py:4-11) copies DEFAULTS (runner/defaults.py:1: attempts=3, timeout=10, enabled=True), then iterates layers in order (project, request), so the request layer is applied last and wins over the project layer, which wins over defaults.\n\nFalse and zero are NOT treated as missing. The guard is `if key in layer and layer[key] is not None` (settings.py:8), so only an absent key or an explicit None falls through to the lower layer. A project value of enabled=False or attempts=0 is accepted and overrides the default; only None is skipped. Note this means a request value of None silently inherits the project value rather than clearing it.\n\nUnknown keys are dropped. The inner loop iterates `for key in DEFAULTS` (settings.py:7), so any key not in DEFAULTS is never copied into `merged` and never reaches validation or the worker. There is no error or warning for unknown keys.\n\nInvalid overridden values do not reach the worker. validate_settings(merged) is called on the fully merged dict before return (settings.py:10), and it raises ValueError for non-int or negative attempts, non-int or non-positive timeout, and non-bool enabled (runner/validation.py:2-7). Because validation runs after merging, a bad project value can be masked by a valid request value, and vice versa a bad request value fails the whole launch. launch (runner/api.py:5-6) calls resolve_settings then start_worker, so an exception propagates and start_worker is never invoked; start_worker (runner/worker.py:1-4) only reads enabled/attempts/timeout and returns started=False when disabled.\n\nUncertainty: validation uses `type(x) is not int`, so bools are rejected for attempts/timeout but subclasses of int are also rejected; I did not see any caller that catches ValueError, so whether the error surfaces as an exception to the API caller is unconfirmed. runner/reports.py only contains a docstring-like string and appears unrelated.",
+      "entities": [
+        "runner/settings.py:resolve_settings",
+        "runner/validation.py:validate_settings",
+        "runner/api.py:launch",
+        "runner/worker.py:start_worker",
+        "runner/defaults.py:DEFAULTS"
+      ],
+      "files": [
+        "runner/settings.py",
+        "runner/defaults.py",
+        "runner/validation.py",
+        "runner/api.py",
+        "runner/worker.py"
+      ]
+    },
+    "criteria": [
+      "Priority defaults < project < request, only known default keys, None does not override.",
+      "False and zero are not missing: false enabled is retained; zero attempts allowed, zero timeout invalid.",
+      "Exact types enforced: bool cannot stand in for integer; invalid final value raises before worker call; an invalid lower value may be replaced by a valid higher value.",
+      "Enabled false returns started false; valid enabled true uses resolved attempts/timeout; no environment layer or arbitrary unknown setting propagation."
+    ]
+  },
+  {
+    "id": "item-dfe16c4b",
+    "question": "A user opens or edits a document using a tenant-scoped identity and an optional share token. Explain the order of access checks, when ownership or an administrator role helps, what a share token permits, and whether recording an audit event itself grants access. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d03_access",
+    "answer": {
+      "answer": "Entry point is open_document (docs/api.py:4-8): it calls permitted(...) first and raises PermissionError('denied') if that returns false; only on success does it call record_access and return document['body']. So the audit write happens after the decision and is not part of it.\n\nOrder of checks in permitted (docs/access.py:3-10): (1) tenant/identity gate — deny if user['disabled'] or user['tenant'] != document['tenant']; (2) action allowlist — deny unless action is 'read' or 'write'; (3) ownership/admin shortcut — return True if user['id'] == document['owner'] or user['role'] == 'admin'; (4) otherwise fall through to `action == 'read' and valid_share(token, document)`.\n\nConsequences: ownership or admin only helps after the tenant and action gates pass, so a disabled user or cross-tenant user is still denied, and an admin cannot perform an action outside ('read','write'). The shortcut grants both read and write.\n\nA share token permits read only — it is evaluated last and is ANDed with action == 'read', so a valid token never authorizes write. valid_share (docs/shares.py:1-4) requires token is not None, not token['revoked'], token['document_id'] == document['id'], and token['tenant'] == document['tenant']; it does not check the user, so the token is document/tenant-scoped, not user-scoped.\n\nrecord_access (docs/audit.py:1-2) merely appends a tuple to the audit list; it performs no permission check and grants no access. Because api.py calls it only after permitted succeeds, audit events reflect allowed access only.\n\nUncertainty: I did not see callers of open_document, how tokens are issued/revoked, or whether any other path (e.g. listing.py, reports.py) bypasses permitted; those files contain no access logic in the evidence I read. Whether 'admin' is tenant-scoped is implied by the tenant check but not otherwise enforced.",
+      "entities": [
+        "docs/api.py:open_document",
+        "docs/access.py:permitted",
+        "docs/shares.py:valid_share",
+        "docs/audit.py:record_access"
+      ],
+      "files": [
+        "docs/api.py",
+        "docs/access.py",
+        "docs/shares.py",
+        "docs/audit.py"
+      ]
+    },
+    "criteria": [
+      "Disabled or cross-tenant user is denied before owner/admin privileges; unknown action denied.",
+      "Same-tenant enabled owner or admin can read/write without share token.",
+      "Other user gets read only with nonrevoked token matching document id and tenant; token does not bypass tenant or disabled checks.",
+      "API checks permission before appending audit and returning body; audit is recording, not a grant. Token cryptographic validation/expiry is not shown."
+    ]
+  },
+  {
+    "id": "item-453e4ae8",
+    "question": "A profile is fetched repeatedly for one tenant, then updated. Explain the cache key, the exact expiry boundary, how an update changes subsequent reads, and what happens if the database write fails. Does this guarantee fresh reads under concurrent operations? Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d01_cache",
+    "answer": {
+      "answer": "Trace: api.get_profile -> cache.fetch_profile; api.put_profile -> writes.replace_profile.\n\nCache key: cache_key(tenant, user, generation) returns (str(tenant), str(user), generation) (keys.py:1-2). generation comes from versions.get((tenant, user), 0) (cache.py:5), so the key is tenant/user/generation-versioned, not just tenant+user.\n\nExpiry boundary: TTL = 30 (cache.py:2). A hit requires entry is not None and now < entry['expires_at'] (cache.py:8); entries are stored with expires_at = now + TTL (cache.py:11). So the entry is valid for now in [write_time, write_time+30) and is stale exactly at now == expires_at (strict <). cleanup.discard_expired uses the complementary test expires_at <= now (cleanup.py:3), consistent with the read path: at the boundary the entry is treated as expired and deleted.\n\nRepeated fetches for one tenant/user: first call misses, reads db.read(tenant, user), stores under generation 0; subsequent calls within 30 units return the cached value without touching the DB.\n\nUpdate effect: replace_profile writes to the DB first, then increments versions[(tenant, user)] (writes.py:2-4). Because the generation is part of the key, the next fetch computes a new key and misses, forcing a fresh db.read. The old generation entry is not deleted by the write; it lingers until discard_expired removes it (cleanup.py:2-4) or it is simply never read again.\n\nDB write failure: db.write is called before the version bump (writes.py:2-4), so an exception propagates and the generation is not incremented. The cache is untouched, so subsequent reads keep serving the previous generation's cached value — which still matches the DB, since the write failed. No rollback or invalidation is needed, but also no error handling exists here; the caller sees the exception.\n\nFreshness under concurrency: not guaranteed. There is no locking, no compare-and-swap, and no invalidation on write. A reader that computed the old key and is between cache.get and db.read can repopulate the old-generation key with pre-update data after the write commits; that stale entry is then served to any reader still using the old generation until TTL expiry. Also, a read that misses and writes cache[key] can overwrite a newer value with an older DB snapshot (read-then-write race). The version bump only helps readers that start after it. Additionally, versions is an in-process dict, so multi-process deployments would not share generations.\n\nUncertainty: db.read/db.write semantics (transaction isolation, whether write is durable before returning) are not visible in these files, so the exact interleaving window is inferred, not proven. Whether versions is shared across processes is also unverified.",
+      "entities": [
+        "profiles/cache.py:fetch_profile",
+        "profiles/keys.py:cache_key",
+        "profiles/writes.py:replace_profile",
+        "profiles/cleanup.py:discard_expired",
+        "profiles/api.py:get_profile"
+      ],
+      "files": [
+        "profiles/cache.py",
+        "profiles/keys.py",
+        "profiles/writes.py",
+        "profiles/cleanup.py",
+        "profiles/api.py"
+      ]
+    },
+    "criteria": [
+      "Key is a tuple of stringified tenant, user and current generation; distinguish raw version-map identity from stringified key.",
+      "Hit requires now < expires_at; equality misses; a miss reads db and caches for 30 units.",
+      "DB write occurs before generation increment; exception leaves generation unchanged; successful increment makes old key unreachable for later generation lookups without deleting old entries.",
+      "No locking/atomic transaction with reader; concurrent stale returns and cross-process shared-state assumptions are not guaranteed."
+    ]
+  },
+  {
+    "id": "item-17a1492c",
+    "question": "A user opens or edits a document using a tenant-scoped identity and an optional share token. Explain the order of access checks, when ownership or an administrator role helps, what a share token permits, and whether recording an audit event itself grants access. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d03_access",
+    "answer": {
+      "answer": "Entry point is docs/api.py:open_document, which calls permitted(...) first and raises PermissionError('denied') if it returns False; only after that does it call record_access and return document['body'] (docs/api.py:4-8).\n\nOrder of checks in docs/access.py:permitted: (1) tenant/identity gate — deny if user['disabled'] or user['tenant'] != document['tenant'] (lines 4-5); (2) action allowlist — deny unless action is 'read' or 'write' (lines 6-7); (3) ownership/admin shortcut — return True if user['id'] == document['owner'] or user['role'] == 'admin' (lines 8-9); (4) fallback — allow only if action == 'read' and valid_share(token, document) (line 10).\n\nSo ownership or admin role only helps after the tenant and action gates pass: it bypasses the share-token requirement but not the tenant match, disabled check, or action allowlist. A cross-tenant owner or admin is still denied.\n\nA share token permits read only, never write (line 10). docs/shares.py:valid_share requires token is not None, not token['revoked'], token['document_id'] == document['id'], and token['tenant'] == document['tenant'] (lines 2-4) — so the token is tenant-bound and document-bound, and revocation is honored.\n\nAudit does not grant access: record_access (docs/audit.py:1-2) merely appends (user_id, document_id, action) to the audit list and returns nothing; it is called after the permission check in open_document, so a denied request is never recorded.\n\nUncertainty: I did not inspect docs/listing.py or docs/reports.py, so whether other entry points (listing, reports) reuse permitted() or apply different ordering is unverified; the audit list is an in-memory append with no persistence or failure handling visible in the read code.",
+      "entities": [
+        "docs/api.py:open_document",
+        "docs/access.py:permitted",
+        "docs/shares.py:valid_share",
+        "docs/audit.py:record_access"
+      ],
+      "files": [
+        "docs/api.py",
+        "docs/access.py",
+        "docs/shares.py",
+        "docs/audit.py"
+      ]
+    },
+    "criteria": [
+      "Disabled or cross-tenant user is denied before owner/admin privileges; unknown action denied.",
+      "Same-tenant enabled owner or admin can read/write without share token.",
+      "Other user gets read only with nonrevoked token matching document id and tenant; token does not bypass tenant or disabled checks.",
+      "API checks permission before appending audit and returning body; audit is recording, not a grant. Token cryptographic validation/expiry is not shown."
+    ]
+  },
+  {
+    "id": "item-4480a5a9",
+    "question": "A batch imports CSV-like rows containing tenant, invoice identifier and amount. Explain the normalization and validation path, how malformed rows are reported, which value wins for repeated invoice keys, and whether replacement rows are added twice to the final totals. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d06_import",
+    "answer": {
+      "answer": "Path: import_rows (imports/api.py:5) iterates rows with enumerate(rows, 1), calls parse_row(headers, row) (imports/parser.py:3), then index_invoice(invoices, invoice) (imports/index.py:1), and finally returns {'totals': tenant_totals(invoices), 'errors': errors} (api.py:14).\n\nNormalization/validation in parse_row: column count must match headers (parser.py:4-5); header names are stripped and lowercased (line 6); headers must be unique and must include tenant, invoice, amount (line 7); tenant and invoice are .strip()ed and must be non-empty (lines 10-12); amount is .strip()ed and parsed with Decimal, with InvalidOperation converted to ValueError (lines 13-16); non-finite or negative amounts are rejected (lines 17-18). The returned dict holds the normalized tenant/invoice strings and a Decimal amount (line 19).\n\nMalformed rows: every validation failure raises ValueError, which import_rows catches (api.py:12-13) and records as the 1-based row number in errors. No per-row message or reason is retained, and the row is skipped entirely — it never reaches indexing or totals.\n\nRepeated keys: index_invoice keys on the tuple (tenant, invoice) and assigns invoices[key] = invoice (index.py:2-3), so a later row with the same normalized key overwrites the earlier one. Last occurrence wins; the earlier amount is discarded, not summed.\n\nDouble counting: no. tenant_totals iterates invoices.values() (totals.py:5), i.e. the deduplicated dict, so each surviving key contributes exactly once. A replacement row is not added twice.\n\nUncertainty: header validation runs per row rather than once per batch, so a bad header set is reported as an error on every row rather than a single batch-level failure; the code does not distinguish these cases. Also, errors carry only row numbers, so callers cannot tell which validation rule failed without re-parsing.",
+      "entities": [
+        "imports/api.py:import_rows",
+        "imports/parser.py:parse_row",
+        "imports/index.py:index_invoice",
+        "imports/totals.py:tenant_totals"
+      ],
+      "files": [
+        "imports/api.py",
+        "imports/parser.py",
+        "imports/index.py",
+        "imports/totals.py"
+      ]
+    },
+    "criteria": [
+      "Headers trimmed/lowercased, duplicate or missing required headers and wrong row length rejected; identities trimmed but not lowercased.",
+      "Empty identity or malformed/nonfinite/negative Decimal amount rejected; zero allowed; extra columns ignored after mapping.",
+      "ValueError records one-based row number and continues; invalid later duplicate does not replace prior valid row; other exception types are not caught.",
+      "Key is tenant plus invoice, last valid row wins; totals computed from final dictionary values so replacements are not double-counted; different tenants remain separate."
+    ]
+  },
+  {
+    "id": "item-60b4e01e",
+    "question": "A job lease expires and another worker claims the same job. Explain how the claim token changes, which acknowledgements and renewals are accepted at the exact deadline, and whether the implementation prevents two concurrent claimants from both performing work. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d05_lease",
+    "answer": {
+      "answer": "Token change: lease_token (jobs/tokens.py:1-2) returns the tuple (job['id'], job['owner'], job['generation']). claim_lease (jobs/leases.py:3-9) rejects the claim only if job['done'] or (owner is not None and now < deadline); otherwise it increments job['generation'], sets owner to the new worker, sets deadline = now + ttl, and returns the new token. So after expiry the token changes in two components at once — owner and generation — meaning the old worker's token can never match again, even if the same worker re-claims (generation still bumps).\n\nExact deadline: both renew_lease (jobs/leases.py:12) and acknowledge (jobs/completion.py:4) use the strict test `now >= job['deadline']`, so at now == deadline both are rejected (False). Claiming uses the opposite strictness: `now < job['deadline']` blocks a claim, so at now == deadline the lease is already claimable. The boundary is therefore consistent: at the exact deadline the old holder can neither renew nor acknowledge, while a new worker can claim. Note the claim check is only against the deadline, not against a token, so any worker may claim an expired lease.\n\nConcurrency: nothing in these functions prevents two claimants from both doing work. claim_lease is a plain read-modify-write on a shared dict with no lock, CAS, or atomic compare-and-set, and the check-then-set (lines 4-8) is not atomic; two workers calling it concurrently at/after the deadline can both pass the guard and both receive tokens (the second overwriting owner/generation). Only the last writer's token matches lease_token, so the loser's later acknowledge/renew fails — but the loser may already have performed the work, and there is no fencing token passed to the work itself. api.acquire (jobs/api.py:4-5) just forwards to claim_lease with ttl=20, adding no synchronization.\n\nUncertainty: I did not see any caller-side locking, storage layer, or job-store implementation (metrics.py and reports.py are read-only helpers), so I cannot rule out atomicity enforced outside these modules; the conclusion about concurrent claimants applies to the code shown.",
+      "entities": [
+        "jobs/leases.py:claim_lease",
+        "jobs/leases.py:renew_lease",
+        "jobs/tokens.py:lease_token",
+        "jobs/completion.py:acknowledge",
+        "jobs/api.py:acquire"
+      ],
+      "files": [
+        "jobs/leases.py",
+        "jobs/tokens.py",
+        "jobs/completion.py",
+        "jobs/api.py"
+      ]
+    },
+    "criteria": [
+      "Claim refused if done or a current owner before deadline; equality permits reclaim; accepted claim increments generation and sets owner/deadline.",
+      "Token includes job id, owner and generation, so a previous generation token is rejected after reclaim.",
+      "Ack and renewal require not done, exact token, and now < deadline; equality rejects; ack marks done, renewal sets now+ttl.",
+      "Plain mutable dictionary lacks locking/CAS or external fencing of side effects; sequential stale-token checks do not prove exclusive concurrent work."
+    ]
+  }
+]

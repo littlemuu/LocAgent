@@ -1,0 +1,6 @@
+{
+  "instance_id": "una-auxme__paf-565",
+  "repo": "una-auxme/paf",
+  "base_commit": "d63c492cb30b3091789dfd2b7179c65ef8c4a55a",
+  "problem_statement": "Seperate tasks from lidar_distance in seperate nodes for better performance\n### Feature Description\n\nThe tasks of image calculation and clustering data points should be seperated into seperate nodes to improve the node performance which should reduce the latency in the visualization.\n\n### Definition of Done\n\n- Create lidar_cluster node\r\n- lidar_cluster works fine\r\n- lidar_distance works fine\n\n### Testability\n\n_No response_\n\n### Dependencies\n\nThis is an addition to Issue #524.\n"
+}

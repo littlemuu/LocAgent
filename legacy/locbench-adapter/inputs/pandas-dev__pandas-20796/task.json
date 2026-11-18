@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-20796",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "fc7bc3f74d1f5702bf66c519ad190126538a8f5b",
+  "problem_statement": "Make itertuples really an iterator/generator in implementation, not just return type\n`itertuples` is not really an iterator/generator and constructs a copy of whole DataFrame in memory. Ideally it would return just an iterator and construct row by row as it is being iterated over.\n"
+}

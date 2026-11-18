@@ -1,0 +1,17 @@
+{
+  "control/audit_offline.py": "e45a41d1a68bbcd0e4266ab09f7c56c8ad2eea46bbf26e1309586f83fe196d55",
+  "control/estimate.py": "508ccfb2fc1f61d808463eb709eb2ab808c87a33eaf9b736df46fdf36eaeb351",
+  "delivery/ENTRYPOINT_CONFLICT_ZH.md": "b6da75789079bd6a9fcf918e449a27f37913572a5ac944e7d56452479f719731",
+  "delivery/PREREGISTRATION_ZH.md": "af74bb3211ac21f77995df30d8ea630b1bf2f058bb4cfddd74fb7f18569bcce8",
+  "delivery/REPORT_ZH.md": "5ae4dc0c48c231055007348dc960da7eadc19bf1331bb7917b53502ee1e2950e",
+  "delivery/audit-progress.log": "88b5e81bbeb6b6484f3b0db742aa0d6c874c186e305f9430afc3a5a844a83c3f",
+  "delivery/estimates.json": "6f1fe2267bf25fd8e872b031c2c30c1f17a6531ece32fe1a7c498167f12e951b",
+  "delivery/execution-order.json": "1f9b54caa6fc43426a1b47e2a50bf5652236e735ef1e6361cf536608b3bbe80e",
+  "delivery/exposure-patterns.txt": "dfb19c557f840bbbf484af141abde8ae3b8fc4ad2ca4f8e741af139448623bc2",
+  "delivery/final-offline-validation.json": "46b52cfa05792af0c018fe0ce0c70ebbe92b21c4cbce0ce4776be7cc68b236e1",
+  "delivery/freeze-verification.json": "846dff5f1d4098532670f4ac0373b3dbdc7deefc14947dda901f11b9f5d61705",
+  "delivery/historical-exposure-scan.json": "90589e3825d8d207f370acf67668888d72ff4d674c4e9286848d1f3573228d26",
+  "delivery/history-conclusion.json": "3a000f95e1e88a8fad0c403951b6ee1aa955c1171dac145d1f241869f52c20ca",
+  "delivery/holdout-integrity.json": "4c0880eb0abbd6755e63035ff1560e73ff3bcf21aa4e2c55c45f79429ca96900",
+  "delivery/status.json": "8e86b7fbc59a0347c200639d704ae52958ad0d4448907c04b20af00ef6b3576b"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "fulcrumgenomics__prymer-99",
+  "repo": "fulcrumgenomics/prymer",
+  "base_commit": "f62c4b52b6753ed070cea2269f2fffa36591de69",
+  "problem_statement": "Speed up from O(n^2) iteration over all left/right primer hits in `OffTargetDetector._to_amplicons`\n`OffTargetDetector._to_amplicons` uses `itertools.product` over the left and right primer hits and evaluates each of them in a loop to identify valid left/right hit combinations for the pair.\r\n\r\nSuggestion:\r\n\r\n1. Get hits by primer sequence from `mappings_of`\r\n2. Split into left and right hits\r\n3. Group hits by refname\r\n4. For each refname, split into left +, right -, left -, right+ hits\r\n5. Build amplicons from left + and right - (amplicon strand +), left - and right + (amplicon strand -)\r\n\r\nBuilding amplicons - dealing with only positive & negative in correct orientation and known to be on the same reference, with known amplicon strand\r\n1. `itertools.product` over positive & negative primer hits\r\n2. Check product size against min/max amplicon size range\r\n3. If in range, return the product hit as positive start to negative end with the known reference name and amplicon strand\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-6128",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "9c089756c3cc745f6cecb3aa1f091cf603834f10",
+  "problem_statement": "`finding_uid` is not unique in `iam_rotate_access_key_90_days`\n### Steps to Reproduce\n\npython prowler.py aws -s iam\r\n\n\n### Expected behavior\n\nThe program output CSV file with the same finding_uid like that \r\nprowler-aws-iam_rotate_access_key_90_days-<AWS ACCOUNT_ID>-us-east-1-<IAM_USER>\r\n\r\nThis IAM_USER has 2 access keys\n\n### Actual Result with Screenshots or Logs\n\nNo log\n\n### How did you install Prowler?\n\nCloning the repository from github.com (git clone)\n\n### Environment Resource\n\n8. Other (Local PC)\n\n### OS used\n\n2. MacOS \n\n### Prowler version\n\nProwler 5.1.0 (You are running the latest version, yay!)\n\n### Pip version\n\npip 23.3\n\n### Context\n\nThe source code of [finding.py ](https://github.com/prowler-cloud/prowler/blob/master/prowler/lib/outputs/finding.py#L238-L241)\r\n\r\n```\r\noutput_data[\"uid\"] = (\r\n                f\"prowler-{provider.type}-{check_output.check_metadata.CheckID}-{output_data['account_uid']}-\"\r\n                f\"{output_data['region']}-{output_data['resource_name']}\"\r\n            )\r\n```\r\n\r\nDo we need add UUID to above line to avoid problem? \n"
+}

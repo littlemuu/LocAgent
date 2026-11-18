@@ -1,0 +1,6 @@
+{
+  "instance_id": "speechbrain__speechbrain-2742",
+  "repo": "speechbrain/speechbrain",
+  "base_commit": "c4a424306a58a08dbdf3f86f4c9a32eecf7c94f3",
+  "problem_statement": "Syntax Bug in Librispeech Whisper Recipe\n### Describe the bug\n\nThese bugs listed below are related to whisper specifically following this [recipe](recipes/LibriSpeech/ASR/transformer/train_with_whisper.py)\r\n1) line 228 in dataio_prepare, hparams is a dictionary so `hasattr(hparams, \"normalized_transcripts\")` does not work as intended.\r\n\r\n2) line 50. I've gotten some rounding issues for some batches where the .long() rounds down rather than to the nearest int. (i.e. 12.998 gets rounded down to 12, excluding the last token).\n\n### Expected behaviour\n\n1) just change syntax to check keys in dictionary\r\n2) use torch.round() to ensure proper mask computation\n\n### To Reproduce\n\n_No response_\n\n### Environment Details\n\n_No response_\n\n### Relevant Log Output\n\n_No response_\n\n### Additional Context\n\n_No response_\n"
+}

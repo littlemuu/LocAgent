@@ -1,0 +1,18 @@
+{
+  "checked_at": 1794915198.2151968,
+  "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "model_alias": "deepseek-flash",
+  "documented_version": "DeepSeek-V4.1-Flash-1017",
+  "CNY_per_million_peak": {
+    "cache_hit": 0.04,
+    "cache_miss": 2,
+    "output": 8
+  },
+  "offpeak_multiplier": 0.5,
+  "peak_Beijing_weekdays": [
+    "09:00-12:00",
+    "14:00-18:00"
+  ],
+  "account_bill_observed": false,
+  "report_method": "usage/cache/time-based estimate, not account invoice; historical v5 metered costs preserved"
+}

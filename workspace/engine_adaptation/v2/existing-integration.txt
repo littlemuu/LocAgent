@@ -1,0 +1,16 @@
+.E..
+======================================================================
+ERROR: test_graph_session_restored_on_error_and_next_case (integration_locagent.LocAgentIntegration.test_graph_session_restored_on_error_and_next_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/xiaomu/Documents/Codex/2026-11-12/task/tests/integration_locagent.py", line 100, in test_graph_session_restored_on_error_and_next_case
+    other = LocAgentRetriever(second, graph2)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/xiaomu/Documents/Codex/2026-11-12/task/readonly_agent/locagent.py", line 70, in __init__
+    raise ValueError('graph_missing_source_entities')
+ValueError: graph_missing_source_entities
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.389s
+
+FAILED (errors=1)

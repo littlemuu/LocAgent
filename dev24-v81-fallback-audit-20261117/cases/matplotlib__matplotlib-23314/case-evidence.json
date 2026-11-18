@@ -1,0 +1,176 @@
+{
+  "index": 3,
+  "instance_id": "matplotlib__matplotlib-23314",
+  "fallback": true,
+  "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-23314/raw-answer.txt",
+  "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-23314/locator/diagnostic-audit.json",
+  "raw_finish_wire_paths": [
+    "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-23314/locator-wire/response-12.json"
+  ],
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- lib/matplotlib/artist.py:1008-1018：Artist.set_visible 只设置 self._visible = b，然后 pchanged() 与 stale = True，不做任何绘制期判断。\n- lib/matplotlib/axes/_base.py:3018-3023：_AxesBase.draw 开头有 `if not self.get_visible(): return`，即二维 Axes 在 draw 入口处自行短路。\n- lib/mpl_toolkits/mplot3d/axes3d.py:389-444：Axes3D.draw 重写了 draw，开头只调用 _unstale_viewLim()，随后直接 self.patch.draw(renderer)（393 行），没有 get_visible() 检查；之后才在 444 行调用 super().draw(renderer)。\n- lib/mpl_toolkits/mplot3d/axes3d.py:411-414：collections/patches 的筛选只检查子 artist 的 get_visible()，不检查 Axes 自身可见性。\n- lib/mpl_toolkits/mplot3d/axes3d.py:435-441：_axis3don 为真时直接绘制 pane 与 axis，同样无 Axes 自身可见性判断。\n\n推断\n- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。\n- 待验证假设：lib/matplotlib/artist.py:Artist.set_visible 本身行为正确（仅置标志），问题在于 Axes3D.draw 未消费该标志，故修复点应在 Axes3D.draw 入口处提前返回。\n\n未核验点\n- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。\n- 未读完：lib/matplotlib/widgets.py:ToolLineHandles.set_visible、lib/matplotlib/widgets.py:_SelectorWidget.set_visible（与本问题相关性低，仅作排除）。\n- 未核验 Axes3D 是否另有 set_visible 覆写或 _axis3don 相关分支；未运行任何渲染验证。\n\n最小验证：`python -c \"import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; f,a=plt.subplots(1,2,subplot_kw={'projection':'3d'}); a[0].set_visible(False); f.canvas.draw(); print(a[0].get_visible())\"` 并配合检查渲染输出中左侧区域是否仍出现 3D 背景。",
+    "entities": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+      "lib/matplotlib/axes/_base.py:AxesBase.draw",
+      "lib/matplotlib/artist.py:Artist.set_visible"
+    ],
+    "files": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py",
+      "lib/matplotlib/axes/_base.py",
+      "lib/matplotlib/artist.py"
+    ]
+  },
+  "source_bytes": 9771,
+  "source_budget": 14336,
+  "requests": 4,
+  "tool_calls": 6,
+  "ranges": [
+    [
+      "lib/matplotlib/artist.py",
+      1008,
+      1018
+    ],
+    [
+      "lib/matplotlib/axes/_base.py",
+      3000,
+      3060
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2054,
+      2054
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2056,
+      2058
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2669,
+      2669
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2671,
+      2672
+    ],
+    [
+      "lib/matplotlib/widgets.py",
+      2761,
+      2762
+    ],
+    [
+      "lib/mpl_toolkits/mplot3d/axes3d.py",
+      389,
+      444
+    ]
+  ],
+  "pending": {},
+  "entity_body_complete": {
+    "lib/matplotlib/artist.py:Artist.set_visible": true,
+    "lib/matplotlib/axes/_base.py:AxesBase.draw": false,
+    "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw": false
+  },
+  "tool_audit": [
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "def set_visible"
+      },
+      "calls": 1,
+      "result": {
+        "next_offset": null,
+        "text": "lib/matplotlib/artist.py:1008:     def set_visible(self, b):\nlib/matplotlib/widgets.py:2054:     def set_visible(self, visible):\nlib/matplotlib/widgets.py:2669:     def set_visible(self, value):\nlib/matplotlib/widgets.py:2761:     def set_visible(self, val):\nlib/mpl_toolkits/axes_grid1/mpl_axes.py:92:     def set_visible(self, b):"
+      },
+      "source_bytes": 366,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "Axes3D draw set_visible"
+      },
+      "calls": 2,
+      "result": {
+        "next_offset": null,
+        "text": "Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.\n#1 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw [identifier_components]\npath=lib/mpl_toolkits/mplot3d/axes3d.py; lines=389-444; implementation_start=390; read_file(path=\"lib/mpl_toolkits/mplot3d/axes3d.py\", start_line=389, end_line=444)\n389:     def draw(self, renderer):\n390:         self._unstale_viewLim()\n391: \n392:         # draw the background patch\n393:         self.patch.draw(renderer)\n394:         self._frameon = False\n395: \n396:         # first, set the aspect\n397:         # this is duplicated from `axes._base._AxesBase.draw`\n398:         # but must be called before any of the artist are drawn as\n399:         # it adjusts the view limits and the size of the bounding box\n400:         # of the Axes\n401:         locator = self.get_axes_locator()\n402:         if locator:\n403:             pos = locator(self, renderer)\n404:             self.apply_aspect(pos)\n405:         else:\n... lines 406-440 omitted ...\n441:                 axis.draw(renderer)\n442: \n443:         # Then rest\n444:         super().draw(renderer)\nPreview incomplete; omitted/overlapping lines remain available via read_file.\n\n#2 lib/matplotlib/artist.py:Artist.set_visible [identifier_components]\npath=lib/matplotlib/artist.py; lines=1008-1018; implementation_start=1016; read_file(path=\"lib/matplotlib/artist.py\", start_line=1008, end_line=1018)\nDocstring lines 1009-1015; preview prioritizes implementation. read_file preserves complete text.\n1008:     def set_visible(self, b):\n... lines 1009-1015 omitted ...\n1016:         self._visible = b\n1017:         self.pchanged()\n1018:         self.stale = True\nPreview incomplete; omitted/overlapping lines remain available via read_file.\n\n#3 lib/matplotlib/widgets.py:ToolHandles.set_visible [identifier_components]\npath=lib/matplotlib/widgets.py; lines=2761-2762; implementation_start=2762; read_file(path=\"lib/matplotlib/widgets.py\", start_line=2761, end_line=2762)\n2761:     def set_visible(self, val):\n2762:         self._markers.set_visible(val)\n\n#4 lib/matplotlib/widgets.py:ToolLineHandles.set_visible [identifier_components]\npath=lib/matplotlib/widgets.py; lines=2669-2672; implementation_start=2671; read_file(path=\"lib/matplotlib/widgets.py\", start_line=2669, end_line=2672)\nDocstring lines 2670-2670; preview prioritizes implementation. read_file preserves complete text.\n2669:     def set_visible(self, value):\n... lines 2670-2670 omitted ...\n2671:         for artist in self.artists:\n2672:             artist.set_visible(value)\nPreview incomplete; omitted/overlapping lines remain available via read_file.\n\n#5 lib/matplotlib/widgets.py:_SelectorWidget.set_visible [identifier_components]\npath=lib/matplotlib/widgets.py; lines=2054-2058; implementation_start=2056; read_file(path=\"lib/matplotlib/widgets.py\", start_line=2054, end_line=2058)\nDocstring lines 2055-2055; preview prioritizes implementation. read_file preserves complete text.\n2054:     def set_visible(self, visible):\n... lines 2055-2055 omitted ...\n2056:         self.visible = visible\n2057:         for artist in self.artists:\n2058:             artist.set_visible(visible)\nPreview incomplete; omitted/overlapping lines remain available via read_file.\n\n"
+      },
+      "source_bytes": 3776,
+      "tool": "locagent_retrieve"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 444,
+        "path": "lib/mpl_toolkits/mplot3d/axes3d.py",
+        "start_line": 389
+      },
+      "calls": 3,
+      "result": {
+        "end_column": 30,
+        "end_line": 444,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 389,
+        "text": "389:     def draw(self, renderer):\n390:         self._unstale_viewLim()\n391: \n392:         # draw the background patch\n393:         self.patch.draw(renderer)\n394:         self._frameon = False\n395: \n396:         # first, set the aspect\n397:         # this is duplicated from `axes._base._AxesBase.draw`\n398:         # but must be called before any of the artist are drawn as\n399:         # it adjusts the view limits and the size of the bounding box\n400:         # of the Axes\n401:         locator = self.get_axes_locator()\n402:         if locator:\n403:             pos = locator(self, renderer)\n404:             self.apply_aspect(pos)\n405:         else:\n406:             self.apply_aspect()\n407: \n408:         # add the projection matrix to the renderer\n409:         self.M = self.get_proj()\n410: \n411:         collections_and_patches = (\n412:             artist for artist in self._children\n413:             if isinstance(artist, (mcoll.Collection, mpatches.Patch))\n414:             and artist.get_visible())\n415:         if self.computed_zorder:\n416:             # Calculate projection of collections and patches and zorder\n417:             # them. Make sure they are drawn above the grids.\n418:             zorder_offset = max(axis.get_zorder()\n419:                                 for axis in self._axis_map.values()) + 1\n420:             collection_zorder = patch_zorder = zorder_offset\n421: \n422:             for artist in sorted(collections_and_patches,\n423:                                  key=lambda artist: artist.do_3d_projection(),\n424:                                  reverse=True):\n425:                 if isinstance(artist, mcoll.Collection):\n426:                     artist.zorder = collection_zorder\n427:                     collection_zorder += 1\n428:                 elif isinstance(artist, mpatches.Patch):\n429:                     artist.zorder = patch_zorder\n430:                     patch_zorder += 1\n431:         else:\n432:             for artist in collections_and_patches:\n433:                 artist.do_3d_projection()\n434: \n435:         if self._axis3don:\n436:             # Draw panes first\n437:             for axis in self._axis_map.values():\n438:                 axis.draw_pane(renderer)\n439:             # Then axes\n440:             for axis in self._axis_map.values():\n441:                 axis.draw(renderer)\n442: \n443:         # Then rest\n444:         super().draw(renderer)\n",
+        "total_lines": 3248
+      },
+      "source_bytes": 6360,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 1018,
+        "path": "lib/matplotlib/artist.py",
+        "start_line": 1008
+      },
+      "calls": 4,
+      "result": {
+        "end_column": 25,
+        "end_line": 1018,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 1008,
+        "text": "1008:     def set_visible(self, b):\n1009:         \"\"\"\n1010:         Set the artist's visibility.\n1011: \n1012:         Parameters\n1013:         ----------\n1014:         b : bool\n1015:         \"\"\"\n1016:         self._visible = b\n1017:         self.pchanged()\n1018:         self.stale = True\n",
+        "total_lines": 1802
+      },
+      "source_bytes": 6782,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 3060,
+        "path": "lib/matplotlib/axes/_base.py",
+        "start_line": 3000
+      },
+      "calls": 5,
+      "result": {
+        "end_column": 59,
+        "end_line": 3060,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 3000,
+        "text": "3000:             if title.get_window_extent(renderer).ymin < top:\n3001:                 _, y = self.transAxes.inverted().transform((0, top))\n3002:                 title.set_position((x, y))\n3003:                 # empirically, this doesn't always get the min to top,\n3004:                 # so we need to adjust again.\n3005:                 if title.get_window_extent(renderer).ymin < top:\n3006:                     _, y = self.transAxes.inverted().transform(\n3007:                         (0., 2 * top - title.get_window_extent(renderer).ymin))\n3008:                     title.set_position((x, y))\n3009: \n3010:         ymax = max(title.get_position()[1] for title in titles)\n3011:         for title in titles:\n3012:             # now line up all the titles at the highest baseline.\n3013:             x, _ = title.get_position()\n3014:             title.set_position((x, ymax))\n3015: \n3016:     # Drawing\n3017:     @martist.allow_rasterization\n3018:     def draw(self, renderer):\n3019:         # docstring inherited\n3020:         if renderer is None:\n3021:             raise RuntimeError('No renderer defined')\n3022:         if not self.get_visible():\n3023:             return\n3024:         self._unstale_viewLim()\n3025: \n3026:         renderer.open_group('axes', gid=self.get_gid())\n3027: \n3028:         # prevent triggering call backs during the draw process\n3029:         self._stale = True\n3030: \n3031:         # loop over self and child Axes...\n3032:         locator = self.get_axes_locator()\n3033:         if locator:\n3034:             pos = locator(self, renderer)\n3035:             self.apply_aspect(pos)\n3036:         else:\n3037:             self.apply_aspect()\n3038: \n3039:         artists = self.get_children()\n3040:         artists.remove(self.patch)\n3041: \n3042:         # the frame draws the edges around the Axes patch -- we\n3043:         # decouple these so the patch can be in the background and the\n3044:         # frame in the foreground. Do this before drawing the axis\n3045:         # objects so that the spine has the opportunity to update them.\n3046:         if not (self.axison and self._frameon):\n3047:             for spine in self.spines.values():\n3048:                 artists.remove(spine)\n3049: \n3050:         self._update_title_position(renderer)\n3051: \n3052:         if not self.axison:\n3053:             for _axis in self._axis_map.values():\n3054:                 artists.remove(_axis)\n3055: \n3056:         if not self.figure.canvas.is_saving():\n3057:             artists = [\n3058:                 a for a in artists\n3059:                 if not a.get_animated() or isinstance(a, mimage.AxesImage)]\n3060:         artists = sorted(artists, key=attrgetter('zorder'))\n",
+        "total_lines": 4611
+      },
+      "source_bytes": 9657,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "get_visible()"
+      },
+      "calls": 6,
+      "result": {
+        "error": "candidate_body_read_priority",
+        "next": "read_file existing candidate/cursor, or finish marking 未读完"
+      },
+      "source_bytes": 9771,
+      "tool": "search_text"
+    }
+  ]
+}

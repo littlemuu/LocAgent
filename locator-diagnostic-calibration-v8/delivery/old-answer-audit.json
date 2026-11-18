@@ -1,0 +1,766 @@
+{
+  "mode": "static-historical-audit-only",
+  "new_api_calls": 0,
+  "live_v8_run": false,
+  "source_hashes": {
+    "evidence/astropy__astropy-12907/localization.json": "12eb45ed2551b2f5c4a9c5b207269d9a0591b25e6da3adcc22d0880d622a876a",
+    "evidence/astropy__astropy-12907/locator-evidence.json": "1f9e57ce5ceececfd5454c34bbbb147ddab81b0fe05d8d88201ec71a14b26836",
+    "evidence/django__django-13964/localization.json": "1aefc9011c06bae50afb5c1fca4f087474fa1fca5ee5140cdbb49c279b71fe72",
+    "evidence/django__django-13964/locator-evidence.json": "9add4289804a832150a98995450c2d9e4a0cc24ef49e7270047a94621cc3ddea",
+    "evidence/django__django-13033/localization.json": "637360a4c60b7a06c0292554429e0cde65171173cd64d346192a3d36346a796b",
+    "evidence/django__django-13033/locator-evidence.json": "a98986fab03fbc19e7ee9f810dd66cde700a469f598013cbe8cd8f32da043a03",
+    "evidence/sympy__sympy-18698/localization.json": "7c2fbb45c216397b70afc8fa3e7ffe6f38b5dd39cd9e1d75e55b45c62fda3b29",
+    "evidence/sympy__sympy-18698/locator-evidence.json": "aef84d4fbc7f4be16222fe1770527e2e1fb19e033f3f587381cf21a972503fa3",
+    "evidence/django__django-13925/localization.json": "2338699362b9350da0ccd79968ed59cd9d2fcdb11101c864cd680b08986b9f8d",
+    "evidence/django__django-13925/locator-evidence.json": "afdb1a14c711eadf58a2abf232ae79dc96553a92e90377a762e6fdeac1c3de52"
+  },
+  "reports": [
+    {
+      "instance_id": "astropy__astropy-12907",
+      "old_requests": 4,
+      "sentences": [
+        {
+          "number": 1,
+          "sentence": "This is a genuine bug, not expected behavior.",
+          "rules": "R3",
+          "judgment": "关键调用链未读全，直接定性 genuine bug 应降为假设。"
+        },
+        {
+          "number": 2,
+          "sentence": "The root cause is in `_coord_matrix` (astropy/modeling/separable.py:171-216), which builds the per-model coordinate matrix used by `_cstack` for the `&` operator.",
+          "rules": "R3",
+          "judgment": "_coord_matrix 已读全，但 _separable 未读完；完整读某个 helper 不能确认它是根因。"
+        },
+        {
+          "number": 3,
+          "sentence": "When a child of `&` is itself a CompoundModel (e.g. `cm = Linear1D(10) & Linear1D(5)`), `_coord_matrix` does not recurse into it.",
+          "rules": "R1,R3",
+          "judgment": "未读到 304–309 的递归分发，不能断言嵌套 CompoundModel 在实际调用路径直接进入该 helper。"
+        },
+        {
+          "number": 4,
+          "sentence": "Instead it only checks `model.separable` (line 202).",
+          "rules": "R4",
+          "judgment": "202 行确实已读，但只说 checks model.separable 忽略 189–201 Mapping 分支；且须写完整路径。"
+        },
+        {
+          "number": 5,
+          "sentence": "For a separable compound model it falls into the `else` branch (lines 209-215), which builds a diagonal matrix `mat[i, i] = 1` for `i in range(model.n_inputs)` and, for a right child, rolls it by `noutp - model.n_outputs`.",
+          "rules": "R3,R4",
+          "judgment": "209–215 已读，条件分支描述可保留为源码事实；实际嵌套输入会走此分支尚未核验。"
+        },
+        {
+          "number": 6,
+          "sentence": "That diagonal construction assumes the child's outputs map one-to-one onto its own inputs in order, which is wrong for a nested compound whose internal structure is not a simple identity-like diagonal.",
+          "rules": "R3",
+          "judgment": "把局部矩阵构造推成嵌套对象错误机制，缺少调用链证据。"
+        },
+        {
+          "number": 7,
+          "sentence": "The result is that the nested `cm` contributes a full 2x2 block of True values instead of the correct diagonal, producing the observed `[[T,T,F,F],[T,T,F,F],[F,F,T,T],[F,F,T,T]]`.",
+          "rules": "R3",
+          "judgment": "把观察到的全 True 子块归因于对角构造，无验证；245 行右矩阵分支已返回却未考虑。"
+        },
+        {
+          "number": 8,
+          "sentence": "By contrast, the flat case `Pix2Sky_TAN() & Linear1D(10) & Linear1D(5)` works because each `&` operand is a simple (non-compound) model, so `_coord_matrix`'s diagonal path is correct for each leaf.",
+          "rules": "R3",
+          "judgment": "扁平组合路径未经完整分发核验，不能用此断言排除其他分支。"
+        },
+        {
+          "number": 9,
+          "sentence": "The fix would be to make `_coord_matrix` recurse into compound models (calling `_separable`/`_cstack` on the nested model) rather than treating any separable model as a diagonal.",
+          "rules": "R1,R3",
+          "judgment": "提出对 _coord_matrix 递归的修复假设可以，但必须标明调用链缺口并附最小验证，不能承接确定根因。"
+        },
+        {
+          "number": 10,
+          "sentence": "I did not read the full `_separable` dispatch (lines 271-313) or `_cdot`, so I cannot rule out related issues for `|` with nested compounds; that remains uncertain.",
+          "rules": "—",
+          "judgment": "明确承认 _separable/_cdot 未读完值得保留；但只把不确定性限定在 | 操作不足以支持前文 & 的强断言。"
+        }
+      ],
+      "read_ranges": [
+        {
+          "path": "astropy/modeling/separable.py",
+          "requested": [
+            60,
+            317
+          ],
+          "returned": [
+            60,
+            161
+          ],
+          "next_cursor": "rf1_10c8b34fd7c56a030082cadc39c955a7be68b0f34f1cda15b2517239ab4d3490",
+          "error": null
+        },
+        {
+          "path": "astropy/modeling/separable.py",
+          "requested": [
+            161,
+            317
+          ],
+          "returned": [
+            161,
+            271
+          ],
+          "next_cursor": "rf1_8d329ea38f9f230db52a664bb4a7f63a92a17b50f6bbd1adbbd69bae0b273d8a",
+          "error": null
+        }
+      ],
+      "global_rules": [
+        "R2",
+        "R3_missing_minimal_validation"
+      ],
+      "replay": {
+        "policy": "locator-diagnostic-calibration-v8",
+        "raw_packet": {
+          "answer": "This is a genuine bug, not expected behavior. The root cause is in `_coord_matrix` (astropy/modeling/separable.py:171-216), which builds the per-model coordinate matrix used by `_cstack` for the `&` operator.\n\nWhen a child of `&` is itself a CompoundModel (e.g. `cm = Linear1D(10) & Linear1D(5)`), `_coord_matrix` does not recurse into it. Instead it only checks `model.separable` (line 202). For a separable compound model it falls into the `else` branch (lines 209-215), which builds a diagonal matrix `mat[i, i] = 1` for `i in range(model.n_inputs)` and, for a right child, rolls it by `noutp - model.n_outputs`. That diagonal construction assumes the child's outputs map one-to-one onto its own inputs in order, which is wrong for a nested compound whose internal structure is not a simple identity-like diagonal. The result is that the nested `cm` contributes a full 2x2 block of True values instead of the correct diagonal, producing the observed `[[T,T,F,F],[T,T,F,F],[F,F,T,T],[F,F,T,T]]`.\n\nBy contrast, the flat case `Pix2Sky_TAN() & Linear1D(10) & Linear1D(5)` works because each `&` operand is a simple (non-compound) model, so `_coord_matrix`'s diagonal path is correct for each leaf.\n\nThe fix would be to make `_coord_matrix` recurse into compound models (calling `_separable`/`_cstack` on the nested model) rather than treating any separable model as a diagonal. I did not read the full `_separable` dispatch (lines 271-313) or `_cdot`, so I cannot rule out related issues for `|` with nested compounds; that remains uncertain.",
+          "entities": [
+            "astropy/modeling/separable.py:_coord_matrix",
+            "astropy/modeling/separable.py:_cstack",
+            "astropy/modeling/separable.py:separability_matrix",
+            "astropy/modeling/separable.py:_separable"
+          ],
+          "files": [
+            "astropy/modeling/separable.py"
+          ]
+        },
+        "violations": [
+          "R2_three_sections",
+          "R3_unverified_strong_claim",
+          "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable",
+          "R1_body_incomplete_unmarked:astropy/modeling/separable.py:separability_matrix",
+          "R1_cursor_unfinished_unmarked"
+        ],
+        "fallback": true,
+        "delivered_full_line_ranges": [
+          [
+            "astropy/modeling/separable.py",
+            60,
+            271
+          ]
+        ],
+        "pending_read_pages": {
+          "rf1_10c8b34fd7c56a030082cadc39c955a7be68b0f34f1cda15b2517239ab4d3490": "astropy/modeling/separable.py",
+          "rf1_8d329ea38f9f230db52a664bb4a7f63a92a17b50f6bbd1adbbd69bae0b273d8a": "astropy/modeling/separable.py"
+        },
+        "entity_body_complete": {
+          "astropy/modeling/separable.py:_coord_matrix": true,
+          "astropy/modeling/separable.py:_cstack": true,
+          "astropy/modeling/separable.py:separability_matrix": false,
+          "astropy/modeling/separable.py:_separable": false
+        },
+        "call_chain_complete": false,
+        "behavior_verified": false,
+        "quality_measured": false
+      }
+    },
+    {
+      "instance_id": "django__django-13964",
+      "old_requests": 4,
+      "sentences": [
+        {
+          "number": 1,
+          "sentence": "Root cause is in ForwardManyToOneDescriptor.__set__ (django/db/models/fields/related_descriptors.py:203-268).",
+          "rules": "R3",
+          "judgment": "__set__ 正文已读全；保存链未读完，不能把赋值阶段确认为根因。"
+        },
+        {
+          "number": 2,
+          "sentence": "At assignment time it copies the related object's PK into the local FK attname: `for lh_field, rh_field in self.field.related_fields: setattr(instance, lh_field.attname, getattr(value, rh_field.attname))` (lines 256-257).",
+          "rules": "R4",
+          "judgment": "256–257 的赋值循环有实际源码支持；应补全文件:行号并放在事实段。"
+        },
+        {
+          "number": 3,
+          "sentence": "When `Product()` is created without a sku, `value.sku` is '' (CharField default), so `order.product_id` is snapshotted as ''.",
+          "rules": "R3",
+          "judgment": "CharField 默认值及保存表现没有在定位阶段行为验证，应作为由题面与代码推得的假设。"
+        },
+        {
+          "number": 4,
+          "sentence": "Later setting `order.product.sku = \"foo\"` mutates only the Product instance; the already-copied `product_id` on Order is never refreshed, so `order.save()` writes ''.",
+          "rules": "R1,R3",
+          "judgment": "never refreshed 涉及未读的保存函数；不能据此断言保存路径不刷新。"
+        },
+        {
+          "number": 5,
+          "sentence": "The descriptor also caches the related object (line 261), so `__get__` returns the in-memory Product and hides the stale FK.",
+          "rules": "R1,R3,R4",
+          "judgment": "261 缓存写入有支持；__get__ 未完整读取，把其行为接入因果链需标注缺口。"
+        },
+        {
+          "number": 6,
+          "sentence": "In the working case, `Product(sku=\"foo\")` is assigned after the PK exists, so the copy is correct.",
+          "rules": "R3",
+          "judgment": "工作示例因果解释未执行验证，应放入推断。"
+        },
+        {
+          "number": 7,
+          "sentence": "A likely fix location is save-time reconciliation: Model._prepare_related_fields_for_save (django/db/models/base.py:911) is where Django validates/refreshes related fields before writing, and it could re-sync local FK values from the cached related object's current PK.",
+          "rules": "R1,R4",
+          "judgment": "只搜索到 _prepare_related_fields_for_save 定义 911 行；likely 的措辞合适，但定义命中不能支持其正文行为。"
+        },
+        {
+          "number": 8,
+          "sentence": "Note get_instance_value_for_fields (django/db/models/fields/related.py:652-660) has a special case using `instance.pk` when the field is a primary key, which is relevant to how non-auto PKs are read.",
+          "rules": "R1",
+          "judgment": "读取到 660 的 if field.primary_key，后续分支正文未读完；注释不是完整实现证据。"
+        },
+        {
+          "number": 9,
+          "sentence": "I did not read the full bodies of _prepare_related_fields_for_save or get_instance_value_for_fields (investigation closed at the call limit), so the exact fix site and whether the bug is purely the stale copy versus also a PK-fetch issue remain partly unverified.",
+          "rules": "—",
+          "judgment": "已主动标注两个未读完函数；保留此不确定性，但仍需最小验证并改写首句强断言。"
+        }
+      ],
+      "read_ranges": [
+        {
+          "path": "django/db/models/fields/related_descriptors.py",
+          "requested": [
+            203,
+            268
+          ],
+          "returned": [
+            203,
+            268
+          ],
+          "next_cursor": null,
+          "error": null
+        },
+        {
+          "path": "django/db/models/fields/related.py",
+          "requested": [
+            640,
+            660
+          ],
+          "returned": [
+            640,
+            660
+          ],
+          "next_cursor": null,
+          "error": null
+        }
+      ],
+      "global_rules": [
+        "R2",
+        "R3_missing_minimal_validation"
+      ],
+      "replay": {
+        "policy": "locator-diagnostic-calibration-v8",
+        "raw_packet": {
+          "answer": "Root cause is in ForwardManyToOneDescriptor.__set__ (django/db/models/fields/related_descriptors.py:203-268). At assignment time it copies the related object's PK into the local FK attname: `for lh_field, rh_field in self.field.related_fields: setattr(instance, lh_field.attname, getattr(value, rh_field.attname))` (lines 256-257). When `Product()` is created without a sku, `value.sku` is '' (CharField default), so `order.product_id` is snapshotted as ''. Later setting `order.product.sku = \"foo\"` mutates only the Product instance; the already-copied `product_id` on Order is never refreshed, so `order.save()` writes ''. The descriptor also caches the related object (line 261), so `__get__` returns the in-memory Product and hides the stale FK. In the working case, `Product(sku=\"foo\")` is assigned after the PK exists, so the copy is correct.\n\nA likely fix location is save-time reconciliation: Model._prepare_related_fields_for_save (django/db/models/base.py:911) is where Django validates/refreshes related fields before writing, and it could re-sync local FK values from the cached related object's current PK. Note get_instance_value_for_fields (django/db/models/fields/related.py:652-660) has a special case using `instance.pk` when the field is a primary key, which is relevant to how non-auto PKs are read. I did not read the full bodies of _prepare_related_fields_for_save or get_instance_value_for_fields (investigation closed at the call limit), so the exact fix site and whether the bug is purely the stale copy versus also a PK-fetch issue remain partly unverified.",
+          "entities": [
+            "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__",
+            "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields",
+            "django/db/models/base.py:Model._prepare_related_fields_for_save"
+          ],
+          "files": [
+            "django/db/models/fields/related_descriptors.py",
+            "django/db/models/fields/related.py",
+            "django/db/models/base.py"
+          ]
+        },
+        "violations": [
+          "R2_three_sections",
+          "R3_unverified_strong_claim",
+          "R4_citation_not_delivered:django/db/models/base.py:911",
+          "R1_body_incomplete_unmarked:django/db/models/base.py:Model._prepare_related_fields_for_save",
+          "R1_body_incomplete_unmarked:django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields"
+        ],
+        "fallback": true,
+        "delivered_full_line_ranges": [
+          [
+            "django/db/models/fields/related.py",
+            640,
+            660
+          ],
+          [
+            "django/db/models/fields/related_descriptors.py",
+            203,
+            268
+          ]
+        ],
+        "pending_read_pages": {},
+        "entity_body_complete": {
+          "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__": true,
+          "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields": false,
+          "django/db/models/base.py:Model._prepare_related_fields_for_save": false
+        },
+        "call_chain_complete": false,
+        "behavior_verified": false,
+        "quality_measured": false
+      }
+    },
+    {
+      "instance_id": "django__django-13033",
+      "old_requests": 4,
+      "sentences": [
+        {
+          "number": 1,
+          "sentence": "This is a genuine bug, not a misunderstanding.",
+          "rules": "R3",
+          "judgment": "关键调用链未读全，定性应降为待验证假设，即使历史 B 最后修复成功。"
+        },
+        {
+          "number": 2,
+          "sentence": "The root cause is in SQLCompiler.find_ordering_name (django/db/models/sql/compiler.py:715-749).",
+          "rules": "R3",
+          "judgment": "find_ordering_name 715–749 已读全，但不能据此确认完整根因。"
+        },
+        {
+          "number": 3,
+          "sentence": "After resolving the join path, it checks whether the final field is a relation with model-level ordering: `if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk'`.",
+          "rules": "R4",
+          "judgment": "730 行条件确实收到；需补完整文件:行号，放事实段。"
+        },
+        {
+          "number": 4,
+          "sentence": "For `record__root_id`, the resolved field is the self-referencing FK `root`, whose attname is `root_id`; the comparison `attname != name` compares `'root_id'` against the full lookup string `'record__root_id'`, so it is unequal and the branch is wrongly taken.",
+          "rules": "R3",
+          "judgment": "name 与 attname 比较是有源码支持的有效假设；字段解析来自未读全的 query.setup_joins，应标条件。"
+        },
+        {
+          "number": 5,
+          "sentence": "Django then appends OneModel.Meta.ordering (`-id`) relative to the joined alias, producing the extra LEFT OUTER JOIN to T3 and the unexpected DESC.",
+          "rules": "R3",
+          "judgment": "额外 join 与排序方向解释需行为验证，不能作为已核验事实。"
+        },
+        {
+          "number": 6,
+          "sentence": "The `-record__root_id` case flips the inherited direction via get_order_dir (query.py:2302-2313), explaining the ASC result.",
+          "rules": "R4",
+          "judgment": "get_order_dir 2302–2313 已读全，可支持方向转换；query.py 缺完整路径，具体 ASC 因果仍属推断。"
+        },
+        {
+          "number": 7,
+          "sentence": "The `record__root__id` form works because the final piece is the pk `id`, not the relation, so the ordering-inheritance branch is skipped.",
+          "rules": "R3",
+          "judgment": "关联字段解析链未读全；针对不同 lookup 的解释应写为假设。"
+        },
+        {
+          "number": 8,
+          "sentence": "The annotate(F(...)) workaround also avoids it since the ordering target is an annotation.",
+          "rules": "R1,R3",
+          "judgment": "annotation 排序入口 get_order_by 未读，绕过分支机制未核验。"
+        },
+        {
+          "number": 9,
+          "sentence": "The fix should compare the last path segment (or the field's name) rather than the whole dotted name, so that `record__root_id` is recognized as targeting the FK's attname and does not inherit Meta.ordering.",
+          "rules": "R3",
+          "judgment": "比较 pieces[-1] 的修复方向有依据，应保留为待验证假设并给一条最小验证。"
+        },
+        {
+          "number": 10,
+          "sentence": "I did not read get_order_by (compiler.py:271) or the full setup_joins path, so the exact minimal patch is unconfirmed.",
+          "rules": "—",
+          "judgment": "明确指出 get_order_by / setup_joins 未读完；_setup_joins 751–762 已完整收到，须区分 compiler helper 与 query 方法。"
+        }
+      ],
+      "read_ranges": [
+        {
+          "path": "django/db/models/sql/compiler.py",
+          "requested": [
+            700,
+            790
+          ],
+          "returned": [
+            700,
+            767
+          ],
+          "next_cursor": "rf1_24f3bbf7d1b0d4f3f5dc152d98478214f8a788dd24e1a8ce063f11aead0c27a2",
+          "error": null
+        },
+        {
+          "path": "django/db/models/sql/query.py",
+          "requested": [
+            2295,
+            2320
+          ],
+          "returned": [
+            2295,
+            2320
+          ],
+          "next_cursor": null,
+          "error": null
+        }
+      ],
+      "global_rules": [
+        "R2",
+        "R3_missing_minimal_validation"
+      ],
+      "replay": {
+        "policy": "locator-diagnostic-calibration-v8",
+        "raw_packet": {
+          "answer": "This is a genuine bug, not a misunderstanding. The root cause is in SQLCompiler.find_ordering_name (django/db/models/sql/compiler.py:715-749). After resolving the join path, it checks whether the final field is a relation with model-level ordering: `if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk'`. For `record__root_id`, the resolved field is the self-referencing FK `root`, whose attname is `root_id`; the comparison `attname != name` compares `'root_id'` against the full lookup string `'record__root_id'`, so it is unequal and the branch is wrongly taken. Django then appends OneModel.Meta.ordering (`-id`) relative to the joined alias, producing the extra LEFT OUTER JOIN to T3 and the unexpected DESC. The `-record__root_id` case flips the inherited direction via get_order_dir (query.py:2302-2313), explaining the ASC result. The `record__root__id` form works because the final piece is the pk `id`, not the relation, so the ordering-inheritance branch is skipped. The annotate(F(...)) workaround also avoids it since the ordering target is an annotation. The fix should compare the last path segment (or the field's name) rather than the whole dotted name, so that `record__root_id` is recognized as targeting the FK's attname and does not inherit Meta.ordering. I did not read get_order_by (compiler.py:271) or the full setup_joins path, so the exact minimal patch is unconfirmed.",
+          "entities": [
+            "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name",
+            "django/db/models/sql/query.py:get_order_dir",
+            "django/db/models/sql/compiler.py:SQLCompiler._setup_joins"
+          ],
+          "files": [
+            "django/db/models/sql/compiler.py",
+            "django/db/models/sql/query.py"
+          ]
+        },
+        "violations": [
+          "R2_three_sections",
+          "R3_unverified_strong_claim",
+          "R4_citation_not_delivered:query.py:2302-2313",
+          "R4_citation_not_delivered:compiler.py:271",
+          "R1_cursor_unfinished_unmarked"
+        ],
+        "fallback": true,
+        "delivered_full_line_ranges": [
+          [
+            "django/db/models/sql/compiler.py",
+            700,
+            767
+          ],
+          [
+            "django/db/models/sql/query.py",
+            2295,
+            2320
+          ]
+        ],
+        "pending_read_pages": {
+          "rf1_24f3bbf7d1b0d4f3f5dc152d98478214f8a788dd24e1a8ce063f11aead0c27a2": "django/db/models/sql/compiler.py"
+        },
+        "entity_body_complete": {
+          "django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name": true,
+          "django/db/models/sql/query.py:get_order_dir": true,
+          "django/db/models/sql/compiler.py:SQLCompiler._setup_joins": true
+        },
+        "call_chain_complete": false,
+        "behavior_verified": false,
+        "quality_measured": false
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-18698",
+      "old_requests": 4,
+      "sentences": [
+        {
+          "number": 1,
+          "sentence": "The user's report is a misunderstanding of the output, not a bug in the algorithm.",
+          "rules": "R1,R3",
+          "judgment": "表达式包装层未读，直接断言 misunderstanding / not a bug 应拦下。"
+        },
+        {
+          "number": 2,
+          "sentence": "In sqf_list, the second element of each (factor, multiplicity) pair is the multiplicity, and the factors are grouped by multiplicity.",
+          "rules": "R3",
+          "judgment": "文档支持二元组格式；是否对表达式输入按重数合并仍需验证，不应混为同一已知事实。"
+        },
+        {
+          "number": 3,
+          "sentence": "For (x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3 the correct square-free decomposition is indeed (1, [(x**2+1, 1), (x-1, 2), (x-2, 3), (x-3, 3)]): the two distinct cubic-multiplicity factors (x-2) and (x-3) each have multiplicity 3, so they appear as two separate entries both with exponent 3.",
+          "rules": "R3",
+          "judgment": "对未验证的表达式输出宣称 correct，且据此认定两个同重数条目合理，证据不足。"
+        },
+        {
+          "number": 4,
+          "sentence": "They are NOT combined into (x**2-5x+6, 3) because square-free factorization returns irreducible-ish square-free factors, not products of distinct factors sharing a multiplicity.",
+          "rules": "R3",
+          "judgment": "对不合并的算法语义作强断言；与已读底层按 i 递增的循环不相符，包装层未读。"
+        },
+        {
+          "number": 5,
+          "sentence": "The second example, x**5-2x**4-2x**3+4x**2+x-2 = (x-2)(x**2-1)**2, correctly yields (1, [(x-2, 1), (x**2-1, 2)]) because x**2-1 is itself square-free (it factors as (x-1)(x+1), both multiplicity 2, but sqf_list over ZZ does not split it further since x**2-1 is square-free).",
+          "rules": "R3",
+          "judgment": "这个示例不能推出两个接口契约一致；因果解释未核验。"
+        },
+        {
+          "number": 6,
+          "sentence": "So both outputs are consistent with the documented semantics.",
+          "rules": "R3",
+          "judgment": "both outputs consistent 是未经验证的契约结论。"
+        },
+        {
+          "number": 7,
+          "sentence": "Evidence: dup_sqf_list (sympy/polys/sqfreetools.py:281-335) builds result by appending (g, i) for each multiplicity i, so distinct factors with the same multiplicity i are appended as separate tuples with the same exponent.",
+          "rules": "R3",
+          "judgment": "281–335 已读全，但 333 行 i += 1 不支持“同一重数多次追加”这一推论；是误读已有证据，不只是漏读。"
+        },
+        {
+          "number": 8,
+          "sentence": "Poly.sqf_list (sympy/polys/polytools.py:3210-3237) simply wraps this.",
+          "rules": "R1,R3",
+          "judgment": "Poly.sqf_list 3210–3237 已读全；它调用 f.rep.sqf_list，未读完整 DMP 路径，不能称简单直接包装已读低层。"
+        },
+        {
+          "number": 9,
+          "sentence": "The docstring examples (lines 3222-3229) confirm the (factor, multiplicity) format.",
+          "rules": "R4",
+          "judgment": "3222–3229 示例已收到，格式描述可保留，补完整文件:行号。"
+        },
+        {
+          "number": 10,
+          "sentence": "Uncertainty: I did not inspect dup_gf_sqf_list or the exact ordering logic, but the reported behavior matches the documented contract, so no code change is warranted; the user's expectation of merging same-multiplicity factors is the inconsistency.",
+          "rules": "R1,R3",
+          "judgment": "虽标部分未读，仍断言无需修改；遗漏 _generic_factor_list/_symbolic_factor_list 的表达式链是关键缺口。"
+        }
+      ],
+      "read_ranges": [
+        {
+          "path": "sympy/polys/sqfreetools.py",
+          "requested": [
+            281,
+            340
+          ],
+          "returned": [
+            281,
+            340
+          ],
+          "next_cursor": null,
+          "error": null
+        },
+        {
+          "path": "sympy/polys/polytools.py",
+          "requested": [
+            3210,
+            3240
+          ],
+          "returned": [
+            3210,
+            3240
+          ],
+          "next_cursor": null,
+          "error": null
+        }
+      ],
+      "global_rules": [
+        "R2",
+        "R3_missing_minimal_validation"
+      ],
+      "replay": {
+        "policy": "locator-diagnostic-calibration-v8",
+        "raw_packet": {
+          "answer": "The user's report is a misunderstanding of the output, not a bug in the algorithm. In sqf_list, the second element of each (factor, multiplicity) pair is the multiplicity, and the factors are grouped by multiplicity. For (x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3 the correct square-free decomposition is indeed (1, [(x**2+1, 1), (x-1, 2), (x-2, 3), (x-3, 3)]): the two distinct cubic-multiplicity factors (x-2) and (x-3) each have multiplicity 3, so they appear as two separate entries both with exponent 3. They are NOT combined into (x**2-5x+6, 3) because square-free factorization returns irreducible-ish square-free factors, not products of distinct factors sharing a multiplicity. The second example, x**5-2x**4-2x**3+4x**2+x-2 = (x-2)(x**2-1)**2, correctly yields (1, [(x-2, 1), (x**2-1, 2)]) because x**2-1 is itself square-free (it factors as (x-1)(x+1), both multiplicity 2, but sqf_list over ZZ does not split it further since x**2-1 is square-free). So both outputs are consistent with the documented semantics.\n\nEvidence: dup_sqf_list (sympy/polys/sqfreetools.py:281-335) builds result by appending (g, i) for each multiplicity i, so distinct factors with the same multiplicity i are appended as separate tuples with the same exponent. Poly.sqf_list (sympy/polys/polytools.py:3210-3237) simply wraps this. The docstring examples (lines 3222-3229) confirm the (factor, multiplicity) format. Uncertainty: I did not inspect dup_gf_sqf_list or the exact ordering logic, but the reported behavior matches the documented contract, so no code change is warranted; the user's expectation of merging same-multiplicity factors is the inconsistency.",
+          "entities": [
+            "sympy/polys/sqfreetools.py:dup_sqf_list",
+            "sympy/polys/polytools.py:Poly.sqf_list",
+            "sympy/polys/polytools.py:sqf_list",
+            "sympy/polys/polyclasses.py:DMP.sqf_list",
+            "sympy/polys/rings.py:PolyElement.sqf_list"
+          ],
+          "files": [
+            "sympy/polys/sqfreetools.py",
+            "sympy/polys/polytools.py",
+            "sympy/polys/polyclasses.py",
+            "sympy/polys/rings.py",
+            "sympy/polys/compatibility.py"
+          ]
+        },
+        "violations": [
+          "R2_three_sections",
+          "R3_unverified_strong_claim",
+          "R1_body_incomplete_unmarked:sympy/polys/polyclasses.py:DMP.sqf_list",
+          "R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list",
+          "R1_body_incomplete_unmarked:sympy/polys/rings.py:PolyElement.sqf_list"
+        ],
+        "fallback": true,
+        "delivered_full_line_ranges": [
+          [
+            "sympy/polys/polytools.py",
+            3210,
+            3240
+          ],
+          [
+            "sympy/polys/sqfreetools.py",
+            281,
+            340
+          ]
+        ],
+        "pending_read_pages": {},
+        "entity_body_complete": {
+          "sympy/polys/sqfreetools.py:dup_sqf_list": true,
+          "sympy/polys/polytools.py:Poly.sqf_list": true,
+          "sympy/polys/polytools.py:sqf_list": false,
+          "sympy/polys/polyclasses.py:DMP.sqf_list": false,
+          "sympy/polys/rings.py:PolyElement.sqf_list": false
+        },
+        "call_chain_complete": false,
+        "behavior_verified": false,
+        "quality_measured": false
+      }
+    },
+    {
+      "instance_id": "django__django-13925",
+      "old_requests": 4,
+      "sentences": [
+        {
+          "number": 1,
+          "sentence": "The W042 warning is emitted by Model._check_default_pk (django/db/models/base.py:1298-1320).",
+          "rules": "—",
+          "judgment": "1298–1320 完整收到，W042 检查位置及引用有支持。"
+        },
+        {
+          "number": 2,
+          "sentence": "Its condition is simply `cls._meta.pk.auto_created and not settings.is_overridden('DEFAULT_AUTO_FIELD') and not cls._meta.app_config._is_default_auto_field_overridden`.",
+          "rules": "R4",
+          "judgment": "1301–1303 条件有支持，应加完整文件:行号。"
+        },
+        {
+          "number": 3,
+          "sentence": "It does not distinguish a PK that was auto-created on the model itself from one inherited/promoted from a parent, so any model whose `_meta.pk.auto_created` is True triggers the warning.",
+          "rules": "R3",
+          "judgment": "any auto_created triggers 忽略另外两个门控条件；应表述为三个条件同时成立。"
+        },
+        {
+          "number": 4,
+          "sentence": "Where auto_created comes from: Options._prepare (django/db/models/options.py:271-287).",
+          "rules": "R3",
+          "judgment": "Options._prepare 252–287 已读全，但仅此不能穷尽 auto_created 来源，需限定范围。"
+        },
+        {
+          "number": 5,
+          "sentence": "For a model with no explicit pk and no parents, it creates `pk_class(verbose_name='ID', primary_key=True, auto_created=True)` (line 286).",
+          "rules": "R4",
+          "judgment": "286 行构造语句有支持，补完整文件:行号。"
+        },
+        {
+          "number": 6,
+          "sentence": "For a child model with parents, it promotes the first parent link and sets `field.primary_key = True` (lines 272-283) without clearing auto_created, so the inherited PK keeps auto_created=True from the ancestor's auto field.",
+          "rules": "R1,R3",
+          "judgment": "272–283 仅显示提升 parent link；未读 ModelBase 创建 parent link，不能断言继承祖先 AutoField 的 auto_created。"
+        },
+        {
+          "number": 7,
+          "sentence": "That is why models inheriting from a base like `Entity` (whose PK is an auto-created AutoField) still report W042 even though the user never asked for a new auto PK on the child.",
+          "rules": "R3",
+          "judgment": "承接未核验的 auto_created 来源解释，应降为待验证假设。"
+        },
+        {
+          "number": 8,
+          "sentence": "So the report is consistent with a real bug/limitation in the 3.2 check: the check keys off `pk.auto_created` rather than whether the model itself defined the PK.",
+          "rules": "R3",
+          "judgment": "检查条件方向有价值，但诊断仍需区分继承关系字段来源和局部字段判据。"
+        },
+        {
+          "number": 9,
+          "sentence": "The fix would be in _check_default_pk (e.g. also require the PK to be a local field / not inherited), not in _prepare.",
+          "rules": "R3",
+          "judgment": "可提出检查处修复的假设；local field 与 parent link 不能直接等同，也不能排除 _prepare。"
+        },
+        {
+          "number": 10,
+          "sentence": "I could not read the W042 tests (tests/check_framework/test_model_checks.py read failed), so I cannot confirm whether a test already covers inherited PKs; that is the main uncertainty.",
+          "rules": "—",
+          "judgment": "明确报告测试读取失败符合诚实披露；缺口还应包括 ModelBase，且提供最小验证。"
+        },
+        {
+          "number": 11,
+          "sentence": "The hint text and app-config override logic (django/apps/config.py:64-70) are unrelated to the false positive.",
+          "rules": "R1,R3,R4",
+          "judgment": "AppConfig 仅搜索片段，完整 getter 未读；64–70 并未全部由 read_file 返回，不能据此排除配置链。"
+        }
+      ],
+      "read_ranges": [
+        {
+          "path": "django/db/models/base.py",
+          "requested": [
+            1280,
+            1330
+          ],
+          "returned": [
+            1280,
+            1330
+          ],
+          "next_cursor": null,
+          "error": null
+        },
+        {
+          "path": "django/db/models/options.py",
+          "requested": [
+            200,
+            245
+          ],
+          "returned": [
+            200,
+            245
+          ],
+          "next_cursor": null,
+          "error": null
+        },
+        {
+          "path": "django/db/models/options.py",
+          "requested": [
+            245,
+            300
+          ],
+          "returned": [
+            245,
+            300
+          ],
+          "next_cursor": null,
+          "error": null
+        },
+        {
+          "path": "tests/check_framework/test_model_checks.py",
+          "requested": [
+            370,
+            430
+          ],
+          "returned": [
+            null,
+            null
+          ],
+          "next_cursor": null,
+          "error": "tool_error"
+        }
+      ],
+      "global_rules": [
+        "R2",
+        "R3_missing_minimal_validation"
+      ],
+      "replay": {
+        "policy": "locator-diagnostic-calibration-v8",
+        "raw_packet": {
+          "answer": "The W042 warning is emitted by Model._check_default_pk (django/db/models/base.py:1298-1320). Its condition is simply `cls._meta.pk.auto_created and not settings.is_overridden('DEFAULT_AUTO_FIELD') and not cls._meta.app_config._is_default_auto_field_overridden`. It does not distinguish a PK that was auto-created on the model itself from one inherited/promoted from a parent, so any model whose `_meta.pk.auto_created` is True triggers the warning.\n\nWhere auto_created comes from: Options._prepare (django/db/models/options.py:271-287). For a model with no explicit pk and no parents, it creates `pk_class(verbose_name='ID', primary_key=True, auto_created=True)` (line 286). For a child model with parents, it promotes the first parent link and sets `field.primary_key = True` (lines 272-283) without clearing auto_created, so the inherited PK keeps auto_created=True from the ancestor's auto field. That is why models inheriting from a base like `Entity` (whose PK is an auto-created AutoField) still report W042 even though the user never asked for a new auto PK on the child.\n\nSo the report is consistent with a real bug/limitation in the 3.2 check: the check keys off `pk.auto_created` rather than whether the model itself defined the PK. The fix would be in _check_default_pk (e.g. also require the PK to be a local field / not inherited), not in _prepare. I could not read the W042 tests (tests/check_framework/test_model_checks.py read failed), so I cannot confirm whether a test already covers inherited PKs; that is the main uncertainty. The hint text and app-config override logic (django/apps/config.py:64-70) are unrelated to the false positive.",
+          "entities": [
+            "django/db/models/base.py:Model._check_default_pk",
+            "django/db/models/options.py:Options._prepare",
+            "django/db/models/options.py:Options._get_default_pk_class",
+            "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+          ],
+          "files": [
+            "django/db/models/base.py",
+            "django/db/models/options.py",
+            "django/apps/config.py"
+          ]
+        },
+        "violations": [
+          "R2_three_sections",
+          "R3_unverified_strong_claim",
+          "R4_citation_not_delivered:django/apps/config.py:64-70",
+          "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+        ],
+        "fallback": true,
+        "delivered_full_line_ranges": [
+          [
+            "django/db/models/base.py",
+            1280,
+            1330
+          ],
+          [
+            "django/db/models/options.py",
+            200,
+            300
+          ]
+        ],
+        "pending_read_pages": {},
+        "entity_body_complete": {
+          "django/db/models/base.py:Model._check_default_pk": true,
+          "django/db/models/options.py:Options._prepare": true,
+          "django/db/models/options.py:Options._get_default_pk_class": true,
+          "django/apps/config.py:AppConfig._is_default_auto_field_overridden": false
+        },
+        "call_chain_complete": false,
+        "behavior_verified": false,
+        "quality_measured": false
+      }
+    }
+  ]
+}

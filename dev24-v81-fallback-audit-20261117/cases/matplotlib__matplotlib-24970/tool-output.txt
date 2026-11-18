@@ -1,0 +1,153 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "_i_over"}
+META: {"next_offset": null}
+lib/matplotlib/colors.py:674:         self._i_over = self.N + 1
+lib/matplotlib/colors.py:730:         xa[xa > self.N - 1] = self._i_over
+lib/matplotlib/colors.py:808:         return np.array(self._lut[self._i_over])
+lib/matplotlib/colors.py:844:             self._lut[self._i_over] = self._rgba_over
+lib/matplotlib/colors.py:846:             self._lut[self._i_over] = self._lut[self.N - 1]
+
+TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "lib/matplotlib/colors.py:Colormap.__call__"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 lib/matplotlib/colors.py:Colormap.__call__ [exact_id]
+path=lib/matplotlib/colors.py; lines=683-759; implementation_start=706; read_file(path="lib/matplotlib/colors.py", start_line=683, end_line=759)
+Docstring lines 684-705; preview prioritizes implementation. read_file preserves complete text.
+683:     def __call__(self, X, alpha=None, bytes=False):
+... lines 684-705 omitted ...
+706:         if not self._isinit:
+707:             self._init()
+708: 
+709:         # Take the bad mask from a masked array, or in all other cases defer
+710:         # np.isnan() to after we have converted to an array.
+711:         mask_bad = X.mask if np.ma.is_masked(X) else None
+712:         xa = np.array(X, copy=True)
+713:         if mask_bad is None:
+714:             mask_bad = np.isnan(xa)
+715:         if not xa.dtype.isnative:
+716:             xa = xa.byteswap().newbyteorder()  # Native byteorder is faster.
+717:         if xa.dtype.kind == "f":
+718:             with np.errstate(invalid="ignore"):
+719:                 xa *= self.N
+720:                 # Negative values are out of range, but astype(int) would
+721:                 # truncate them towards zero.
+... lines 722-755 omitted ...
+756: 
+757:         if not np.iterable(X):
+758:             rgba = tuple(rgba)
+759:         return rgba
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 760, "path": "lib/matplotlib/colors.py", "start_line": 683}
+META: {"end_column": 0, "end_line": 760, "next_cursor": null, "start_column": 0, "start_line": 683, "total_lines": 2664}
+683:     def __call__(self, X, alpha=None, bytes=False):
+684:         """
+685:         Parameters
+686:         ----------
+687:         X : float or int, `~numpy.ndarray` or scalar
+688:             The data value(s) to convert to RGBA.
+689:             For floats, *X* should be in the interval ``[0.0, 1.0]`` to
+690:             return the RGBA values ``X*100`` percent along the Colormap line.
+691:             For integers, *X* should be in the interval ``[0, Colormap.N)`` to
+692:             return RGBA values *indexed* from the Colormap with index ``X``.
+693:         alpha : float or array-like or None
+694:             Alpha must be a scalar between 0 and 1, a sequence of such
+695:             floats with shape matching X, or None.
+696:         bytes : bool
+697:             If False (default), the returned RGBA values will be floats in the
+698:             interval ``[0, 1]`` otherwise they will be uint8s in the interval
+699:             ``[0, 255]``.
+700: 
+701:         Returns
+702:         -------
+703:         Tuple of RGBA values if X is scalar, otherwise an array of
+704:         RGBA values with a shape of ``X.shape + (4, )``.
+705:         """
+706:         if not self._isinit:
+707:             self._init()
+708: 
+709:         # Take the bad mask from a masked array, or in all other cases defer
+710:         # np.isnan() to after we have converted to an array.
+711:         mask_bad = X.mask if np.ma.is_masked(X) else None
+712:         xa = np.array(X, copy=True)
+713:         if mask_bad is None:
+714:             mask_bad = np.isnan(xa)
+715:         if not xa.dtype.isnative:
+716:             xa = xa.byteswap().newbyteorder()  # Native byteorder is faster.
+717:         if xa.dtype.kind == "f":
+718:             with np.errstate(invalid="ignore"):
+719:                 xa *= self.N
+720:                 # Negative values are out of range, but astype(int) would
+721:                 # truncate them towards zero.
+722:                 xa[xa < 0] = -1
+723:                 # xa == 1 (== N after multiplication) is not out of range.
+724:                 xa[xa == self.N] = self.N - 1
+725:                 # Avoid converting large positive values to negative integers.
+726:                 np.clip(xa, -1, self.N, out=xa)
+727:                 xa = xa.astype(int)
+728:         # Set the over-range indices before the under-range;
+729:         # otherwise the under-range values get converted to over-range.
+730:         xa[xa > self.N - 1] = self._i_over
+731:         xa[xa < 0] = self._i_under
+732:         xa[mask_bad] = self._i_bad
+733: 
+734:         lut = self._lut
+735:         if bytes:
+736:             lut = (lut * 255).astype(np.uint8)
+737: 
+738:         rgba = lut.take(xa, axis=0, mode='clip')
+739: 
+740:         if alpha is not None:
+741:             alpha = np.clip(alpha, 0, 1)
+742:             if bytes:
+743:                 alpha *= 255  # Will be cast to uint8 upon assignment.
+744:             if alpha.shape not in [(), xa.shape]:
+745:                 raise ValueError(
+746:                     f"alpha is array-like but its shape {alpha.shape} does "
+747:                     f"not match that of X {xa.shape}")
+748:             rgba[..., -1] = alpha
+749: 
+750:             # If the "bad" color is all zeros, then ignore alpha input.
+751:             if (lut[-1] == 0).all() and np.any(mask_bad):
+752:                 if np.iterable(mask_bad) and mask_bad.shape == xa.shape:
+753:                     rgba[mask_bad] = (0, 0, 0, 0)
+754:                 else:
+755:                     rgba[..., :] = (0, 0, 0, 0)
+756: 
+757:         if not np.iterable(X):
+758:             rgba = tuple(rgba)
+759:         return rgba
+760: 
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 682, "path": "lib/matplotlib/colors.py", "start_line": 660}
+META: {"end_column": 0, "end_line": 682, "next_cursor": null, "start_column": 0, "start_line": 660, "total_lines": 2664}
+660:         """
+661:         Parameters
+662:         ----------
+663:         name : str
+664:             The name of the colormap.
+665:         N : int
+666:             The number of RGB quantization levels.
+667:         """
+668:         self.name = name
+669:         self.N = int(N)  # ensure that N is always int
+670:         self._rgba_bad = (0.0, 0.0, 0.0, 0.0)  # If bad, don't paint anything.
+671:         self._rgba_under = None
+672:         self._rgba_over = None
+673:         self._i_under = self.N
+674:         self._i_over = self.N + 1
+675:         self._i_bad = self.N + 2
+676:         self._isinit = False
+677:         #: When this colormap exists on a scalar mappable and colorbar_extend
+678:         #: is not False, colorbar creation will pick up ``colorbar_extend`` as
+679:         #: the default value for the ``extend`` keyword in the
+680:         #: `matplotlib.colorbar.Colorbar` constructor.
+681:         self.colorbar_extend = False
+682: 
+

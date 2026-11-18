@@ -1,0 +1,187 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "def none(self)"}
+META: {"next_offset": null}
+django/db/models/query.py:919:     def none(self):
+
+TOOL 2: search_text
+ARGS: {"offset": 0, "query": "def union(self"}
+META: {"next_offset": null}
+django/contrib/gis/gdal/geometries.py:493:     def union(self, other):
+django/contrib/gis/geos/geometry.py:591:     def union(self, other):
+django/db/models/query.py:999:     def union(self, *other_qs, all=False):
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 1060, "path": "django/db/models/query.py", "start_line": 900}
+META: {"end_column": 40, "end_line": 992, "next_cursor": "rf1_695a3ff25e49fb6b7a5393fb9bf13b601c18451d6bc4137661f75faa9704a6ae", "start_column": 0, "start_line": 900, "total_lines": 1979}
+900:             "'order' must be either 'ASC' or 'DESC'."
+901:         if settings.USE_TZ:
+902:             if tzinfo is None:
+903:                 tzinfo = timezone.get_current_timezone()
+904:         else:
+905:             tzinfo = None
+906:         return self.annotate(
+907:             datetimefield=Trunc(
+908:                 field_name,
+909:                 kind,
+910:                 output_field=DateTimeField(),
+911:                 tzinfo=tzinfo,
+912:                 is_dst=is_dst,
+913:             ),
+914:             plain_field=F(field_name)
+915:         ).values_list(
+916:             'datetimefield', flat=True
+917:         ).distinct().filter(plain_field__isnull=False).order_by(('-' if order == 'DESC' else '') + 'datetimefield')
+918: 
+919:     def none(self):
+920:         """Return an empty QuerySet."""
+921:         clone = self._chain()
+922:         clone.query.set_empty()
+923:         return clone
+924: 
+925:     ##################################################################
+926:     # PUBLIC METHODS THAT ALTER ATTRIBUTES AND RETURN A NEW QUERYSET #
+927:     ##################################################################
+928: 
+929:     def all(self):
+930:         """
+931:         Return a new QuerySet that is a copy of the current one. This allows a
+932:         QuerySet to proxy for a model manager in some cases.
+933:         """
+934:         return self._chain()
+935: 
+936:     def filter(self, *args, **kwargs):
+937:         """
+938:         Return a new QuerySet instance with the args ANDed to the existing
+939:         set.
+940:         """
+941:         self._not_support_combined_queries('filter')
+942:         return self._filter_or_exclude(False, *args, **kwargs)
+943: 
+944:     def exclude(self, *args, **kwargs):
+945:         """
+946:         Return a new QuerySet instance with NOT (args) ANDed to the existing
+947:         set.
+948:         """
+949:         self._not_support_combined_queries('exclude')
+950:         return self._filter_or_exclude(True, *args, **kwargs)
+951: 
+952:     def _filter_or_exclude(self, negate, *args, **kwargs):
+953:         if args or kwargs:
+954:             assert not self.query.is_sliced, \
+955:                 "Cannot filter a query once a slice has been taken."
+956: 
+957:         clone = self._chain()
+958:         if self._defer_next_filter:
+959:             self._defer_next_filter = False
+960:             clone._deferred_filter = negate, args, kwargs
+961:         else:
+962:             clone._filter_or_exclude_inplace(negate, *args, **kwargs)
+963:         return clone
+964: 
+965:     def _filter_or_exclude_inplace(self, negate, *args, **kwargs):
+966:         if negate:
+967:             self._query.add_q(~Q(*args, **kwargs))
+968:         else:
+969:             self._query.add_q(Q(*args, **kwargs))
+970: 
+971:     def complex_filter(self, filter_obj):
+972:         """
+973:         Return a new QuerySet instance with filter_obj added to the filters.
+974: 
+975:         filter_obj can be a Q object or a dictionary of keyword lookup
+976:         arguments.
+977: 
+978:         This exists to support framework features such as 'limit_choices_to',
+979:         and usually it will be more natural to use other methods.
+980:         """
+981:         if isinstance(filter_obj, Q):
+982:             clone = self._chain()
+983:             clone.query.add_q(filter_obj)
+984:             return clone
+985:         else:
+986:             return self._filter_or_exclude(False, **filter_obj)
+987: 
+988:     def _combinator_query(self, combinator, *other_qs, all=False):
+989:         # Clone the query to inherit the select list and everything
+990:         clone = self._chain()
+991:         # Clear limits and ordering so they can be reapplied
+992:         clone.query.clear_ordering(True)
+
+
+TOOL 4: search_text
+ARGS: {"offset": 0, "query": "def _combinator_query"}
+META: {"error": "candidate_body_read_priority", "next": "read_file existing candidate/cursor, or finish marking 未读完"}
+
+
+TOOL 5: read_file
+ARGS: {"cursor": "rf1_695a3ff25e49fb6b7a5393fb9bf13b601c18451d6bc4137661f75faa9704a6ae", "end_line": null, "path": "django/db/models/query.py", "start_line": null}
+META: {"end_column": 11, "end_line": 1060, "next_cursor": null, "start_column": 0, "start_line": 993, "total_lines": 1979}
+993:         clone.query.clear_limits()
+994:         clone.query.combined_queries = (self.query,) + tuple(qs.query for qs in other_qs)
+995:         clone.query.combinator = combinator
+996:         clone.query.combinator_all = all
+997:         return clone
+998: 
+999:     def union(self, *other_qs, all=False):
+1000:         # If the query is an EmptyQuerySet, combine all nonempty querysets.
+1001:         if isinstance(self, EmptyQuerySet):
+1002:             qs = [q for q in other_qs if not isinstance(q, EmptyQuerySet)]
+1003:             return qs[0]._combinator_query('union', *qs[1:], all=all) if qs else self
+1004:         return self._combinator_query('union', *other_qs, all=all)
+1005: 
+1006:     def intersection(self, *other_qs):
+1007:         # If any query is an EmptyQuerySet, return it.
+1008:         if isinstance(self, EmptyQuerySet):
+1009:             return self
+1010:         for other in other_qs:
+1011:             if isinstance(other, EmptyQuerySet):
+1012:                 return other
+1013:         return self._combinator_query('intersection', *other_qs)
+1014: 
+1015:     def difference(self, *other_qs):
+1016:         # If the query is an EmptyQuerySet, return it.
+1017:         if isinstance(self, EmptyQuerySet):
+1018:             return self
+1019:         return self._combinator_query('difference', *other_qs)
+1020: 
+1021:     def select_for_update(self, nowait=False, skip_locked=False, of=(), no_key=False):
+1022:         """
+1023:         Return a new QuerySet instance that will select objects with a
+1024:         FOR UPDATE lock.
+1025:         """
+1026:         if nowait and skip_locked:
+1027:             raise ValueError('The nowait option cannot be used with skip_locked.')
+1028:         obj = self._chain()
+1029:         obj._for_write = True
+1030:         obj.query.select_for_update = True
+1031:         obj.query.select_for_update_nowait = nowait
+1032:         obj.query.select_for_update_skip_locked = skip_locked
+1033:         obj.query.select_for_update_of = of
+1034:         obj.query.select_for_no_key_update = no_key
+1035:         return obj
+1036: 
+1037:     def select_related(self, *fields):
+1038:         """
+1039:         Return a new QuerySet instance that will select related objects.
+1040: 
+1041:         If fields are specified, they must be ForeignKey fields and only those
+1042:         related objects are included in the selection.
+1043: 
+1044:         If select_related(None) is called, clear the list.
+1045:         """
+1046:         self._not_support_combined_queries('select_related')
+1047:         if self._fields is not None:
+1048:             raise TypeError("Cannot call select_related() after .values() or .values_list()")
+1049: 
+1050:         obj = self._chain()
+1051:         if fields == (None,):
+1052:             obj.query.select_related = False
+1053:         elif fields:
+1054:             obj.query.add_select_related(fields)
+1055:         else:
+1056:             obj.query.select_related = True
+1057:         return obj
+1058: 
+1059:     def prefetch_related(self, *lookups):
+1060:         """
+

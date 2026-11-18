@@ -1,0 +1,11 @@
+{
+  "answer": "已读到的事实（附文件:行号）\n- sympy/functions/elementary/hyperbolic.py:557-607：coth.eval 完整函数体已读完（含 docstring 区段外的全部语句，无分页缺口）。\n- sympy/functions/elementary/hyperbolic.py:586-593：arg.is_Add 分支调用 _peeloff_ipi(arg) 得 x, m；随后第 589 行赋值 cothm = coth(m)，但第 590 行判断的是未定义的 cotm（`if cotm is S.ComplexInfinity`），第 592 行注释写 cothm == 0。\n- sympy/functions/elementary/hyperbolic.py:558：函数内仅 `from sympy import cot`，未导入或定义 cotm。\n- sympy/functions/elementary/trigonometric.py:1304-1311：cot.eval 中对应块先 `cotm = cot(m)` 再判断 cotm，是命名一致的参照写法。\n- 搜索命中：cotm 仅出现在 hyperbolic.py:590 与 trigonometric.py:1307-1310。\n\n推断\n- 待验证假设：sympy/functions/elementary/hyperbolic.py:coth.eval 第 589-590 行变量名不一致（cothm 赋值、cotm 使用）导致 NameError，属复制自 sympy/functions/elementary/trigonometric.py:cot.eval 时未改名。\n- 待验证假设：仅当 arg 为 Add 且 _peeloff_ipi 返回非零 m 时进入该分支，故只有部分数值代入触发，与报告中的 2,3,5,6,8,9… 模式一致。\n- 待验证假设：修复方向为把第 590 行改为 cothm（并核对第 592-593 行返回 tanh(x) 的语义是否与 coth 的周期性一致）。\n\n未核验点\n- 未读 _peeloff_ipi 实现，无法确认 m 的取值与 coth(m) 是否恒为 0 或 ComplexInfinity。\n- 未读 coth 类定义头部与 docstring 之外的上下文（如 _eval_* 方法），未验证其他分支。\n- 未运行任何复现或测试，未验证修复后 2,3,5 等输入的实际输出。\n- 未检查 tanh/coth 周期性推导是否使第 592-593 行逻辑本身正确。\n\n最小验证：`python -c \"from sympy import *; x=Symbol('x'); print(coth(log(tan(x))).subs(x,2))\"`（修复前应复现 NameError，修复后应返回数值）。\n\n说明：本只读定位未执行行为验证，也不能证明关键调用链穷尽，以上仅为待验证假设。",
+  "entities": [
+    "sympy/functions/elementary/hyperbolic.py:coth.eval",
+    "sympy/functions/elementary/trigonometric.py:cot.eval"
+  ],
+  "files": [
+    "sympy/functions/elementary/hyperbolic.py",
+    "sympy/functions/elementary/trigonometric.py"
+  ]
+}

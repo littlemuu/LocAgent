@@ -1,0 +1,59 @@
+{
+  "evidence_manifests": 50,
+  "product_hashes_checked": 21072,
+  "product_hash_mismatches": [],
+  "same_image_for_all_arms": 50,
+  "new_task_images_removed_after_evidence": 50,
+  "deployment_files_checked": 81,
+  "deployment_hash_mismatches": [],
+  "fixed_task_and_arm_order_verified": true,
+  "stage_once_markers": 480,
+  "stage_intervals_nonoverlapping": true,
+  "stage_counts": {
+    "coding": 140,
+    "evaluation": 140,
+    "locator": 100,
+    "archive-and-image-cleanup": 50,
+    "image": 50
+  },
+  "request_reservations": 3257,
+  "request_status_counts": {
+    "received": 3243,
+    "reserved": 14
+  },
+  "actual_model_identifiers": [
+    "deepseek-flash"
+  ],
+  "per_episode_request_sequence_unique": true,
+  "request_budgets_respected": true,
+  "resource_observation_count": 379,
+  "resource_configurations": [
+    {
+      "memory_bytes": 6442450944,
+      "nano_cpus": 6000000000,
+      "network_mode": "none",
+      "observations": 240
+    },
+    {
+      "memory_bytes": 0,
+      "nano_cpus": 0,
+      "network_mode": "bridge",
+      "observations": 139
+    }
+  ],
+  "minimum_observed_free_bytes": 72007958528,
+  "original_cache": {
+    "at": 1794948523.2995267,
+    "bindings": {
+      "C": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+      "AB": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+      "ids_sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6"
+    },
+    "credential_exists": false,
+    "containers": [],
+    "preserved_original_cache_count": 24,
+    "preserved_original_cache_unchanged": true,
+    "exit": "0"
+  },
+  "status": "passed"
+}

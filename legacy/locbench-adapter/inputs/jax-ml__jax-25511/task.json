@@ -1,0 +1,6 @@
+{
+  "instance_id": "jax-ml__jax-25511",
+  "repo": "jax-ml/jax",
+  "base_commit": "cd7109e6b55730c3ace264ed5eccf7b2ce84407e",
+  "problem_statement": "jax.lax.scan transforms dict keys to lower case when reporting mismatch in pytree structures\n### Description\n\nWhen `jax.lax.scan` reports an error due to mismatch in the pytree input/output structres, it transforms dict keys to lowercase.\r\n\r\nSmall repro:\r\n\r\n```python\r\ndef f(loop_i, x):\r\n  return {'T': jnp.array([0.5])}\r\n\r\ninit_val = {'t': jnp.array([1.0])}\r\njax.lax.fori_loop(0, 1, f, init_val)\r\n```\r\n\r\nWhich leads to error:\r\n```\r\nTypeError: scan body function carry input and carry output must have the same pytree structure, but they differ:\r\n\r\nThe input carry component loop_carry[1] is a <class 'dict'> with pytree metadata ('t',) but the corresponding component of the carry output is a <class 'dict'> with pytree metadata ('t',), so the pytree node metadata does not match.\r\n```\n\n### System info (python version, jaxlib version, accelerator, etc.)\n\nN/A\n"
+}

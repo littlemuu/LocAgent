@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Offline-only project entry point. All host paths live in project_config.json."""
+import json,os,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent
+cfg=json.loads((root/'project_config.json').read_text())
+python=root/cfg['paths']['python']
+mode=sys.argv[1] if len(sys.argv)>1 else 'help'
+if mode=='bootstrap':
+    if (root/'.venv').exists():raise SystemExit('Refusing to overwrite existing .venv')
+    subprocess.run([cfg['host']['bootstrap_python'],'-m','venv',str(root/'.venv')],check=True)
+    subprocess.run([str(python),'-m','pip','install','--no-index','--disable-pip-version-check','--no-cache-dir','--find-links',str(root/cfg['paths']['wheelhouse']),'--require-hashes','-r',str(root/'requirements-offline.lock')],check=True)
+elif mode in ('test','regression','encode','verify'):
+    env=dict(os.environ,PYTHONPATH=str(root/'runtime'),PYTHONDONTWRITEBYTECODE='1',OPENHANDS_SUPPRESS_BANNER='1')
+    subprocess.run([str(python),str(root/'scripts/offline.py'),mode,*sys.argv[2:]],cwd=root,env=env,check=True)
+else:print('Usage: ./dev bootstrap | test | regression | encode | verify')

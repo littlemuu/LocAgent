@@ -1,0 +1,6 @@
+{
+  "instance_id": "numpy__numpy-10615",
+  "repo": "numpy/numpy",
+  "base_commit": "e20f11036bb7ce9f8de91eb4240e49ea4e41ef17",
+  "problem_statement": "deprecate scalar conversions for rank>0 arrays\nNumpy allows for conversion of arrays into scalars if they are  size-1, i.e.,\r\n```python\r\nfloat(numpy.array(1.0))  # 1.0\r\nfloat(numpy.array([1.0]))  # 1.0\r\nfloat(numpy.array([[[[1.0]]]]))  # 1.0\r\n\r\n# TypeError: only size-1 arrays can be converted to Python scalars\r\nfloat(numpy.array([1.0, 1.0]))\r\n```\r\nI'm fine with rank-0 conversions, but I found that discrimination of conversion based on array size can easily lead to inconsistencies downstream. See, for example, https://github.com/sympy/sympy/issues/13924 where suddenly you have a different behavior of multiplication depending on the length of the input array.\r\n\r\nMoreover, this feature is actually redundant for rank>0 arrays since the value can simply be retrieved from the array via `x[0]`.\r\n\r\nWhen grepping for `\"converted to Python scalar\"` in the numpy sources, one finds that `numpy/lib/user_array.py` has\r\n```\r\n\"only rank-0 arrays can be converted to Python scalars.\"\r\n```\r\nwhich seems to be the more consistent solution.\r\n\r\nI would hence like to suggest to deprecate scalar conversion for rank>0 size-1 arrays.\n"
+}

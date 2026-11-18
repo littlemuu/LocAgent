@@ -1,0 +1,11 @@
+{
+  "answer": "已读到的事实（附文件:行号）\n- astropy/io/ascii/qdp.py:62-71：`_line_type` 内 `_command_re = r\"READ [TS]ERR(\\s+[0-9]+)+\"`，且 `_type_re` 未使用 `re.IGNORECASE`，故命令匹配区分大小写。\n- astropy/io/ascii/qdp.py:72-78：行先 `strip()`，`match is None` 时抛 `ValueError(f\"Unrecognized QDP line: {line}\")`，与报错信息一致。\n- astropy/io/ascii/qdp.py:79-85：匹配成功时按 groupdict 返回 `command`/`new`/`data,N`。\n- astropy/io/ascii/qdp.py:122-132：`_get_type_from_list_of_lines` 对每行调用 `_line_type`，因此小写 `read serr 1 2` 会在该处失败。\n- astropy/io/ascii/qdp.py:149-200：`_interpret_err_lines` 的 docstring 说明 err_specs 形如 `{'serr': [...], 'terr': [...]}`，键为小写。\n- astropy/io/ascii/qdp.py:639-642：`write` 调用 `_write_table_qdp`。\n\n推断\n- 待验证假设：根因在 astropy/io/ascii/qdp.py:_line_type 的命令正则大小写敏感，使小写 `read serr 1 2` 落入 `Unrecognized QDP line` 分支。\n- 待验证假设：修复可在 astropy/io/ascii/qdp.py:_line_type 中给 `_line_type_re` 加 `re.IGNORECASE`（或对命令部分单独忽略大小写），并保持返回的 `command` 类型不变。\n- 待验证假设：命令解析后由 astropy/io/ascii/qdp.py:_interpret_err_lines 消费 err_specs，若上游已统一大小写，则下游键名无需改动。\n\n未核验点\n- 未读完：astropy/io/ascii/qdp.py:201-638（含 `_interpret_err_lines` 剩余部分、`_read_table_qdp`、`QDP` 类及 `_write_table_qdp`），故命令到 err_specs 的完整调用链未核验。\n- 未续读分页：无（已返回的 cursor 已读完至 200 行）。\n- 未运行任何测试或行为验证。\n\n最小验证：`python -c \"from astropy.io.ascii.qdp import _line_type; assert _line_type('read serr 1 2') == 'command'\"`\n",
+  "entities": [
+    "astropy/io/ascii/qdp.py:_line_type",
+    "astropy/io/ascii/qdp.py:_get_type_from_list_of_lines",
+    "astropy/io/ascii/qdp.py:_interpret_err_lines"
+  ],
+  "files": [
+    "astropy/io/ascii/qdp.py"
+  ]
+}

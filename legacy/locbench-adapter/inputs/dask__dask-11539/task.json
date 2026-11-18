@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-11539",
+  "repo": "dask/dask",
+  "base_commit": "5b115c4360fec6a4aa6e0edf8ad1d89a87c986dd",
+  "problem_statement": "Warning raised with default `from_zarr` settings\n\r\n**Describe the issue**:\r\nReading a zarr array with `dask.array.from_zarr` raises a `UserWarning`, but I'm not doing anything wrong. \r\n\r\n**Minimal Complete Verifiable Example**:\r\n\r\n```python\r\nimport dask.array\r\nimport zarr\r\n\r\nzarr_arr = zarr.open(shape=(6, 6, 6), store=\"./zeros.zarr\", chunks=(3, 3, 2), mode='w')\r\nzarr_arr[:] = 0\r\n\r\ndask_arr = dask.array.from_zarr(\"./zeros.zarr\")\r\n```\r\n\r\nRaises:\r\n\r\n```\r\n/Users/dstansby/software/zarr/hackathon/.venv/lib/python3.12/site-packages/zarr/creation.py:614: UserWarning: ignoring keyword argument 'read_only'\r\n  compressor, fill_value = _kwargs_compat(compressor, fill_value, kwargs)\r\n```\r\n\r\n**Anything else we need to know?**:\r\n\r\n**Environment**:\r\n\r\n- Dask version: 2024.11.2\r\n- zarr version: 2.18.3\r\n- Python version: 3.12\r\n- Operating System: macOS\r\n- Install method (conda, pip, source): pip\r\n\n"
+}

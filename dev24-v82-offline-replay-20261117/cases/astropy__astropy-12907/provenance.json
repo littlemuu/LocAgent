@@ -1,0 +1,15 @@
+{
+  "original_audit": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/locator/diagnostic-audit.json",
+  "original_result": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/locator/result.json",
+  "original_provider_finish": [
+    "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/locator-wire/response-51.json"
+  ],
+  "original_localization_metadata": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/localization.json",
+  "v82_binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "replay_mode": "saved original finish + recorded C coverage/search/retrieval metadata; no source snapshot invented",
+  "new_API_calls": 0,
+  "model_calls": 0,
+  "body_sha256": "dd69de074f3b0ce4962b0d71155b6adfd2815a735561427aded1457198295abb",
+  "body_preserved": true,
+  "serialized_envelope_bytes": 2716
+}

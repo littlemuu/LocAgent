@@ -1,0 +1,6 @@
+{
+  "instance_id": "Qiskit__qiskit-12214",
+  "repo": "Qiskit/qiskit",
+  "base_commit": "d10f9a0fe1f73cde5b66e49af880a6f7816f131f",
+  "problem_statement": "generate_preset_pass_manager should take initial_layout as a list\n### What should we add?\n\nNow that https://github.com/Qiskit/qiskit/pull/10344 is merged, we should make the `generate_preset_pass_manager` function take an integer list for layout. This is a user entry point and should be easy to use. The Layout object is a pain to use all around (I would love to completely eliminate it, since it doesn't contain any more information than a list of int. The circuit qubits have an order).\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-3438",
+  "repo": "modin-project/modin",
+  "base_commit": "a43d158ea71e332380f94dad2ed02f1ded870382",
+  "problem_statement": "Warn user about heterogeneous data presence during `read_csv` call and propose workaround\nSubpart of https://github.com/modin-project/modin/issues/3278.\r\n\n"
+}

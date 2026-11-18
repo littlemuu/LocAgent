@@ -1,0 +1,6 @@
+{
+  "instance_id": "UKPLab__sentence-transformers-3073",
+  "repo": "UKPLab/sentence-transformers",
+  "base_commit": "043445051d60dc2dcf62d7d5afbc4da27a5a8dbd",
+  "problem_statement": "Same order of training samples with `NoDuplicatesBatchSampler`\nIt seems that  `NoDuplicatesBatchSampler` produces the same set of batches in the same order regardless of the epoch index.\r\nIndeed, in [this piece of code](https://github.com/UKPLab/sentence-transformers/blob/e156f38b1007e7860218c27223e1d577f3a021fe/sentence_transformers/sampler.py#L184C3-L187C102), the order of the indices in `remaining_indices` does not depend on the random permutation `torch.randperm(len(self.dataset), generator=self.generator)` as it is reset to the ordered range with `set`.\r\n\r\nMoreover, the seed in line 185 does not change from one epoch to another (the [`set_epoch`](https://github.com/UKPLab/sentence-transformers/blob/e156f38b1007e7860218c27223e1d577f3a021fe/sentence_transformers/sampler.py#L32) method does not seem to be used...)\r\n\r\n\r\n\r\n\n"
+}

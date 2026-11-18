@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18654",
+  "repo": "django/django",
+  "base_commit": "c334c1a8ff4579cdb1dd77cce8da747070ac9fc4",
+  "problem_statement": "Clarify django.urls.set_urlconf scoping behaviour\nDescription\n\t \ndjango.urls.set_urlconf ​docstring mentions setting the urlconf for the current thread. However, this is backed by asgiref.local.Local, which is supposed to provide scoping features related to asyncio tasks as well. This becomes relevant, for example, when doing multi-tenancy with more than one urlconf and trying to call django.urls.reverse in an ASGI application.\nI have been trying to infer what is the expected behaviour in async Django code by following the current implementation, and I found that asgiref.local.Local behaviour has changed over time (see ​https://github.com/django/asgiref/issues/473).\nI assume that using asgiref.local.Local instead of threading.local hints at an intention is to give set_urlconf/get_urlconf meaningful semantics for Channels consumers or ASGI applications.\nWhether the intention is to isolate set_urlconf/get_urlconf across different asyncio tasks or to only support isolation between threads, I suppose it would be useful if their behaviour was documented also for the case of asyncio code, especially given they back django.urls.reverse.\n"
+}

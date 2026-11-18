@@ -1,0 +1,6 @@
+{
+  "instance_id": "tarantool__ansible-cartridge-172",
+  "repo": "tarantool/ansible-cartridge",
+  "base_commit": "087f6126c1cccc83e67c36ceab6868b43251e04b",
+  "problem_statement": "[2pt] Too long \"Install package\" task\nI have 100 Tarantool instances in a cluster. When I deploy them via ansible-cartridge, it takes a very long time to complete the \"Install package\" task, since it is performed for each instance. Moreover, this task is performed even despite the fact that it is written in the logs that task is skipped for all instances.\r\n\r\nLet's define the host list once instead of a hundred times.\n[2pt] Too long \"Install package\" task\nI have 100 Tarantool instances in a cluster. When I deploy them via ansible-cartridge, it takes a very long time to complete the \"Install package\" task, since it is performed for each instance. Moreover, this task is performed even despite the fact that it is written in the logs that task is skipped for all instances.\r\n\r\nLet's define the host list once instead of a hundred times.\n"
+}

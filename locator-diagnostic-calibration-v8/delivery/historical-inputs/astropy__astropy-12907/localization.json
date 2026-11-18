@@ -1,0 +1,17 @@
+{
+  "base_commit": "d16bfe05a744909de4b27f5875fe0d4ed41ce607",
+  "instance_id": "astropy__astropy-12907",
+  "result": {
+    "answer": "This is a genuine bug, not expected behavior. The root cause is in `_coord_matrix` (astropy/modeling/separable.py:171-216), which builds the per-model coordinate matrix used by `_cstack` for the `&` operator.\n\nWhen a child of `&` is itself a CompoundModel (e.g. `cm = Linear1D(10) & Linear1D(5)`), `_coord_matrix` does not recurse into it. Instead it only checks `model.separable` (line 202). For a separable compound model it falls into the `else` branch (lines 209-215), which builds a diagonal matrix `mat[i, i] = 1` for `i in range(model.n_inputs)` and, for a right child, rolls it by `noutp - model.n_outputs`. That diagonal construction assumes the child's outputs map one-to-one onto its own inputs in order, which is wrong for a nested compound whose internal structure is not a simple identity-like diagonal. The result is that the nested `cm` contributes a full 2x2 block of True values instead of the correct diagonal, producing the observed `[[T,T,F,F],[T,T,F,F],[F,F,T,T],[F,F,T,T]]`.\n\nBy contrast, the flat case `Pix2Sky_TAN() & Linear1D(10) & Linear1D(5)` works because each `&` operand is a simple (non-compound) model, so `_coord_matrix`'s diagonal path is correct for each leaf.\n\nThe fix would be to make `_coord_matrix` recurse into compound models (calling `_separable`/`_cstack` on the nested model) rather than treating any separable model as a diagonal. I did not read the full `_separable` dispatch (lines 271-313) or `_cdot`, so I cannot rule out related issues for `|` with nested compounds; that remains uncertain.",
+    "entities": [
+      "astropy/modeling/separable.py:_coord_matrix",
+      "astropy/modeling/separable.py:_cstack",
+      "astropy/modeling/separable.py:separability_matrix",
+      "astropy/modeling/separable.py:_separable"
+    ],
+    "files": [
+      "astropy/modeling/separable.py"
+    ]
+  },
+  "version": 1
+}

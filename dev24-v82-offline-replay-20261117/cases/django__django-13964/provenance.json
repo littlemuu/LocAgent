@@ -1,0 +1,15 @@
+{
+  "original_audit": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13964/locator/diagnostic-audit.json",
+  "original_result": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13964/locator/result.json",
+  "original_provider_finish": [
+    "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13964/locator-wire/response-82.json"
+  ],
+  "original_localization_metadata": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13964/localization.json",
+  "v82_binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "replay_mode": "saved original finish + recorded C coverage/search/retrieval metadata; no source snapshot invented",
+  "new_API_calls": 0,
+  "model_calls": 0,
+  "body_sha256": "40b40e3983a5e3d52332ba3bc92091d322c5592b99c2613211322d3b9aecd21a",
+  "body_preserved": true,
+  "serialized_envelope_bytes": 2817
+}

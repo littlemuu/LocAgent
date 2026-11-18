@@ -1,0 +1,6 @@
+{
+  "instance_id": "aio-libs__aiohttp-9766",
+  "repo": "aio-libs/aiohttp",
+  "base_commit": "cc9a14aa3a29e54e2da3045083cca865654e3ff9",
+  "problem_statement": "Payload registry has to do a linear search to find payloads\nhttps://github.com/aio-libs/aiohttp/blob/21f5f92a755dc5ac7225b5e76f561553cf86565e/aiohttp/payload.py#L97\r\n\r\nThere is a note that its inefficent.\r\n\r\nWe might be able to clean it up by giving each payload a key as part of the base class and then doing a dict lookup instead\n"
+}

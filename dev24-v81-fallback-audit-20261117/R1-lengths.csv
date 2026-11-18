@@ -1,0 +1,26 @@
+id,instance_id,entity,definition_start,definition_end,definition_length,status,provenance,source_bytes,budget_assessment
+01-02,sympy__sympy-21379,sympy/polys/polytools.py:_parallel_dict_from_expr,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,14325,题级预算确实耗尽（余11字节），但此实体存在模块/别名问题且未请求该完整定义；不能把这条R1直接归因于字节截断。
+03-01,matplotlib__matplotlib-23314,lib/matplotlib/axes/_base.py:AxesBase.draw,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,9771,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+03-02,matplotlib__matplotlib-23314,lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw,389,444,56,已知def范围,C检索元数据；def至末行，不含装饰器,9771,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+05-01,scikit-learn__scikit-learn-13779,sklearn/ensemble/voting.py:_BaseVoting.fit,64,101,38,已知def范围,同base B补足95-101；C只到94；63行为已读装饰器,11201,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+06-01,django__django-13033,分页规则,未知/不适用,未知/不适用,未知/不适用,不适用：分页规则,详见逐条记录,5200,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+07-02,pylint-dev__pylint-7080,pylint/lint/pylinter.py:PyLinter._iterate_file_descrs,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,14285,总字节预算耗尽对继续读取头部缺口有直接限制（最后余51字节）；最初读取又从签名尾部760开始。不是唯一原因。
+07-03,pylint-dev__pylint-7080,分页规则,未知/不适用,未知/不适用,未知/不适用,不适用：分页规则,详见逐条记录,14285,题级预算耗尽，两个cursor未续读；原答已披露分页未续读，触发本条却是词面标注误判。
+08-05,sphinx-doc__sphinx-11445,sphinx/util/rst.py:append_epilog,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,7316,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+09-03,pydata__xarray-4094,xarray/core/dataset.py:Dataset.to_stacked_array,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,9703,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+10-04,psf__requests-2317,requests/compat.py:builtin_str,未知/不适用,未知/不适用,未知/不适用,不适用：builtin_str为别名赋值,详见逐条记录,10171,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+10-05,psf__requests-2317,requests/sessions.py:Session.prepare_request,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,10171,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+12-03,sympy__sympy-18698,sympy/polys/polytools.py:sqf_list,6204,6218,15,已知def范围,C检索元数据；def至末行，不含装饰器,3195,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+13-01,astropy__astropy-12907,astropy/modeling/separable.py:_arith_oper,130,168,39,已知def范围,同base B补足161-168；C只到160,7332,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+13-02,astropy__astropy-12907,astropy/modeling/separable.py:_separable,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,7332,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+14-03,sphinx-doc__sphinx-8595,sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,11668,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+14-04,sphinx-doc__sphinx-8595,sphinx/ext/autodoc/__init__.py:filter_members,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,11668,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+14-05,sphinx-doc__sphinx-8595,sphinx/util/inspect.py:getall,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,11668,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+16-03,matplotlib__matplotlib-24970,lib/matplotlib/colors.py:Colormap.__init__,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,6976,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+18-03,sphinx-doc__sphinx-8721,sphinx/ext/viewcode.py:collect_pages,181,276,96,已知def范围,同base B补足205-276；C只到204,9504,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+19-01,matplotlib__matplotlib-25332,lib/matplotlib/figure.py:Figure.align_xlabels,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,14311,题级预算耗尽，但实际所指align_xlabels的1335-1394已完整收到；这条主要是限定名/映射边界，非该函数正文被预算截断。
+19-02,matplotlib__matplotlib-25332,lib/matplotlib/figure.py:Figure.align_ylabels,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,14311,最后续页容量已小于4096，返回止于1452且余25字节；总字节预算直接截断尾部。限定名/标注问题仍另计。
+22-03,astropy__astropy-14365,astropy/io/ascii/qdp.py:_interpret_err_lines,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,8044,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+23-03,sympy__sympy-13480,sympy/functions/elementary/hyperbolic.py:coth.eval,557,607,51,已知def范围,C检索元数据；def至末行，不含装饰器,4751,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+23-04,sympy__sympy-13480,sympy/functions/elementary/trigonometric.py:cot.eval,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,4751,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+24-05,django__django-13925,django/apps/config.py:AppConfig._is_default_auto_field_overridden,未知/不适用,未知/不适用,未知/不适用,未知,详见逐条记录,11290,"未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"

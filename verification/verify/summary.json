@@ -1,0 +1,10 @@
+{
+  "verified_files": 5587,
+  "lock_sha256": "cac18a70e98ec73ef709402055d58d7d456e9914d379bf529d378b26dff810aa",
+  "status": "passed",
+  "network_attempts": 0,
+  "historical_path_attempts": [],
+  "elapsed_seconds": 0.748,
+  "real_llm_requests": 0,
+  "real_embedding_requests": 0
+}

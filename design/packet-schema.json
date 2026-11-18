@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Localization packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "instance_id", "base_commit", "locations", "evidence"],
+  "properties": {
+    "version": {"const": 1},
+    "instance_id": {"type": "string"},
+    "base_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "locations": {"type": "array", "maxItems": 5, "items": {"type": "object", "additionalProperties": false, "required": ["path", "entity", "start_line", "end_line"], "properties": {"path": {"type": "string"}, "entity": {"type": ["string", "null"]}, "start_line": {"type": ["integer", "null"], "minimum": 1}, "end_line": {"type": ["integer", "null"], "minimum": 1}}}},
+    "evidence": {"type": "string", "description": "Exact base-commit source with path and line numbers; total serialized packet <= 14336 UTF-8 bytes, enforced at runtime."}
+  }
+}

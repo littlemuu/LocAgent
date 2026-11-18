@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-10176",
+  "repo": "huggingface/diffusers",
+  "base_commit": "09675934006cefb1eb3e58c41fca9ec372a7c797",
+  "problem_statement": "Raise an error when `len(gligen_images )` is not equal to `len(gligen_phrases)` in `StableDiffusionGLIGENTextImagePipeline`\nTo whom it may concern,\r\n\r\nI found that when using `StableDiffusionGLIGENTextImagePipeline`, there is no error raised when `len(gligen_images )` is not equal to `len(gligen_phrases)`. And when I dig into the source code, it seems that these two features are zipped together in a for loop during the preprocessing. I guess this will cause the longer one to be clipped unintentionally. (If my understanding is wrong, feel free to correct me.) Is there any possibility to raise an error or at least warning? Thanks in advance.\r\n\r\nSource Code: https://github.com/huggingface/diffusers/blob/v0.31.0/src/diffusers/pipelines/stable_diffusion_gligen/pipeline_stable_diffusion_gligen_text_image.py#L689\r\n\r\n\n"
+}

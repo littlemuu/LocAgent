@@ -1,0 +1,670 @@
+"""ACP provider registry — single source of truth for built-in provider metadata.
+
+Each record captures the static properties that are known at configuration time
+(before any subprocess is launched):
+
+- ``key``                   settings discriminator (``ACPAgentSettings.acp_server``)
+- ``display_name``          human-readable label for UI display
+- ``default_command``       default ``npx``-based launch command
+- ``api_key_env_var``       env var the subprocess expects for its API key
+- ``base_url_env_var``      env var for proxy/base-URL routing (or ``None``)
+- ``default_session_mode``  ACP mode ID that disables permission prompts,
+                            or ``None`` when the server has no such mode
+- ``agent_name_patterns``   lowercase substrings in the runtime agent name;
+                            used by ``ACPAgent`` to auto-detect mode / protocol
+- ``supports_set_session_model``  whether the provider applies its *initial*
+                                  model via a protocol call at session creation
+                                  (``set_config_option``/``set_session_model``)
+- ``supports_runtime_model_switch``  whether the server supports a protocol-level
+                                  model switch for runtime, mid-conversation use
+- ``session_meta_key``      top-level ``_meta`` key for model selection (or ``None``)
+- ``effort_config_id``      config option that sets reasoning effort (or ``None``)
+- ``effort_levels``         effort suffixes split off a ``<model>/<effort>`` id
+- ``file_secrets``          reserved "file-content" credential secrets the
+                            provider authenticates from (Codex ``auth.json``,
+                            Gemini Vertex SA JSON); see :class:`ACPFileSecretSpec`
+
+The registry describes which harnesses exist, not which ones a deployment
+offers. Clients that surface a subset declare ``SURFACED_ACP_PROVIDERS``
+independently and enforce that policy themselves. Their consistency check is
+one-way: surfaced keys must be registry keys, so an upstream rename or removal
+fails while an addition is a no-op. Do not add a complementary not-surfaced
+list or deployment-policy field to this registry; either would couple every
+client to every upstream addition.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+from pathlib import PurePosixPath
+from types import MappingProxyType
+from typing import Any, Literal
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from openhands.sdk.settings.acp_install_catalog import (
+    ACP_INSTALL_CATALOG,
+    CLAUDE_AGENT_ACP_VERSION as CLAUDE_AGENT_ACP_VERSION,
+    CODEX_ACP_VERSION as CODEX_ACP_VERSION,
+    GEMINI_CLI_VERSION as GEMINI_CLI_VERSION,
+    KIMI_CODE_VERSION as KIMI_CODE_VERSION,
+)
+
+
+class ACPFileSecretSpec(BaseModel):
+    """Declarative mapping from a reserved "file-content" secret to a credential
+    file the ACP subprocess authenticates from.
+
+    Some providers read their credential from a *file on disk* rather than an
+    env var: Codex reads ``$CODEX_HOME/auth.json``; Gemini (Vertex AI) reads a
+    service-account JSON pointed at by ``GOOGLE_APPLICATION_CREDENTIALS``. The
+    user supplies that credential as a pasted blob — a reserved secret named
+    :attr:`secret_name` — and :class:`~openhands.sdk.agent.ACPAgent` materialises
+    it to :attr:`filename` under the conversation's durable per-conversation root
+    (seed-if-absent), then sets :attr:`env_var` so the CLI can find it.
+
+    Materialisation is keyed off :attr:`secret_name` (not the launch command),
+    so a custom or aliased ``acp_command`` still works as long as the reserved
+    secret is supplied.
+
+    The SDK owns the *mechanism* (writing the file in the runtime pod, setting
+    the env var, seed-if-absent, permissions); the *policy* — which secrets map
+    to which files for which CLIs — lives in these specs. Built-in defaults
+    cover the supported providers, but downstream applications can override
+    :attr:`~openhands.sdk.agent.ACPAgent.acp_file_secrets` to support other ACP
+    servers with different file-auth schemes without an SDK change.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    secret_name: str = Field(min_length=1)
+    """Reserved secret whose value is the credential file's contents (looked up
+    in ``state.secret_registry`` / ``agent_context.secrets``)."""
+
+    filename: str = Field(min_length=1)
+    """Basename of the materialised file (e.g. ``auth.json``)."""
+
+    env_var: str = Field(min_length=1)
+    """Env var the CLI reads to locate the materialised credential."""
+
+    subdir: str = Field(min_length=1)
+    """Folder under the per-conversation ``<conversations>/{id.hex}/acp/`` root
+    where the file is written — the provider key for built-ins (``codex`` /
+    ``gemini-cli``), or any stable folder name for a custom spec. Keeps
+    concurrent providers' credential files isolated within one sandbox."""
+
+    env_points_to: Literal["dir", "file"] = "file"
+    """Whether :attr:`env_var` is set to the file's parent *directory* (Codex's
+    ``CODEX_HOME``) or to the *file* path itself (Gemini's
+    ``GOOGLE_APPLICATION_CREDENTIALS``)."""
+
+    warn_if_unset: tuple[str, ...] = ()
+    """Companion env vars to warn about when this secret is materialised but
+    they are missing (e.g. ``GOOGLE_CLOUD_PROJECT`` / ``GOOGLE_CLOUD_LOCATION``
+    for Vertex AI). Advisory only — materialisation still proceeds."""
+
+    @field_validator("filename")
+    @classmethod
+    def _validate_filename(cls, value: str) -> str:
+        """``filename`` must be a bare basename, never a path or traversal."""
+        if "/" in value or "\\" in value or value in (".", ".."):
+            raise ValueError("filename must be a bare basename, not a path")
+        return value
+
+    @field_validator("subdir")
+    @classmethod
+    def _validate_subdir(cls, value: str) -> str:
+        """``subdir`` must be a real relative folder (no traversal, root escape,
+        or the ``.`` identity path that would drop the credential straight into
+        the shared ``acp/`` root where two specs could collide)."""
+        path = PurePosixPath(value)
+        if path.is_absolute() or ".." in path.parts or value.strip() in ("", "."):
+            raise ValueError(
+                "subdir must be a non-empty relative path without '.'/'..' segments"
+            )
+        return value
+
+
+class ACPEnvConflictSpec(BaseModel):
+    """One provider's rule for env vars that must not coexist with a credential.
+
+    Some CLIs accept more than one credential channel and pick between them by a
+    precedence the caller cannot see, so a variable that is merely *present*
+    silently defeats the credential the user intended. Claude Code is the case
+    that motivated this: ``CLAUDE_CODE_OAUTH_TOKEN`` is a bearer validated
+    against api.anthropic.com, a co-present ``ANTHROPIC_API_KEY`` takes
+    precedence over it, and an ``ANTHROPIC_BASE_URL`` routes the bearer to a
+    proxy that rejects it.
+
+    The rule belongs to the provider, not to the process: another provider may
+    legitimately read one of these variables as its *own* credential (a
+    provider whose ``api_key_env_var`` is ``ANTHROPIC_API_KEY``), and stripping
+    it there deletes the only credential that provider has.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    dominant: str = Field(min_length=1)
+    """Env var whose presence means this provider is authenticating with it."""
+
+    strip: tuple[str, ...] = Field(min_length=1)
+    """Env vars removed from the subprocess environment when :attr:`dominant`
+    is present."""
+
+
+@dataclass(frozen=True)
+class ACPProviderInfo:
+    """Immutable metadata record for one built-in ACP provider."""
+
+    key: str
+    """Settings discriminator value (``ACPAgentSettings.acp_server``)."""
+
+    display_name: str
+    """Human-readable name suitable for UI labels."""
+
+    default_command: tuple[str, ...] = field(compare=False)
+    """Default subprocess command used when no explicit ``acp_command`` is set."""
+
+    api_key_env_var: str | None
+    """Env var the ACP subprocess expects for its primary API credential.
+
+    ``None`` for providers that authenticate via browser login rather than
+    an API key (e.g. Claude Code's ``claude-login`` flow).
+    """
+
+    base_url_env_var: str | None
+    """Env var the ACP subprocess reads for a custom API base URL.
+
+    Allows routing provider calls through a proxy such as LiteLLM.
+    ``None`` if the provider does not support env-based base-URL override.
+    """
+
+    default_session_mode: str | None
+    """ACP session-mode ID set right after ``session/new``, or ``None`` to skip
+    the call.
+
+    For servers with a permission-suppressing mode that is the value:
+    ``bypassPermissions`` (claude-agent-acp), ``agent-full-access``
+    (@agentclientprotocol/codex-acp).
+    gemini-cli uses ``default`` (its ``yolo`` mode errors at init); the ACP
+    bridge auto-approves permission requests, so the mode doesn't gate prompts.
+    ``None`` for a server that exposes no permission mode at all: pi-acp maps
+    ACP modes onto pi's thinking levels (``off``..``xhigh``) and rejects any
+    other id, so sending one would fail session init to no purpose.
+    """
+
+    agent_name_patterns: tuple[str, ...]
+    """Lowercase substring fragments present in the runtime ``agent_name``.
+
+    ``ACPAgent`` checks these against the name returned by the ACP server's
+    ``InitializeResponse`` to auto-select the correct session mode and
+    determine which model-selection protocol to use.
+    """
+
+    supports_set_session_model: bool
+    """``True`` if this provider selects its *initial* model via the
+    ``set_session_model`` protocol call (rather than session ``_meta``).
+
+    This governs the **session-creation** path only. ``True`` for every
+    built-in provider, which gets a one-shot ``set_session_model`` call right
+    after the session is created. claude-agent-acp was ``False`` until 0.30.0
+    was found to silently ignore the session-``_meta`` selection it relied on
+    (#3654); its ``_meta`` payload is still sent alongside (see
+    :attr:`session_meta_key`).
+
+    This is **independent of** runtime switching capability — see
+    :attr:`supports_runtime_model_switch`. The original meaning of this flag
+    is preserved so external consumers that use it to pick the initial
+    selection path keep working.
+    """
+
+    session_meta_key: str | None
+    """Top-level ``_meta`` key for model selection *at session creation*.
+
+    When non-``None``, the model is additionally advertised via ACP session
+    ``_meta`` using the structure
+    ``{session_meta_key: {"options": {"model": <model>}}}`` passed to
+    ``new_session()``. This is best-effort only: claude-agent-acp ignores it
+    (#3654), so the authoritative initial selection is the protocol call gated
+    on :attr:`supports_set_session_model`.
+
+    Runtime switches use the mechanism the session advertised
+    (``set_config_option`` or ``set_session_model``), gated on
+    :attr:`supports_runtime_model_switch`.
+
+    - ``"claudeCode"`` — claude-agent-acp
+    - ``None``         — codex-acp, gemini-cli, pi-acp
+    """
+
+    supports_runtime_model_switch: bool = False
+    """``True`` if the server supports the ``session/set_model`` protocol call
+    for **runtime, mid-conversation model switching**.
+
+    The call applies to the live session, so subsequent turns use the new
+    model without restarting the subprocess or losing context. Every built-in
+    provider supports it (verified against claude-agent-acp, codex-acp,
+    gemini-cli and pi-acp).
+
+    Unlike :attr:`supports_set_session_model`, this is about switching the
+    model of an *already-running* session, not the initial selection. A
+    provider may select its initial model via ``_meta`` (claude-agent-acp)
+    yet still support a protocol-level switch for later changes.
+
+    Defaults to ``False`` so forward-compat providers — and any external
+    caller constructing this dataclass positionally — keep working without a
+    signature break; the built-in providers set it explicitly.
+    """
+
+    file_secrets: tuple[ACPFileSecretSpec, ...] = field(default=(), compare=False)
+    """Reserved file-content credential secrets this provider authenticates from.
+
+    Each entry maps a reserved secret name to the on-disk file (and the env var
+    pointing at it) that :class:`~openhands.sdk.agent.ACPAgent` materialises
+    before launching the subprocess. Empty for providers that authenticate
+    purely via env vars (e.g. Claude Code). Defaults to ``()`` so external
+    callers constructing this dataclass positionally keep working.
+    """
+
+    binary_name: str | None = field(default=None, compare=False)
+    """Pinned, pre-installed CLI binary for this provider (e.g. ``codex-acp``).
+
+    The agent-server image installs the ACP CLIs at a fixed version as ``PATH``
+    wrappers. When this binary resolves via :func:`shutil.which`,
+    :meth:`~openhands.sdk.settings.model.ACPAgentSettings.resolve_acp_command`
+    rewrites the ``npx -y <pkg>`` launch command to run it directly (preserving
+    trailing args like gemini's ``--acp``); otherwise the ``npx`` command is
+    used unchanged. ``None`` for providers with no pinned binary (and ``custom``
+    servers); defaulted so positional construction keeps working.
+    """
+
+    data_dir_env_var: str | None = None
+    """Env var that relocates this CLI's per-user data/config root.
+
+    Set it to a per-conversation directory to isolate the CLI's on-disk state
+    (config, transcripts, caches, lockfiles) when several of a user's
+    conversations share one sandbox (``SandboxGroupingStrategy != NO_GROUPING``)
+    — otherwise they race on a single shared ``HOME`` (see #1019). Each CLI
+    exposes a different lever:
+
+    - ``CODEX_HOME``        — codex-acp (relocates ``~/.codex`` wholesale)
+    - ``CLAUDE_CONFIG_DIR`` — claude-agent-acp (relocates ``~/.claude*``)
+    - ``HOME``              — gemini-cli (no dedicated var; it hard-codes
+      ``~/.gemini`` and ignores ``XDG``, so only ``HOME`` moves it)
+    - ``HOME``              — pi-acp (its session map is hard-coded to
+      ``~/.pi/pi-acp``; ``PI_CODING_AGENT_DIR`` moves pi's own config dir but
+      not the adapter's, so only ``HOME`` relocates both)
+
+    ``None`` for providers with no known relocation lever, which then skip
+    isolation. Consumed by
+    :attr:`~openhands.sdk.agent.ACPAgent.acp_isolate_data_dir`.
+    """
+
+    env_conflicts: tuple[ACPEnvConflictSpec, ...] = field(default=(), compare=False)
+    """Env vars this provider's own credentials must not coexist with.
+
+    Applied to the subprocess environment by
+    :class:`~openhands.sdk.agent.ACPAgent` only for the provider that declares
+    them — see :class:`ACPEnvConflictSpec`.
+    """
+
+    effort_config_id: str | None = field(default=None, compare=False)
+    """Session config option that sets reasoning effort, or ``None``.
+
+    When set, an ``acp_model`` of the form ``<model>/<effort>`` (with ``effort``
+    in :attr:`effort_levels`) is split into a ``model`` selection plus this
+    config option — e.g. codex-acp ``reasoning_effort``, claude-agent-acp
+    ``effort``. See :meth:`split_model_effort`.
+    """
+
+    effort_levels: tuple[str, ...] = field(default=(), compare=False)
+    """Effort values accepted as a ``/<effort>`` model-id suffix."""
+
+    def split_model_effort(self, model: str) -> tuple[str, str | None]:
+        """Split ``<model>/<effort>`` into ``(model, effort)``.
+
+        Ids without a known effort suffix, or providers without an
+        :attr:`effort_config_id`, are returned unchanged with ``None``.
+        """
+        if self.effort_config_id is None:
+            return model, None
+        base_model, sep, effort = model.rpartition("/")
+        if sep and base_model and effort in self.effort_levels:
+            return base_model, effort
+        return model, None
+
+
+# ---------------------------------------------------------------------------
+# Reserved file-content credential secrets for the built-in providers.
+#
+# Codex's ChatGPT-subscription ``auth.json`` relocates with ``CODEX_HOME`` (and
+# is rewritten in place on token refresh, so it must live on durable, writable
+# storage). Gemini's Vertex AI service-account JSON is pointed at directly by
+# ``GOOGLE_APPLICATION_CREDENTIALS``; Vertex also needs a project/location, so
+# warn when those are unset. Pi reads its credentials from ``auth.json`` under
+# ``PI_CODING_AGENT_DIR`` (``settings.json`` in the same directory holds model
+# and UI preferences and does not authenticate).
+# ---------------------------------------------------------------------------
+_CODEX_FILE_SECRETS: tuple[ACPFileSecretSpec, ...] = (
+    ACPFileSecretSpec(
+        secret_name="CODEX_AUTH_JSON",
+        filename="auth.json",
+        env_var="CODEX_HOME",
+        subdir="codex",
+        env_points_to="dir",
+    ),
+)
+_KIMI_FILE_SECRETS: tuple[ACPFileSecretSpec, ...] = (
+    # Kimi authenticates from its config file, not the environment: the ACP
+    # auth gate resolves credentials via ``provider.env`` inside config.toml
+    # and never reads ``process.env``. Verified on 0.38.0 — a session starts
+    # only when the key is inline in the file, even with KIMI_API_KEY exported.
+    ACPFileSecretSpec(
+        secret_name="KIMI_CODE_CONFIG_TOML",
+        filename="config.toml",
+        env_var="KIMI_CODE_HOME",
+        subdir="kimi-code",
+        env_points_to="dir",
+    ),
+)
+_GEMINI_FILE_SECRETS: tuple[ACPFileSecretSpec, ...] = (
+    ACPFileSecretSpec(
+        secret_name="GOOGLE_APPLICATION_CREDENTIALS_JSON",
+        filename="gcloud-credentials.json",
+        env_var="GOOGLE_APPLICATION_CREDENTIALS",
+        subdir="gemini-cli",
+        env_points_to="file",
+        warn_if_unset=("GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_LOCATION"),
+    ),
+)
+_PI_FILE_SECRETS: tuple[ACPFileSecretSpec, ...] = (
+    ACPFileSecretSpec(
+        secret_name="PI_AUTH_JSON",
+        filename="auth.json",
+        env_var="PI_CODING_AGENT_DIR",
+        subdir="pi",
+        env_points_to="dir",
+    ),
+)
+
+
+# Pinned npm package/version and CLI-invocation shape for each built-in
+# launcher now lives in ACP_INSTALL_CATALOG (openhands.sdk.settings.
+# acp_install_catalog) — a dependency-free module also consumed directly by
+# the agent-server Dockerfile's `acp-providers` build stage. A version bump
+# only needs to happen there; `default_command`/`binary_name` below are
+# derived from it so both stay in sync automatically.
+#
+# claude-agent-acp 0.44+ / codex-acp select the model via a ``model``
+# ``configOptions`` entry (and retain the legacy ``session/set_model``
+# extension); the SDK detects which mechanism each session advertises.
+
+
+ACP_PROVIDERS: Mapping[str, ACPProviderInfo] = MappingProxyType(
+    {
+        "claude-code": ACPProviderInfo(
+            key="claude-code",
+            display_name="Claude Code",
+            default_command=ACP_INSTALL_CATALOG["claude-code"].npx_command(),
+            api_key_env_var="ANTHROPIC_API_KEY",
+            base_url_env_var="ANTHROPIC_BASE_URL",
+            default_session_mode="bypassPermissions",
+            agent_name_patterns=("claude-agent",),
+            # claude-agent-acp ignores the session-_meta model selection (the
+            # requested model only becomes a picker option; the session keeps
+            # running its default), so the init path must push the model via a
+            # protocol call (#3654). On 0.44.0+ that call is
+            # ``set_config_option(configId="model")`` rather than
+            # ``set_session_model`` (auto-detected from session/new); the _meta
+            # payload (session_meta_key below) is still sent — harmless, and
+            # picks up the same model if a future CLI honours it.
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            session_meta_key="claudeCode",
+            effort_config_id="effort",
+            effort_levels=("low", "medium", "high", "xhigh", "max"),
+            binary_name=ACP_INSTALL_CATALOG["claude-code"].binary_name,
+            data_dir_env_var="CLAUDE_CONFIG_DIR",
+            # Keyed on the credential itself, NOT on CLAUDE_CONFIG_DIR: the
+            # config dir is a *location* lever (data-dir isolation, #1019)
+            # orthogonal to which credential is active. Keying the strip on it
+            # wrongly fired during API-key isolation and missed the conflict
+            # when the token arrived via env without isolation (#3588).
+            env_conflicts=(
+                ACPEnvConflictSpec(
+                    dominant="CLAUDE_CODE_OAUTH_TOKEN",
+                    strip=("ANTHROPIC_API_KEY", "ANTHROPIC_BASE_URL"),
+                ),
+            ),
+        ),
+        "codex": ACPProviderInfo(
+            key="codex",
+            display_name="Codex",
+            default_command=ACP_INSTALL_CATALOG["codex"].npx_command(),
+            api_key_env_var="OPENAI_API_KEY",
+            base_url_env_var="OPENAI_BASE_URL",
+            default_session_mode="agent-full-access",
+            agent_name_patterns=("codex-acp",),
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            session_meta_key=None,
+            effort_config_id="reasoning_effort",
+            effort_levels=("low", "medium", "high", "xhigh", "max", "ultra"),
+            file_secrets=_CODEX_FILE_SECRETS,
+            binary_name=ACP_INSTALL_CATALOG["codex"].binary_name,
+            data_dir_env_var="CODEX_HOME",
+        ),
+        "gemini-cli": ACPProviderInfo(
+            key="gemini-cli",
+            display_name="Gemini CLI",
+            default_command=ACP_INSTALL_CATALOG["gemini-cli"].npx_command(),
+            api_key_env_var="GEMINI_API_KEY",
+            base_url_env_var="GEMINI_BASE_URL",
+            # gemini-cli 0.46.0 rejects ``set_session_mode("yolo")`` at session
+            # init (-32603), which crashes headless startup; ``default`` is
+            # accepted. The ACP bridge auto-approves every request_permission, so
+            # prompts never block regardless of mode. See #3772.
+            default_session_mode="default",
+            agent_name_patterns=("gemini-cli",),
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            session_meta_key=None,
+            file_secrets=_GEMINI_FILE_SECRETS,
+            binary_name=ACP_INSTALL_CATALOG["gemini-cli"].binary_name,
+            # Gemini CLI has no dedicated config-dir var; it hard-codes
+            # ``~/.gemini`` (ignoring XDG), so only HOME relocates its state.
+            data_dir_env_var="HOME",
+        ),
+        "kimi-code": ACPProviderInfo(
+            key="kimi-code",
+            display_name="Kimi Code",
+            default_command=ACP_INSTALL_CATALOG["kimi-code"].npx_command(),
+            # No env-var API key: ``KIMI_API_KEY`` is read only from inside
+            # config.toml, so exporting it authenticates nothing (verified on
+            # 0.38.0, with and without a config file present). The credential
+            # is the file itself — see _KIMI_FILE_SECRETS. Kimi's env-only
+            # route is ``KIMI_MODEL_NAME`` + ``KIMI_MODEL_API_KEY``, which
+            # needs a second variable this field cannot express. See #4819.
+            api_key_env_var=None,
+            # Not an auth claim: a plain endpoint override the CLI honours as
+            # a fallback when config.toml declares no base_url.
+            base_url_env_var="KIMI_BASE_URL",
+            # Verified against Kimi Code CLI 0.38.0: ``session/set_mode``
+            # accepts ``auto``/``yolo``/``default``/``plan``. ``yolo``
+            # auto-approves tool calls while still allowing question
+            # elicitation; ``auto`` would suppress questions entirely.
+            default_session_mode="yolo",
+            # ``kimi acp`` reports ``agentInfo.name = "Kimi Code CLI"``.
+            agent_name_patterns=("kimi",),
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            session_meta_key=None,
+            file_secrets=_KIMI_FILE_SECRETS,
+            binary_name=ACP_INSTALL_CATALOG["kimi-code"].binary_name,
+            # ``KIMI_CODE_HOME`` relocates the ``~/.kimi-code`` data root.
+            data_dir_env_var="KIMI_CODE_HOME",
+        ),
+        "pi": ACPProviderInfo(
+            key="pi",
+            display_name="Pi",
+            # Two packages, so the catalog emits the ``--package=`` form with
+            # ``pi-acp`` as the positional npx runs — which is also the only
+            # token ``_prefer_pinned_binary`` and
+            # ``detect_acp_provider_by_command`` can match on.
+            default_command=ACP_INSTALL_CATALOG["pi"].npx_command(),
+            api_key_env_var="ANTHROPIC_API_KEY",
+            # pi resolves each provider's base URL from its own catalogue;
+            # ANTHROPIC_BASE_URL reaches only the vendored Anthropic SDK, which
+            # pi overrides. Redirecting it needs models.json or an extension.
+            base_url_env_var=None,
+            default_session_mode=None,
+            agent_name_patterns=("pi-acp",),
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            session_meta_key=None,
+            file_secrets=_PI_FILE_SECRETS,
+            binary_name=ACP_INSTALL_CATALOG["pi"].binary_name,
+            data_dir_env_var="HOME",
+        ),
+        "opencode": ACPProviderInfo(
+            key="opencode",
+            display_name="OpenCode",
+            default_command=ACP_INSTALL_CATALOG["opencode"].npx_command(),
+            # OpenCode Zen, the CLI's own gateway and the provider its model
+            # ids are namespaced under. Third-party keys (ANTHROPIC_API_KEY,
+            # OPENAI_API_KEY, ...) also enable their providers inside OpenCode,
+            # but none of them is OpenCode's own credential.
+            api_key_env_var="OPENCODE_API_KEY",
+            # Zen's endpoint comes from the model catalogue, not the
+            # environment: verified against a local sink that neither
+            # OPENCODE_BASE_URL nor OPENAI_BASE_URL diverts it. A per-provider
+            # ``options.baseURL`` in the config file is the only override.
+            base_url_env_var=None,
+            # OpenCode exposes exactly two modes, ``build`` and ``plan``.
+            # ``build`` is the tool-executing default and raised no permission
+            # requests for read/write/bash under the stock permission config.
+            default_session_mode="build",
+            # ``opencode acp`` reports ``agentInfo.name = "OpenCode"``; the
+            # pattern also prefixes the package basename ``opencode-ai`` and the
+            # binary ``opencode`` for command-time detection.
+            agent_name_patterns=("opencode",),
+            supports_set_session_model=True,
+            supports_runtime_model_switch=True,
+            # ``session/new`` ignores a ``_meta`` model selection (tried under
+            # three plausible keys); the configOptions select is the only path
+            # that takes effect.
+            session_meta_key=None,
+            # No ``file_secrets``: OpenCode reads its whole auth store from
+            # OPENCODE_AUTH_CONTENT when set, ahead of the on-disk auth.json, so
+            # the credential rides the ordinary env-var channel.
+            binary_name=ACP_INSTALL_CATALOG["opencode"].binary_name,
+            # OPENCODE_CONFIG_DIR exists but points at a config *file* only;
+            # auth, sessions, the SQLite store and caches follow
+            # XDG_{DATA,CONFIG,CACHE,STATE}_HOME, which all fall back to HOME.
+            # Relocating HOME is the only single lever that moves all of them.
+            data_dir_env_var="HOME",
+        ),
+    }
+)
+"""Read-only registry of built-in ACP providers keyed by ``acp_server`` value."""
+
+
+def default_acp_file_secrets() -> tuple[ACPFileSecretSpec, ...]:
+    """Built-in file-content credential specs across all supported providers.
+
+    The union of every :attr:`ACPProviderInfo.file_secrets` (Codex ``auth.json``,
+    Gemini Vertex SA). Used as the default for
+    :attr:`~openhands.sdk.agent.ACPAgent.acp_file_secrets`, which a downstream
+    application may override or extend to support other ACP servers without an
+    SDK change.
+    """
+    return tuple(spec for info in ACP_PROVIDERS.values() for spec in info.file_secrets)
+
+
+def get_acp_provider(key: str) -> ACPProviderInfo | None:
+    """Return the :class:`ACPProviderInfo` for ``key``, or ``None`` if unknown."""
+    return ACP_PROVIDERS.get(key)
+
+
+def detect_acp_provider_by_agent_name(agent_name: str) -> ACPProviderInfo | None:
+    """Identify a provider from the runtime ``agent_name`` string.
+
+    Iterates :data:`ACP_PROVIDERS` in insertion order and returns the first
+    entry whose :attr:`~ACPProviderInfo.agent_name_patterns` contains a
+    substring of ``agent_name.lower()``.
+
+    Returns ``None`` when no pattern matches (e.g. a ``'custom'`` server or
+    an unrecognised third-party ACP implementation).
+    """
+    lower = agent_name.lower()
+    for info in ACP_PROVIDERS.values():
+        if any(pat in lower for pat in info.agent_name_patterns):
+            return info
+    return None
+
+
+def detect_acp_provider_by_command(
+    command: Sequence[str],
+) -> ACPProviderInfo | None:
+    """Identify a provider from its launch ``command``, before the subprocess runs.
+
+    Each provider's :attr:`~ACPProviderInfo.agent_name_patterns` fragments
+    (``"codex-acp"``, ``"claude-agent"``, ``"gemini-cli"``, ``"pi-acp"``) are
+    prefixes of its npm-package / binary basename, so we can pick the provider
+    *before* the server starts and reports its name (when the subprocess
+    environment, e.g. a relocated data dir, must already be set).
+
+    Matching is deliberately stricter than
+    :func:`detect_acp_provider_by_agent_name` because the launch command is
+    *caller-controlled*: each token is reduced to its basename (last path segment,
+    minus a trailing ``@version`` pin) and a provider matches only when that
+    basename *starts with* one of its patterns. This accepts the real forms —
+    ``@agentclientprotocol/codex-acp``, ``@google/gemini-cli@0.46.0``,
+    ``/opt/node_modules/.bin/codex-acp`` — while rejecting incidental substrings
+    like ``my-codex-acp-wrapper`` or ``/opt/shims/not-codex-acp`` that a plain
+    substring test would misattribute.
+
+    Returns ``None`` for a custom/unrecognised command, so callers that require a
+    known provider (e.g. data-dir isolation) safely no-op.
+    """
+    bases: list[str] = []
+    for token in command:
+        base = token.rsplit("/", 1)[-1].lower()
+        at = base.rfind("@")
+        if at > 0:  # strip a trailing @version pin (not a leading @scope)
+            base = base[:at]
+        bases.append(base)
+    for info in ACP_PROVIDERS.values():
+        if any(
+            base.startswith(pat) for base in bases for pat in info.agent_name_patterns
+        ):
+            return info
+    return None
+
+
+def build_session_model_meta(
+    agent_name: str, acp_model: str | None, acp_effort: str | None = None
+) -> dict[str, Any]:
+    """Build ACP session ``_meta`` content for model and effort selection.
+
+    Returns the dict to spread into ``new_session()`` kwargs for providers
+    that select their model via ``_meta`` (i.e. those whose
+    :attr:`~ACPProviderInfo.session_meta_key` is not ``None``). ``acp_effort``
+    wins over a ``<model>/<effort>`` suffix on ``acp_model``.
+
+    Returns an empty dict when there is nothing to select or when the detected
+    provider uses the ``set_session_model`` protocol call instead.
+    """
+    provider = detect_acp_provider_by_agent_name(agent_name)
+    if provider is None or provider.session_meta_key is None:
+        return {}
+    options: dict[str, str] = {}
+    suffix_effort = None
+    if acp_model:
+        options["model"], suffix_effort = provider.split_model_effort(acp_model)
+    effort = acp_effort or suffix_effort
+    if effort and provider.effort_config_id is not None:
+        options[provider.effort_config_id] = effort
+    if not options:
+        return {}
+    return {provider.session_meta_key: {"options": options}}

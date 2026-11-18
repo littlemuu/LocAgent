@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-6108",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "38a0d2d740e886f905a047791b22274fe741d60d",
+  "problem_statement": "False positive alert on firehose_stream_encrypted_at_rest\n### Steps to Reproduce\r\n\r\nHi! There is a bug with the check `firehose_stream_encrypted_at_rest`\r\n\r\n\r\n### Expected behavior\r\n\r\nThe check should not alert if the Firehose Server-side encryption (SSE)  is enabled\r\n\r\n\r\n### Actual Result with Screenshots or Logs\r\n\r\n![image](https://github.com/user-attachments/assets/d3ad234f-006b-4293-b780-2c9af652a85a)\r\n\r\n\r\n### How did you install Prowler?\r\n\r\nCloning the repository from github.com (git clone)\r\n\r\n### Environment Resource\r\n\r\nWorkstation\r\n\r\n### OS used\r\n\r\nWindows\r\n\r\n### Prowler version\r\n\r\nProwler 5.0.0 (You are running the latest version, yay!)\r\n\r\n### Pip version\r\n\r\npip 24.2 (python 3.12)\r\n\r\n### Context\r\n\r\n_No response_\n"
+}

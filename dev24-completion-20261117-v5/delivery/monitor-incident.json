@@ -1,0 +1,23 @@
+{
+  "incident": "Local read-only SSH monitor timed out once; first reconnect permission review timed out before execution; permitted second read-only reconnect succeeded.",
+  "cloud_task_restarted": false,
+  "model_requests_retried": false,
+  "last_observation_before_gap": {
+    "elapsed_seconds": 2895,
+    "completed_episodes": 15
+  },
+  "first_confirmed_observation_after_gap": {
+    "elapsed_seconds": 3094,
+    "completed_episodes": 16,
+    "active": "trial:scikit-learn__scikit-learn-14087:A:agent",
+    "failed": null
+  },
+  "local_ssh_monitor_timeout_count": 2,
+  "second_observation_gap": {
+    "before_elapsed_seconds": 3635,
+    "before_completed_episodes": 18,
+    "after_elapsed_seconds": 5679,
+    "after_completed_episodes": 32,
+    "failed": null
+  }
+}

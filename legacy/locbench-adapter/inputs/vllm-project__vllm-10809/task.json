@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-10809",
+  "repo": "vllm-project/vllm",
+  "base_commit": "c11f172187b6f44710e1f011ca8bff923ce49a7f",
+  "problem_statement": "[Core] Avoid metrics log noise when idle\n\n1a789ae7 [Core] Avoid metrics log noise when idle\n\ncommit 1a789ae76695bca801b55c9d4531e5438a3378c4\nAuthor: Russell Bryant <rbryant@redhat.com>\nDate:   Thu Sep 26 20:56:41 2024 +0000\n\n    [Core] Avoid metrics log noise when idle\n    \n    Prior to this change, there was always a log message every 10 seconds,\n    even when the system is idle. The noise when the metrics are all zeros\n    doesn't seem very interesting, so this change makes it so the log\n    message is only emitted while active. It will log a message whenever\n    metrics are non-zero, or when returning to idle from non-idle.\n    Repeated messages during idle now go to DEBUG instead of INFO.\n    \n    Signed-off-by: Russell Bryant <rbryant@redhat.com>\n\n"
+}

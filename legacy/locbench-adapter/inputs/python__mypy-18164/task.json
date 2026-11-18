@@ -1,0 +1,6 @@
+{
+  "instance_id": "python__mypy-18164",
+  "repo": "python/mypy",
+  "base_commit": "8ef21976cfd190d0b1974f438a7d30e8eaea5272",
+  "problem_statement": "`arg-type` error duck typing a `TypedDict` with `NotRequired` field\n**Bug Report**\r\n\r\n[mypy play url](https://mypy-play.net/?mypy=latest&python=3.12&gist=e6a8b78acddafd1ad10e81364e8e9ab5)\r\n\r\nit seems that mypy doesn't \"match\" a `NotRequired` field with a normal one when duck typing 2 different typed dict:\r\n\r\nLet's say that I have a function `foo` that expect a `Small` TypedDict as parameter\r\n\r\n```python\r\nclass Small(TypedDict):\r\n    a: NotRequired[str]\r\n\r\ndef foo(small: Small) -> None: ...\r\n```\r\n\r\nIn this `Small` TypedDict the field `a` is marked as `NotRequired`.\r\n\r\nElsewere I have another `Big` TypedDict with 2 fields `a`, and `b`, both required.\r\n\r\n```python\r\nclass Big(TypedDict):\r\n    a: str\r\n    b: str\r\n```\r\n\r\nbut if I try to pass a `Big` dict instance to my `foo` function, mypy mark it as an error:\r\n`main.py:21: error: Argument 1 to \"foo\" has incompatible type \"Big\"; expected \"Small\"  [arg-type]`\r\n\r\nIf I change the type of `Big.a` to a `NotRequired[str]`, mypy is happy, however mypy should allow the original definition, as a \"normal\" field should be treated as a stricter, \"smaller\" version of a not required one\r\n\n"
+}

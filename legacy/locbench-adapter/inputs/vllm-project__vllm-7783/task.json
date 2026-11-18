@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-7783",
+  "repo": "vllm-project/vllm",
+  "base_commit": "80162c44b1d1e59a2c10f65b6adb9b0407439b1f",
+  "problem_statement": "[Feature]: phi-3.5 is a strong model for its size, including vision support.  Has multi-image support, but vllm does not support\n### 🚀 The feature, motivation and pitch\n\nphi-3.5 is a strong model for its size, including strong multi-image vision support.   But vllm does not support the multi-image case.\r\n\r\nhttps://github.com/vllm-project/vllm/blob/03b7bfb79b1edf54511fd1b12acc9a875cee5656/vllm/model_executor/models/phi3v.py#L421-L425\n\n### Alternatives\n\nOnly other models\n\n### Additional context\n\n_No response_\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "Agenta-AI__agenta-1639",
+  "repo": "Agenta-AI/agenta",
+  "base_commit": "bd8167ce73d0ca31e1d6397906d4ecb63d6252c3",
+  "problem_statement": "[AGE-164] [Improvement] Speed up the endpoint /get_config\nThe call to retrieve the configuration takes 1.20 seconds, indicating that 'get_config' is highly unoptimised.\n\nHere's the current process:\n\n* It fetches the base_id.\n* It checks permissions.\n* It lists the environment for the app_id, which is obtained from the base_id.\n* It searches one by one until it finds the correct name.\n* It gets the variant_revision_id from the found environment.\n* It returns the configuration from that variant.\n\nThis process involves a significant number of queries!\n\n<sub>From [SyncLinear.com](https://synclinear.com) | [AGE-164](https://linear.app/agenta/issue/AGE-164/[improvement]-speed-up-the-endpoint-get-config)</sub>\n"
+}

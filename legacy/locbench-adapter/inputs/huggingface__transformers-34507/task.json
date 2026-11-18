@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-34507",
+  "repo": "huggingface/transformers",
+  "base_commit": "dadb286f061f156d01b80e12594321e890b53088",
+  "problem_statement": "Move Trainer's tokens per second metric into the inner training loop\n### Feature request\n\nRight now `include_tokens_per_second=True` in `Trainer` only reports the tokens per second metric at [the end of training](https://github.com/huggingface/transformers/blob/c1753436dbb8bcbcee183cdd6eba9f08a90d602a/src/transformers/trainer.py#L2610). It would be very useful to have this metric reported continuously inside the training loop so we can monitor it during training. \n\n### Motivation\n\nThe current behavior is counter-intuitive, doesn't align with other convenient trainers (like torchtune), and it's undocumented, so I had to RTFC to figure out why the metric wasn't showing up.\n\n### Your contribution\n\nI probably don't have time to contribute it myself.\n"
+}

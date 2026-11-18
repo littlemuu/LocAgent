@@ -1,0 +1,6 @@
+{
+  "instance_id": "Qiskit__qiskit-13052",
+  "repo": "Qiskit/qiskit",
+  "base_commit": "9898979d2947340514adca7121ed8eaea75df77f",
+  "problem_statement": "Port `FilterOpNodes` to Rust\n\nPort `FilterOpNodes` to Rust\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "kedro-org__kedro-4299",
+  "repo": "kedro-org/kedro",
+  "base_commit": "84b71b1436942d70f181a083991806cf75d5cd6d",
+  "problem_statement": "`kedro --version` isn't working \n## Description\r\nReported by @noklam, since adding lazy loading of Kedro subcommands, the `--version`/`-V` option isn't working. \r\n\r\n## Context\r\nThis bug is originating in Kedro 0.19.7 -> https://github.com/kedro-org/kedro/pull/3883\n"
+}

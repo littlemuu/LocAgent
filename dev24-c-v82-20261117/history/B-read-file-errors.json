@@ -1,0 +1,230 @@
+[
+  {
+    "instance_id": "sympy__sympy-21379",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/sympy__sympy-21379/locator/result.json"
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/astropy__astropy-14182/locator/result.json"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/matplotlib__matplotlib-23314/locator/result.json"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7432",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/pytest-dev__pytest-7432/locator/result.json"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/scikit-learn__scikit-learn-13779/locator/result.json"
+  },
+  {
+    "instance_id": "django__django-13033",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/django__django-13033/locator/result.json"
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7080",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/pylint-dev__pylint-7080/locator/result.json"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "read_file_error_count": 1,
+    "errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "archive": "first8-evidence-v4.tar.gz",
+    "member": "verification/round-run/trial/sphinx-doc__sphinx-11445/locator/result.json"
+  },
+  {
+    "instance_id": "pydata__xarray-4094",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/pydata__xarray-4094/locator/result.json"
+  },
+  {
+    "instance_id": "psf__requests-2317",
+    "read_file_error_count": 1,
+    "errors": [
+      {
+        "index": 3,
+        "arguments": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/psf__requests-2317/locator/result.json"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-7490",
+    "read_file_error_count": 1,
+    "errors": [
+      {
+        "index": 3,
+        "arguments": {
+          "cursor": null,
+          "end_line": 330,
+          "path": "src/_pytest/skipping.py",
+          "start_line": 240
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/pytest-dev__pytest-7490/locator/result.json"
+  },
+  {
+    "instance_id": "sympy__sympy-18698",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sympy__sympy-18698/locator/result.json"
+  },
+  {
+    "instance_id": "astropy__astropy-12907",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/astropy__astropy-12907/locator/result.json"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sphinx-doc__sphinx-8595/locator/result.json"
+  },
+  {
+    "instance_id": "django__django-13158",
+    "read_file_error_count": 1,
+    "errors": [
+      {
+        "index": 4,
+        "arguments": {
+          "cursor": null,
+          "end_line": 1420,
+          "path": "django/forms/models.py",
+          "start_line": 1295
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/django__django-13158/locator/result.json"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/matplotlib__matplotlib-24970/locator/result.json"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-14087",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/scikit-learn__scikit-learn-14087/locator/result.json"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sphinx-doc__sphinx-8721/locator/result.json"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/matplotlib__matplotlib-25332/locator/result.json"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/scikit-learn__scikit-learn-10297/locator/result.json"
+  },
+  {
+    "instance_id": "django__django-13964",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/django__django-13964/locator/result.json"
+  },
+  {
+    "instance_id": "astropy__astropy-14365",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/astropy__astropy-14365/locator/result.json"
+  },
+  {
+    "instance_id": "sympy__sympy-13480",
+    "read_file_error_count": 0,
+    "errors": [],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/sympy__sympy-13480/locator/result.json"
+  },
+  {
+    "instance_id": "django__django-13925",
+    "read_file_error_count": 1,
+    "errors": [
+      {
+        "index": 6,
+        "arguments": {
+          "cursor": null,
+          "end_line": 430,
+          "path": "tests/check_framework/test_model_checks.py",
+          "start_line": 370
+        },
+        "error": "tool_error",
+        "error_type": "ValueError"
+      }
+    ],
+    "archive": "remaining16-evidence-v5.tar.gz",
+    "member": "verification/remaining16-run/trial/django__django-13925/locator/result.json"
+  }
+]

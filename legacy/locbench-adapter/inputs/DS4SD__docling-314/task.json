@@ -1,0 +1,6 @@
+{
+  "instance_id": "DS4SD__docling-314",
+  "repo": "DS4SD/docling",
+  "base_commit": "c6b3763ecb6ef862840a30978ee177b907f86505",
+  "problem_statement": "Missing Text Inside Tables When Converting from DOCX to Markdown\n### Bug\r\nI've encountered an issue with Docling version 2.4.2 while converting a DOCX file to Markdown. It seems that the conversion process is missing text inside tables.\r\n\r\n**Command Used:**\r\n```sh\r\ndocling example.docx --from docx --to md --table-mode accurate\r\n```\r\n\r\n### Steps to reproduce\r\n\r\n1. Use the attached example DOCX file.\r\n2. Run the above command to convert the DOCX file to Markdown.\r\n3. Open the resulting Markdown file and check the tables.\r\n\r\n**Expected Behavior:**\r\nThe text inside the tables should be accurately converted and included in the Markdown output.\r\n\r\n**Actual Behavior:**\r\nThe text inside the tables is missing in the Markdown output.\r\n\r\n**Attachments:**\r\n- [example.docx](https://github.com/user-attachments/files/17692190/example.docx)\r\n\r\nI appreciate your assistance in resolving this issue.\r\nThank you!\r\n\r\n\r\n### Docling version\r\nDocling version: 2.4.2\r\nDocling Core version: 2.3.1\r\nDocling IBM Models version: 2.0.3\r\nDocling Parse version: 2.0.3\r\n...\r\n\r\n### Python version\r\nPython 3.12.7\r\n...\n"
+}

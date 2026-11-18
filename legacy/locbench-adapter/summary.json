@@ -1,0 +1,65 @@
+{
+  "rows": 560,
+  "repositories": 165,
+  "schema": {
+    "repo": [
+      "str"
+    ],
+    "instance_id": [
+      "str"
+    ],
+    "base_commit": [
+      "str"
+    ],
+    "patch": [
+      "str"
+    ],
+    "test_patch": [
+      "str"
+    ],
+    "problem_statement": [
+      "str"
+    ],
+    "hints_text": [
+      "str"
+    ],
+    "created_at": [
+      "int"
+    ],
+    "labels": [
+      "NoneType",
+      "list"
+    ],
+    "category": [
+      "str"
+    ],
+    "edit_functions": [
+      "list"
+    ],
+    "added_functions": [
+      "list"
+    ],
+    "edit_functions_length": [
+      "int"
+    ],
+    "__index_level_0__": [
+      "int"
+    ]
+  },
+  "categories": {
+    "Performance Issue": 139,
+    "Bug Report": 242,
+    "Security Vulnerability": 29,
+    "Feature Request": 150
+  },
+  "prior_task_files": 44,
+  "prior_unique_ids": 22,
+  "id_overlap": 0,
+  "text_overlap": 0,
+  "target_overlap": 0,
+  "remaining_candidates": 560,
+  "constructor_cases": 64,
+  "empty_function_labels": 0,
+  "dataset_license": "Not declared in dataset card or repository files; code Apache-2.0 does not imply dataset license",
+  "model_calls": 0
+}

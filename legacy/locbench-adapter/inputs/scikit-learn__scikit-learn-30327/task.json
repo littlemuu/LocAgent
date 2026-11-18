@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-30327",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "90a51c12d6159f72ab8990ea1a3ff835861ec81d",
+  "problem_statement": "MAINT conversion old->new/new->old tags\nTowards #30298 \r\n\r\nThis PR provides a way to convert old tags into new tags and new tags into old tags.\r\nWe should make sure that:\r\n\r\n- An estimator implementing `_get_tags` or `_more_tags` get a warning but that the check_estimator should be working reasonably\r\n- `_safe_tags` should raise a deprecation warning\r\n- we should make sure that `get_tags` can get old tags and convert it to new tags. The tricky part is to detect whether `__sklearn_tags__` if present is implemented by the `BaseEstimator` from scikit-learn or the child class. If this is only the `BaseEstimator`, we should raise a warning to move to the new API and we should temporary use the `_get_tags`/`_safe_tags`, otherwise we are fine.\r\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "jax-ml__jax-23020",
+  "repo": "jax-ml/jax",
+  "base_commit": "5cf89b3f61faec83ee0bbf27bfb6850c8da3de50",
+  "problem_statement": "shape hint arguments in lax numpy functions to enable compilation\nSeveral functions in `jax.numpy` are not `jit`-compilable for shape-level arguments. Specifically, we can't decide their output shape from input shapes alone.\r\n\r\nWe've given [`jax.numpy.bincount`](https://github.com/google/jax/blob/db8f66d508d536e1312291ba966905ddf910582d/jax/numpy/lax_numpy.py#L1309) an optional `length` argument that's not in standard numpy because it determines the output shape (when it is static/concrete). It's not uncommon for callers to have this information on hand.\r\n\r\nWe could consider extending other functions similarly to accept optional shape hints:\r\n- [x] argwhere (#6915)\r\n- [x] compress (#21090)\r\n- [x] extract (#21090)\r\n- [x] nonzero (#6501 #7592)\r\n- [x] flatnonzero (#6913)\r\n- [x] 1-argument where (#6910)\r\n- [x] repeat (#3670)\r\n- [x] unique (#6912, #8121, #8186)\r\n- [x] setdiff1d (#8144)\r\n- [x] union1d (#6930, #8143)\r\n- [x] intersect1d (#22979)\r\n- [x] setxor1d (#23020)\n"
+}

@@ -1,0 +1,216 @@
+B TOOL 1: search_text
+ARGS: {"offset": 0, "query": "_i_over"}
+lib/matplotlib/colors.py:674:         self._i_over = self.N + 1
+lib/matplotlib/colors.py:730:         xa[xa > self.N - 1] = self._i_over
+lib/matplotlib/colors.py:808:         return np.array(self._lut[self._i_over])
+lib/matplotlib/colors.py:844:             self._lut[self._i_over] = self._rgba_over
+lib/matplotlib/colors.py:846:             self._lut[self._i_over] = self._lut[self.N - 1]
+
+B TOOL 2: search_text
+ARGS: {"offset": 0, "query": "def __call__"}
+doc/sphinxext/gallery_order.py:40:     def __call__(self, item):
+doc/sphinxext/gallery_order.py:95:     def __call__(self, item):
+examples/animation/bayes_update.py:43:     def __call__(self, i):
+examples/event_handling/viewlims.py:26:     def __call__(self, ax):
+examples/images_contours_and_fields/colormap_normalizations.py:99:     def __call__(self, value, clip=None):
+examples/misc/custom_projection.py:41:         def __call__(self, x, pos=None):
+examples/misc/demo_agg_filter.py:44:     def __call__(self, im, dpi):
+examples/misc/demo_agg_filter.py:140:     def __call__(self, im, dpi):
+examples/misc/multiprocess_sgskip.py:51:     def __call__(self, pipe):
+examples/ticks/date_index_formatter.py:75:     def __call__(self, x, pos=0):
+examples/units/basic_units.py:39:     def __call__(self, *args):
+examples/units/basic_units.py:50:     def __call__(self, *args):
+examples/units/basic_units.py:66:     def __call__(self, *args):
+examples/units/basic_units.py:77:     def __call__(self, *args):
+examples/units/basic_units.py:205:     def __call__(self, value):
+examples/units/basic_units.py:273:     def __call__(self, operation, units):
+examples/userdemo/custom_boxstyle01.py:90:     def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/_docstring.py:38:     def __call__(self, func):
+lib/matplotlib/_docstring.py:79:     def __call__(self, obj):
+lib/matplotlib/axes/_base.py:112:     def __call__(self, ax, renderer):
+lib/matplotlib/axes/_base.py:241:     def __call__(self, *args, data=None, **kwargs):
+lib/matplotlib/backend_bases.py:3646:     def __call__(self, block=None):
+lib/matplotlib/bezier.py:200:     def __call__(self, t):
+lib/matplotlib/category.py:129:     def __call__(self):
+lib/matplotlib/category.py:149:     def __call__(self, x, pos=None):
+lib/matplotlib/cbook.py:93:     def __call__(self):
+lib/matplotlib/cbook.py:576:     def __call__(self):
+lib/matplotlib/cm.py:94:     def __call__(self):
+lib/matplotlib/colorbar.py:154:     def __call__(self, ax, renderer):
+lib/matplotlib/colors.py:683:     def __call__(self, X, alpha=None, bytes=False):
+lib/matplotlib/colors.py:1314:     def __call__(self, value, clip=None):
+lib/matplotlib/colors.py:1452:     def __call__(self, value, clip=None):
+lib/matplotlib/colors.py:1687:         def __call__(self, value, clip=None):
+lib/matplotlib/colors.py:1870:     def __call__(self, value, clip=None):
+lib/matplotlib/colors.py:1987:     def __call__(self, value, clip=None):
+lib/matplotlib/colors.py:2045:     def __call__(self, value, clip=None):
+lib/matplotlib/dates.py:650:     def __call__(self, x, pos=0):
+lib/matplotlib/dates.py:788:     def __call__(self, x, pos=None):
+lib/matplotlib/dates.py:978:     def __call__(self, x, pos=None):
+lib/matplotlib/dates.py:1203:     def __call__(self):
+lib/matplotlib/dates.py:1375:     def __call__(self):
+lib/matplotlib/dates.py:1751:     def __call__(self):
+lib/matplotlib/patches.py:2312:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2335:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2360:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2384:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2407:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2427:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2466:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2524:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2613:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2622:         def __call__(self, x0, y0, width, height, mutation_size):
+lib/matplotlib/patches.py:2720:         def __call__(self, posA, posB,
+lib/matplotlib/patches.py:3155:         def __call__(self, path, mut
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 760, "path": "lib/matplotlib/colors.py", "start_line": 660}
+660:         """
+661:         Parameters
+662:         ----------
+663:         name : str
+664:             The name of the colormap.
+665:         N : int
+666:             The number of RGB quantization levels.
+667:         """
+668:         self.name = name
+669:         self.N = int(N)  # ensure that N is always int
+670:         self._rgba_bad = (0.0, 0.0, 0.0, 0.0)  # If bad, don't paint anything.
+671:         self._rgba_under = None
+672:         self._rgba_over = None
+673:         self._i_under = self.N
+674:         self._i_over = self.N + 1
+675:         self._i_bad = self.N + 2
+676:         self._isinit = False
+677:         #: When this colormap exists on a scalar mappable and colorbar_extend
+678:         #: is not False, colorbar creation will pick up ``colorbar_extend`` as
+679:         #: the default value for the ``extend`` keyword in the
+680:         #: `matplotlib.colorbar.Colorbar` constructor.
+681:         self.colorbar_extend = False
+682: 
+683:     def __call__(self, X, alpha=None, bytes=False):
+684:         """
+685:         Parameters
+686:         ----------
+687:         X : float or int, `~numpy.ndarray` or scalar
+688:             The data value(s) to convert to RGBA.
+689:             For floats, *X* should be in the interval ``[0.0, 1.0]`` to
+690:             return the RGBA values ``X*100`` percent along the Colormap line.
+691:             For integers, *X* should be in the interval ``[0, Colormap.N)`` to
+692:             return RGBA values *indexed* from the Colormap with index ``X``.
+693:         alpha : float or array-like or None
+694:             Alpha must be a scalar between 0 and 1, a sequence of such
+695:             floats with shape matching X, or None.
+696:         bytes : bool
+697:             If False (default), the returned RGBA values will be floats in the
+698:             interval ``[0, 1]`` otherwise they will be uint8s in the interval
+699:             ``[0, 255]``.
+700: 
+701:         Returns
+702:         -------
+703:         Tuple of RGBA values if X is scalar, otherwise an array of
+704:         RGBA values with a shape of ``X.shape + (4, )``.
+705:         """
+706:         if not self._isinit:
+707:             self._init()
+708: 
+709:         # Take the bad mask from a masked array, or in all other cases defer
+710:         # np.isnan() to after we have converted to an array.
+711:         mask_bad = X.mask if np.ma.is_masked(X) else None
+712:         xa = np.array(X, copy=True)
+713:         if mask_bad is None:
+714:             mask_bad = np.isnan(xa)
+715:         if not xa.dtype.isnative:
+716:             xa = xa.byteswap().newbyteorder()  # Native byteorder is faster.
+717:         if xa.dtype.kind == "f":
+718:             with np.errstate(invalid="ignore"):
+719:                 xa *= self.N
+720:                 # Negative values are out of range, but astype(int) would
+721:                 # truncate them towards zero.
+722:                 xa[xa < 0] = -1
+723:                 # xa == 1 (== N after multiplication) is not out of range.
+724:                 xa[xa == self.N] = self.N - 1
+725:                 # Avoid converting large positive values to negative integers.
+726:                 np.clip(xa, -1, self.N, out=xa)
+727:                 xa = xa.astype(int)
+728:         # Set the over-range indices before the under-range;
+729:         # otherwise the under-range values get converted to over-range.
+730:         xa[xa > self.N - 1] = self._i_over
+731:         xa[xa < 0] = self._i_under
+732:         xa[mask_bad] = self._i_bad
+733: 
+734:         lut = self._lut
+735:         if bytes:
+736:             lut = (lut * 255).astype(np.uint8)
+737: 
+738:         rgba = lut.take(xa, axis=0, mode='clip')
+739: 
+740:         if alpha is not None:
+741:             alpha = np.clip(alpha, 0, 1)
+742:             if bytes:
+
+
+B TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 860, "path": "lib/matplotlib/colors.py", "start_line": 800}
+800:         self._rgba_under = to_rgba(color, alpha)
+801:         if self._isinit:
+802:             self._set_extremes()
+803: 
+804:     def get_over(self):
+805:         """Get the color for high out-of-range values."""
+806:         if not self._isinit:
+807:             self._init()
+808:         return np.array(self._lut[self._i_over])
+809: 
+810:     def set_over(self, color='k', alpha=None):
+811:         """Set the color for high out-of-range values."""
+812:         self._rgba_over = to_rgba(color, alpha)
+813:         if self._isinit:
+814:             self._set_extremes()
+815: 
+816:     def set_extremes(self, *, bad=None, under=None, over=None):
+817:         """
+818:         Set the colors for masked (*bad*) values and, when ``norm.clip =
+819:         False``, low (*under*) and high (*over*) out-of-range values.
+820:         """
+821:         if bad is not None:
+822:             self.set_bad(bad)
+823:         if under is not None:
+824:             self.set_under(under)
+825:         if over is not None:
+826:             self.set_over(over)
+827: 
+828:     def with_extremes(self, *, bad=None, under=None, over=None):
+829:         """
+830:         Return a copy of the colormap, for which the colors for masked (*bad*)
+831:         values and, when ``norm.clip = False``, low (*under*) and high (*over*)
+832:         out-of-range values, have been set accordingly.
+833:         """
+834:         new_cm = self.copy()
+835:         new_cm.set_extremes(bad=bad, under=under, over=over)
+836:         return new_cm
+837: 
+838:     def _set_extremes(self):
+839:         if self._rgba_under:
+840:             self._lut[self._i_under] = self._rgba_under
+841:         else:
+842:             self._lut[self._i_under] = self._lut[0]
+843:         if self._rgba_over:
+844:             self._lut[self._i_over] = self._rgba_over
+845:         else:
+846:             self._lut[self._i_over] = self._lut[self.N - 1]
+847:         self._lut[self._i_bad] = self._rgba_bad
+848: 
+849:     def _init(self):
+850:         """Generate the lookup table, ``self._lut``."""
+851:         raise NotImplementedError("Abstract class only")
+852: 
+853:     def is_gray(self):
+854:         """Return whether the colormap is grayscale."""
+855:         if not self._isinit:
+856:             self._init()
+857:         return (np.all(self._lut[:, 0] == self._lut[:, 1]) and
+858:                 np.all(self._lut[:, 0] == self._lut[:, 2]))
+859: 
+860:     def resampled(self, lutsize):
+

@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18158",
+  "repo": "django/django",
+  "base_commit": "8c118c0e00846091c261b97dbed9a5b89ceb79bf",
+  "problem_statement": "Auto-importing models feature for shell-command\nDescription\n\t \nThis would be an update of the existing Django shell that auto-imports models for you from your app/project. Also, the goal would be to allow the user to subclass this shell to customize its behavior and import extra things.\nwiki\n​proposal\nAuto-importing models feature for shell-command\nDescription\n\t \nThis would be an update of the existing Django shell that auto-imports models for you from your app/project. Also, the goal would be to allow the user to subclass this shell to customize its behavior and import extra things.\nwiki\n​proposal\n"
+}

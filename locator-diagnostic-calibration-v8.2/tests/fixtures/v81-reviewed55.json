@@ -1,0 +1,332 @@
+[
+  {
+    "id": "01-01",
+    "instance_id": "sympy__sympy-21379",
+    "recorded_violation": "R4_citation_not_delivered:polytools.py:4399",
+    "classification": "误判"
+  },
+  {
+    "id": "01-02",
+    "instance_id": "sympy__sympy-21379",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:_parallel_dict_from_expr",
+    "classification": "边界"
+  },
+  {
+    "id": "02-01",
+    "instance_id": "astropy__astropy-14182",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/fixedwidth.py:1-239",
+    "classification": "误判"
+  },
+  {
+    "id": "03-01",
+    "instance_id": "matplotlib__matplotlib-23314",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw",
+    "classification": "边界"
+  },
+  {
+    "id": "03-02",
+    "instance_id": "matplotlib__matplotlib-23314",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+    "classification": "边界"
+  },
+  {
+    "id": "04-01",
+    "instance_id": "pytest-dev__pytest-7432",
+    "recorded_violation": "R4_citation_not_delivered:testing/test_skipping.py:233",
+    "classification": "误判"
+  },
+  {
+    "id": "05-01",
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "recorded_violation": "R1_body_incomplete_unmarked:sklearn/ensemble/voting.py:_BaseVoting.fit",
+    "classification": "误判"
+  },
+  {
+    "id": "06-01",
+    "instance_id": "django__django-13033",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "classification": "误判"
+  },
+  {
+    "id": "07-01",
+    "instance_id": "pylint-dev__pylint-7080",
+    "recorded_violation": "R4_citation_not_delivered:pylint/lint/pylinter.py:1014",
+    "classification": "误判"
+  },
+  {
+    "id": "07-02",
+    "instance_id": "pylint-dev__pylint-7080",
+    "recorded_violation": "R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+    "classification": "真违规"
+  },
+  {
+    "id": "07-03",
+    "instance_id": "pylint-dev__pylint-7080",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "classification": "误判"
+  },
+  {
+    "id": "08-01",
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/parsers.py:85",
+    "classification": "误判"
+  },
+  {
+    "id": "08-02",
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/config.py:128",
+    "classification": "误判"
+  },
+  {
+    "id": "08-03",
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/transforms/i18n.py:60-79",
+    "classification": "边界"
+  },
+  {
+    "id": "08-04",
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/rst.py:1-69",
+    "classification": "误判"
+  },
+  {
+    "id": "08-05",
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/rst.py:append_epilog",
+    "classification": "误判"
+  },
+  {
+    "id": "09-01",
+    "instance_id": "pydata__xarray-4094",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055",
+    "classification": "边界"
+  },
+  {
+    "id": "09-02",
+    "instance_id": "pydata__xarray-4094",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135",
+    "classification": "边界"
+  },
+  {
+    "id": "09-03",
+    "instance_id": "pydata__xarray-4094",
+    "recorded_violation": "R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array",
+    "classification": "边界"
+  },
+  {
+    "id": "10-01",
+    "instance_id": "psf__requests-2317",
+    "recorded_violation": "R4_citation_not_delivered:requests/compat.py:96",
+    "classification": "误判"
+  },
+  {
+    "id": "10-02",
+    "instance_id": "psf__requests-2317",
+    "recorded_violation": "R4_citation_not_delivered:requests/models.py:443",
+    "classification": "误判"
+  },
+  {
+    "id": "10-03",
+    "instance_id": "psf__requests-2317",
+    "recorded_violation": "R4_citation_not_delivered:requests/utils.py:663",
+    "classification": "误判"
+  },
+  {
+    "id": "10-04",
+    "instance_id": "psf__requests-2317",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/compat.py:builtin_str",
+    "classification": "误判"
+  },
+  {
+    "id": "10-05",
+    "instance_id": "psf__requests-2317",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/sessions.py:Session.prepare_request",
+    "classification": "真违规"
+  },
+  {
+    "id": "12-01",
+    "instance_id": "sympy__sympy-18698",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/polyclasses.py:784",
+    "classification": "误判"
+  },
+  {
+    "id": "12-02",
+    "instance_id": "sympy__sympy-18698",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/rings.py:2457",
+    "classification": "误判"
+  },
+  {
+    "id": "12-03",
+    "instance_id": "sympy__sympy-18698",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list",
+    "classification": "边界"
+  },
+  {
+    "id": "13-01",
+    "instance_id": "astropy__astropy-12907",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_arith_oper",
+    "classification": "真违规"
+  },
+  {
+    "id": "13-02",
+    "instance_id": "astropy__astropy-12907",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable",
+    "classification": "误判"
+  },
+  {
+    "id": "14-01",
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/autodoc/__init__.py:1077",
+    "classification": "误判"
+  },
+  {
+    "id": "14-02",
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/inspect.py:145-158",
+    "classification": "边界"
+  },
+  {
+    "id": "14-03",
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+    "classification": "误判"
+  },
+  {
+    "id": "14-04",
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:filter_members",
+    "classification": "边界"
+  },
+  {
+    "id": "14-05",
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/inspect.py:getall",
+    "classification": "误判"
+  },
+  {
+    "id": "16-01",
+    "instance_id": "matplotlib__matplotlib-24970",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "classification": "误判"
+  },
+  {
+    "id": "16-02",
+    "instance_id": "matplotlib__matplotlib-24970",
+    "recorded_violation": "R4_citation_not_delivered:colors.py:808",
+    "classification": "误判"
+  },
+  {
+    "id": "16-03",
+    "instance_id": "matplotlib__matplotlib-24970",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/colors.py:Colormap.__init__",
+    "classification": "真违规"
+  },
+  {
+    "id": "18-01",
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:281",
+    "classification": "误判"
+  },
+  {
+    "id": "18-02",
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:204-291",
+    "classification": "误判"
+  },
+  {
+    "id": "18-03",
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/viewcode.py:collect_pages",
+    "classification": "误判"
+  },
+  {
+    "id": "19-01",
+    "instance_id": "matplotlib__matplotlib-25332",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_xlabels",
+    "classification": "边界"
+  },
+  {
+    "id": "19-02",
+    "instance_id": "matplotlib__matplotlib-25332",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_ylabels",
+    "classification": "边界"
+  },
+  {
+    "id": "20-01",
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "recorded_violation": "R4_citation_not_delivered:sklearn/linear_model/tests/test_ridge.py:577-587",
+    "classification": "边界"
+  },
+  {
+    "id": "22-01",
+    "instance_id": "astropy__astropy-14365",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "classification": "误判"
+  },
+  {
+    "id": "22-02",
+    "instance_id": "astropy__astropy-14365",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/qdp.py:201-638",
+    "classification": "误判"
+  },
+  {
+    "id": "22-03",
+    "instance_id": "astropy__astropy-14365",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/io/ascii/qdp.py:_interpret_err_lines",
+    "classification": "误判"
+  },
+  {
+    "id": "23-01",
+    "instance_id": "sympy__sympy-13480",
+    "recorded_violation": "R4_citation_not_delivered:hyperbolic.py:590",
+    "classification": "边界"
+  },
+  {
+    "id": "23-02",
+    "instance_id": "sympy__sympy-13480",
+    "recorded_violation": "R4_citation_not_delivered:trigonometric.py:1307-1310",
+    "classification": "边界"
+  },
+  {
+    "id": "23-03",
+    "instance_id": "sympy__sympy-13480",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/hyperbolic.py:coth.eval",
+    "classification": "边界"
+  },
+  {
+    "id": "23-04",
+    "instance_id": "sympy__sympy-13480",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/trigonometric.py:cot.eval",
+    "classification": "真违规"
+  },
+  {
+    "id": "24-01",
+    "instance_id": "django__django-13925",
+    "recorded_violation": "R4_citation_not_delivered:django/apps/config.py:64-70",
+    "classification": "真违规"
+  },
+  {
+    "id": "24-02",
+    "instance_id": "django__django-13925",
+    "recorded_violation": "R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412",
+    "classification": "真违规"
+  },
+  {
+    "id": "24-03",
+    "instance_id": "django__django-13925",
+    "recorded_violation": "R4_citation_not_delivered:base.py:364",
+    "classification": "误判"
+  },
+  {
+    "id": "24-04",
+    "instance_id": "django__django-13925",
+    "recorded_violation": "R4_citation_not_delivered:options.py:439",
+    "classification": "误判"
+  },
+  {
+    "id": "24-05",
+    "instance_id": "django__django-13925",
+    "recorded_violation": "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+    "classification": "边界"
+  }
+]

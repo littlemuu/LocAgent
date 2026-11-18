@@ -1,0 +1,16 @@
+# Local credentials, including alternate files and editor backups.
+.env
+.env.*
+!.env.example
+*.swp
+*.swo
+*~
+
+# Local dependencies and private experiment records.
+.venv*/
+__pycache__/
+*.py[cod]
+authority/
+authority-batches/
+authority-locbench/
+verification/

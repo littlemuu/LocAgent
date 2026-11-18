@@ -1,0 +1,84 @@
+{
+  "checked_at": "2026-11-12T15:52:53.162055+00:00",
+  "reviewed_answers": 12,
+  "criteria_per_answer": 4,
+  "first_reviewers": "fresh-context A and B; independent submitted files",
+  "first_pair_agreements": 47,
+  "first_pair_comparisons": 48,
+  "fresh_context_adjudicated_items": 1,
+  "all_reviews_completed": true,
+  "review_failures": 0,
+  "all_input_hashes_unchanged": true,
+  "all_scores_sealed_before_unblinding": true,
+  "source_rubric_runtime_and_original_live_ledgers_unchanged": true,
+  "parent_operator_did_not_assign_or_change_scores": true,
+  "independent_human_review": false,
+  "os_enforced_information_barrier": false,
+  "reviewer_attestations": {
+    "a": {
+      "prior_mapping_seen": false,
+      "other_reviewer_seen": false,
+      "only_allowed_inputs_read": true,
+      "group_disclosure_detected": [],
+      "limitations": [
+        "仅读取本目录 REVIEW_POLICY.txt、packets.json 和 sources 内全部 36 个源码文件；未读取映射、其他评审、历史或运行轨迹。",
+        "未执行或修改固定源码，未调用网络或模型 API；仅静态审阅，注入依赖的真实实现无法确认。",
+        "复合标准按全部实质要求判断；对答案内已充分表达的等价逻辑接受，对未提及的独立限制不从源码代补。"
+      ]
+    },
+    "b": {
+      "prior_mapping_seen": false,
+      "other_reviewer_seen": false,
+      "only_allowed_inputs_read": true,
+      "group_disclosure_detected": [],
+      "limitations": [
+        "仅阅读本目录 REVIEW_POLICY.txt、packets.json 及 sources 下全部固定源码；未读取其他评审、映射、父目录材料、用户历史或运行轨迹。",
+        "未调用网络或模型 API，未导入、修改或执行被评审源码；只进行静态阅读。",
+        "源码未提供外部数据库、存储、注入映射实现或调用方同步，涉及这些语义的结论以可见代码为限。",
+        "复合标准按所有实质要求评分；直接由答案自身明确描述的完整流程表达的等价含义可以计分，源码才揭示的遗漏不予补足。"
+      ]
+    },
+    "c": {
+      "prior_mapping_seen": false,
+      "other_reviewer_seen": false,
+      "only_allowed_inputs_read": true,
+      "group_disclosure_detected": [],
+      "limitations": [
+        "仅依据指定目录中的 REVIEW_POLICY.txt、packets.json 与该题相关的 d02_config 固定源码；未读取其他评审、映射、轨迹或历史对话，未调用网络或模型 API，未执行源码。",
+        "这是答案质量的独立复核，不是独立实验；第 4 条存在是否接受跨句等价表述的解释空间，具体判断记录在 uncertainty。"
+      ]
+    }
+  },
+  "final_group_scores": {
+    "baseline": {
+      "answers": 6,
+      "maximum": 24,
+      "a_total": 17,
+      "b_total": 17,
+      "final_total": 17,
+      "final_mean_per_answer": 2.8333333333333335,
+      "criterion_totals": [
+        5,
+        5,
+        5,
+        2
+      ]
+    },
+    "retrieval": {
+      "answers": 6,
+      "maximum": 24,
+      "a_total": 18,
+      "b_total": 19,
+      "final_total": 19,
+      "final_mean_per_answer": 3.1666666666666665,
+      "criterion_totals": [
+        6,
+        5,
+        4,
+        4
+      ]
+    }
+  },
+  "new_external_model_api_requests": 0,
+  "claims_retrieval_benefit": false
+}

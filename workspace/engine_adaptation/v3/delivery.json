@@ -1,0 +1,8 @@
+{
+  "report_sha256": "69918bb24a4710577192d78500464ce2d2dcfbf9b5d75b2e3afbcac11ff4eb5b",
+  "acceptance_sha256": "001ca0326be1494fcfe23c2a8c2cee7aa8c624dd18a1a70a3383bf457a376250",
+  "engine_hash": "8ae12c2eb8a66dea80e78d8bf0342c4b132c3c70338ac755ac44a1ab5fc98707",
+  "model_calls": 0,
+  "log_appended": true,
+  "status": "completed_with_two_explicit_BOM_blockers"
+}

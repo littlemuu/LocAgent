@@ -1,0 +1,6 @@
+{
+  "instance_id": "UXARRAY__uxarray-1117",
+  "repo": "UXARRAY/uxarray",
+  "base_commit": "fe4cae1311db7fb21187b505e06018334a015c48",
+  "problem_statement": "Optimize Face Centroid Calculations\nIf `Grid.face_lon` does not exist, `_populate_face_centroids()`, actually `_construct_face_centroids()` in it, takes extremely long for large datasets. For instance, the benchmark/profiling below is for a ~4GB SCREAM dataset, around 5 mins:\n\n@rajeeja FYI: I'm already working on this and have gotten optimized results, which will be good for \"cartesian\" parts of the face center calculations, but you may want to look into the `Welzl` parts as well, i.e. `_populate_face_centerpoints()`.\n\n<img width=\"1065\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9aba545f-0fdb-4a4c-b2be-b8fb9ffe087e\" />\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "sktime__sktime-7417",
+  "repo": "sktime/sktime",
+  "base_commit": "d7f582335197b9c1382d33e40c4dbe1dbae14137",
+  "problem_statement": "[BUG] Unable to use _StatsModelsAdapter.predict if config remember_data=False\n**Describe the bug**\r\nIf the config `remember_data=False` is set then `_StatsModelsAdapter._predict` will throw an error when trying to use `_y` and `_X`.\r\n\r\n\r\n**To Reproduce**\r\n\r\n\r\n```python\r\nimport numpy as np\r\nfrom sktime.forecasting.sarimax import SARIMAX\r\n\r\nforecaster = SARIMAX()\r\nforecaster.set_config(remember_data=False)\r\n\r\ny = np.ones(10)\r\nforecaster.fit(y)\r\nforecaster.predict(fh=11)\r\n```\r\n\r\n**Expected behavior**\r\n`_StatsModelsAdapter` forecasters should be able to `predict` with config `remember_data=False`.\r\n\r\nRelated to #6914\r\n\r\n\n"
+}

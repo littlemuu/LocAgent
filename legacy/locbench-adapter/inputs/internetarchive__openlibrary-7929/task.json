@@ -1,0 +1,6 @@
+{
+  "instance_id": "internetarchive__openlibrary-7929",
+  "repo": "internetarchive/openlibrary",
+  "base_commit": "dc49fddb78a3cb25138922790ddd6a5dd2b5741c",
+  "problem_statement": "Cache Patron's Active Loans\n<!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->\r\n\r\nOn several pages (e.g. LoanStatus) we fetch the patron's active loans (which can be expensive) to see if they've borrowed a book (e.g. on the book page).\r\n\r\nIdeally, we'd cache this every 5 minutes and invalidate within the /borrow endpoint. The one \"gotcha\" is if a patron borrows a book from archive.org, Open Library doesn't know how to bust the cache, but that should be okay because presumably this will be fixed within the 5 minute window.\r\n\r\nExploration required into whether cache actually works for this and how performance is impacted.\r\n\r\n\n"
+}

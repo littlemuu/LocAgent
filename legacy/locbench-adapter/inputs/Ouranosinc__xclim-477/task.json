@@ -1,0 +1,6 @@
+{
+  "instance_id": "Ouranosinc__xclim-477",
+  "repo": "Ouranosinc/xclim",
+  "base_commit": "cc17fde69b757443602872d1156caf00b34ba161",
+  "problem_statement": "sdba - improve the speed of DetrendedQuantileMapping\n### Description\r\nDoing a few preliminary tests **on a single pixel and without dask**, I obtained the following times : \r\n\r\nDetrendedQuantileMapping, groups='month', 150 years of daily data : ~15 seconds\r\nDetrendedQuantileMapping, groups='day', window=31, 150 years of daily data : ~24 seconds\r\n\r\nEmpiricalQuantileMapping, groups='month', 150 years of daily data : ~0.35 seconds\r\nEmpiricalQuantileMapping, groups='day', window=31, 150 years of daily data : ~2.5 seconds\r\n\r\nThere seems to be a bottleneck in the detrending version. Discussions with @aulemahal point towards the normalization process and `sdba.utils.interp_on_quantiles`. I will continue investigating and post my findings here.\n"
+}

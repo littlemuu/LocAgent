@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-10269",
+  "repo": "huggingface/diffusers",
+  "base_commit": "2739241ad189aef9372394a185b864cbbb9ab5a8",
+  "problem_statement": "Allow configuring `shift=` for SD3 dynamically\n**Is your feature request related to a problem? Please describe.**\r\nAllow passing `shift=` per inference call (like timesteps) on the pipeline, for flow matching scheduler, or allow `set_shift()` etc. on the scheduler. This seems to be the key to getting good results with SD3 https://x.com/bfitzgerald242/status/1801018438120341911\n"
+}

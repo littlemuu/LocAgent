@@ -1,0 +1,3 @@
+{"name": "/sweb.eval.scikit-learn__scikit-learn-13779.smoke", "memory_bytes": 0, "nano_cpus": 0, "network_mode": "bridge", "network_disabled": null, "observed_at": 1794888866.1402225}
+{"name": "/sweb.eval.django__django-13033.smoke", "memory_bytes": 0, "nano_cpus": 0, "network_mode": "bridge", "observed_at": 1794889405.7585483}
+{"name": "/locagent-e2e-9df8d52e480945", "memory_bytes": 6442450944, "nano_cpus": 6000000000, "network_mode": "none", "observed_at": 1794889563.1812284}

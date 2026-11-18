@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18795",
+  "repo": "django/django",
+  "base_commit": "2bc43ccbdb28b9d87da172ef119ff3b48e6ff71a",
+  "problem_statement": "System check for default database values with expressions prohibits non-expressions\nDescription\n\t \nSince its introduction in Django 5.0, ​the fields.E011 system check for database backends that have DatabaseFeatures.supports_expression_defaults = False ​requires literal defaults to be wrapped in Value.\nThere are a number of test models that have ​int, float and ​string db_defaults that will raise a system check error if DatabaseFeatures.supports_expression_defaults = False\nsince these models don't have required_db_features = {\"supports_expression_defaults\"}.\nI'm working on MongoDB which doesn't support any database defaults, literal or expressions.\n"
+}

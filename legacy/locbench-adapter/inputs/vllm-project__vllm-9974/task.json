@@ -1,0 +1,6 @@
+{
+  "instance_id": "vllm-project__vllm-9974",
+  "repo": "vllm-project/vllm",
+  "base_commit": "91c9ebbb1bfc39e98aa2bd444b9569e5f2f92c9e",
+  "problem_statement": "[Bug]: from vllm.platforms import current_platform infinite loop error with OpenVino Build. \n### Your current environment\n\nUnrelated\n\n### Model Input Dumps\n\nUnrelated\n\n### 🐛 Describe the bug\n\nIn OpenVino Build, from vllm.platforms import current_platform for OpenVino will...\r\n * reference openvino.py in vllm.platforms.openvino.py as OpenVino is identified as current platform\r\n * openvino.py line 4 will reference from vllm.utils import print_warning_once\r\n * vllm.utils line 40 will reference from vllm.platforms import current_platform\r\n * Due to circular self-reference, will throw error\r\n\r\nThis impacts any vllm functionality on the openvino build due to vllm requiring detection of the current_platform.\r\n\r\nResolution: **removing print_warning_once dependency from openvino.py will fix, either by defining print function locally or removing logging altogether from openvino.py**\r\n\r\n\n\n### Before submitting a new issue...\n\n- [X] Make sure you already searched for relevant issues, and asked the chatbot living at the bottom right corner of the [documentation page](https://docs.vllm.ai/en/latest/), which can answer lots of frequently asked questions.\n"
+}

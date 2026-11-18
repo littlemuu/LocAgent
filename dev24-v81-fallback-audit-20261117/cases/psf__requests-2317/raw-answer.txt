@@ -1,0 +1,20 @@
+已读到的事实（附文件:行号）
+- requests/sessions.py:378-392：`Session.request` 的签名接收 `method` 参数，无类型转换或 bytes 处理。
+- requests/sessions.py:428：`method = builtin_str(method)` 是 method 进入 `Request` 前的唯一显式转换点。
+- requests/sessions.py:431-432：转换结果经 `method.upper()` 传入 `Request`。
+- requests/sessions.py:363-365：`prepare_request` 中再次调用 `request.method.upper()` 传给 `PreparedRequest.prepare`。
+- requests/sessions.py:461-469：`get()` 以字面量 `'GET'` 调用 `request`，说明内置便捷方法不受影响。
+- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。
+
+推断
+- 待验证假设：在 Python 3 下 `requests/compat.py:builtin_str` 绑定为 `str`，因此 `str(b'GET')` 得到 `"b'GET'"`，与用户观察一致；Python 2 下 `str` 对 bytes 是恒等，故 2.6 不复现。
+- 待验证假设：`requests/sessions.py:Session.request` 缺少对 bytes 型 method 的显式解码（如 `method.decode('ascii')`），是该方法路径上的可疑点；`Session.prepare_request` 只做 `upper()`，不会修复该问题。
+- 待验证假设：`requests/utils.py` 中 `safe_encode_list` 属于 neutronclient 而非本仓库，本仓库内未见对应实现，故“谁该修”无法从本仓库证据判定。
+
+未核验点
+- requests/compat.py 的 `builtin_str` 定义函数体未读完（两次读取均报错），仅凭搜索命中行，未确认 py2/py3 分支条件。
+- requests/models.py 的 `Request`/`PreparedRequest.prepare` 完整函数体未读，method 后续如何进入 urllib3 请求行未核验。
+- requests/utils.py 未读，`safe_encode_list` 是否存在于本仓库未确认。
+- 未运行任何行为验证，未证明调用链穷尽。
+
+最小验证：`python -c "import requests.compat as c; print(repr(c.builtin_str(b'GET')))"`（预期在 py3 输出 "b'GET'" 以支持假设）

@@ -1,0 +1,1187 @@
+{
+  "reviewer": "B",
+  "independence_attestation": {
+    "prior_mapping_seen": false,
+    "other_reviewer_seen": false,
+    "only_allowed_inputs_read": true,
+    "group_disclosure_detected": [],
+    "limitations": [
+      "仅阅读本目录 REVIEW_POLICY.txt、packets.json 及 sources 下全部固定源码；未读取其他评审、映射、父目录材料、用户历史或运行轨迹。",
+      "未调用网络或模型 API，未导入、修改或执行被评审源码；只进行静态阅读。",
+      "源码未提供外部数据库、存储、注入映射实现或调用方同步，涉及这些语义的结论以可见代码为限。",
+      "复合标准按所有实质要求评分；直接由答案自身明确描述的完整流程表达的等价含义可以计分，源码才揭示的遗漏不予补足。"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "item-5fcca383",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "request wins over project, which wins over defaults; Only an absent key or an explicit `None` value falls through; keys outside DEFAULTS are never copied",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            }
+          ],
+          "reason": "正确覆盖优先级、已知键限制及 None 不覆盖。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "`False` and `0` are NOT treated as missing; `attempts: 0` ... replaces the default; negative `attempts` ... non-positive `timeout`",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            },
+            {
+              "path": "sources/d02_config/runner/validation.py",
+              "lines": "2-7",
+              "excerpt": "type(settings['attempts']) is not int or settings['attempts'] < 0; type(settings['timeout']) is not int or settings['timeout'] <= 0; type(settings['enabled']) is not bool"
+            }
+          ],
+          "reason": "保留 False/0，并用 attempts 负数、timeout 非正数的拒绝规则表达零的不同合法性。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "`validate_settings(merged)` is called on the merged result; request wins over project; `bool` values for `attempts`/`timeout` are rejected",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            },
+            {
+              "path": "sources/d02_config/runner/validation.py",
+              "lines": "2-7",
+              "excerpt": "type(settings['attempts']) is not int or settings['attempts'] < 0; type(settings['timeout']) is not int or settings['timeout'] <= 0; type(settings['enabled']) is not bool"
+            },
+            {
+              "path": "sources/d02_config/runner/api.py",
+              "lines": "4-6",
+              "excerpt": "settings = resolve_settings(project, request); return start_worker(settings)"
+            }
+          ],
+          "reason": "精确类型和 worker 前校验清楚；答案自身给出的先覆盖、再仅校验最终 merged 的顺序，也表达较低层坏值可被较高层合法值替换。",
+          "uncertainty": "中；较低层坏值被遮蔽是答案所述完整顺序的直接含义，未单独举例。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "`start_worker` ... trusts its input and only branches on `enabled`",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/worker.py",
+              "lines": "2-4",
+              "excerpt": "if not settings['enabled']: return {'started': False}; return {'started': True, 'attempts': settings['attempts'], 'timeout': settings['timeout']}"
+            },
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            }
+          ],
+          "reason": "没有交代 disabled 返回 started false，也没有说明 enabled true 时使用解析后的 attempts/timeout；未知键不传播部分已覆盖。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-c6b4d181",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "column count must match headers; header names are stripped and lowercased, must be unique and include tenant/invoice/amount; tenant and invoice are .strip()ed",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/parser.py",
+              "lines": "4-10",
+              "excerpt": "len(headers) != len(row); names = [name.strip().lower() for name in headers]; ... {'tenant', 'invoice', 'amount'} <= set(names); tenant, invoice = data['tenant'].strip(), data['invoice'].strip()"
+            }
+          ],
+          "reason": "完整描述头部规范化和拒绝条件；身份仅 strip，与头部 lower 的区分足够明确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 0,
+          "answer_evidence": "must be non-empty; parsed with Decimal ... non-finite or negative amounts rejected",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/parser.py",
+              "lines": "9-19",
+              "excerpt": "data = dict(zip(names, row)); ... if not tenant or not invoice ... amount = Decimal(data['amount'].strip()); except InvalidOperation ... if not amount.is_finite() or amount < 0 ... return {'tenant': tenant, 'invoice': invoice, 'amount': amount}"
+            }
+          ],
+          "reason": "金额及空身份条件正确，负数拒绝也表达零可接受；没有交代额外映射列被忽略。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "calls parse_row then index_invoice; catches only ValueError ... 1-based row number ... row is skipped, not fatal",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/api.py",
+              "lines": "8-14",
+              "excerpt": "for number, row in enumerate(rows, 1): ... invoice = parse_row(headers, row); index_invoice(invoices, invoice); except ValueError: errors.append(number)"
+            }
+          ],
+          "reason": "只捕获 ValueError、记一基序号并继续已明示；先解析后索引且错误行跳过，足以表达无效后续重复行不会替换原行。",
+          "uncertainty": "中；无效重复行保留旧值由答案自身明确描述的跳过索引流程表达，未单独举例。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "keys on (tenant, invoice) ... last occurrence wins; sums over invoices.values() ... replacement row is counted once",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/index.py",
+              "lines": "1-3",
+              "excerpt": "key = (invoice['tenant'], invoice['invoice']); invoices[key] = invoice"
+            },
+            {
+              "path": "sources/d06_import/imports/totals.py",
+              "lines": "3-8",
+              "excerpt": "for invoice in invoices.values(): tenant = invoice['tenant']; totals[tenant] = totals.get(tenant, Decimal('0')) + invoice['amount']"
+            },
+            {
+              "path": "sources/d06_import/imports/api.py",
+              "lines": "8-14",
+              "excerpt": "for number, row in enumerate(rows, 1): ... invoice = parse_row(headers, row); index_invoice(invoices, invoice); except ValueError: errors.append(number)"
+            }
+          ],
+          "reason": "结合前述错误行跳过，最后出现指最后有效行；复合键及按 tenant 汇总维持租户隔离，最终字典不重复累计。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-dc9902fd",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "rejects only if job['done'] or (owner is not None and now < deadline); increments generation, sets owner ... deadline = now + ttl",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            }
+          ],
+          "reason": "覆盖 done、未到期已有 owner 的拒绝、到期等号及成功更新字段。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "(job['id'], job['owner'], job['generation']); old worker's token no longer matches",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            }
+          ],
+          "reason": "令牌组成和重领后的旧代次失效正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "at exactly now == deadline both renewals and acknowledgements are rejected",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            }
+          ],
+          "reason": "等号拒绝正确，但未完整交代两者均要求 not done 和精确令牌，也遗漏 ack 写 done、renew 写 now+ttl。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "no locking, compare-and-swap, or atomicity ... Nothing prevents both from doing work",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/api.py",
+              "lines": "4-8",
+              "excerpt": "return claim_lease(job, worker, now, ttl=20); ... return acknowledge(job, token, now)"
+            }
+          ],
+          "reason": "正确否定并发工作互斥保证，说明令牌检查不能阻止已发生的工作，并承认调用者同步未知。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "the last writer's owner/generation wins, so the earlier claimant's token becomes stale",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            }
+          ],
+          "reason": "这是可能的交错，不是所有交错的必然结果：两个调用也可能在写入后读取同一最终 job 状态并返回相同令牌。主结论无互斥保证仍正确。"
+        },
+        {
+          "answer_evidence": "only the later acknowledge/renew would fail",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            }
+          ],
+          "reason": "失败的是当时令牌失配、done 或到期的调用，并非按调用先后决定；此处措辞容易误导。"
+        }
+      ]
+    },
+    {
+      "id": "item-21ec8def",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 0,
+          "answer_evidence": "int in [0, count); a repeated part number simply overwrites the earlier bytes",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/parts.py",
+              "lines": "1-6",
+              "excerpt": "if session['completed']: raise ValueError('already complete'); if type(number) is not int or not 0 <= number < session['count']: raise ValueError('part number'); session['parts'][number] = data"
+            }
+          ],
+          "reason": "范围和覆盖正确，但未说明已完成会拒绝 receive。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "requires set(session['parts']) == expected; joins parts in numeric order 0..count-1; before any storage write",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/parts.py",
+              "lines": "8-12",
+              "excerpt": "expected = set(range(session['count'])); if set(session['parts']) != expected: raise ValueError('missing or extra parts'); return b''.join(session['parts'][number] for number in range(session['count']))"
+            },
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "精确索引集合、升序拼接及失败在持久写之前均有说明。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "compares sha256(data).hexdigest() to expected_hash; storage.put(data) ... before session['object_id'], session['completed'], and session['parts'].clear()",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/checksum.py",
+              "lines": "3-4",
+              "excerpt": "return sha256(data).hexdigest() == expected"
+            },
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "哈希算法及数据、比较和写存储先于会话修改均正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "returns the existing object_id if already completed; no session mutation occurs; whether storage.put is atomic/partially durable is not visible",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "已覆盖异常保留状态、潜在存储副作用及重复完成返回 id；未说明共享会话完成过程缺少并发保证，单独的 put 原子性未知不足以表达这一点。",
+          "uncertainty": "中；该条包含多个限制，按所有实质要求都需覆盖处理，答案的原子性保留意见仅针对 storage.put。"
+        }
+      ],
+      "total": 2,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "object_id is unset",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "源码只保证 object_id 在 put 抛错时不被本函数赋值，未提供会话初始化，不能保证此前没有 object_id。应表述为保持原值。"
+        }
+      ]
+    },
+    {
+      "id": "item-0adfc0f4",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "duplicate part number simply overwrites ... non-int or out-of-range ... any part after completion raises 'already complete'",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/parts.py",
+              "lines": "1-6",
+              "excerpt": "if session['completed']: raise ValueError('already complete'); if type(number) is not int or not 0 <= number < session['count']: raise ValueError('part number'); session['parts'][number] = data"
+            },
+            {
+              "path": "sources/d04_upload/uploads/parts.py",
+              "lines": "8-12",
+              "excerpt": "expected = set(range(session['count'])); if set(session['parts']) != expected: raise ValueError('missing or extra parts'); return b''.join(session['parts'][number] for number in range(session['count']))"
+            }
+          ],
+          "reason": "覆盖重复替换、整数范围和已完成拒绝接收。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "requires set(session['parts']) == expected; joins parts in numeric order 0..count-1; neither incomplete nor mismatched uploads reach storage.put",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/parts.py",
+              "lines": "8-12",
+              "excerpt": "expected = set(range(session['count'])); if set(session['parts']) != expected: raise ValueError('missing or extra parts'); return b''.join(session['parts'][number] for number in range(session['count']))"
+            },
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "完整覆盖集合、拼接顺序和写存储前拒绝。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "checksum_matches ... sha256 hexdigest equality; before session['object_id'], session['completed'], and session['parts'].clear()",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/checksum.py",
+              "lines": "3-4",
+              "excerpt": "return sha256(data).hexdigest() == expected"
+            },
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "明确组装后 SHA256 校验及 put 在状态修改前。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "session stays pending with all parts retained ... possible duplicate object; storage.put semantics/atomicity are unknown",
+          "source_evidence": [
+            {
+              "path": "sources/d04_upload/uploads/finalize.py",
+              "lines": "4-14",
+              "excerpt": "if session['completed']: return session['object_id']; data = assemble_parts(session); if not checksum_matches(data, expected_hash): raise ValueError('checksum'); object_id = storage.put(data); session['object_id'] = object_id; session['completed'] = True; session['parts'].clear()"
+            }
+          ],
+          "reason": "异常与潜在副作用正确，但遗漏已完成再次调用直接返回 object_id，也未明确并发保证的缺失。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-0eb46173",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "generation = versions.get((tenant, user), 0); tuple (str(tenant), str(user), generation) — tenant and user are stringified",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/keys.py",
+              "lines": "1-2",
+              "excerpt": "return (str(tenant), str(user), generation)"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "原始版本表身份与字符串化缓存键均清楚列出。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "now < entry['expires_at']; expires_at = now + TTL, TTL = 30; misses, re-reads the DB and caches under the new key",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "2",
+              "excerpt": "TTL = 30"
+            }
+          ],
+          "reason": "边界严格小于、等号过期及 miss 读取数据库并缓存 30 单位均覆盖。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "writes to the DB first, then increments; next fetch computes a different key; old entry is not deleted; generation is never incremented",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cleanup.py",
+              "lines": "1-4",
+              "excerpt": "for key in list(cache): if cache[key]['expires_at'] <= now: del cache[key]"
+            }
+          ],
+          "reason": "写后增代、失败不增代及新代查不到旧键但旧项不删除均正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "no locking, no compare-and-set; design gives eventual consistency bounded by TTL; db, cache and versions are injected",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "虽否定并发新鲜性且承认注入实现未知，却无根据地承诺 TTL 有界最终一致性；也未说明跨进程版本共享假设。这不足以完整满足限制性标准。",
+          "uncertainty": "中；对注入实现未知的声明可部分涵盖共享状态未知，但正文的 TTL 保证仍过强。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "stale but self-healing after 30 units; eventual consistency bounded by TTL",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "失败未必改变数据库，旧缓存未必因失败而变旧；若数据库有副作用、读隔离未知或并发读长期阻塞，也无法由这些文件保证 30 单位内恢复。影响标准 4。"
+        },
+        {
+          "answer_evidence": "repopulate the old key with pre-write data, extending staleness by a further TTL",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "后续读取新代次不再访问旧键；此外 expires_at 使用调用提供的 now，非完成时刻。旧键被重填本身不证明正常新代读取额外陈旧一个 TTL。"
+        }
+      ]
+    },
+    {
+      "id": "item-d462b788",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "request > project > defaults; only an absent key or an explicit None falls through; Unknown keys are dropped",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            }
+          ],
+          "reason": "完整覆盖优先级、None 和已知键。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "enabled=False or attempts=0 is accepted; non-int or non-positive timeout",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            },
+            {
+              "path": "sources/d02_config/runner/validation.py",
+              "lines": "2-7",
+              "excerpt": "type(settings['attempts']) is not int or settings['attempts'] < 0; type(settings['timeout']) is not int or settings['timeout'] <= 0; type(settings['enabled']) is not bool"
+            }
+          ],
+          "reason": "明确 False 与零 attempts 保留，并以非正 timeout 拒绝规则覆盖零 timeout。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "a bad project value can be masked by a valid request value; bools are rejected for attempts/timeout; start_worker is never invoked",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            },
+            {
+              "path": "sources/d02_config/runner/validation.py",
+              "lines": "2-7",
+              "excerpt": "type(settings['attempts']) is not int or settings['attempts'] < 0; type(settings['timeout']) is not int or settings['timeout'] <= 0; type(settings['enabled']) is not bool"
+            },
+            {
+              "path": "sources/d02_config/runner/api.py",
+              "lines": "4-6",
+              "excerpt": "settings = resolve_settings(project, request); return start_worker(settings)"
+            }
+          ],
+          "reason": "明确说明最终值校验、精确类型、低层坏值可遮蔽及异常阻断 worker。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "launch ... calls resolve_settings then start_worker; only reads enabled/attempts/timeout and returns started=False when disabled; Unknown keys are dropped",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/api.py",
+              "lines": "4-6",
+              "excerpt": "settings = resolve_settings(project, request); return start_worker(settings)"
+            },
+            {
+              "path": "sources/d02_config/runner/worker.py",
+              "lines": "2-4",
+              "excerpt": "if not settings['enabled']: return {'started': False}; return {'started': True, 'attempts': settings['attempts'], 'timeout': settings['timeout']}"
+            },
+            {
+              "path": "sources/d02_config/runner/settings.py",
+              "lines": "5-11",
+              "excerpt": "merged = dict(DEFAULTS); for layer in (project, request): ... for key in DEFAULTS: ... layer[key] is not None; validate_settings(merged)"
+            }
+          ],
+          "reason": "答案说明 worker 读取解析后的三项并在禁用时返回 false；完整列举的两覆盖层排除了环境层，未知项不会传播。",
+          "uncertainty": "中；enabled true 使用解析值及没有环境层通过答案所述完整调用与数据流表达，未分别单列一句。"
+        }
+      ],
+      "total": 4,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "runner/reports.py only contains a docstring-like string",
+          "source_evidence": [
+            {
+              "path": "sources/d02_config/runner/reports.py",
+              "lines": "1-2",
+              "excerpt": "def report_defaults(): return 'Defaults are documentation, not a runtime override.'"
+            }
+          ],
+          "reason": "该文件实际定义了一个返回字符串的函数，不是只有类似文档字符串的内容；与四项核心评分无关。"
+        }
+      ]
+    },
+    {
+      "id": "item-dfe16c4b",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "deny if user['disabled'] or user['tenant'] != document['tenant']; deny unless action is 'read' or 'write'",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            }
+          ],
+          "reason": "顺序和全部前置拒绝条件正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "ownership or admin only helps after the tenant and action gates pass; shortcut grants both read and write",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            }
+          ],
+          "reason": "前置门通过后 owner/admin 直接返回 True，答案正确表达无需 token 的读写权限。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "share token permits read only; not token['revoked'], token['document_id'] == document['id'], and token['tenant'] == document['tenant']",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            },
+            {
+              "path": "sources/d03_access/docs/shares.py",
+              "lines": "1-4",
+              "excerpt": "return (token is not None and not token['revoked'] and token['document_id'] == document['id'] and token['tenant'] == document['tenant'])"
+            }
+          ],
+          "reason": "只读、非空未撤销、双匹配及前置用户门均完整覆盖。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "audit write happens after the decision; merely appends a tuple ... grants no access; how tokens are issued/revoked ... unverified",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/api.py",
+              "lines": "4-8",
+              "excerpt": "if not permitted(user, document, action, token): raise PermissionError('denied'); record_access(audit, user['id'], document['id'], action); return document['body']"
+            },
+            {
+              "path": "sources/d03_access/docs/audit.py",
+              "lines": "1-2",
+              "excerpt": "audit.append((user_id, document_id, action))"
+            },
+            {
+              "path": "sources/d03_access/docs/shares.py",
+              "lines": "1-4",
+              "excerpt": "return (token is not None and not token['revoked'] and token['document_id'] == document['id'] and token['tenant'] == document['tenant'])"
+            }
+          ],
+          "reason": "许可先于审计和返回正文、审计不授权均正确；没有指出所示 token 检查不包含密码学验证或到期检查。发放/撤销方式未知不等于覆盖该限制。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-453e4ae8",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "(str(tenant), str(user), generation); generation comes from versions.get((tenant, user), 0)",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/keys.py",
+              "lines": "1-2",
+              "excerpt": "return (str(tenant), str(user), generation)"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "清楚区分两种键的身份转换。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "now < entry['expires_at']; TTL = 30; stale exactly at now == expires_at; reads db.read(tenant, user)",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "2",
+              "excerpt": "TTL = 30"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cleanup.py",
+              "lines": "1-4",
+              "excerpt": "for key in list(cache): if cache[key]['expires_at'] <= now: del cache[key]"
+            }
+          ],
+          "reason": "严格到期边界和 miss 读数据库、缓存 30 单位正确。",
+          "uncertainty": "低；write_time 一词可指缓存写入时刻，答案已明确使用 now+TTL，未视为数据库更新时刻。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "writes to the DB first, then increments; old generation entry is not deleted; exception propagates and the generation is not incremented",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "完整覆盖状态顺序及旧键保留但新代不再命中。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "Freshness under concurrency: not guaranteed; no locking ... Whether versions is shared across processes is also unverified",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            },
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "明确否定并发新鲜性，并在最终不确定性中承认跨进程共享未知。",
+          "uncertainty": "中；正文曾把 versions 描述为进程内 dict 的事实，末段将该点明确退回未验证假设；保留主标准得分，并另记措辞过强。"
+        }
+      ],
+      "total": 4,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "which still matches the DB, since the write failed. No rollback or invalidation is needed",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            }
+          ],
+          "reason": "db.write 抛错不证明底层完全未写，也不证明缓存此前与数据库一致；数据库实现未提供，不能保证无需回滚或失效。"
+        },
+        {
+          "answer_evidence": "versions is an in-process dict, so multi-process deployments would not share generations",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/writes.py",
+              "lines": "1-5",
+              "excerpt": "db.write(tenant, user, payload); identity = (tenant, user); versions[identity] = versions.get(identity, 0) + 1; return versions[identity]"
+            },
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "versions 是注入参数，源码未限定具体类型或共享机制；答案末段承认未知，但正文断言仍过强。"
+        },
+        {
+          "answer_evidence": "first call misses ... stores under generation 0",
+          "source_evidence": [
+            {
+              "path": "sources/d01_cache/profiles/cache.py",
+              "lines": "4-12",
+              "excerpt": "generation = versions.get((tenant, user), 0); key = cache_key(tenant, user, generation); ... if entry is not None and now < entry['expires_at']: return entry['value']; value = db.read(tenant, user); cache[key] = {'value': value, 'expires_at': now + TTL}"
+            }
+          ],
+          "reason": "首次调用只有缓存为空且版本映射无该身份时才如此；注入状态可能已有项或非零代次。"
+        }
+      ]
+    },
+    {
+      "id": "item-17a1492c",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "tenant/identity gate ... action allowlist ... ownership/admin shortcut",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            }
+          ],
+          "reason": "明确顺序，禁止 disabled、跨租户及未知动作先于特权。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "bypasses the share-token requirement but not the tenant match, disabled check, or action allowlist",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            }
+          ],
+          "reason": "结合 read/write allowlist 和直接 True，完整表达同租户 enabled owner/admin 无 token 可读写。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 1,
+          "answer_evidence": "read only, never write; not token['revoked']; token['document_id'] == document['id']; token['tenant'] == document['tenant']",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/access.py",
+              "lines": "3-10",
+              "excerpt": "if user['disabled'] or user['tenant'] != document['tenant']: return False; if action not in ('read', 'write'): return False; if user['id'] == document['owner'] or user['role'] == 'admin': return True; return action == 'read' and valid_share(token, document)"
+            },
+            {
+              "path": "sources/d03_access/docs/shares.py",
+              "lines": "1-4",
+              "excerpt": "return (token is not None and not token['revoked'] and token['document_id'] == document['id'] and token['tenant'] == document['tenant'])"
+            }
+          ],
+          "reason": "token 全部校验和不能绕过用户前置门均正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 0,
+          "answer_evidence": "only after that does it call record_access and return document['body']; Audit does not grant access",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/api.py",
+              "lines": "4-8",
+              "excerpt": "if not permitted(user, document, action, token): raise PermissionError('denied'); record_access(audit, user['id'], document['id'], action); return document['body']"
+            },
+            {
+              "path": "sources/d03_access/docs/audit.py",
+              "lines": "1-2",
+              "excerpt": "audit.append((user_id, document_id, action))"
+            },
+            {
+              "path": "sources/d03_access/docs/shares.py",
+              "lines": "1-4",
+              "excerpt": "return (token is not None and not token['revoked'] and token['document_id'] == document['id'] and token['tenant'] == document['tenant'])"
+            }
+          ],
+          "reason": "审计部分完整，但密码学验证及 token 到期未在所示实现出现的限制缺失。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "audit list is an in-memory append with no persistence",
+          "source_evidence": [
+            {
+              "path": "sources/d03_access/docs/audit.py",
+              "lines": "1-2",
+              "excerpt": "audit.append((user_id, document_id, action))"
+            },
+            {
+              "path": "sources/d03_access/docs/api.py",
+              "lines": "4-8",
+              "excerpt": "if not permitted(user, document, action, token): raise PermissionError('denied'); record_access(audit, user['id'], document['id'], action); return document['body']"
+            }
+          ],
+          "reason": "源码显示注入 audit 对象的 append 调用，未提供对象实现；可说未展示持久化，不能确认一定仅在内存。"
+        }
+      ]
+    },
+    {
+      "id": "item-4480a5a9",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "column count must match headers; header names are stripped and lowercased; headers must be unique ... include tenant, invoice, amount; tenant and invoice are .strip()ed",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/parser.py",
+              "lines": "4-10",
+              "excerpt": "len(headers) != len(row); names = [name.strip().lower() for name in headers]; ... {'tenant', 'invoice', 'amount'} <= set(names); tenant, invoice = data['tenant'].strip(), data['invoice'].strip()"
+            }
+          ],
+          "reason": "全部头部拒绝与规范化、身份仅 strip 的区分均表达。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 0,
+          "answer_evidence": "must be non-empty; Decimal ... non-finite or negative amounts are rejected",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/parser.py",
+              "lines": "9-19",
+              "excerpt": "data = dict(zip(names, row)); ... if not tenant or not invoice ... amount = Decimal(data['amount'].strip()); except InvalidOperation ... if not amount.is_finite() or amount < 0 ... return {'tenant': tenant, 'invoice': invoice, 'amount': amount}"
+            }
+          ],
+          "reason": "空身份及金额校验正确，负数拒绝表达零合法；没有解释额外列映射后被忽略。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "ValueError, which import_rows catches ... 1-based row number ... skipped entirely — it never reaches indexing or totals",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/api.py",
+              "lines": "8-14",
+              "excerpt": "for number, row in enumerate(rows, 1): ... invoice = parse_row(headers, row); index_invoice(invoices, invoice); except ValueError: errors.append(number)"
+            }
+          ],
+          "reason": "一基行号、跳过及不替换旧有效行已表达；没有说明其他异常类型不被捕获。",
+          "uncertainty": "中；回答点名捕获 ValueError，但未说 only，也未解释非 ValueError 的路径，按完整要求计 0。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "tuple (tenant, invoice) ... later row with the same normalized key overwrites; each surviving key contributes exactly once",
+          "source_evidence": [
+            {
+              "path": "sources/d06_import/imports/index.py",
+              "lines": "1-3",
+              "excerpt": "key = (invoice['tenant'], invoice['invoice']); invoices[key] = invoice"
+            },
+            {
+              "path": "sources/d06_import/imports/totals.py",
+              "lines": "3-8",
+              "excerpt": "for invoice in invoices.values(): tenant = invoice['tenant']; totals[tenant] = totals.get(tenant, Decimal('0')) + invoice['amount']"
+            },
+            {
+              "path": "sources/d06_import/imports/api.py",
+              "lines": "8-14",
+              "excerpt": "for number, row in enumerate(rows, 1): ... invoice = parse_row(headers, row); index_invoice(invoices, invoice); except ValueError: errors.append(number)"
+            }
+          ],
+          "reason": "复合键、已说明无效行不入索引，故最后有效行胜出且不同租户独立；最终字典汇总无重复。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 2,
+      "additional_accuracy_notes": []
+    },
+    {
+      "id": "item-60b4e01e",
+      "criteria": [
+        {
+          "index": 1,
+          "score": 1,
+          "answer_evidence": "rejects ... job['done'] or (owner is not None and now < deadline); increments ... generation ... owner ... deadline = now + ttl",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            }
+          ],
+          "reason": "完整描述拒绝、等号可重领及成功赋值。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 2,
+          "score": 1,
+          "answer_evidence": "(job['id'], job['owner'], job['generation']); even if the same worker re-claims (generation still bumps)",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            }
+          ],
+          "reason": "三元令牌和同一 worker 重领仍因 generation 变化令旧 token 失效正确。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 3,
+          "score": 0,
+          "answer_evidence": "at now == deadline both are rejected (False)",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            }
+          ],
+          "reason": "等号拒绝正确，未交代 ack/renew 共同的 not done 与 exact token 完整条件，也未说明成功 ack 标记 done 和 renew 设 now+ttl。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        },
+        {
+          "index": 4,
+          "score": 1,
+          "answer_evidence": "no lock, CAS ... both doing work ... no fencing token passed to the work itself",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/api.py",
+              "lines": "4-8",
+              "excerpt": "return claim_lease(job, worker, now, ttl=20); ... return acknowledge(job, token, now)"
+            }
+          ],
+          "reason": "明确无锁/CAS 和副作用 fencing，解释状态检查不证明并发工作互斥，并限定外部实现未知。",
+          "uncertainty": "低；所引源码直接支持判断。"
+        }
+      ],
+      "total": 3,
+      "additional_accuracy_notes": [
+        {
+          "answer_evidence": "Only the last writer's token matches lease_token, so the loser's later acknowledge/renew fails",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            },
+            {
+              "path": "sources/d05_lease/jobs/tokens.py",
+              "lines": "1-2",
+              "excerpt": "return (job['id'], job['owner'], job['generation'])"
+            },
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "11-15",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['deadline'] = now + ttl; return True"
+            },
+            {
+              "path": "sources/d05_lease/jobs/completion.py",
+              "lines": "3-7",
+              "excerpt": "if job['done'] or token != lease_token(job) or now >= job['deadline']: return False; job['done'] = True; return True"
+            }
+          ],
+          "reason": "只是某些交错下成立：两个 claim 可能在写完后读取相同最终状态，拿到同一 token；不能保证只有一个调用返回匹配 token。无工作互斥的主结论仍正确。"
+        },
+        {
+          "answer_evidence": "claim check is only against the deadline",
+          "source_evidence": [
+            {
+              "path": "sources/d05_lease/jobs/leases.py",
+              "lines": "3-9",
+              "excerpt": "if job['done'] or (job['owner'] is not None and now < job['deadline']): return None; job['generation'] += 1; job['owner'] = worker; job['deadline'] = now + ttl; return lease_token(job)"
+            }
+          ],
+          "reason": "若单独理解不准确，因为还检查 done 和 owner 是否为空；前文已列出完整条件，故视为局部措辞问题，不另影响标准 1。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+已读到的事实（附文件:行号）
+- django/db/models/sql/compiler.py:715-721：find_ordering_name 的签名与 docstring，说明 name 形如 'field1__field2__...__fieldN'，返回表别名与列名。
+- django/db/models/sql/compiler.py:722-725：先 get_order_dir(name, default_order) 拆出 name/order，再 _setup_joins(pieces, opts, alias) 解析路径。
+- django/db/models/sql/compiler.py:727-730：若 field.is_relation 且 opts.ordering 非空，且 field.attname != name 且 name != 'pk'，则递归展开目标模型的默认 ordering。
+- django/db/models/sql/compiler.py:731-747：用 join_tuple 做 already_seen 防无限循环；对 opts.ordering 每项，若为表达式则按 descending 加 desc()/asc()，否则递归 find_ordering_name(item, opts, alias, order, already_seen)。
+- django/db/models/sql/compiler.py:748-749：否则 trim_joins 后返回 OrderBy(transform_function(t, alias), descending=descending)。
+- django/db/models/sql/compiler.py:751-762：_setup_joins 调用 query.setup_joins 并取 joins[-1] 作为 alias。
+
+推断
+- 待验证假设：order_by("record__root_id") 在 django/db/models/sql/compiler.py:SQLCompiler.find_ordering_name 中，因 name 为 'record__root_id' 而 field.attname 为 'root_id'，两者不等，故 730 行条件成立，进入 739-746 递归展开 OneModel.Meta.ordering=("-id",)，从而产生 T3 额外 JOIN 与 DESC。
+- 待验证假设：order_by("-record__root_id") 时 722 行得到 order='DESC'，递归时以 order 作为 default_order 传入，与 Meta 的 "-id" 叠加，导致出现 ASC，即用户观察到的“反转”。
+- 待验证假设：order_by("record__root__id") 因 name 末段为 'id' 且 attname 匹配，跳过 730 分支，故只产生单 JOIN 与 ASC。
+- 待验证假设：自引用外键使 setup_joins 在 django/db/models/sql/compiler.py:SQLCompiler._setup_joins 中生成新别名 T3，而非自引用时可能复用别名，这解释了“仅自引用时多一个 JOIN”。
+
+未核验点
+- django/db/models/sql/compiler.py 的 find_ordering_name 未读完：cursor=rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca 未续读（实际完整行仅 700-767）。
+- get_order_dir 定义未读到，其 DESC 解析与 default_order 语义未核验。
+- query.setup_joins / trim_joins 未读，别名复用与自引用 JOIN 生成逻辑未核验。
+- 未运行任何行为验证，未证明调用链穷尽。
+
+最小验证：`python -m pytest -q tests/queries/tests.py -k ordering`（仅作回归入口，不能单独验证根因）

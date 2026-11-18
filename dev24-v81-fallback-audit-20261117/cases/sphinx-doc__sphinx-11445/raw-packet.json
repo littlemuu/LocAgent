@@ -1,0 +1,13 @@
+{
+  "answer": "已读到的事实（附文件:行号）\n- sphinx/util/rst.py:78-97：prepend_prolog 在 prolog 非空时，先跳过开头连续的 docinfo 行（docinfo_re.match），再在 pos 处插入 prolog 各行，最后插入一个空行。\n- sphinx/util/rst.py:94-95：prolog 的每一行以 source='<rst_prolog>' 插入到 content 中，行号取自 prolog 内部 enumerate。\n- sphinx/util/rst.py:97：prolog 之后插入一个空行（'<generated>'）。\n- sphinx/parsers.py:85（搜索命中）：RSTParser 在解析前调用 prepend_prolog(content, self.config.rst_prolog)。\n- sphinx/config.py:128（搜索命中）：rst_prolog 默认 None，类型 [str]。\n- sphinx/transforms/i18n.py:60-79（搜索命中）：i18n 变换会临时清空并恢复 config.rst_prolog。\n\n推断\n- 待验证假设：sphinx/util/rst.py:prepend_prolog 把 prolog 文本插到文档最前面，使原本位于首行的标题（如 :mod:`mypackage2` 及其下划线）不再处于文档起始位置；docutils 的标题识别/文档标题提升（doctitle promotion）依赖首块结构，插入的 prolog 块可能使该标题被当作普通段落或 section 而非文档标题，从而丢失 toctree 条目。\n- 待验证假设：sphinx/parsers.py 中 RSTParser 的解析流程（未读完）在 prepend_prolog 之后未对标题做补偿处理，是问题暴露的调用点。\n- 待验证假设：sphinx/util/rst.py:append_epilog 与 prepend_prolog 结构对称，但 epilog 在尾部，不影响标题提升，故非根因候选。\n\n未核验点\n- sphinx/parsers.py 的 RSTParser.parse 完整函数体未读完（两次读取均返回 ValueError），无法确认 prolog 插入后是否还有标题相关处理。\n- sphinx/util/rst.py:1-69 与 100-110 未读，docinfo_re 定义与 append_epilog 正文未核验。\n- sphinx/transforms/i18n.py 与 sphinx/config.py 仅有搜索命中，未读函数体。\n- 未运行任何构建或测试，未验证 docutils 版本行为差异。\n\n最小验证：`python -m pytest -q tests/test_util_rst.py::test_prepend_prolog`（仅验证插入位置，需另加断言检查插入后首块是否为标题）",
+  "entities": [
+    "sphinx/util/rst.py:prepend_prolog",
+    "sphinx/util/rst.py:append_epilog"
+  ],
+  "files": [
+    "sphinx/util/rst.py",
+    "sphinx/parsers.py",
+    "sphinx/transforms/i18n.py",
+    "sphinx/config.py"
+  ]
+}

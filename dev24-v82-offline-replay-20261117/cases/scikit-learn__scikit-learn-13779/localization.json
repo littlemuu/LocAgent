@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "instance_id": "scikit-learn__scikit-learn-13779",
+  "base_commit": "b34751b7ed02b2cfcc36037fb729d4360480a299",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sklearn/ensemble/voting.py:30-36：`_parallel_fit_estimator` 在 `sample_weight is not None` 时直接调用 `estimator.fit(X, y, sample_weight=sample_weight)`，无 None 判断。\n- sklearn/ensemble/voting.py:79-83：`_BaseVoting.fit` 中 `sample_weight is not None` 时遍历 `self.estimators`，对每个 `step` 调用 `has_fit_parameter(step, 'sample_weight')`，此处未先排除 `step is None`。\n- sklearn/ensemble/voting.py:88-91：None 检查（`n_isnone`）出现在 sample_weight 校验之后，且只处理“全部为 None”的情况。\n- sklearn/ensemble/voting.py:93-94：随后用 `Parallel` 对 `clone(clf)` 调用 `_parallel_fit_estimator`（该行在 94 行处被截断，后续参数未读到）。\n- sklearn/ensemble/voting.py:240-273：`VotingClassifier.fit` 仅做多输出/voting 校验与标签编码，然后 `super().fit(X, transformed_y, sample_weight)`，自身无 None 过滤。\n\n推断\n- 待验证假设：`sklearn/ensemble/voting.py:_BaseVoting.fit` 的 sample_weight 校验循环（79-83 行）在遇到 `None` 估计器时，`has_fit_parameter(None, ...)` 可能抛错或返回 False，从而在到达 88 行 None 检查前失败。\n- 待验证假设：即使校验通过，`sklearn/ensemble/voting.py:_parallel_fit_estimator` 对 `None` 估计器调用 `.fit` 会产生题述 `AttributeError: 'NoneType' object has no attribute 'fit'`；`sklearn/ensemble/voting.py:VotingClassifier.fit` 未过滤 None 估计器，故异常向上传播。\n- 待验证假设：修复点应在 `_BaseVoting.fit` 中先过滤 `None` 估计器（与 `_weights_not_none` 的过滤语义一致，见 51-57 行），再校验 sample_weight 并并行拟合。\n\n未核验点\n- `_BaseVoting.fit` 第 94 行之后（`estimators_` 赋值、`named_estimators_` 等）未读完，分页 cursor=rf1_c8957b2c39a1085cf503830f60179a951e7a537289c00842799eaa5156baa65f 未续读。\n- `has_fit_parameter` 对 `None` 输入的实际行为未读（sklearn/utils/validation.py 未读）。\n- `VotingRegressor.fit`、`_BaseVoting._predict` 与 `predict_proba` 对 None 估计器的处理未读。\n- 未运行任何复现或测试，异常抛出位置（79-83 行 vs 30-36 行）未实测确认。\n\n最小验证：`python -c \"import numpy as np; from sklearn.datasets import load_iris; from sklearn.ensemble import VotingClassifier; from sklearn.linear_model import LogisticRegression; from sklearn.ensemble import RandomForestClassifier; X,y=load_iris(return_X_y=True); v=VotingClassifier(estimators=[('lr',LogisticRegression()),('rf',RandomForestClassifier())]).fit(X,y,sample_weight=np.ones(y.shape)); v.set_params(lr=None); v.fit(X,y,sample_weight=np.ones(y.shape))\"`（观察 traceback 首帧以区分校验循环与 `_parallel_fit_estimator`）。",
+    "entities": [
+      "sklearn/ensemble/voting.py:_BaseVoting.fit",
+      "sklearn/ensemble/voting.py:_parallel_fit_estimator",
+      "sklearn/ensemble/voting.py:VotingClassifier.fit"
+    ],
+    "files": [
+      "sklearn/ensemble/voting.py"
+    ]
+  }
+}

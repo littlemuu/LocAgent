@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-17443",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "c3db2cdbf5244229af2c5eb54f9216a69f77a146",
+  "problem_statement": "Add calibration curve to plotting module\nI think it would be nice to have something like\r\n\r\n```python\r\ndef plot_calibration_curve(y_true, prob_y_pred, n_bins=5, ax=None):\r\n    prop_true, prop_pred = calibration_curve(y_true, prob_y_pred, n_bins=n_bins)\r\n    if ax is None:\r\n        ax = plt.gca()\r\n    ax.plot([0, 1], [0, 1], ':', c='k')\r\n    ax.plot(prop_pred, prop_true)\r\n\r\n    ax.set_xlabel(\"predicted probability\")\r\n    ax.set_ylabel(\"fraction of positive samples\")\r\n    ax.set_aspect(\"equal\")\r\n```\r\n\r\nI got confused for a bit because the order of the return arguments is not the order of the arguments to plot. I think a plot function even just labeling the axes right would decrease mental effort (yes, I'm lazy).\n"
+}

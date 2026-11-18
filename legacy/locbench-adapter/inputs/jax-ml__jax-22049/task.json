@@ -1,0 +1,6 @@
+{
+  "instance_id": "jax-ml__jax-22049",
+  "repo": "jax-ml/jax",
+  "base_commit": "e0efcaee840e8db7940723e65750ddf8c138b264",
+  "problem_statement": "shard_map should support static_argnums\nWe've started using (a type-based derivative of) shard_map as a function decorator. Ideally we'd like to annotate our top-level training function with `@jax.jit @typed_shard_map` decorator on a single top-level function. However, `shard_map` doesn't support `static_argnums`. We're forced to add a level of nested functions, in order to capture the static arguments in a closure, see this example:\r\n\r\nhttps://github.com/MatX-inc/seqax/blob/871bd91efc004e569aa91228ef0a66931ed16986/train.py#L292-L295\r\n\r\nWould it be possible to add `static_argnums` support to `shard_map`? That would allow us to simplify the above to:\r\n\r\n```\r\n@partial(jax.jit, static_argnums=(2, 3), donate_argnums=(0,))\r\n@typed_shard_map\r\ndef training_step(state: State, step: u32[b''], h: Hparams, hparams: TrainingHparams, batch: TokenBatch) -> Tuple[Any, Metrics]:\r\n  ...\r\n```\n"
+}

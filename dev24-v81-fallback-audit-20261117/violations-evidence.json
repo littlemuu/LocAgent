@@ -1,0 +1,2273 @@
+[
+  {
+    "id": "01-01",
+    "case_index": 1,
+    "instance_id": "sympy__sympy-21379",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:polytools.py:4399",
+    "matches": [
+      {
+        "line": 26,
+        "text": "最小验证：`python -c \"from sympy import *; x,y,z=symbols('x y z',real=True); e=exp(sinh(Piecewise((x,y>x),(y,True))/z)); import traceback; traceback.print_exc() if False else print(e.subs({1:1.0}))\"`（配合 `SYMPY_USE_CACHE=no` 与开启缓存各跑一次，观察 traceback 是否落在 polytools.py:4399）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "polytools.py:4399",
+      "path": "polytools.py",
+      "start": 4399,
+      "end": 4399
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/core/basic.py",
+        761,
+        942
+      ],
+      [
+        "sympy/core/basic.py",
+        949,
+        952
+      ],
+      [
+        "sympy/core/basic.py",
+        955,
+        955
+      ],
+      [
+        "sympy/core/basic.py",
+        1026,
+        1041
+      ],
+      [
+        "sympy/core/basic.py",
+        1061,
+        1064
+      ],
+      [
+        "sympy/core/function.py",
+        2108,
+        2108
+      ],
+      [
+        "sympy/core/function.py",
+        2196,
+        2211
+      ],
+      [
+        "sympy/core/function.py",
+        2432,
+        2432
+      ],
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "source_bytes": 14325,
+    "source_budget_remaining": 11,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "01-02",
+    "case_index": 1,
+    "instance_id": "sympy__sympy-21379",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:_parallel_dict_from_expr",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- 待验证假设：异常来自 `sympy/polys/polytools.py:_parallel_dict_from_expr` 的 gens 检查，即某条路径把含 `Piecewise` 的表达式送进 Poly 构造（如 `expand`/`as_poly`/`cancel` 类调用），而非 `subs` 本身直接抛错。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/polys/polytools.py:_parallel_dict_from_expr",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/core/basic.py",
+        761,
+        942
+      ],
+      [
+        "sympy/core/basic.py",
+        949,
+        952
+      ],
+      [
+        "sympy/core/basic.py",
+        955,
+        955
+      ],
+      [
+        "sympy/core/basic.py",
+        1026,
+        1041
+      ],
+      [
+        "sympy/core/basic.py",
+        1061,
+        1064
+      ],
+      [
+        "sympy/core/function.py",
+        2108,
+        2108
+      ],
+      [
+        "sympy/core/function.py",
+        2196,
+        2211
+      ],
+      [
+        "sympy/core/function.py",
+        2432,
+        2432
+      ],
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "source_bytes": 14325,
+    "source_budget_remaining": 11,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "02-01",
+    "case_index": 2,
+    "instance_id": "astropy__astropy-14182",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/fixedwidth.py:1-239",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- 未读 astropy/io/ascii/fixedwidth.py:1-239 与 421-490（FixedWidthHeader 其余方法、FixedWidthTwoLine 等），未确认 position_line 在写入路径的完整语义。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "astropy/io/ascii/fixedwidth.py:1-239",
+      "path": "astropy/io/ascii/fixedwidth.py",
+      "start": 1,
+      "end": 239
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/fixedwidth.py",
+        240,
+        420
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/fixedwidth.py",
+        240,
+        420
+      ],
+      [
+        "astropy/io/ascii/rst.py",
+        1,
+        66
+      ]
+    ],
+    "source_bytes": 11996,
+    "source_budget_remaining": 2340,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "03-01",
+    "case_index": 3,
+    "instance_id": "matplotlib__matplotlib-23314",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/axes/_base.py:AxesBase.draw",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/artist.py",
+        1008,
+        1018
+      ],
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2054,
+        2054
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2056,
+        2058
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2669,
+        2669
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2671,
+        2672
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2761,
+        2762
+      ],
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "source_bytes": 9771,
+    "source_budget_remaining": 4565,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "03-02",
+    "case_index": 3,
+    "instance_id": "matplotlib__matplotlib-23314",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。"
+      },
+      {
+        "line": 13,
+        "text": "- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/artist.py",
+        1008,
+        1018
+      ],
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2054,
+        2054
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2056,
+        2058
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2669,
+        2669
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2671,
+        2672
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2761,
+        2762
+      ],
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "source_bytes": 9771,
+    "source_budget_remaining": 4565,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "04-01",
+    "case_index": 4,
+    "instance_id": "pytest-dev__pytest-7432",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:testing/test_skipping.py:233",
+    "matches": [
+      {
+        "line": 15,
+        "text": "- 未读 testing/test_skipping.py:233、334、352 的既有 runxfail 测试，未确认是否已有覆盖 skip 位置的用例。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "testing/test_skipping.py:233",
+      "path": "testing/test_skipping.py",
+      "start": 233,
+      "end": 233
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "src/_pytest/skipping.py",
+        225,
+        310
+      ]
+    ],
+    "source_bytes": 6335,
+    "source_budget_remaining": 8001,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "05-01",
+    "case_index": 5,
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sklearn/ensemble/voting.py:_BaseVoting.fit",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：`sklearn/ensemble/voting.py:_BaseVoting.fit` 的 sample_weight 校验循环（79-83 行）在遇到 `None` 估计器时，`has_fit_parameter(None, ...)` 可能抛错或返回 False，从而在到达 88 行 None 检查前失败。"
+      }
+    ],
+    "basis": {
+      "entity": "sklearn/ensemble/voting.py:_BaseVoting.fit",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sklearn/ensemble/voting.py",
+        1,
+        94
+      ],
+      [
+        "sklearn/ensemble/voting.py",
+        240,
+        275
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sklearn/ensemble/voting.py",
+        1,
+        94
+      ],
+      [
+        "sklearn/ensemble/voting.py",
+        240,
+        275
+      ]
+    ],
+    "source_bytes": 11201,
+    "source_budget_remaining": 3135,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "06-01",
+    "case_index": 6,
+    "instance_id": "django__django-13033",
+    "rule": "R1",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "matches": [],
+    "basis": {
+      "entity": "",
+      "structured_candidate": false,
+      "exact_unread_same_line": false,
+      "entity_complete": "not_stored_for_answer_only_entity"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/sql/compiler.py",
+        700,
+        767
+      ]
+    ],
+    "source_bytes": 5200,
+    "source_budget_remaining": 9136,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "07-01",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:pylint/lint/pylinter.py:1014",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- pylint/lint/pylinter.py:1014（搜索命中，未读正文）：`self._ignore_paths = self.linter.config.ignore_paths`。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "pylint/lint/pylinter.py:1014",
+      "path": "pylint/lint/pylinter.py",
+      "start": 1014,
+      "end": 1014
+    },
+    "credited_ranges_for_path": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "07-02",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+    "matches": [],
+    "basis": {
+      "entity": "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "07-03",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R1",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "matches": [],
+    "basis": {
+      "entity": "",
+      "structured_candidate": false,
+      "exact_unread_same_line": false,
+      "entity_complete": "not_stored_for_answer_only_entity"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "08-01",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/parsers.py:85",
+    "matches": [
+      {
+        "line": 5,
+        "text": "- sphinx/parsers.py:85（搜索命中）：RSTParser 在解析前调用 prepend_prolog(content, self.config.rst_prolog)。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/parsers.py:85",
+      "path": "sphinx/parsers.py",
+      "start": 85,
+      "end": 85
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "08-02",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/config.py:128",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- sphinx/config.py:128（搜索命中）：rst_prolog 默认 None，类型 [str]。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/config.py:128",
+      "path": "sphinx/config.py",
+      "start": 128,
+      "end": 128
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "08-03",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/transforms/i18n.py:60-79",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- sphinx/transforms/i18n.py:60-79（搜索命中）：i18n 变换会临时清空并恢复 config.rst_prolog。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/transforms/i18n.py:60-79",
+      "path": "sphinx/transforms/i18n.py",
+      "start": 60,
+      "end": 79
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "08-04",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/rst.py:1-69",
+    "matches": [
+      {
+        "line": 16,
+        "text": "- sphinx/util/rst.py:1-69 与 100-110 未读，docinfo_re 定义与 append_epilog 正文未核验。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/util/rst.py:1-69",
+      "path": "sphinx/util/rst.py",
+      "start": 1,
+      "end": 69
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "08-05",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/rst.py:append_epilog",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- 待验证假设：sphinx/util/rst.py:append_epilog 与 prepend_prolog 结构对称，但 epilog 在尾部，不影响标题提升，故非根因候选。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/util/rst.py:append_epilog",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "09-01",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "xarray/tests/test_dataset.py:3033-3055",
+      "path": "xarray/tests/test_dataset.py",
+      "start": 3033,
+      "end": 3055
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "09-02",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "xarray/tests/test_dataarray.py:2132-2135",
+      "path": "xarray/tests/test_dataarray.py",
+      "start": 2132,
+      "end": 2135
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "09-03",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：`xarray/core/dataset.py:Dataset.to_stacked_array` 的 `assign_coords[dim] = None` 使单维变量在 stacking dim 上产生 NaN 坐标，是 roundtrip 中坐标冲突的上游来源之一。"
+      }
+    ],
+    "basis": {
+      "entity": "xarray/core/dataset.py:Dataset.to_stacked_array",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "10-01",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/compat.py:96",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/compat.py:96",
+      "path": "requests/compat.py",
+      "start": 96,
+      "end": 96
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "10-02",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/models.py:443",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/models.py:443",
+      "path": "requests/models.py",
+      "start": 443,
+      "end": 443
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "10-03",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/utils.py:663",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/utils.py:663",
+      "path": "requests/utils.py",
+      "start": 663,
+      "end": 663
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "10-04",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/compat.py:builtin_str",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：在 Python 3 下 `requests/compat.py:builtin_str` 绑定为 `str`，因此 `str(b'GET')` 得到 `\"b'GET'\"`，与用户观察一致；Python 2 下 `str` 对 bytes 是恒等，故 2.6 不复现。"
+      }
+    ],
+    "basis": {
+      "entity": "requests/compat.py:builtin_str",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "10-05",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/sessions.py:Session.prepare_request",
+    "matches": [],
+    "basis": {
+      "entity": "requests/sessions.py:Session.prepare_request",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "12-01",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/polyclasses.py:784",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sympy/polys/polyclasses.py:784",
+      "path": "sympy/polys/polyclasses.py",
+      "start": 784,
+      "end": 784
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "12-02",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/rings.py:2457",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sympy/polys/rings.py:2457",
+      "path": "sympy/polys/rings.py",
+      "start": 2457,
+      "end": 2457
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "12-03",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- sympy/polys/polytools.py:sqf_list 的 docstring 已读，但 _generic_factor_list 未读（搜索被预算拦截）。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/polys/polytools.py:sqf_list",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "13-01",
+    "case_index": 13,
+    "instance_id": "astropy__astropy-12907",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_arith_oper",
+    "matches": [],
+    "basis": {
+      "entity": "astropy/modeling/separable.py:_arith_oper",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "source_bytes": 7332,
+    "source_budget_remaining": 7004,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "13-02",
+    "case_index": 13,
+    "instance_id": "astropy__astropy-12907",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`astropy/modeling/separable.py:_separable` 在遇到 `&` 的右操作数是 CompoundModel（如 `Linear1D(10) & Linear1D(5)`）时，可能把该子树当作单个不可分块处理，而不是递归展开其 coord_matrix，从而产生 2x2 全 True 块。"
+      }
+    ],
+    "basis": {
+      "entity": "astropy/modeling/separable.py:_separable",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "source_bytes": 7332,
+    "source_budget_remaining": 7004,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "14-01",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/autodoc/__init__.py:1077",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/autodoc/__init__.py:1077",
+      "path": "sphinx/ext/autodoc/__init__.py",
+      "start": 1077,
+      "end": 1077
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "14-02",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/inspect.py:145-158",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/util/inspect.py:145-158",
+      "path": "sphinx/util/inspect.py",
+      "start": 145,
+      "end": 158
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "14-03",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+    "matches": [],
+    "basis": {
+      "entity": "sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "14-04",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:filter_members",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：空列表 `__all__ = []` 在 sphinx/ext/autodoc/__init__.py:ModuleDocumenter.import_object 中被正确读入 self.__all__，但 sphinx/ext/autodoc/__init__.py:filter_members 中 `if not self.__all__` 的判空把空列表与 None 同等对待，从而跳过按 __all__ 过滤，导致 foo/bar/baz 全部输出。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/ext/autodoc/__init__.py:filter_members",
+      "structured_candidate": false,
+      "exact_unread_same_line": false,
+      "entity_complete": "not_stored_for_answer_only_entity"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "14-05",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/inspect.py:getall",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/util/inspect.py:getall",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "16-01",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R3",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：根因是 `lib/matplotlib/colors.py:Colormap.__call__` 在整数输入路径上未把 `xa` 提升为可容纳 `N+2` 的整型（如 `intp`/`int64`），导致哨兵赋值触发 NumPy 1.24 的越界转换弃用告警；修复方向是在 730 行前对非浮点输入做 `xa = xa.astype(int)` 或等价提升。",
+        "matches": [
+          "根因是"
+        ]
+      }
+    ],
+    "basis": {
+      "regex": "已确认|确认.{0,8}根因|根因(?:就是|是|在)|不是\\s*(?:bug|缺陷|问题)|无需(?:修改|修复)|不(?:需要|应)(?:修改|修复)|确定.{0,8}(?:原因|错误)|必然|肯定|毫无疑问|\\b(?:root cause|confirmed|definitely|certainly|not a bug|no bug|not a misunderstanding|misunderstanding|no (?:code )?(?:change|fix|modification) (?:is )?(?:needed|required|warranted)|(?:does not|doesn.t) need (?:a )?(?:fix|change)|correct(?:ly)?|unrelated)\\b"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "16-02",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:colors.py:808",
+    "matches": [
+      {
+        "line": 16,
+        "text": "- 未读 `Colormap.set_over`/`set_under`/`set_bad`（colors.py:808、844-846 附近仅见搜索命中，未读正文）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "colors.py:808",
+      "path": "colors.py",
+      "start": 808,
+      "end": 808
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "16-03",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/colors.py:Colormap.__init__",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：`lib/matplotlib/colors.py:Colormap.__init__` 中哨兵值取 `N+1`/`N+2` 而非 `N`/`N+1` 并非缺陷，因为 `_i_under` 与 `_i_bad` 需区分且 LUT 长度按 `N+3` 分配（该分配处未读，属未核验）。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/colors.py:Colormap.__init__",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "18-01",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:281",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- sphinx/ext/viewcode.py:281：viewcode_enable_epub 默认 False。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/viewcode.py:281",
+      "path": "sphinx/ext/viewcode.py",
+      "start": 281,
+      "end": 281
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "18-02",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:204-291",
+    "matches": [
+      {
+        "line": 13,
+        "text": "- sphinx/ext/viewcode.py:204-291 未读完（分页 cursor=rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67 未续读），collect_pages 尾部与 setup 的 connect 注册（collect_pages 是否对 epub 注册）未确认。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/viewcode.py:204-291",
+      "path": "sphinx/ext/viewcode.py",
+      "start": 204,
+      "end": 291
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "18-03",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/viewcode.py:collect_pages",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：`make html epub` 时 html 构建先填充 env._viewcode_modules（sphinx/ext/viewcode.py:doctree_read 在 html builder 下不返回），该环境被 epub 复用/合并（sphinx/ext/viewcode.py:env_merge_info），于是 epub 的 collect_pages（sphinx/ext/viewcode.py:collect_pages）仍为这些模块生成 _modules 页面，绕过 epub 的开关。"
+      },
+      {
+        "line": 10,
+        "text": "- 待验证假设：修复方向是在 sphinx/ext/viewcode.py:collect_pages 或 should_generate_module_page 中按 builder 名与 viewcode_enable_epub 提前返回，与 doctree_read 的判定保持一致。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/ext/viewcode.py:collect_pages",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "19-01",
+    "case_index": 19,
+    "instance_id": "matplotlib__matplotlib-25332",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_xlabels",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：lib/matplotlib/figure.py:Figure.align_xlabels 与 lib/matplotlib/figure.py:Figure.align_ylabels 只是触发点，本身不直接持有 weakref。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/figure.py:Figure.align_xlabels",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/cbook.py",
+        780,
+        860
+      ],
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "source_bytes": 14311,
+    "source_budget_remaining": 25,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "19-02",
+    "case_index": 19,
+    "instance_id": "matplotlib__matplotlib-25332",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_ylabels",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：lib/matplotlib/figure.py:Figure.align_xlabels 与 lib/matplotlib/figure.py:Figure.align_ylabels 只是触发点，本身不直接持有 weakref。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/figure.py:Figure.align_ylabels",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/cbook.py",
+        780,
+        860
+      ],
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "source_bytes": 14311,
+    "source_budget_remaining": 25,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "20-01",
+    "case_index": 20,
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sklearn/linear_model/tests/test_ridge.py:577-587",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- sklearn/linear_model/tests/test_ridge.py:577-587：已有测试只覆盖 RidgeCV 的 store_cv_values，未见 RidgeClassifierCV 的对应测试（仅搜索命中，未读正文）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sklearn/linear_model/tests/test_ridge.py:577-587",
+      "path": "sklearn/linear_model/tests/test_ridge.py",
+      "start": 577,
+      "end": 587
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sklearn/linear_model/ridge.py",
+        1085,
+        1145
+      ],
+      [
+        "sklearn/linear_model/ridge.py",
+        1247,
+        1381
+      ]
+    ],
+    "source_bytes": 12533,
+    "source_budget_remaining": 1803,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "22-01",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R3",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：根因在 astropy/io/ascii/qdp.py:_line_type 的命令正则大小写敏感，使小写 `read serr 1 2` 落入 `Unrecognized QDP line` 分支。",
+        "matches": [
+          "根因在"
+        ]
+      }
+    ],
+    "basis": {
+      "regex": "已确认|确认.{0,8}根因|根因(?:就是|是|在)|不是\\s*(?:bug|缺陷|问题)|无需(?:修改|修复)|不(?:需要|应)(?:修改|修复)|确定.{0,8}(?:原因|错误)|必然|肯定|毫无疑问|\\b(?:root cause|confirmed|definitely|certainly|not a bug|no bug|not a misunderstanding|misunderstanding|no (?:code )?(?:change|fix|modification) (?:is )?(?:needed|required|warranted)|(?:does not|doesn.t) need (?:a )?(?:fix|change)|correct(?:ly)?|unrelated)\\b"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "22-02",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/qdp.py:201-638",
+    "matches": [
+      {
+        "line": 15,
+        "text": "- 未读完：astropy/io/ascii/qdp.py:201-638（含 `_interpret_err_lines` 剩余部分、`_read_table_qdp`、`QDP` 类及 `_write_table_qdp`），故命令到 err_specs 的完整调用链未核验。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "astropy/io/ascii/qdp.py:201-638",
+      "path": "astropy/io/ascii/qdp.py",
+      "start": 201,
+      "end": 638
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "22-03",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/io/ascii/qdp.py:_interpret_err_lines",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- 待验证假设：命令解析后由 astropy/io/ascii/qdp.py:_interpret_err_lines 消费 err_specs，若上游已统一大小写，则下游键名无需改动。"
+      }
+    ],
+    "basis": {
+      "entity": "astropy/io/ascii/qdp.py:_interpret_err_lines",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "23-01",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:hyperbolic.py:590",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中：cotm 仅出现在 hyperbolic.py:590 与 trigonometric.py:1307-1310。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "hyperbolic.py:590",
+      "path": "hyperbolic.py",
+      "start": 590,
+      "end": 590
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "23-02",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:trigonometric.py:1307-1310",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中：cotm 仅出现在 hyperbolic.py:590 与 trigonometric.py:1307-1310。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "trigonometric.py:1307-1310",
+      "path": "trigonometric.py",
+      "start": 1307,
+      "end": 1310
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "23-03",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/hyperbolic.py:coth.eval",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：sympy/functions/elementary/hyperbolic.py:coth.eval 第 589-590 行变量名不一致（cothm 赋值、cotm 使用）导致 NameError，属复制自 sympy/functions/elementary/trigonometric.py:cot.eval 时未改名。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/functions/elementary/hyperbolic.py:coth.eval",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "23-04",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/trigonometric.py:cot.eval",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：sympy/functions/elementary/hyperbolic.py:coth.eval 第 589-590 行变量名不一致（cothm 赋值、cotm 使用）导致 NameError，属复制自 sympy/functions/elementary/trigonometric.py:cot.eval 时未改名。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/functions/elementary/trigonometric.py:cot.eval",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "24-01",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:django/apps/config.py:64-70",
+    "matches": [
+      {
+        "line": 5,
+        "text": "- django/apps/config.py:64-70：`default_auto_field` 属性与 `_is_default_auto_field_overridden` 仅比较类属性是否被覆盖。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "django/apps/config.py:64-70",
+      "path": "django/apps/config.py",
+      "start": 64,
+      "end": 70
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "24-02",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- tests/check_framework/test_model_checks.py:389-412：测试覆盖了 app 级 default_auto_field 与 setting 两种抑制路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "tests/check_framework/test_model_checks.py:389-412",
+      "path": "tests/check_framework/test_model_checks.py",
+      "start": 389,
+      "end": 412
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "24-03",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:base.py:364",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "base.py:364",
+      "path": "base.py",
+      "start": 364,
+      "end": 364
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "24-04",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:options.py:439",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "options.py:439",
+      "path": "options.py",
+      "start": 439,
+      "end": 439
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": null,
+    "reason": null
+  },
+  {
+    "id": "24-05",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+    "matches": [],
+    "basis": {
+      "entity": "django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": null,
+    "reason": null
+  }
+]

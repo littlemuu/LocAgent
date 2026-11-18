@@ -1,0 +1,15 @@
+*
+!Dockerfile
+!requirements-service.txt
+!requirements-runtime.txt
+!locagent_service/**
+!util/**
+!dependency_graph/**
+!plugins/**
+!repo_index/**
+**/__pycache__
+**/*.pyc
+
+!requirements.txt
+!requirements-cpu.txt
+!evaluation/eval_metric.py

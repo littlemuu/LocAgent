@@ -1,0 +1,21 @@
+已读到的事实（附文件:行号）
+- sphinx/ext/viewcode.py:53-60：doctree_read 在 singlehtml 直接 return，并在 `app.builder.name.startswith("epub") and not env.config.viewcode_enable_epub` 时 return；该判断读取的是 `env.config`。
+- sphinx/ext/viewcode.py:62-89：has_tag 通过 `app.emit_firstresult('viewcode-find-source', modname)` 或 ModuleAnalyzer 取源码，并把结果写入 `env._viewcode_modules`。
+- sphinx/ext/viewcode.py:91-120：遍历 py 域 desc 节点，命中后构造 `_modules/<modname>` 的 pagename 与 `[source]` 链接（only 表达式为 html）。
+- sphinx/ext/viewcode.py:281（搜索命中，未读正文）：`app.add_config_value('viewcode_enable_epub', False, False)`，即默认 False。
+
+推断
+- 待验证假设：sphinx/ext/viewcode.py:doctree_read 的 epub 早退依赖 `env.config`，而 `make html epub` 在同一进程内先构建 html 时，`env._viewcode_modules` 已被 html 构建填充；epub 构建若复用同一 env（或未重新读取 doctree），`_modules` 页面仍可能由后续 collect/build 阶段生成，从而绕过该早退。
+- 待验证假设：sphinx/ext/viewcode.py:has_tag 写入的 `env._viewcode_modules` 是跨 builder 共享状态，若 epub builder 复用该 env 且未清空，则即使 doctree_read 早退，残留条目仍可能触发模块页输出。
+- 待验证假设：真正生成 `_modules` 页面的逻辑位于本文件 120 行之后（未读），可能由 `html-collect-pages` 或 `build-finished` 回调实现，且未再次检查 builder 名。
+
+未核验点
+- sphinx/ext/viewcode.py:120-295 未读完（含 setup 与页面生成回调），无法确认 epub 页面生成路径。
+- 未读 sphinx/builders/_epub_base.py 与 sphinx/builders/html/__init__.py，未确认多 builder 时 env 是否复用、`_viewcode_modules` 是否被清理。
+- 未运行任何构建验证。
+
+最小验证：`python -m pytest -q tests/test_ext_viewcode.py`（或断言 `make html epub` 后 epub 输出目录不存在 `_modules` 页面）
+
+以下内容未在阅读记录中核验：
+- [R1] sphinx/ext/viewcode.py:doctree_read
+- [R1] sphinx/ext/viewcode.py:has_tag

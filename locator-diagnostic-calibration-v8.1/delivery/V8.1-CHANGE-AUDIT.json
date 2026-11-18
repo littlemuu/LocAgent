@@ -1,0 +1,24 @@
+{
+  "parent_v8_unchanged": true,
+  "changed_existing_files": [
+    "calibration/policy.py",
+    "tests/test_calibration.py"
+  ],
+  "added_tests": [
+    "tests/test_v81.py",
+    "tests/fixtures/sympy-21379-response-4.json"
+  ],
+  "unchanged_baseline_files": 42,
+  "locator_py_unchanged": true,
+  "coding_retrieval_budget_harness_unchanged": true,
+  "config_and_prompt_inherited_from_v8": true,
+  "binding": "9def7a0000b202dc8f7127ef6424b596c1155015bc7d248e74203512b02f7cee",
+  "tests": {
+    "original": 22,
+    "v8": 22,
+    "new": 11,
+    "total": 55
+  },
+  "v8_test_adjustment": "Bare helper-name negative test now verifies no inferred full entity; other 21 tests unchanged",
+  "replay_scope": "real provider final answer + synthetic source coverage; no API or quality score"
+}

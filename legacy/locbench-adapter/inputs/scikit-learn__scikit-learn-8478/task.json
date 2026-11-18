@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-8478",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "312f64053d7249a326a19a07fa635ef5b5c6ed99",
+  "problem_statement": "MICE imputer\nProceeding from https://github.com/scikit-learn/scikit-learn/pull/4844#issuecomment-253043238 is a suggestion that MICE imputation be included in scikit-learn. @sergeyf has implemented it [here](https://github.com/hammerlab/fancyimpute/blob/master/fancyimpute/mice.py).\r\n\r\nHere we will discuss issues related to its design and inclusion.\r\n\r\n\n"
+}

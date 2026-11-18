@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-11450",
+  "repo": "dask/dask",
+  "base_commit": "017adfb1794cd3debef0b7a4b0e8b6a587da8531",
+  "problem_statement": "Slicing an Array with full slices along every dimension should just map the keys\n```\r\nds = xr.open_zarr(\r\n    \"gs://weatherbench2/datasets/era5/1959-2023_01_10-wb13-6h-1440x721.zarr\",\r\n    #consolidated=True\r\n)\r\nds = ds[variables].sel(time=slice(\"2020-01-01\", \"2022-12-31\"))\r\n```\r\n\r\nThe dataset has one point per chunk along the time axis, so every slice is trivial\r\n\r\n<img width=\"634\" alt=\"Screenshot 2024-10-18 at 17 09 25\" src=\"https://github.com/user-attachments/assets/2c005e78-d97b-4e67-9936-c63ca54a7b66\">\r\n\r\nthis creates a lot of tasks that look like this:\r\n\r\n```\r\n ('getitem-cbd92e9090b2dd038943d6de9184aefe',\r\n  1,\r\n  0,\r\n  0): (<function dask.array.chunk.getitem(obj, index)>, ('open_dataset-sea_surface_temperature-c20638560e986ac27140dafa0e57ac52',\r\n   89121,\r\n   0,\r\n   0), (slice(None, None, None),\r\n   slice(None, None, None),\r\n   slice(None, None, None))),\r\n```\r\n\r\nWe should optimise this away to something like:\r\n\r\n```\r\n ('getitem-cbd92e9090b2dd038943d6de9184aefe',\r\n  1,\r\n  0,\r\n  0): ('open_dataset-sea_surface_temperature-c20638560e986ac27140dafa0e57ac52',\r\n   89121,\r\n   0,\r\n   0),\r\n```\n"
+}

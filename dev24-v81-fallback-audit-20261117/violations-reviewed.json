@@ -1,0 +1,6153 @@
+[
+  {
+    "id": "01-01",
+    "case_index": 1,
+    "instance_id": "sympy__sympy-21379",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:polytools.py:4399",
+    "matches": [
+      {
+        "line": 26,
+        "text": "最小验证：`python -c \"from sympy import *; x,y,z=symbols('x y z',real=True); e=exp(sinh(Piecewise((x,y>x),(y,True))/z)); import traceback; traceback.print_exc() if False else print(e.subs({1:1.0}))\"`（配合 `SYMPY_USE_CACHE=no` 与开启缓存各跑一次，观察 traceback 是否落在 polytools.py:4399）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "polytools.py:4399",
+      "path": "polytools.py",
+      "start": 4399,
+      "end": 4399
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/core/basic.py",
+        761,
+        942
+      ],
+      [
+        "sympy/core/basic.py",
+        949,
+        952
+      ],
+      [
+        "sympy/core/basic.py",
+        955,
+        955
+      ],
+      [
+        "sympy/core/basic.py",
+        1026,
+        1041
+      ],
+      [
+        "sympy/core/basic.py",
+        1061,
+        1064
+      ],
+      [
+        "sympy/core/function.py",
+        2108,
+        2108
+      ],
+      [
+        "sympy/core/function.py",
+        2196,
+        2211
+      ],
+      [
+        "sympy/core/function.py",
+        2432,
+        2432
+      ],
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "source_bytes": 14325,
+    "source_budget_remaining": 11,
+    "classification": "误判",
+    "reason": "该引用出现在最小验证的待观察 traceback 落点，不是已读事实断言；其完整路径 sympy/polys/polytools.py:4399 本来也已读。全文扫描和不识别用途导致回退。",
+    "subtype": "范围/用途",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-21379/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-21379/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sympy/polys/polytools.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/polys/polytools.py",
+        "line": 4399,
+        "text": "            raise PolynomialError(\"Piecewise generators do not make sense\")"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sympy/polys/polytools.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 4420,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 4360
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 4420,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 4360,
+          "total_lines": 7229
+        },
+        "cumulative_source_bytes": 10296
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ]
+  },
+  {
+    "id": "01-02",
+    "case_index": 1,
+    "instance_id": "sympy__sympy-21379",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:_parallel_dict_from_expr",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- 待验证假设：异常来自 `sympy/polys/polytools.py:_parallel_dict_from_expr` 的 gens 检查，即某条路径把含 `Piecewise` 的表达式送进 Poly 构造（如 `expand`/`as_poly`/`cancel` 类调用），而非 `subs` 本身直接抛错。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/polys/polytools.py:_parallel_dict_from_expr",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/core/basic.py",
+        761,
+        942
+      ],
+      [
+        "sympy/core/basic.py",
+        949,
+        952
+      ],
+      [
+        "sympy/core/basic.py",
+        955,
+        955
+      ],
+      [
+        "sympy/core/basic.py",
+        1026,
+        1041
+      ],
+      [
+        "sympy/core/basic.py",
+        1061,
+        1064
+      ],
+      [
+        "sympy/core/function.py",
+        2108,
+        2108
+      ],
+      [
+        "sympy/core/function.py",
+        2196,
+        2211
+      ],
+      [
+        "sympy/core/function.py",
+        2432,
+        2432
+      ],
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "source_bytes": 14325,
+    "source_budget_remaining": 11,
+    "classification": "边界",
+    "reason": "原回答另写“未读 _parallel_dict_from_expr 函数头”，但未带路径；所写 polytools.py 限定名又可能指导入别名/错误模块。不能凭此确定该完整 ID 的正文边界，也不把纠正定位身份当成纯校验误判修复。",
+    "subtype": "实体身份+标注格式",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-21379/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-21379/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sympy/polys/polytools.py:_parallel_dict_from_expr",
+    "unread_context": [
+      {
+        "line": 19,
+        "text": "未核验点"
+      },
+      {
+        "line": 20,
+        "text": "- `sympy/core/basic.py:Basic._subs` 未读完（仅 1026-1041、1061-1064 已读，docstring 与 1042-1060 缺失）。"
+      },
+      {
+        "line": 21,
+        "text": "- `sympy/core/basic.py:Basic.subs` 未读完：分页 cursor `rf1_e05b5bdfccaa95ed8bb81f49ce43fd2d1157d871d8faa36deca72123911aa8ed` 未续读（943-948 缺失）。"
+      },
+      {
+        "line": 22,
+        "text": "- `sympy/core/function.py:Subs` 未读完（仅 2196-2211 已读）。"
+      },
+      {
+        "line": 23,
+        "text": "- 未读 `_parallel_dict_from_expr` 函数头与 `expand`/`sinh`/`exp` 的 `_eval_subs`，调用链未穷尽。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sympy/polys/polytools.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/polys/polytools.py",
+        "line": 4399,
+        "text": "            raise PolynomialError(\"Piecewise generators do not make sense\")"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sympy/polys/polytools.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 4420,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 4360
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 4420,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 4360,
+          "total_lines": 7229
+        },
+        "cumulative_source_bytes": 10296
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        4360,
+        4420
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "题级预算确实耗尽（余11字节），但此实体存在模块/别名问题且未请求该完整定义；不能把这条R1直接归因于字节截断。"
+  },
+  {
+    "id": "02-01",
+    "case_index": 2,
+    "instance_id": "astropy__astropy-14182",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/fixedwidth.py:1-239",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- 未读 astropy/io/ascii/fixedwidth.py:1-239 与 421-490（FixedWidthHeader 其余方法、FixedWidthTwoLine 等），未确认 position_line 在写入路径的完整语义。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "astropy/io/ascii/fixedwidth.py:1-239",
+      "path": "astropy/io/ascii/fixedwidth.py",
+      "start": 1,
+      "end": 239
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/fixedwidth.py",
+        240,
+        420
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/fixedwidth.py",
+        240,
+        420
+      ],
+      [
+        "astropy/io/ascii/rst.py",
+        1,
+        66
+      ]
+    ],
+    "source_bytes": 11996,
+    "source_budget_remaining": 2340,
+    "classification": "误判",
+    "reason": "位于未核验点，明确说“未读 …:1-239”，没有冒充读过该范围；R4 不区分未读声明和证据引用。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-14182/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-14182/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "astropy/io/ascii/fixedwidth.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "astropy/io/ascii/fixedwidth.py",
+        "line": 97,
+        "text": "        header_rows = getattr(self, \"header_rows\", [\"name\"])"
+      },
+      {
+        "tool_index": 2,
+        "path": "astropy/io/ascii/fixedwidth.py",
+        "line": 163,
+        "text": "            line = self.get_line(lines, start_line + header_rows.index(\"name\"))"
+      },
+      {
+        "tool_index": 2,
+        "path": "astropy/io/ascii/fixedwidth.py",
+        "line": 168,
+        "text": "        for ii, attr in enumerate(header_rows):"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "astropy/io/ascii/fixedwidth.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 420,
+          "path": "astropy/io/ascii/fixedwidth.py",
+          "start_line": 240
+        },
+        "delivered_metadata": {
+          "end_column": 21,
+          "end_line": 344,
+          "next_cursor": "rf1_d1cb829c4b349783ef6fd96c224df486d6aeba83c1d65bdb6186ec06f8c1300c",
+          "start_column": 0,
+          "start_line": 240,
+          "total_lines": 490
+        },
+        "cumulative_source_bytes": 9022
+      },
+      {
+        "tool_index": 5,
+        "path": "astropy/io/ascii/fixedwidth.py",
+        "requested": {
+          "cursor": "rf1_d1cb829c4b349783ef6fd96c224df486d6aeba83c1d65bdb6186ec06f8c1300c",
+          "end_line": null,
+          "path": "astropy/io/ascii/fixedwidth.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 11,
+          "end_line": 420,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 345,
+          "total_lines": 490
+        },
+        "cumulative_source_bytes": 11996
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "astropy/io/ascii/fixedwidth.py",
+        240,
+        420
+      ]
+    ]
+  },
+  {
+    "id": "03-01",
+    "case_index": 3,
+    "instance_id": "matplotlib__matplotlib-23314",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/axes/_base.py:AxesBase.draw",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/axes/_base.py:AxesBase.draw",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/artist.py",
+        1008,
+        1018
+      ],
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2054,
+        2054
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2056,
+        2058
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2669,
+        2669
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2671,
+        2672
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2761,
+        2762
+      ],
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "source_bytes": 9771,
+    "source_budget_remaining": 4565,
+    "classification": "边界",
+    "reason": "回答事实段写 _AxesBase.draw，候选/推断却写 AxesBase.draw；校验器按不存在或不匹配的完整 ID 检查。实际读取 3000-3060 也不能证明对应 draw 的全部边界。模型命名错误和未读标注问题交织。",
+    "subtype": "限定名错误",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-23314/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-23314/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "lib/matplotlib/axes/_base.py:AxesBase.draw",
+    "unread_context": [
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。"
+      },
+      {
+        "line": 14,
+        "text": "- 未读完：lib/matplotlib/widgets.py:ToolLineHandles.set_visible、lib/matplotlib/widgets.py:_SelectorWidget.set_visible（与本问题相关性低，仅作排除）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未核验 Axes3D 是否另有 set_visible 覆写或 _axis3don 相关分支；未运行任何渲染验证。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "lib/matplotlib/axes/_base.py"
+    ],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 5,
+        "path": "lib/matplotlib/axes/_base.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 3060,
+          "path": "lib/matplotlib/axes/_base.py",
+          "start_line": 3000
+        },
+        "delivered_metadata": {
+          "end_column": 59,
+          "end_line": 3060,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 3000,
+          "total_lines": 4611
+        },
+        "cumulative_source_bytes": 9657
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "03-02",
+    "case_index": 3,
+    "instance_id": "matplotlib__matplotlib-23314",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：根因位于 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw —— 它在调用 super().draw 之前已绘制 patch、pane 和 axis，因此 lib/matplotlib/axes/_base.py:AxesBase.draw 中的可见性短路（3022-3023）来得太晚，无法阻止 3D 背景与坐标轴被绘制。"
+      },
+      {
+        "line": 13,
+        "text": "- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/artist.py",
+        1008,
+        1018
+      ],
+      [
+        "lib/matplotlib/axes/_base.py",
+        3000,
+        3060
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2054,
+        2054
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2056,
+        2058
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2669,
+        2669
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2671,
+        2672
+      ],
+      [
+        "lib/matplotlib/widgets.py",
+        2761,
+        2762
+      ],
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "source_bytes": 9771,
+    "source_budget_remaining": 4565,
+    "classification": "边界",
+    "reason": "检索元数据给 def 范围 389-444，C 已完整读取；校验器却报正文不完整。policy 把装饰器也纳入范围，检索器从 def 开始，但本地日志未保存原 AST span/388 行，无法确证具体缺口是否仅装饰器或重复定义。",
+    "subtype": "装饰器/覆盖口径",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-23314/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-23314/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw",
+    "unread_context": [
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw 虽收到 389-444 完整行，但未核验其是否被其他包装（如 figure 级 draw 或 allow_rasterization 装饰器）另行拦截。"
+      },
+      {
+        "line": 14,
+        "text": "- 未读完：lib/matplotlib/widgets.py:ToolLineHandles.set_visible、lib/matplotlib/widgets.py:_SelectorWidget.set_visible（与本问题相关性低，仅作排除）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未核验 Axes3D 是否另有 set_visible 覆写或 _axis3don 相关分支；未运行任何渲染验证。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py"
+    ],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/mpl_toolkits/mplot3d/axes3d.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 444,
+          "path": "lib/mpl_toolkits/mplot3d/axes3d.py",
+          "start_line": 389
+        },
+        "delivered_metadata": {
+          "end_column": 30,
+          "end_line": 444,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 389,
+          "total_lines": 3248
+        },
+        "cumulative_source_bytes": 6360
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/mpl_toolkits/mplot3d/axes3d.py",
+        389,
+        444
+      ]
+    ],
+    "function_span": {
+      "start": 389,
+      "end": 444,
+      "length": 56,
+      "provenance": "C检索元数据；def至末行，不含装饰器",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        389,
+        444
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "04-01",
+    "case_index": 4,
+    "instance_id": "pytest-dev__pytest-7432",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:testing/test_skipping.py:233",
+    "matches": [
+      {
+        "line": 15,
+        "text": "- 未读 testing/test_skipping.py:233、334、352 的既有 runxfail 测试，未确认是否已有覆盖 skip 位置的用例。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "testing/test_skipping.py:233",
+      "path": "testing/test_skipping.py",
+      "start": 233,
+      "end": 233
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "src/_pytest/skipping.py",
+        225,
+        310
+      ]
+    ],
+    "source_bytes": 6335,
+    "source_budget_remaining": 8001,
+    "classification": "误判",
+    "reason": "未核验点明确说“未读 testing/test_skipping.py:233…”；不应按伪造已读引用处理。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pytest-dev__pytest-7432/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pytest-dev__pytest-7432/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "testing/test_skipping.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "testing/test_skipping.py",
+        "line": 233,
+        "text": "        result = testdir.runpytest(\"--runxfail\")"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "05-01",
+    "case_index": 5,
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sklearn/ensemble/voting.py:_BaseVoting.fit",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：`sklearn/ensemble/voting.py:_BaseVoting.fit` 的 sample_weight 校验循环（79-83 行）在遇到 `None` 估计器时，`has_fit_parameter(None, ...)` 可能抛错或返回 False，从而在到达 88 行 None 检查前失败。"
+      }
+    ],
+    "basis": {
+      "entity": "sklearn/ensemble/voting.py:_BaseVoting.fit",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sklearn/ensemble/voting.py",
+        1,
+        94
+      ],
+      [
+        "sklearn/ensemble/voting.py",
+        240,
+        275
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sklearn/ensemble/voting.py",
+        1,
+        94
+      ],
+      [
+        "sklearn/ensemble/voting.py",
+        240,
+        275
+      ]
+    ],
+    "source_bytes": 11201,
+    "source_budget_remaining": 3135,
+    "classification": "误判",
+    "reason": "同一文件上下文明确写“_BaseVoting.fit 第94行之后…未读完，分页…未续读”；只是未在此行重复完整路径，R1 漏认。",
+    "subtype": "简称标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/scikit-learn__scikit-learn-13779/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-13779/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sklearn/ensemble/voting.py:_BaseVoting.fit",
+    "unread_context": [
+      {
+        "line": 5,
+        "text": "- sklearn/ensemble/voting.py:93-94：随后用 `Parallel` 对 `clone(clf)` 调用 `_parallel_fit_estimator`（该行在 94 行处被截断，后续参数未读到）。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- `_BaseVoting.fit` 第 94 行之后（`estimators_` 赋值、`named_estimators_` 等）未读完，分页 cursor=rf1_c8957b2c39a1085cf503830f60179a951e7a537289c00842799eaa5156baa65f 未续读。"
+      },
+      {
+        "line": 15,
+        "text": "- `has_fit_parameter` 对 `None` 输入的实际行为未读（sklearn/utils/validation.py 未读）。"
+      },
+      {
+        "line": 16,
+        "text": "- `VotingRegressor.fit`、`_BaseVoting._predict` 与 `predict_proba` 对 None 估计器的处理未读。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sklearn/ensemble/voting.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "sklearn/ensemble/voting.py",
+        "line": 138,
+        "text": "class VotingClassifier(_BaseVoting, ClassifierMixin):"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sklearn/ensemble/voting.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 275,
+          "path": "sklearn/ensemble/voting.py",
+          "start_line": 240
+        },
+        "delivered_metadata": {
+          "end_column": 25,
+          "end_line": 275,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 240,
+          "total_lines": 488
+        },
+        "cumulative_source_bytes": 3091
+      },
+      {
+        "tool_index": 5,
+        "path": "sklearn/ensemble/voting.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 137,
+          "path": "sklearn/ensemble/voting.py",
+          "start_line": 1
+        },
+        "delivered_metadata": {
+          "end_column": 66,
+          "end_line": 94,
+          "next_cursor": "rf1_c8957b2c39a1085cf503830f60179a951e7a537289c00842799eaa5156baa65f",
+          "start_column": 0,
+          "start_line": 1,
+          "total_lines": 488
+        },
+        "cumulative_source_bytes": 11201
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sklearn/ensemble/voting.py",
+        1,
+        94
+      ],
+      [
+        "sklearn/ensemble/voting.py",
+        240,
+        275
+      ]
+    ],
+    "function_span": {
+      "start": 64,
+      "end": 101,
+      "length": 38,
+      "provenance": "同base B补足95-101；C只到94；63行为已读装饰器",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        64,
+        94
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "06-01",
+    "case_index": 6,
+    "instance_id": "django__django-13033",
+    "rule": "R1",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "matches": [
+      {
+        "line": 16,
+        "text": "- django/db/models/sql/compiler.py 的 find_ordering_name 未读完：cursor=rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca 未续读（实际完整行仅 700-767）。"
+      }
+    ],
+    "basis": {
+      "condition": "pending非空且未核验段缺少字面“未读完”或“分页”",
+      "pending": {
+        "rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca": "django/db/models/sql/compiler.py"
+      }
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/sql/compiler.py",
+        700,
+        767
+      ]
+    ],
+    "source_bytes": 5200,
+    "source_budget_remaining": 9136,
+    "classification": "误判",
+    "reason": "已写“未读完：cursor=…未续读（实际完整行仅700-767）”；只因未含字面词“分页”而触发。cursor 使用错误确实存在，但已披露未续读。",
+    "subtype": "关键词格式",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13033/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13033/locator/diagnostic-audit.json",
+    "unread_context": [
+      {
+        "line": 15,
+        "text": "未核验点"
+      },
+      {
+        "line": 16,
+        "text": "- django/db/models/sql/compiler.py 的 find_ordering_name 未读完：cursor=rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca 未续读（实际完整行仅 700-767）。"
+      },
+      {
+        "line": 17,
+        "text": "- get_order_dir 定义未读到，其 DESC 解析与 default_order 语义未核验。"
+      },
+      {
+        "line": 18,
+        "text": "- query.setup_joins / trim_joins 未读，别名复用与自引用 JOIN 生成逻辑未核验。"
+      }
+    ],
+    "canonical_path_candidates": [],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "django/db/models/sql/compiler.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "django/db/models/sql/compiler.py",
+          "start_line": 700
+        },
+        "delivered_metadata": {
+          "end_column": 77,
+          "end_line": 767,
+          "next_cursor": "rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca",
+          "start_column": 0,
+          "start_line": 700,
+          "total_lines": 1604
+        },
+        "cumulative_source_bytes": 4924
+      },
+      {
+        "tool_index": 5,
+        "path": "django/db/models/sql/compiler.py",
+        "requested": {
+          "cursor": "rf1_dd8acea62d3a87e1f94f5a755316a0926bec6e5119735df6515d77dfd4c23eca",
+          "end_line": 749,
+          "path": "django/db/models/sql/compiler.py",
+          "start_line": 715
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 5086
+      }
+    ],
+    "canonical_credited_ranges": [],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "不适用：分页规则",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "07-01",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:pylint/lint/pylinter.py:1014",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- pylint/lint/pylinter.py:1014（搜索命中，未读正文）：`self._ignore_paths = self.linter.config.ignore_paths`。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "pylint/lint/pylinter.py:1014",
+      "path": "pylint/lint/pylinter.py",
+      "start": 1014,
+      "end": 1014
+    },
+    "credited_ranges_for_path": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": "误判",
+    "reason": "事实明确标为“搜索命中，未读正文”，所引1014行赋值原文确已由 search_text 返回；这里没有声称读完整函数。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pylint-dev__pylint-7080/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pylint-dev__pylint-7080/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "pylint/lint/pylinter.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "pylint/lint/pylinter.py",
+        "line": 1014,
+        "text": "        self._ignore_paths = self.linter.config.ignore_paths"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 700,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 580
+        },
+        "delivered_metadata": {
+          "end_column": 80,
+          "end_line": 661,
+          "next_cursor": "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2",
+          "start_column": 0,
+          "start_line": 580,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 9328
+      },
+      {
+        "tool_index": 4,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 760
+        },
+        "delivered_metadata": {
+          "end_column": 26,
+          "end_line": 800,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 760,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 11438
+      },
+      {
+        "tool_index": 5,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 661
+        },
+        "delivered_metadata": {
+          "end_column": 32,
+          "end_line": 714,
+          "next_cursor": "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161",
+          "start_column": 0,
+          "start_line": 661,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 14285
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ]
+  },
+  {
+    "id": "07-02",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- pylint/lint/pylinter.py:767-770：`_iterate_file_descrs` 对 `_expand_files` 的每个描述符再调用 `should_analyze_file` 过滤。"
+      }
+    ],
+    "basis": {
+      "entity": "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": "真违规",
+    "reason": "候选 _iterate_file_descrs 只收到760-770的签名尾部/docstring/实现；函数定义头不在已读区间。未核验点没有逐项说明该函数缺头，泛指两个分页且第二处范围描述有误，不能确定覆盖此缺口。",
+    "subtype": "缺少函数特定缺口标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pylint-dev__pylint-7080/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pylint-dev__pylint-7080/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+    "unread_context": [
+      {
+        "line": 6,
+        "text": "- pylint/lint/pylinter.py:1014（搜索命中，未读正文）：`self._ignore_paths = self.linter.config.ignore_paths`。"
+      },
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_is_ignored_file` 对 `ignore_paths` 的匹配语义（是否用 `re.match` 于绝对路径、是否对文件路径也生效）决定该假设成立与否；其函数体未读到。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- `_is_ignored_file` 函数体未读（仅见调用点）。"
+      },
+      {
+        "line": 15,
+        "text": "- `expand_modules`（pylint/lint/expand_modules.py）未读。"
+      },
+      {
+        "line": 16,
+        "text": "- `should_analyze_file` 函数体未读。"
+      },
+      {
+        "line": 17,
+        "text": "- pylinter.py 两处分页未续读：cursor=rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2（661-714 之后）与 cursor=rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161（760-800 之后）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "pylint/lint/pylinter.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "pylint/lint/pylinter.py",
+        "line": 604,
+        "text": "                        self.config.ignore_paths,"
+      },
+      {
+        "tool_index": 1,
+        "path": "pylint/lint/pylinter.py",
+        "line": 778,
+        "text": "            self._ignore_paths,"
+      },
+      {
+        "tool_index": 1,
+        "path": "pylint/lint/pylinter.py",
+        "line": 1014,
+        "text": "        self._ignore_paths = self.linter.config.ignore_paths"
+      },
+      {
+        "tool_index": 2,
+        "path": "pylint/lint/pylinter.py",
+        "line": 634,
+        "text": "        if self.config.recursive:"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 700,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 580
+        },
+        "delivered_metadata": {
+          "end_column": 80,
+          "end_line": 661,
+          "next_cursor": "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2",
+          "start_column": 0,
+          "start_line": 580,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 9328
+      },
+      {
+        "tool_index": 4,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 760
+        },
+        "delivered_metadata": {
+          "end_column": 26,
+          "end_line": 800,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 760,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 11438
+      },
+      {
+        "tool_index": 5,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 661
+        },
+        "delivered_metadata": {
+          "end_column": 32,
+          "end_line": 714,
+          "next_cursor": "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161",
+          "start_column": 0,
+          "start_line": 661,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 14285
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "总字节预算耗尽对继续读取头部缺口有直接限制（最后余51字节）；最初读取又从签名尾部760开始。不是唯一原因。"
+  },
+  {
+    "id": "07-03",
+    "case_index": 7,
+    "instance_id": "pylint-dev__pylint-7080",
+    "rule": "R1",
+    "recorded_violation": "R1_cursor_unfinished_unmarked",
+    "matches": [
+      {
+        "line": 17,
+        "text": "- pylinter.py 两处分页未续读：cursor=rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2（661-714 之后）与 cursor=rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161（760-800 之后）。"
+      }
+    ],
+    "basis": {
+      "condition": "pending非空且未核验段缺少字面“未读完”或“分页”",
+      "pending": {
+        "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161": "pylint/lint/pylinter.py",
+        "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2": "pylint/lint/pylinter.py"
+      }
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "pylint/lint/pylinter.py",
+        580,
+        714
+      ],
+      [
+        "pylint/lint/pylinter.py",
+        760,
+        800
+      ]
+    ],
+    "source_bytes": 14285,
+    "source_budget_remaining": 51,
+    "classification": "误判",
+    "reason": "明确写“两处分页未续读”并列出两个实际 pending cursor；仅缺“未读完”字样。范围描述不精确不等于未声明分页未读。",
+    "subtype": "关键词格式",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pylint-dev__pylint-7080/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pylint-dev__pylint-7080/locator/diagnostic-audit.json",
+    "unread_context": [
+      {
+        "line": 6,
+        "text": "- pylint/lint/pylinter.py:1014（搜索命中，未读正文）：`self._ignore_paths = self.linter.config.ignore_paths`。"
+      },
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_is_ignored_file` 对 `ignore_paths` 的匹配语义（是否用 `re.match` 于绝对路径、是否对文件路径也生效）决定该假设成立与否；其函数体未读到。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- `_is_ignored_file` 函数体未读（仅见调用点）。"
+      },
+      {
+        "line": 15,
+        "text": "- `expand_modules`（pylint/lint/expand_modules.py）未读。"
+      },
+      {
+        "line": 16,
+        "text": "- `should_analyze_file` 函数体未读。"
+      },
+      {
+        "line": 17,
+        "text": "- pylinter.py 两处分页未续读：cursor=rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2（661-714 之后）与 cursor=rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161（760-800 之后）。"
+      }
+    ],
+    "canonical_path_candidates": [],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 700,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 580
+        },
+        "delivered_metadata": {
+          "end_column": 80,
+          "end_line": 661,
+          "next_cursor": "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2",
+          "start_column": 0,
+          "start_line": 580,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 9328
+      },
+      {
+        "tool_index": 4,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 800,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 760
+        },
+        "delivered_metadata": {
+          "end_column": 26,
+          "end_line": 800,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 760,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 11438
+      },
+      {
+        "tool_index": 5,
+        "path": "pylint/lint/pylinter.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "pylint/lint/pylinter.py",
+          "start_line": 661
+        },
+        "delivered_metadata": {
+          "end_column": 32,
+          "end_line": 714,
+          "next_cursor": "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161",
+          "start_column": 0,
+          "start_line": 661,
+          "total_lines": 1253
+        },
+        "cumulative_source_bytes": 14285
+      }
+    ],
+    "canonical_credited_ranges": [],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "不适用：分页规则",
+    "budget_assessment": "题级预算耗尽，两个cursor未续读；原答已披露分页未续读，触发本条却是词面标注误判。"
+  },
+  {
+    "id": "08-01",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/parsers.py:85",
+    "matches": [
+      {
+        "line": 5,
+        "text": "- sphinx/parsers.py:85（搜索命中）：RSTParser 在解析前调用 prepend_prolog(content, self.config.rst_prolog)。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/parsers.py:85",
+      "path": "sphinx/parsers.py",
+      "start": 85,
+      "end": 85
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": "误判",
+    "reason": "搜索确实返回 parsers.py:85 的 prepend_prolog(content,self.config.rst_prolog)；原文明确限定“搜索命中”。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-11445/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-11445/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/parsers.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/parsers.py",
+        "line": 85,
+        "text": "        prepend_prolog(content, self.config.rst_prolog)"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/parsers.py",
+        "line": 85,
+        "text": "        prepend_prolog(content, self.config.rst_prolog)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sphinx/parsers.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 110,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7268
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/parsers.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 110,
+          "path": "sphinx/parsers.py",
+          "start_line": 60
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7316
+      }
+    ],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "08-02",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/config.py:128",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- sphinx/config.py:128（搜索命中）：rst_prolog 默认 None，类型 [str]。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/config.py:128",
+      "path": "sphinx/config.py",
+      "start": 128,
+      "end": 128
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": "误判",
+    "reason": "搜索确实返回 config.py:128 的 rst_prolog=(None,env,[str])；陈述只复述此行且标明搜索命中。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-11445/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-11445/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/config.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/config.py",
+        "line": 128,
+        "text": "        'rst_prolog': (None, 'env', [str]),"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/config.py",
+        "line": 128,
+        "text": "        'rst_prolog': (None, 'env', [str]),"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "08-03",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/transforms/i18n.py:60-79",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- sphinx/transforms/i18n.py:60-79（搜索命中）：i18n 变换会临时清空并恢复 config.rst_prolog。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/transforms/i18n.py:60-79",
+      "path": "sphinx/transforms/i18n.py",
+      "start": 60,
+      "end": 79
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": "边界",
+    "reason": "实际仅收到60、61、62、79等搜索行；临时清空/恢复的描述有支持，且标为搜索命中，但写成60-79连续范围违反字面上的不连缺口约束。",
+    "subtype": "稀疏搜索连成范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-11445/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-11445/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/transforms/i18n.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 60,
+        "text": "        # clear rst_prolog temporarily"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 61,
+        "text": "        rst_prolog = config.rst_prolog"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 62,
+        "text": "        config.rst_prolog = None  # type: ignore[attr-defined]"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 79,
+        "text": "        config.rst_prolog = rst_prolog  # type: ignore[attr-defined]"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 60,
+        "text": "        # clear rst_prolog temporarily"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 61,
+        "text": "        rst_prolog = config.rst_prolog"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 62,
+        "text": "        config.rst_prolog = None  # type: ignore[attr-defined]"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/transforms/i18n.py",
+        "line": 79,
+        "text": "        config.rst_prolog = rst_prolog  # type: ignore[attr-defined]"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "08-04",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/rst.py:1-69",
+    "matches": [
+      {
+        "line": 16,
+        "text": "- sphinx/util/rst.py:1-69 与 100-110 未读，docinfo_re 定义与 append_epilog 正文未核验。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/util/rst.py:1-69",
+      "path": "sphinx/util/rst.py",
+      "start": 1,
+      "end": 69
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": "误判",
+    "reason": "未核验点明确说1-69与100-110未读；R4 把未读范围当作事实证据引用。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-11445/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-11445/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/util/rst.py"
+    ],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sphinx/util/rst.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/util/rst.py",
+          "start_line": 70
+        },
+        "delivered_metadata": {
+          "end_column": 60,
+          "end_line": 100,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 70,
+          "total_lines": 110
+        },
+        "cumulative_source_bytes": 7220
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ]
+  },
+  {
+    "id": "08-05",
+    "case_index": 8,
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/rst.py:append_epilog",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- 待验证假设：sphinx/util/rst.py:append_epilog 与 prepend_prolog 结构对称，但 epilog 在尾部，不影响标题提升，故非根因候选。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/util/rst.py:append_epilog",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "source_bytes": 7316,
+    "source_budget_remaining": 7020,
+    "classification": "误判",
+    "reason": "后文已说明同一文件100-110未读、append_epilog正文未核验；只有函数签名100行交付。R1要求完整ID与“未读完”同一行，漏认明确的上下文未读声明。",
+    "subtype": "上下文标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-11445/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-11445/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sphinx/util/rst.py:append_epilog",
+    "unread_context": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：sphinx/parsers.py 中 RSTParser 的解析流程（未读完）在 prepend_prolog 之后未对标题做补偿处理，是问题暴露的调用点。"
+      },
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- sphinx/parsers.py 的 RSTParser.parse 完整函数体未读完（两次读取均返回 ValueError），无法确认 prolog 插入后是否还有标题相关处理。"
+      },
+      {
+        "line": 16,
+        "text": "- sphinx/util/rst.py:1-69 与 100-110 未读，docinfo_re 定义与 append_epilog 正文未核验。"
+      },
+      {
+        "line": 17,
+        "text": "- sphinx/transforms/i18n.py 与 sphinx/config.py 仅有搜索命中，未读函数体。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sphinx/util/rst.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/rst.py",
+        "line": 95,
+        "text": "            content.insert(pos + lineno, line, '<rst_prolog>', lineno)"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 78,
+        "text": "def prepend_prolog(content: StringList, prolog: str) -> None:"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 79,
+        "text": "    \"\"\"Prepend a string to content body as prolog.\"\"\""
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 80,
+        "text": "    if prolog:"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 93,
+        "text": "        # insert prolog (after docinfo if exists)"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 94,
+        "text": "        for lineno, line in enumerate(prolog.splitlines()):"
+      },
+      {
+        "tool_index": 2,
+        "path": "sphinx/util/rst.py",
+        "line": 95,
+        "text": "            content.insert(pos + lineno, line, '<rst_prolog>', lineno)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sphinx/util/rst.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 100,
+          "path": "sphinx/util/rst.py",
+          "start_line": 70
+        },
+        "delivered_metadata": {
+          "end_column": 60,
+          "end_line": 100,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 70,
+          "total_lines": 110
+        },
+        "cumulative_source_bytes": 7220
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/util/rst.py",
+        70,
+        100
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "09-01",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataset.py:3033-3055",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "xarray/tests/test_dataset.py:3033-3055",
+      "path": "xarray/tests/test_dataset.py",
+      "start": 3033,
+      "end": 3055
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": "边界",
+    "reason": "只有3033/3040/3044/3048/3055等搜索行，存在相关测试的说法有依据并明确未读正文；但3033-3055不是连续读取。是否接受“搜索命中范围”需政策明确。",
+    "subtype": "稀疏搜索连成范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pydata__xarray-4094/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pydata__xarray-4094/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "xarray/tests/test_dataset.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataset.py",
+        "line": 3033,
+        "text": "    def test_to_stacked_array_to_unstacked_dataset(self):"
+      },
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataset.py",
+        "line": 3040,
+        "text": "        x = y.to_unstacked_dataset(\"features\")"
+      },
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataset.py",
+        "line": 3044,
+        "text": "        x0 = y[0].to_unstacked_dataset(\"features\")"
+      },
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataset.py",
+        "line": 3048,
+        "text": "    def test_to_stacked_array_to_unstacked_dataset_different_dimension(self):"
+      },
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataset.py",
+        "line": 3055,
+        "text": "        x = y.to_unstacked_dataset(\"features\")"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "09-02",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:xarray/tests/test_dataarray.py:2132-2135",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "xarray/tests/test_dataarray.py:2132-2135",
+      "path": "xarray/tests/test_dataarray.py",
+      "start": 2132,
+      "end": 2135
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": "边界",
+    "reason": "只收到2132和2135搜索行；测试名称支持 ValueError 用例存在，原文承认未读正文，但引用2132-2135连续范围不满足字面覆盖规则。",
+    "subtype": "稀疏搜索连成范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pydata__xarray-4094/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pydata__xarray-4094/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "xarray/tests/test_dataarray.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataarray.py",
+        "line": 2132,
+        "text": "    def test_to_unstacked_dataset_raises_value_error(self):"
+      },
+      {
+        "tool_index": 1,
+        "path": "xarray/tests/test_dataarray.py",
+        "line": 2135,
+        "text": "            data.to_unstacked_dataset(\"x\", 0)"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "09-03",
+    "case_index": 9,
+    "instance_id": "pydata__xarray-4094",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:xarray/core/dataset.py:Dataset.to_stacked_array",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：`xarray/core/dataset.py:Dataset.to_stacked_array` 的 `assign_coords[dim] = None` 使单维变量在 stacking dim 上产生 NaN 坐标，是 roundtrip 中坐标冲突的上游来源之一。"
+      }
+    ],
+    "basis": {
+      "entity": "xarray/core/dataset.py:Dataset.to_stacked_array",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "xarray/core/dataarray.py",
+        1895,
+        1990
+      ],
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "source_bytes": 9703,
+    "source_budget_remaining": 4633,
+    "classification": "边界",
+    "reason": "C读3370-3470，末尾仅到嵌套 ensure_stackable 定义，未提供外层函数未读标注；audit称不完整。但日志没有该实体完整AST范围或后续原源码，不能独立排除装饰器/边界口径原因；不据缺失元数据断言真违规。",
+    "subtype": "真实函数终点缺证",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pydata__xarray-4094/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pydata__xarray-4094/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "xarray/core/dataset.py:Dataset.to_stacked_array",
+    "unread_context": [
+      {
+        "line": 6,
+        "text": "- xarray/tests/test_dataset.py:3033-3055、xarray/tests/test_dataarray.py:2132-2135：存在 roundtrip 与 ValueError 测试（仅搜索命中，未读正文）。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- 未读 `Dataset.__init__`/merge 逻辑，无法确认冲突具体发生在哪个坐标变量上。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 xarray/tests/test_dataset.py:3033-3055 与 xarray/tests/test_dataarray.py:2132-2135 正文，测试覆盖情况未知。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "xarray/core/dataset.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "xarray/core/dataset.py",
+        "line": 3410,
+        "text": "        DataArray.to_unstacked_dataset"
+      },
+      {
+        "tool_index": 2,
+        "path": "xarray/core/dataset.py",
+        "line": 3370,
+        "text": "    def to_stacked_array("
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "xarray/core/dataset.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 3470,
+          "path": "xarray/core/dataset.py",
+          "start_line": 3370
+        },
+        "delivered_metadata": {
+          "end_column": 41,
+          "end_line": 3461,
+          "next_cursor": "rf1_f371c96a1a4e5a9385e1f1b23628cb72dc3772ec7f3542d43fda4f74676f2221",
+          "start_column": 0,
+          "start_line": 3370,
+          "total_lines": 6372
+        },
+        "cumulative_source_bytes": 9240
+      },
+      {
+        "tool_index": 5,
+        "path": "xarray/core/dataset.py",
+        "requested": {
+          "cursor": "rf1_f371c96a1a4e5a9385e1f1b23628cb72dc3772ec7f3542d43fda4f74676f2221",
+          "end_line": null,
+          "path": "xarray/core/dataset.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 3470,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 3462,
+          "total_lines": 6372
+        },
+        "cumulative_source_bytes": 9703
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "xarray/core/dataset.py",
+        3370,
+        3470
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "10-01",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/compat.py:96",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/compat.py:96",
+      "path": "requests/compat.py",
+      "start": 96,
+      "end": 96
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": "误判",
+    "reason": "96行 builtin_str=str 确已在搜索结果中交付，原文明确“搜索命中（未读正文）”；没有声称已确认分支条件。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/psf__requests-2317/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/psf__requests-2317/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "requests/compat.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "requests/compat.py",
+        "line": 96,
+        "text": "    builtin_str = str"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "requests/compat.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 125,
+          "path": "requests/compat.py",
+          "start_line": 80
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7460
+      },
+      {
+        "tool_index": 5,
+        "path": "requests/compat.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7508
+      }
+    ],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "10-02",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/models.py:443",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/models.py:443",
+      "path": "requests/models.py",
+      "start": 443,
+      "end": 443
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": "误判",
+    "reason": "443/469/474行 builtin_str 处理Content-Length均由搜索交付，原文限制为搜索命中。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/psf__requests-2317/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/psf__requests-2317/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "requests/models.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "requests/models.py",
+        "line": 443,
+        "text": "                self.headers['Content-Length'] = builtin_str(length)"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "10-03",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:requests/utils.py:663",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "requests/utils.py:663",
+      "path": "requests/utils.py",
+      "start": 663,
+      "end": 663
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": "误判",
+    "reason": "663行 isinstance(string,builtin_str) 判断由搜索交付，陈述只复述这段代码。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/psf__requests-2317/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/psf__requests-2317/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "requests/utils.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "requests/utils.py",
+        "line": 663,
+        "text": "    if isinstance(string, builtin_str):"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "10-04",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/compat.py:builtin_str",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：在 Python 3 下 `requests/compat.py:builtin_str` 绑定为 `str`，因此 `str(b'GET')` 得到 `\"b'GET'\"`，与用户观察一致；Python 2 下 `str` 对 bytes 是恒等，故 2.6 不复现。"
+      }
+    ],
+    "basis": {
+      "entity": "requests/compat.py:builtin_str",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": "误判",
+    "reason": "builtin_str 是条件分支里的 str 别名赋值，不是此文件的 AST 函数/类定义；完整函数体检查永远无法命中。原回答还明确写该定义未读完、未确认分支。应单独检查预测实体类型，不能报告“函数未读且未标”。",
+    "subtype": "实体类型+标注格式",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/psf__requests-2317/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/psf__requests-2317/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "requests/compat.py:builtin_str",
+    "unread_context": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      },
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- requests/compat.py 的 `builtin_str` 定义函数体未读完（两次读取均报错），仅凭搜索命中行，未确认 py2/py3 分支条件。"
+      },
+      {
+        "line": 16,
+        "text": "- requests/models.py 的 `Request`/`PreparedRequest.prepare` 完整函数体未读，method 后续如何进入 urllib3 请求行未核验。"
+      },
+      {
+        "line": 17,
+        "text": "- requests/utils.py 未读，`safe_encode_list` 是否存在于本仓库未确认。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "requests/compat.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "requests/compat.py",
+        "line": 96,
+        "text": "    builtin_str = str"
+      },
+      {
+        "tool_index": 1,
+        "path": "requests/compat.py",
+        "line": 111,
+        "text": "    builtin_str = str"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "requests/compat.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 125,
+          "path": "requests/compat.py",
+          "start_line": 80
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7460
+      },
+      {
+        "tool_index": 5,
+        "path": "requests/compat.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "requests/compat.py",
+          "start_line": 85
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 7508
+      }
+    ],
+    "canonical_credited_ranges": [],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "不适用：builtin_str为别名赋值",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "10-05",
+    "case_index": 10,
+    "instance_id": "psf__requests-2317",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:requests/sessions.py:Session.prepare_request",
+    "matches": [
+      {
+        "line": 5,
+        "text": "- requests/sessions.py:363-365：`prepare_request` 中再次调用 `request.method.upper()` 传给 `PreparedRequest.prepare`。"
+      },
+      {
+        "line": 11,
+        "text": "- 待验证假设：`requests/sessions.py:Session.request` 缺少对 bytes 型 method 的显式解码（如 `method.decode('ascii')`），是该方法路径上的可疑点；`Session.prepare_request` 只做 `upper()`，不会修复该问题。"
+      }
+    ],
+    "basis": {
+      "entity": "requests/sessions.py:Session.prepare_request",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "source_bytes": 10171,
+    "source_budget_remaining": 4165,
+    "classification": "真违规",
+    "reason": "C仅从340行开始读 prepare_request 的中间部分，未收到定义头；候选中列出该方法，推断还讨论其行为，却没有该函数未读完的说明。",
+    "subtype": "函数头缺失",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/psf__requests-2317/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/psf__requests-2317/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "requests/sessions.py:Session.prepare_request",
+    "unread_context": [
+      {
+        "line": 7,
+        "text": "- 搜索命中（未读正文）：requests/compat.py:96 与 :111 均定义 `builtin_str = str`；requests/models.py:443/469/474 用 `builtin_str` 处理 Content-Length；requests/utils.py:663 用 `isinstance(string, builtin_str)` 判断。"
+      },
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- requests/compat.py 的 `builtin_str` 定义函数体未读完（两次读取均报错），仅凭搜索命中行，未确认 py2/py3 分支条件。"
+      },
+      {
+        "line": 16,
+        "text": "- requests/models.py 的 `Request`/`PreparedRequest.prepare` 完整函数体未读，method 后续如何进入 urllib3 请求行未核验。"
+      },
+      {
+        "line": 17,
+        "text": "- requests/utils.py 未读，`safe_encode_list` 是否存在于本仓库未确认。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "requests/sessions.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "requests/sessions.py",
+        "line": 16,
+        "text": "from .compat import cookielib, OrderedDict, urljoin, urlparse, builtin_str"
+      },
+      {
+        "tool_index": 1,
+        "path": "requests/sessions.py",
+        "line": 428,
+        "text": "        method = builtin_str(method)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "requests/sessions.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 470,
+          "path": "requests/sessions.py",
+          "start_line": 400
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 470,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 400,
+          "total_lines": 671
+        },
+        "cumulative_source_bytes": 7412
+      },
+      {
+        "tool_index": 6,
+        "path": "requests/sessions.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 400,
+          "path": "requests/sessions.py",
+          "start_line": 340
+        },
+        "delivered_metadata": {
+          "end_column": 78,
+          "end_line": 400,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 340,
+          "total_lines": 671
+        },
+        "cumulative_source_bytes": 10171
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "requests/sessions.py",
+        340,
+        470
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "12-01",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/polyclasses.py:784",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sympy/polys/polyclasses.py:784",
+      "path": "sympy/polys/polyclasses.py",
+      "start": 784,
+      "end": 784
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": "误判",
+    "reason": "784行 DMP.sqf_list 定义签名确在搜索结果；事实只报告“搜索命中，未读正文”，后文也标函数体未读完。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-18698/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-18698/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sympy/polys/polyclasses.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "sympy/polys/polyclasses.py",
+        "line": 784,
+        "text": "    def sqf_list(f, all=False):"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "12-02",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sympy/polys/rings.py:2457",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sympy/polys/rings.py:2457",
+      "path": "sympy/polys/rings.py",
+      "start": 2457,
+      "end": 2457
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": "误判",
+    "reason": "2457行 PolyElement.sqf_list 签名确在搜索结果；没有声称正文完整。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-18698/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-18698/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sympy/polys/rings.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "sympy/polys/rings.py",
+        "line": 2457,
+        "text": "    def sqf_list(f, all=False):"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "12-03",
+    "case_index": 12,
+    "instance_id": "sympy__sympy-18698",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- sympy/polys/polytools.py:sqf_list 的 docstring 已读，但 _generic_factor_list 未读（搜索被预算拦截）。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/polys/polytools.py:sqf_list",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "source_bytes": 3195,
+    "source_budget_remaining": 11141,
+    "classification": "边界",
+    "reason": "C完整读完检索元数据所给6204-6218（15行），但 audit 仍判不完整。可能是检索器不含装饰器而校验器包含；AST实际span未持久化，不能确定只缺哪一行。",
+    "subtype": "装饰器/覆盖口径",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-18698/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-18698/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sympy/polys/polytools.py:sqf_list",
+    "unread_context": [
+      {
+        "line": 4,
+        "text": "- 搜索命中（未读正文）：sympy/polys/polyclasses.py:784 DMP.sqf_list、:789 sqf_list_include；sympy/polys/rings.py:2457 PolyElement.sqf_list。"
+      },
+      {
+        "line": 11,
+        "text": "未核验点"
+      },
+      {
+        "line": 12,
+        "text": "- sympy/polys/polytools.py:sqf_list 的 docstring 已读，但 _generic_factor_list 未读（搜索被预算拦截）。"
+      },
+      {
+        "line": 13,
+        "text": "- sympy/polys/polyclasses.py:DMP.sqf_list、sympy/polys/rings.py:PolyElement.sqf_list 仅见搜索命中，函数体未读完。"
+      },
+      {
+        "line": 14,
+        "text": "- dup_sqf_list / dmp_sqf_list 未定位、未读；调用链未穷尽。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sympy/polys/polytools.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "sympy/polys/polytools.py",
+        "line": 3210,
+        "text": "    def sqf_list(f, all=False):"
+      },
+      {
+        "tool_index": 2,
+        "path": "sympy/polys/polytools.py",
+        "line": 3239,
+        "text": "    def sqf_list_include(f, all=False):"
+      },
+      {
+        "tool_index": 2,
+        "path": "sympy/polys/polytools.py",
+        "line": 6204,
+        "text": "def sqf_list(f, *gens, **args):"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sympy/polys/polytools.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 6218,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 6204
+        },
+        "delivered_metadata": {
+          "end_column": 60,
+          "end_line": 6218,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 6204,
+          "total_lines": 7151
+        },
+        "cumulative_source_bytes": 1725
+      },
+      {
+        "tool_index": 4,
+        "path": "sympy/polys/polytools.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 3240,
+          "path": "sympy/polys/polytools.py",
+          "start_line": 3210
+        },
+        "delivered_metadata": {
+          "end_column": 11,
+          "end_line": 3240,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 3210,
+          "total_lines": 7151
+        },
+        "cumulative_source_bytes": 2967
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/polytools.py",
+        6204,
+        6218
+      ]
+    ],
+    "function_span": {
+      "start": 6204,
+      "end": 6218,
+      "length": 15,
+      "provenance": "C检索元数据；def至末行，不含装饰器",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        6204,
+        6218
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "13-01",
+    "case_index": 13,
+    "instance_id": "astropy__astropy-12907",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_arith_oper",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- astropy/modeling/separable.py:130-160：`_arith_oper` 的 docstring 声明算术运算“always returns a nonseparable output”，并校验左右输入/输出数一致。"
+      }
+    ],
+    "basis": {
+      "entity": "astropy/modeling/separable.py:_arith_oper",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "source_bytes": 7332,
+    "source_budget_remaining": 7004,
+    "classification": "真违规",
+    "reason": "同base历史日志可确定 _arith_oper 为130-168；C只到160，缺161-168；候选列出该函数且事实讨论实现，没有声明该函数未读完。",
+    "subtype": "真实尾部未读且未标",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-12907/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "astropy/modeling/separable.py:_arith_oper",
+    "unread_context": [
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- `_separable` 函数体未读完（仅知其在 100 行被调用，定义位置与实现未收到）。"
+      },
+      {
+        "line": 16,
+        "text": "- `&` 对应的算子函数（如 `_separable_bitwise_and` 之类）未读到，无法确认拼接逻辑。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "astropy/modeling/separable.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "astropy/modeling/separable.py",
+        "line": 66,
+        "text": "def separability_matrix(transform):"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "astropy/modeling/separable.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 160,
+          "path": "astropy/modeling/separable.py",
+          "start_line": 1
+        },
+        "delivered_metadata": {
+          "end_column": 38,
+          "end_line": 99,
+          "next_cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+          "start_column": 0,
+          "start_line": 1,
+          "total_lines": 317
+        },
+        "cumulative_source_bytes": 5139
+      },
+      {
+        "tool_index": 4,
+        "path": "astropy/modeling/separable.py",
+        "requested": {
+          "cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+          "end_line": null,
+          "path": "astropy/modeling/separable.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 35,
+          "end_line": 160,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 100,
+          "total_lines": 317
+        },
+        "cumulative_source_bytes": 7332
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "function_span": {
+      "start": 130,
+      "end": 168,
+      "length": 39,
+      "provenance": "同base B补足161-168；C只到160",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        130,
+        160
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "13-02",
+    "case_index": 13,
+    "instance_id": "astropy__astropy-12907",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/modeling/separable.py:_separable",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`astropy/modeling/separable.py:_separable` 在遇到 `&` 的右操作数是 CompoundModel（如 `Linear1D(10) & Linear1D(5)`）时，可能把该子树当作单个不可分块处理，而不是递归展开其 coord_matrix，从而产生 2x2 全 True 块。"
+      }
+    ],
+    "basis": {
+      "entity": "astropy/modeling/separable.py:_separable",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "source_bytes": 7332,
+    "source_budget_remaining": 7004,
+    "classification": "误判",
+    "reason": "未核验点明确“_separable 函数体未读完（…定义位置与实现未收到）”；同一文件语境无歧义，仅缺完整路径。",
+    "subtype": "简称标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-12907/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-12907/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "astropy/modeling/separable.py:_separable",
+    "unread_context": [
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- `_separable` 函数体未读完（仅知其在 100 行被调用，定义位置与实现未收到）。"
+      },
+      {
+        "line": 16,
+        "text": "- `&` 对应的算子函数（如 `_separable_bitwise_and` 之类）未读到，无法确认拼接逻辑。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "astropy/modeling/separable.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "astropy/modeling/separable.py",
+        "line": 66,
+        "text": "def separability_matrix(transform):"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "astropy/modeling/separable.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 160,
+          "path": "astropy/modeling/separable.py",
+          "start_line": 1
+        },
+        "delivered_metadata": {
+          "end_column": 38,
+          "end_line": 99,
+          "next_cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+          "start_column": 0,
+          "start_line": 1,
+          "total_lines": 317
+        },
+        "cumulative_source_bytes": 5139
+      },
+      {
+        "tool_index": 4,
+        "path": "astropy/modeling/separable.py",
+        "requested": {
+          "cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8",
+          "end_line": null,
+          "path": "astropy/modeling/separable.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 35,
+          "end_line": 160,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 100,
+          "total_lines": 317
+        },
+        "cumulative_source_bytes": 7332
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "astropy/modeling/separable.py",
+        1,
+        160
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "14-01",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/autodoc/__init__.py:1077",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/autodoc/__init__.py:1077",
+      "path": "sphinx/ext/autodoc/__init__.py",
+      "start": 1077,
+      "end": 1077
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": "误判",
+    "reason": "1077行 if not self.__all__ 已由搜索交付，原文明确搜索命中。函数归属被误认是另一个诊断问题，不支持 R4 的“此行未交付”标签。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8595/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8595/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1077,
+        "text": "            if not self.__all__:"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 985
+        },
+        "delivered_metadata": {
+          "end_column": 61,
+          "end_line": 1066,
+          "next_cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "start_column": 0,
+          "start_line": 985,
+          "total_lines": 2617
+        },
+        "cumulative_source_bytes": 11620
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 1066
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 11668
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ]
+  },
+  {
+    "id": "14-02",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/util/inspect.py:145-158",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/util/inspect.py:145-158",
+      "path": "sphinx/util/inspect.py",
+      "start": 145,
+      "end": 158
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": "边界",
+    "reason": "搜索只给145、147-149、151-152、155-156、158等行；概要部分有直接支持并标未读正文，但连续145-158引用有缺口。",
+    "subtype": "稀疏搜索连成范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8595/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8595/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/util/inspect.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 145,
+        "text": "    \"\"\"Get __all__ attribute of the module as dict."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 147,
+        "text": "    Return None if given *obj* does not have __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 148,
+        "text": "    Raises AttributeError if given *obj* raises an error on accessing __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 149,
+        "text": "    Raises ValueError if given *obj* have invalid __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 151,
+        "text": "    __all__ = safe_getattr(obj, '__all__', None)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 152,
+        "text": "    if __all__ is None:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 155,
+        "text": "        if (isinstance(__all__, (list, tuple)) and all(isinstance(e, str) for e in __all__)):"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 156,
+        "text": "            return __all__"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 158,
+        "text": "            raise ValueError(__all__)"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "14-03",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+    "matches": [
+      {
+        "line": 4,
+        "text": "- sphinx/ext/autodoc/__init__.py:1046-1066：get_module_members 遍历 dir(self.object) 收集成员，未见对 self.__all__ 的过滤（该函数体在 1066 处被截断，后续未读）。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": "误判",
+    "reason": "事实段已明确 get_module_members 在1066处被截断、后续未读，未核验段也列出同一分页；校验器只认完整ID同一行的“未读完”。",
+    "subtype": "跨段标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8595/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8595/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+    "unread_context": [
+      {
+        "line": 4,
+        "text": "- sphinx/ext/autodoc/__init__.py:1046-1066：get_module_members 遍历 dir(self.object) 收集成员，未见对 self.__all__ 的过滤（该函数体在 1066 处被截断，后续未读）。"
+      },
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      },
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- sphinx/ext/autodoc/__init__.py:1066 之后的分页（cursor=rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275）未续读，filter_members 完整函数体（含 1077、1083 行上下文）未读完，上述推断基于搜索命中行而非完整正文。"
+      },
+      {
+        "line": 14,
+        "text": "- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 788,
+        "text": "               # forcedly skipped member (ex. a module attribute not defined in __all__)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 992,
+        "text": "        self.__all__ = None  # type: Optional[Sequence[str]]"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1020,
+        "text": "                self.__all__ = inspect.getall(self.object)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1022,
+        "text": "            # __all__ raises an error."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1023,
+        "text": "            logger.warning(__('%s.__all__ raises an error. Ignored: %r'),"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1026,
+        "text": "            # invalid __all__ found."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1027,
+        "text": "            logger.warning(__('__all__ should be a list of strings, not %r '"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1028,
+        "text": "                              '(in module %s) -- ignoring __all__') %"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1077,
+        "text": "            if not self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1083,
+        "text": "                    if member.__name__ not in self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1102,
+        "text": "        if order == 'bysource' and self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1103,
+        "text": "            # Sort alphabetically first (for members not listed on the __all__)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1106,
+        "text": "            # Sort by __all__"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1109,
+        "text": "                if name in self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1110,
+        "text": "                    return self.__all__.index(name)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1112,
+        "text": "                    return len(self.__all__)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 985
+        },
+        "delivered_metadata": {
+          "end_column": 61,
+          "end_line": 1066,
+          "next_cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "start_column": 0,
+          "start_line": 985,
+          "total_lines": 2617
+        },
+        "cumulative_source_bytes": 11620
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 1066
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 11668
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "14-04",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/autodoc/__init__.py:filter_members",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：空列表 `__all__ = []` 在 sphinx/ext/autodoc/__init__.py:ModuleDocumenter.import_object 中被正确读入 self.__all__，但 sphinx/ext/autodoc/__init__.py:filter_members 中 `if not self.__all__` 的判空把空列表与 None 同等对待，从而跳过按 __all__ 过滤，导致 foo/bar/baz 全部输出。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/ext/autodoc/__init__.py:filter_members",
+      "structured_candidate": false,
+      "exact_unread_same_line": false,
+      "entity_complete": "not_stored_for_answer_only_entity",
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": "边界",
+    "reason": "写成模块级 filter_members，且将1077/1083附近逻辑归给它；同base B检索显示这些行属于 ModuleDocumenter.get_object_members。虽然原答已声明 filter_members 未读完，不能把纠正这个实体/诊断错误计作确定的纯误判修复。",
+    "subtype": "限定名/诊断归属错误",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8595/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8595/locator/diagnostic-audit.json",
+    "unread_context": [
+      {
+        "line": 4,
+        "text": "- sphinx/ext/autodoc/__init__.py:1046-1066：get_module_members 遍历 dir(self.object) 收集成员，未见对 self.__all__ 的过滤（该函数体在 1066 处被截断，后续未读）。"
+      },
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      },
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- sphinx/ext/autodoc/__init__.py:1066 之后的分页（cursor=rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275）未续读，filter_members 完整函数体（含 1077、1083 行上下文）未读完，上述推断基于搜索命中行而非完整正文。"
+      },
+      {
+        "line": 14,
+        "text": "- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 788,
+        "text": "               # forcedly skipped member (ex. a module attribute not defined in __all__)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 992,
+        "text": "        self.__all__ = None  # type: Optional[Sequence[str]]"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1020,
+        "text": "                self.__all__ = inspect.getall(self.object)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1022,
+        "text": "            # __all__ raises an error."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1023,
+        "text": "            logger.warning(__('%s.__all__ raises an error. Ignored: %r'),"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1026,
+        "text": "            # invalid __all__ found."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1027,
+        "text": "            logger.warning(__('__all__ should be a list of strings, not %r '"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1028,
+        "text": "                              '(in module %s) -- ignoring __all__') %"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1077,
+        "text": "            if not self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1083,
+        "text": "                    if member.__name__ not in self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1102,
+        "text": "        if order == 'bysource' and self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1103,
+        "text": "            # Sort alphabetically first (for members not listed on the __all__)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1106,
+        "text": "            # Sort by __all__"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1109,
+        "text": "                if name in self.__all__:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1110,
+        "text": "                    return self.__all__.index(name)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "line": 1112,
+        "text": "                    return len(self.__all__)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 985
+        },
+        "delivered_metadata": {
+          "end_column": 61,
+          "end_line": 1066,
+          "next_cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "start_column": 0,
+          "start_line": 985,
+          "total_lines": 2617
+        },
+        "cumulative_source_bytes": 11620
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/autodoc/__init__.py",
+        "requested": {
+          "cursor": "rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275",
+          "end_line": 1120,
+          "path": "sphinx/ext/autodoc/__init__.py",
+          "start_line": 1066
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 11668
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "14-05",
+    "case_index": 14,
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/util/inspect.py:getall",
+    "matches": [
+      {
+        "line": 14,
+        "text": "- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/util/inspect.py:getall",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/autodoc/__init__.py",
+        985,
+        1066
+      ],
+      [
+        "sphinx/ext/autodoc/importer.py",
+        184,
+        245
+      ]
+    ],
+    "source_bytes": 11668,
+    "source_budget_remaining": 2668,
+    "classification": "误判",
+    "reason": "完整ID同一行明确“完整函数体未读”，仅因为不是字面“未读完”而触发。",
+    "subtype": "同义词格式",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8595/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8595/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sphinx/util/inspect.py:getall",
+    "unread_context": [
+      {
+        "line": 4,
+        "text": "- sphinx/ext/autodoc/__init__.py:1046-1066：get_module_members 遍历 dir(self.object) 收集成员，未见对 self.__all__ 的过滤（该函数体在 1066 处被截断，后续未读）。"
+      },
+      {
+        "line": 6,
+        "text": "- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。"
+      },
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- sphinx/ext/autodoc/__init__.py:1066 之后的分页（cursor=rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275）未续读，filter_members 完整函数体（含 1077、1083 行上下文）未读完，上述推断基于搜索命中行而非完整正文。"
+      },
+      {
+        "line": 14,
+        "text": "- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sphinx/util/inspect.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 145,
+        "text": "    \"\"\"Get __all__ attribute of the module as dict."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 147,
+        "text": "    Return None if given *obj* does not have __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 148,
+        "text": "    Raises AttributeError if given *obj* raises an error on accessing __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 149,
+        "text": "    Raises ValueError if given *obj* have invalid __all__."
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 151,
+        "text": "    __all__ = safe_getattr(obj, '__all__', None)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 152,
+        "text": "    if __all__ is None:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 155,
+        "text": "        if (isinstance(__all__, (list, tuple)) and all(isinstance(e, str) for e in __all__)):"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 156,
+        "text": "            return __all__"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/util/inspect.py",
+        "line": 158,
+        "text": "            raise ValueError(__all__)"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": [],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "16-01",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R3",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：根因是 `lib/matplotlib/colors.py:Colormap.__call__` 在整数输入路径上未把 `xa` 提升为可容纳 `N+2` 的整型（如 `intp`/`int64`），导致哨兵赋值触发 NumPy 1.24 的越界转换弃用告警；修复方向是在 730 行前对非浮点输入做 `xa = xa.astype(int)` 或等价提升。",
+        "matches": [
+          "根因是"
+        ]
+      }
+    ],
+    "basis": {
+      "regex": "已确认|确认.{0,8}根因|根因(?:就是|是|在)|不是\\s*(?:bug|缺陷|问题)|无需(?:修改|修复)|不(?:需要|应)(?:修改|修复)|确定.{0,8}(?:原因|错误)|必然|肯定|毫无疑问|\\b(?:root cause|confirmed|definitely|certainly|not a bug|no bug|not a misunderstanding|misunderstanding|no (?:code )?(?:change|fix|modification) (?:is )?(?:needed|required|warranted)|(?:does not|doesn.t) need (?:a )?(?:fix|change)|correct(?:ly)?|unrelated)\\b"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": "误判",
+    "reason": "正则命中“根因是”，但整句以“待验证假设：”限定；不是声称已确认根因。全局词法扫描忽略限定。",
+    "subtype": "假设作用域",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-24970/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-24970/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 683
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 760,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 683,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 5871
+      },
+      {
+        "tool_index": 4,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 682,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 660
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 682,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 660,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 6976
+      }
+    ],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "16-02",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:colors.py:808",
+    "matches": [
+      {
+        "line": 16,
+        "text": "- 未读 `Colormap.set_over`/`set_under`/`set_bad`（colors.py:808、844-846 附近仅见搜索命中，未读正文）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "colors.py:808",
+      "path": "colors.py",
+      "start": 808,
+      "end": 808
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": "误判",
+    "reason": "未核验点明确未读这些方法，并说808附近只见搜索；不能将这一未读声明判作未经交付的事实引用。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-24970/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-24970/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "lib/matplotlib/colors.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 808,
+        "text": "        return np.array(self._lut[self._i_over])"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 683
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 760,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 683,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 5871
+      },
+      {
+        "tool_index": 4,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 682,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 660
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 682,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 660,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 6976
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ]
+  },
+  {
+    "id": "16-03",
+    "case_index": 16,
+    "instance_id": "matplotlib__matplotlib-24970",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/colors.py:Colormap.__init__",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：`lib/matplotlib/colors.py:Colormap.__init__` 中哨兵值取 `N+1`/`N+2` 而非 `N`/`N+1` 并非缺陷，因为 `_i_under` 与 `_i_bad` 需区分且 LUT 长度按 `N+3` 分配（该分配处未读，属未核验）。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/colors.py:Colormap.__init__",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "source_bytes": 6976,
+    "source_budget_remaining": 7360,
+    "classification": "真违规",
+    "reason": "C从660行的docstring起点开始，未收到 __init__ 定义头；未核验点标的是不同方法 Colormap._init，不是 __init__，不能替代该函数标注。",
+    "subtype": "缺函数头/docstring且未标",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-24970/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-24970/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "lib/matplotlib/colors.py:Colormap.__init__",
+    "unread_context": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：`lib/matplotlib/colors.py:Colormap.__init__` 中哨兵值取 `N+1`/`N+2` 而非 `N`/`N+1` 并非缺陷，因为 `_i_under` 与 `_i_bad` 需区分且 LUT 长度按 `N+3` 分配（该分配处未读，属未核验）。"
+      },
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 `Colormap._init`（LUT 分配长度与 `_i_*` 的对应关系），无法确认 `N+3` 行 LUT 假设。"
+      },
+      {
+        "line": 16,
+        "text": "- 未读 `Colormap.set_over`/`set_under`/`set_bad`（colors.py:808、844-846 附近仅见搜索命中，未读正文）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "lib/matplotlib/colors.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 674,
+        "text": "        self._i_over = self.N + 1"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 730,
+        "text": "        xa[xa > self.N - 1] = self._i_over"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 808,
+        "text": "        return np.array(self._lut[self._i_over])"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 844,
+        "text": "            self._lut[self._i_over] = self._rgba_over"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/colors.py",
+        "line": 846,
+        "text": "            self._lut[self._i_over] = self._lut[self.N - 1]"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 760,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 683
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 760,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 683,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 5871
+      },
+      {
+        "tool_index": 4,
+        "path": "lib/matplotlib/colors.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 682,
+          "path": "lib/matplotlib/colors.py",
+          "start_line": 660
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 682,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 660,
+          "total_lines": 2664
+        },
+        "cumulative_source_bytes": 6976
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/matplotlib/colors.py",
+        660,
+        760
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "18-01",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:281",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- sphinx/ext/viewcode.py:281：viewcode_enable_epub 默认 False。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/viewcode.py:281",
+      "path": "sphinx/ext/viewcode.py",
+      "start": 281,
+      "end": 281
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": "误判",
+    "reason": "281行 add_config_value(...False...)由 C搜索实际交付，足以支持“默认False”这条窄事实；无需把完整 setup 函数读完才可复述该行。",
+    "subtype": "搜索证据遗漏",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8721/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8721/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/ext/viewcode.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/viewcode.py",
+        "line": 281,
+        "text": "    app.add_config_value('viewcode_enable_epub', False, False)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 40
+        },
+        "delivered_metadata": {
+          "end_column": 94,
+          "end_line": 120,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 40,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 5397
+      },
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 120
+        },
+        "delivered_metadata": {
+          "end_column": 75,
+          "end_line": 204,
+          "next_cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "start_column": 0,
+          "start_line": 120,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 9456
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 204
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 9504
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ]
+  },
+  {
+    "id": "18-02",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sphinx/ext/viewcode.py:204-291",
+    "matches": [
+      {
+        "line": 13,
+        "text": "- sphinx/ext/viewcode.py:204-291 未读完（分页 cursor=rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67 未续读），collect_pages 尾部与 setup 的 connect 注册（collect_pages 是否对 epub 注册）未确认。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sphinx/ext/viewcode.py:204-291",
+      "path": "sphinx/ext/viewcode.py",
+      "start": 204,
+      "end": 291
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": "误判",
+    "reason": "未核验点直接说204-291未读完，并给出未续读cursor；R4全文扫描误伤。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8721/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8721/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sphinx/ext/viewcode.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/viewcode.py",
+        "line": 281,
+        "text": "    app.add_config_value('viewcode_enable_epub', False, False)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 40
+        },
+        "delivered_metadata": {
+          "end_column": 94,
+          "end_line": 120,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 40,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 5397
+      },
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 120
+        },
+        "delivered_metadata": {
+          "end_column": 75,
+          "end_line": 204,
+          "next_cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "start_column": 0,
+          "start_line": 120,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 9456
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 204
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 9504
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ]
+  },
+  {
+    "id": "18-03",
+    "case_index": 18,
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sphinx/ext/viewcode.py:collect_pages",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：`make html epub` 时 html 构建先填充 env._viewcode_modules（sphinx/ext/viewcode.py:doctree_read 在 html builder 下不返回），该环境被 epub 复用/合并（sphinx/ext/viewcode.py:env_merge_info），于是 epub 的 collect_pages（sphinx/ext/viewcode.py:collect_pages）仍为这些模块生成 _modules 页面，绕过 epub 的开关。"
+      },
+      {
+        "line": 10,
+        "text": "- 待验证假设：修复方向是在 sphinx/ext/viewcode.py:collect_pages 或 should_generate_module_page 中按 builder 名与 viewcode_enable_epub 提前返回，与 doctree_read 的判定保持一致。"
+      }
+    ],
+    "basis": {
+      "entity": "sphinx/ext/viewcode.py:collect_pages",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "source_bytes": 9504,
+    "source_budget_remaining": 4832,
+    "classification": "误判",
+    "reason": "同一未核验条目以完整文件路径/范围说明未读完，并点名collect_pages尾部；仅未重复 path:collect_pages 的完整实体格式。",
+    "subtype": "上下文标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sphinx-doc__sphinx-8721/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sphinx-doc__sphinx-8721/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sphinx/ext/viewcode.py:collect_pages",
+    "unread_context": [
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- sphinx/ext/viewcode.py:204-291 未读完（分页 cursor=rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67 未续读），collect_pages 尾部与 setup 的 connect 注册（collect_pages 是否对 epub 注册）未确认。"
+      },
+      {
+        "line": 14,
+        "text": "- 未读 sphinx/builders/epub3.py 与 sphinx/builders/__init__.py，无法确认 epub builder 是否复用 html 环境或独立读取。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sphinx/ext/viewcode.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/viewcode.py",
+        "line": 59,
+        "text": "    if app.builder.name.startswith(\"epub\") and not env.config.viewcode_enable_epub:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sphinx/ext/viewcode.py",
+        "line": 281,
+        "text": "    app.add_config_value('viewcode_enable_epub', False, False)"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 120,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 40
+        },
+        "delivered_metadata": {
+          "end_column": 94,
+          "end_line": 120,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 40,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 5397
+      },
+      {
+        "tool_index": 4,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 120
+        },
+        "delivered_metadata": {
+          "end_column": 75,
+          "end_line": 204,
+          "next_cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "start_column": 0,
+          "start_line": 120,
+          "total_lines": 295
+        },
+        "cumulative_source_bytes": 9456
+      },
+      {
+        "tool_index": 5,
+        "path": "sphinx/ext/viewcode.py",
+        "requested": {
+          "cursor": "rf1_80e8f2a1adfd892db167e44fe786bbd87fa8bd888f180312f382c8a812e3ca67",
+          "end_line": 295,
+          "path": "sphinx/ext/viewcode.py",
+          "start_line": 204
+        },
+        "delivered_metadata": {
+          "error": "tool_error",
+          "error_type": "ValueError"
+        },
+        "cumulative_source_bytes": 9504
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sphinx/ext/viewcode.py",
+        11,
+        26
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        40,
+        204
+      ],
+      [
+        "sphinx/ext/viewcode.py",
+        292,
+        295
+      ]
+    ],
+    "function_span": {
+      "start": 181,
+      "end": 276,
+      "length": 96,
+      "provenance": "同base B补足205-276；C只到204",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        181,
+        204
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "19-01",
+    "case_index": 19,
+    "instance_id": "matplotlib__matplotlib-25332",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_xlabels",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：lib/matplotlib/figure.py:Figure.align_xlabels 与 lib/matplotlib/figure.py:Figure.align_ylabels 只是触发点，本身不直接持有 weakref。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/figure.py:Figure.align_xlabels",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/cbook.py",
+        780,
+        860
+      ],
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "source_bytes": 14311,
+    "source_budget_remaining": 25,
+    "classification": "边界",
+    "reason": "对应方法 def1335-1394全部交付，但报错ID是Figure.align_xlabels；历史B元数据指附近方法属于FigureBase。缺完整类/继承源码以严格验证映射，不能断言精确ID已读完整，也不能断言正文未读。",
+    "subtype": "继承/限定名映射",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-25332/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-25332/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "lib/matplotlib/figure.py:Figure.align_xlabels",
+    "unread_context": [
+      {
+        "line": 3,
+        "text": "- lib/matplotlib/figure.py:1436-1452：align_ylabels 结构相同，调用 self._align_label_groups['y'].join(...)（该行在 1452 之后，未读到）。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- lib/matplotlib/figure.py 未读完：cursor=rf1_2f332b37f601f51727179ef283dc096e93b2773699f82ad1ebf6d0a8e3fd8d2d 之后的分页（含 align_ylabels 尾部与 align_labels 函数体）未读。"
+      },
+      {
+        "line": 15,
+        "text": "- Figure.__init__ 中 _align_label_groups 的初始化、Figure.__getstate__/__setstate__ 是否存在及内容未读。"
+      },
+      {
+        "line": 16,
+        "text": "- axis.draw / _update_label_position 读取该 Grouper 的调用链未读。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "lib/matplotlib/figure.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1358,
+        "text": "        matplotlib.figure.Figure.align_labels"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1419,
+        "text": "        matplotlib.figure.Figure.align_labels"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1456,
+        "text": "    def align_labels(self, axs=None):"
+      },
+      {
+        "tool_index": 2,
+        "path": "lib/matplotlib/figure.py",
+        "line": 3209,
+        "text": "        # weakref-collected."
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/matplotlib/figure.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1480,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": 1330
+        },
+        "delivered_metadata": {
+          "end_column": 18,
+          "end_line": 1410,
+          "next_cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+          "start_column": 0,
+          "start_line": 1330,
+          "total_lines": 3614
+        },
+        "cumulative_source_bytes": 8870
+      },
+      {
+        "tool_index": 5,
+        "path": "lib/matplotlib/figure.py",
+        "requested": {
+          "cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+          "end_line": null,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 78,
+          "end_line": 1452,
+          "next_cursor": "rf1_2f332b37f601f51727179ef283dc096e93b2773699f82ad1ebf6d0a8e3fd8d2d",
+          "start_column": 0,
+          "start_line": 1411,
+          "total_lines": 3614
+        },
+        "cumulative_source_bytes": 14311
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "possible_referent_span": {
+      "start": 1335,
+      "end": 1394,
+      "length": 60,
+      "note": "实际方法定义范围可确认；报错Figure限定名与FigureBase映射未确认，不纳入精确ID长度统计"
+    },
+    "function_length_status": "未知",
+    "budget_assessment": "题级预算耗尽，但实际所指align_xlabels的1335-1394已完整收到；这条主要是限定名/映射边界，非该函数正文被预算截断。"
+  },
+  {
+    "id": "19-02",
+    "case_index": 19,
+    "instance_id": "matplotlib__matplotlib-25332",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:lib/matplotlib/figure.py:Figure.align_ylabels",
+    "matches": [
+      {
+        "line": 11,
+        "text": "- 待验证假设：lib/matplotlib/figure.py:Figure.align_xlabels 与 lib/matplotlib/figure.py:Figure.align_ylabels 只是触发点，本身不直接持有 weakref。"
+      }
+    ],
+    "basis": {
+      "entity": "lib/matplotlib/figure.py:Figure.align_ylabels",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "lib/matplotlib/cbook.py",
+        780,
+        860
+      ],
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "source_bytes": 14311,
+    "source_budget_remaining": 25,
+    "classification": "边界",
+    "reason": "实际align_ylabels尾部因总预算未读，原文已点名尾部未读；同时Figure与FigureBase定义归属混淆。身份映射与标签问题交织，保守归边界。",
+    "subtype": "继承限定名+截断标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/matplotlib__matplotlib-25332/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/matplotlib__matplotlib-25332/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "lib/matplotlib/figure.py:Figure.align_ylabels",
+    "unread_context": [
+      {
+        "line": 3,
+        "text": "- lib/matplotlib/figure.py:1436-1452：align_ylabels 结构相同，调用 self._align_label_groups['y'].join(...)（该行在 1452 之后，未读到）。"
+      },
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- lib/matplotlib/figure.py 未读完：cursor=rf1_2f332b37f601f51727179ef283dc096e93b2773699f82ad1ebf6d0a8e3fd8d2d 之后的分页（含 align_ylabels 尾部与 align_labels 函数体）未读。"
+      },
+      {
+        "line": 15,
+        "text": "- Figure.__init__ 中 _align_label_groups 的初始化、Figure.__getstate__/__setstate__ 是否存在及内容未读。"
+      },
+      {
+        "line": 16,
+        "text": "- axis.draw / _update_label_position 读取该 Grouper 的调用链未读。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "lib/matplotlib/figure.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1358,
+        "text": "        matplotlib.figure.Figure.align_labels"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1419,
+        "text": "        matplotlib.figure.Figure.align_labels"
+      },
+      {
+        "tool_index": 1,
+        "path": "lib/matplotlib/figure.py",
+        "line": 1456,
+        "text": "    def align_labels(self, axs=None):"
+      },
+      {
+        "tool_index": 2,
+        "path": "lib/matplotlib/figure.py",
+        "line": 3209,
+        "text": "        # weakref-collected."
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "lib/matplotlib/figure.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1480,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": 1330
+        },
+        "delivered_metadata": {
+          "end_column": 18,
+          "end_line": 1410,
+          "next_cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+          "start_column": 0,
+          "start_line": 1330,
+          "total_lines": 3614
+        },
+        "cumulative_source_bytes": 8870
+      },
+      {
+        "tool_index": 5,
+        "path": "lib/matplotlib/figure.py",
+        "requested": {
+          "cursor": "rf1_628036f4282f06125443831068bdff26965bcb06a6fc418918658af5bf2de125",
+          "end_line": null,
+          "path": "lib/matplotlib/figure.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 78,
+          "end_line": 1452,
+          "next_cursor": "rf1_2f332b37f601f51727179ef283dc096e93b2773699f82ad1ebf6d0a8e3fd8d2d",
+          "start_column": 0,
+          "start_line": 1411,
+          "total_lines": 3614
+        },
+        "cumulative_source_bytes": 14311
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "lib/matplotlib/figure.py",
+        1330,
+        1452
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "最后续页容量已小于4096，返回止于1452且余25字节；总字节预算直接截断尾部。限定名/标注问题仍另计。"
+  },
+  {
+    "id": "20-01",
+    "case_index": 20,
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:sklearn/linear_model/tests/test_ridge.py:577-587",
+    "matches": [
+      {
+        "line": 7,
+        "text": "- sklearn/linear_model/tests/test_ridge.py:577-587：已有测试只覆盖 RidgeCV 的 store_cv_values，未见 RidgeClassifierCV 的对应测试（仅搜索命中，未读正文）。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "sklearn/linear_model/tests/test_ridge.py:577-587",
+      "path": "sklearn/linear_model/tests/test_ridge.py",
+      "start": 577,
+      "end": 587
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sklearn/linear_model/ridge.py",
+        1085,
+        1145
+      ],
+      [
+        "sklearn/linear_model/ridge.py",
+        1247,
+        1381
+      ]
+    ],
+    "source_bytes": 12533,
+    "source_budget_remaining": 1803,
+    "classification": "边界",
+    "reason": "只收到577、578、587搜索行；RidgeCV测试存在有支持，但连续范围与“只覆盖、未见另一类”概括更强；原文又明确仅搜索、后文承认未确认覆盖缺口，保守归边界。",
+    "subtype": "稀疏搜索/测试覆盖概括",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/scikit-learn__scikit-learn-10297/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/scikit-learn__scikit-learn-10297/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sklearn/linear_model/tests/test_ridge.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "sklearn/linear_model/tests/test_ridge.py",
+        "line": 577,
+        "text": "def test_ridgecv_store_cv_values():"
+      },
+      {
+        "tool_index": 2,
+        "path": "sklearn/linear_model/tests/test_ridge.py",
+        "line": 578,
+        "text": "    # Test _RidgeCV's store_cv_values attribute."
+      },
+      {
+        "tool_index": 2,
+        "path": "sklearn/linear_model/tests/test_ridge.py",
+        "line": 587,
+        "text": "    r = RidgeCV(alphas=alphas, store_cv_values=True)"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "22-01",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R3",
+    "recorded_violation": "R3_unverified_strong_claim",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：根因在 astropy/io/ascii/qdp.py:_line_type 的命令正则大小写敏感，使小写 `read serr 1 2` 落入 `Unrecognized QDP line` 分支。",
+        "matches": [
+          "根因在"
+        ]
+      }
+    ],
+    "basis": {
+      "regex": "已确认|确认.{0,8}根因|根因(?:就是|是|在)|不是\\s*(?:bug|缺陷|问题)|无需(?:修改|修复)|不(?:需要|应)(?:修改|修复)|确定.{0,8}(?:原因|错误)|必然|肯定|毫无疑问|\\b(?:root cause|confirmed|definitely|certainly|not a bug|no bug|not a misunderstanding|misunderstanding|no (?:code )?(?:change|fix|modification) (?:is )?(?:needed|required|warranted)|(?:does not|doesn.t) need (?:a )?(?:fix|change)|correct(?:ly)?|unrelated)\\b"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": "误判",
+    "reason": "“根因在”处于“待验证假设：”句内，并声明行为未验证；正则忽略假设限定。",
+    "subtype": "假设作用域",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-14365/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-14365/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": 20
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 133,
+          "next_cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "start_column": 0,
+          "start_line": 20,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 5460
+      },
+      {
+        "tool_index": 5,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "end_line": null,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 200,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 134,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 8044
+      }
+    ],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "22-02",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:astropy/io/ascii/qdp.py:201-638",
+    "matches": [
+      {
+        "line": 15,
+        "text": "- 未读完：astropy/io/ascii/qdp.py:201-638（含 `_interpret_err_lines` 剩余部分、`_read_table_qdp`、`QDP` 类及 `_write_table_qdp`），故命令到 err_specs 的完整调用链未核验。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "astropy/io/ascii/qdp.py:201-638",
+      "path": "astropy/io/ascii/qdp.py",
+      "start": 201,
+      "end": 638
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": "误判",
+    "reason": "明确“未读完：…201-638”，并列出尚未读到的实现；这正是所要求的缺口披露。",
+    "subtype": "否定/未读范围",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-14365/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-14365/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "astropy/io/ascii/qdp.py"
+    ],
+    "search_hit_evidence": [],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": 20
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 133,
+          "next_cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "start_column": 0,
+          "start_line": 20,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 5460
+      },
+      {
+        "tool_index": 5,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "end_line": null,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 200,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 134,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 8044
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ]
+  },
+  {
+    "id": "22-03",
+    "case_index": 22,
+    "instance_id": "astropy__astropy-14365",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:astropy/io/ascii/qdp.py:_interpret_err_lines",
+    "matches": [
+      {
+        "line": 12,
+        "text": "- 待验证假设：命令解析后由 astropy/io/ascii/qdp.py:_interpret_err_lines 消费 err_specs，若上游已统一大小写，则下游键名无需改动。"
+      }
+    ],
+    "basis": {
+      "entity": "astropy/io/ascii/qdp.py:_interpret_err_lines",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "source_bytes": 8044,
+    "source_budget_remaining": 6292,
+    "classification": "误判",
+    "reason": "未核验点同一句明确201-638未读完，“含 _interpret_err_lines 剩余部分”；标注清楚，但没有完整实体ID同一行。",
+    "subtype": "范围+简称标注",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/astropy__astropy-14365/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/astropy__astropy-14365/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "astropy/io/ascii/qdp.py:_interpret_err_lines",
+    "unread_context": [
+      {
+        "line": 14,
+        "text": "未核验点"
+      },
+      {
+        "line": 15,
+        "text": "- 未读完：astropy/io/ascii/qdp.py:201-638（含 `_interpret_err_lines` 剩余部分、`_read_table_qdp`、`QDP` 类及 `_write_table_qdp`），故命令到 err_specs 的完整调用链未核验。"
+      },
+      {
+        "line": 16,
+        "text": "- 未续读分页：无（已返回的 cursor 已读完至 200 行）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "astropy/io/ascii/qdp.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "astropy/io/ascii/qdp.py",
+        "line": 56,
+        "text": "    ValueError: Unrecognized QDP line..."
+      },
+      {
+        "tool_index": 1,
+        "path": "astropy/io/ascii/qdp.py",
+        "line": 60,
+        "text": "    ValueError: Unrecognized QDP line..."
+      },
+      {
+        "tool_index": 1,
+        "path": "astropy/io/ascii/qdp.py",
+        "line": 78,
+        "text": "        raise ValueError(f\"Unrecognized QDP line: {line}\")"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 200,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": 20
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 133,
+          "next_cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "start_column": 0,
+          "start_line": 20,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 5460
+      },
+      {
+        "tool_index": 5,
+        "path": "astropy/io/ascii/qdp.py",
+        "requested": {
+          "cursor": "rf1_655496557e920b75dfcc638ffa80e9110321d80e1f716eb766f4ab9845720d7f",
+          "end_line": null,
+          "path": "astropy/io/ascii/qdp.py",
+          "start_line": null
+        },
+        "delivered_metadata": {
+          "end_column": 0,
+          "end_line": 200,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 134,
+          "total_lines": 642
+        },
+        "cumulative_source_bytes": 8044
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "astropy/io/ascii/qdp.py",
+        7,
+        200
+      ],
+      [
+        "astropy/io/ascii/qdp.py",
+        639,
+        642
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "23-01",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:hyperbolic.py:590",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中：cotm 仅出现在 hyperbolic.py:590 与 trigonometric.py:1307-1310。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "hyperbolic.py:590",
+      "path": "hyperbolic.py",
+      "start": 590,
+      "end": 590
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": "边界",
+    "reason": "完整hyperbolic.py:590源行确已在C read_file交付；原答用唯一可对应的basename。不过冻结提示明确要求完整相对路径，接受缩写属格式契约放宽，不计为确定误判。",
+    "subtype": "路径缩写",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-13480/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-13480/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sympy/functions/elementary/hyperbolic.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/hyperbolic.py",
+        "line": 590,
+        "text": "                    if cotm is S.ComplexInfinity:"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sympy/functions/elementary/hyperbolic.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 607,
+          "path": "sympy/functions/elementary/hyperbolic.py",
+          "start_line": 557
+        },
+        "delivered_metadata": {
+          "end_column": 34,
+          "end_line": 607,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 557,
+          "total_lines": 1403
+        },
+        "cumulative_source_bytes": 3632
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ]
+    ]
+  },
+  {
+    "id": "23-02",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:trigonometric.py:1307-1310",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- 搜索命中：cotm 仅出现在 hyperbolic.py:590 与 trigonometric.py:1307-1310。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "trigonometric.py:1307-1310",
+      "path": "trigonometric.py",
+      "start": 1307,
+      "end": 1310
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": "边界",
+    "reason": "完整trigonometric.py:1307-1310均已读；仅basename导致lookup失败。和上一条一样，证据真实但违反完整路径字面要求，归边界。",
+    "subtype": "路径缩写",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-13480/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-13480/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "sympy/functions/elementary/trigonometric.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1307,
+        "text": "                cotm = cot(m)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1308,
+        "text": "                if cotm is S.ComplexInfinity:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1310,
+        "text": "                else: # cotm == 0"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1320,
+          "path": "sympy/functions/elementary/trigonometric.py",
+          "start_line": 1295
+        },
+        "delivered_metadata": {
+          "end_column": 34,
+          "end_line": 1320,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 1295,
+          "total_lines": 2817
+        },
+        "cumulative_source_bytes": 4751
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ]
+  },
+  {
+    "id": "23-03",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/hyperbolic.py:coth.eval",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：sympy/functions/elementary/hyperbolic.py:coth.eval 第 589-590 行变量名不一致（cothm 赋值、cotm 使用）导致 NameError，属复制自 sympy/functions/elementary/trigonometric.py:cot.eval 时未改名。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/functions/elementary/hyperbolic.py:coth.eval",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": "边界",
+    "reason": "检索给出的coth.eval def范围557-607全部交付，仍被判不完整；可能漏装饰器，日志无原AST完整span。不能把正文完整和带装饰器的实体完整混为一谈。",
+    "subtype": "装饰器/覆盖口径",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-13480/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-13480/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sympy/functions/elementary/hyperbolic.py:coth.eval",
+    "unread_context": [
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- 未读 _peeloff_ipi 实现，无法确认 m 的取值与 coth(m) 是否恒为 0 或 ComplexInfinity。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 coth 类定义头部与 docstring 之外的上下文（如 _eval_* 方法），未验证其他分支。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sympy/functions/elementary/hyperbolic.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/hyperbolic.py",
+        "line": 590,
+        "text": "                    if cotm is S.ComplexInfinity:"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "sympy/functions/elementary/hyperbolic.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 607,
+          "path": "sympy/functions/elementary/hyperbolic.py",
+          "start_line": 557
+        },
+        "delivered_metadata": {
+          "end_column": 34,
+          "end_line": 607,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 557,
+          "total_lines": 1403
+        },
+        "cumulative_source_bytes": 3632
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ]
+    ],
+    "function_span": {
+      "start": 557,
+      "end": 607,
+      "length": 51,
+      "provenance": "C检索元数据；def至末行，不含装饰器",
+      "definition_excludes_decorators": true
+    },
+    "entity_read_intersection": [
+      [
+        557,
+        607
+      ]
+    ],
+    "function_length_status": "已知def范围",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "23-04",
+    "case_index": 23,
+    "instance_id": "sympy__sympy-13480",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:sympy/functions/elementary/trigonometric.py:cot.eval",
+    "matches": [
+      {
+        "line": 9,
+        "text": "- 待验证假设：sympy/functions/elementary/hyperbolic.py:coth.eval 第 589-590 行变量名不一致（cothm 赋值、cotm 使用）导致 NameError，属复制自 sympy/functions/elementary/trigonometric.py:cot.eval 时未改名。"
+      }
+    ],
+    "basis": {
+      "entity": "sympy/functions/elementary/trigonometric.py:cot.eval",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "all_credited_ranges": [
+      [
+        "sympy/functions/elementary/hyperbolic.py",
+        557,
+        607
+      ],
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "source_bytes": 4751,
+    "source_budget_remaining": 9585,
+    "classification": "真违规",
+    "reason": "cot.eval只收到1295-1320中部，没有函数头；用其作为复制来源参与推断，却没有cot.eval未读完标注。关于coth类上下文未读的声明不是cot.eval标注。",
+    "subtype": "只读中部且未标",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/sympy__sympy-13480/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/sympy__sympy-13480/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "sympy/functions/elementary/trigonometric.py:cot.eval",
+    "unread_context": [
+      {
+        "line": 13,
+        "text": "未核验点"
+      },
+      {
+        "line": 14,
+        "text": "- 未读 _peeloff_ipi 实现，无法确认 m 的取值与 coth(m) 是否恒为 0 或 ComplexInfinity。"
+      },
+      {
+        "line": 15,
+        "text": "- 未读 coth 类定义头部与 docstring 之外的上下文（如 _eval_* 方法），未验证其他分支。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "sympy/functions/elementary/trigonometric.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1307,
+        "text": "                cotm = cot(m)"
+      },
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1308,
+        "text": "                if cotm is S.ComplexInfinity:"
+      },
+      {
+        "tool_index": 1,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "line": 1310,
+        "text": "                else: # cotm == 0"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "sympy/functions/elementary/trigonometric.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1320,
+          "path": "sympy/functions/elementary/trigonometric.py",
+          "start_line": 1295
+        },
+        "delivered_metadata": {
+          "end_column": 34,
+          "end_line": 1320,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 1295,
+          "total_lines": 2817
+        },
+        "cumulative_source_bytes": 4751
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "sympy/functions/elementary/trigonometric.py",
+        1295,
+        1320
+      ]
+    ],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  },
+  {
+    "id": "24-01",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:django/apps/config.py:64-70",
+    "matches": [
+      {
+        "line": 5,
+        "text": "- django/apps/config.py:64-70：`default_auto_field` 属性与 `_is_default_auto_field_overridden` 仅比较类属性是否被覆盖。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "django/apps/config.py:64-70",
+      "path": "django/apps/config.py",
+      "start": 64,
+      "end": 70
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": "真违规",
+    "reason": "事实段把64-70写为已读依据；C仅搜索收到64、69、70，未收到65-68，没有在此说明仅搜索，且同时概括两个属性行为。",
+    "subtype": "事实连续引用有缺口",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13925/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13925/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "django/apps/config.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 64,
+        "text": "    def default_auto_field(self):"
+      },
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 69,
+        "text": "    def _is_default_auto_field_overridden(self):"
+      },
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 70,
+        "text": "        return self.__class__.default_auto_field is not AppConfig.default_auto_field"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "24-02",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:tests/check_framework/test_model_checks.py:389-412",
+    "matches": [
+      {
+        "line": 6,
+        "text": "- tests/check_framework/test_model_checks.py:389-412：测试覆盖了 app 级 default_auto_field 与 setting 两种抑制路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "tests/check_framework/test_model_checks.py:389-412",
+      "path": "tests/check_framework/test_model_checks.py",
+      "start": 389,
+      "end": 412
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": "真违规",
+    "reason": "事实段引用389-412并断言测试覆盖两条路径，C只收到稀疏搜索命中（389/394/399/412等），没有完整测试体，未标“搜索命中”。",
+    "subtype": "事实连续引用有缺口",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13925/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13925/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "tests/check_framework/test_model_checks.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 1,
+        "path": "tests/check_framework/test_model_checks.py",
+        "line": 394,
+        "text": "                id='models.W042',"
+      },
+      {
+        "tool_index": 2,
+        "path": "tests/check_framework/test_model_checks.py",
+        "line": 389,
+        "text": "                    \"CheckDefaultPKConfig.default_auto_field attribute to \""
+      },
+      {
+        "tool_index": 2,
+        "path": "tests/check_framework/test_model_checks.py",
+        "line": 399,
+        "text": "    def test_default_auto_field_setting(self):"
+      },
+      {
+        "tool_index": 2,
+        "path": "tests/check_framework/test_model_checks.py",
+        "line": 412,
+        "text": "    def test_app_default_auto_field(self, apps):"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": []
+  },
+  {
+    "id": "24-03",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:base.py:364",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "base.py:364",
+      "path": "base.py",
+      "start": 364,
+      "end": 364
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": "误判",
+    "reason": "该推断明确“搜索仅命中…manager.auto_created”“无法确认”pk来源；364行manager赋值确由C搜索交付，不是编造已读根因证据。",
+    "subtype": "受限搜索陈述",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13925/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13925/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "django/db/models/base.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 6,
+        "path": "django/db/models/base.py",
+        "line": 364,
+        "text": "            manager.auto_created = True"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 3,
+        "path": "django/db/models/base.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1330,
+          "path": "django/db/models/base.py",
+          "start_line": 1280
+        },
+        "delivered_metadata": {
+          "end_column": 30,
+          "end_line": 1330,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 1280,
+          "total_lines": 2139
+        },
+        "cumulative_source_bytes": 6648
+      },
+      {
+        "tool_index": 5,
+        "path": "django/db/models/base.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 1280,
+          "path": "django/db/models/base.py",
+          "start_line": 1240
+        },
+        "delivered_metadata": {
+          "end_column": 49,
+          "end_line": 1280,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 1240,
+          "total_lines": 2139
+        },
+        "cumulative_source_bytes": 11049
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ]
+    ]
+  },
+  {
+    "id": "24-04",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R4",
+    "recorded_violation": "R4_citation_not_delivered:options.py:439",
+    "matches": [
+      {
+        "line": 10,
+        "text": "- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。"
+      }
+    ],
+    "basis": {
+      "regex": "(?P<path>[\\w./-]+\\.py):(?P<start>\\d+)(?:[-–](?P<end>\\d+))?",
+      "citation": "options.py:439",
+      "path": "options.py",
+      "start": 439,
+      "end": 439
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": "误判",
+    "reason": "同上，options.py:439的manager赋值确已搜索交付，且用于说明证据不足。",
+    "subtype": "受限搜索陈述",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13925/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13925/locator/diagnostic-audit.json",
+    "unread_context": [],
+    "canonical_path_candidates": [
+      "django/db/models/options.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 6,
+        "path": "django/db/models/options.py",
+        "line": 439,
+        "text": "        manager.auto_created = True"
+      }
+    ],
+    "read_file_observations": [
+      {
+        "tool_index": 4,
+        "path": "django/db/models/options.py",
+        "requested": {
+          "cursor": null,
+          "end_line": 250,
+          "path": "django/db/models/options.py",
+          "start_line": 200
+        },
+        "delivered_metadata": {
+          "end_column": 23,
+          "end_line": 250,
+          "next_cursor": null,
+          "start_column": 0,
+          "start_line": 200,
+          "total_lines": 895
+        },
+        "cumulative_source_bytes": 9036
+      }
+    ],
+    "canonical_credited_ranges": [
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ]
+  },
+  {
+    "id": "24-05",
+    "case_index": 24,
+    "instance_id": "django__django-13925",
+    "rule": "R1",
+    "recorded_violation": "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+    "matches": [
+      {
+        "line": 2,
+        "text": "- django/db/models/base.py:1298-1320：`_check_default_pk` 的触发条件只有三项：`cls._meta.pk.auto_created` 为真、`settings.is_overridden('DEFAULT_AUTO_FIELD')` 为假、`cls._meta.app_config._is_default_auto_field_overridden` 为假；三者同时成立才返回 models.W042。"
+      },
+      {
+        "line": 5,
+        "text": "- django/apps/config.py:64-70：`default_auto_field` 属性与 `_is_default_auto_field_overridden` 仅比较类属性是否被覆盖。"
+      }
+    ],
+    "basis": {
+      "entity": "django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+      "structured_candidate": true,
+      "exact_unread_same_line": false,
+      "entity_complete": false,
+      "condition": "complete_entity=False 且没有同一行完整ID+字面“未读完”；False具体AST span未持久化"
+    },
+    "credited_ranges_for_path": [],
+    "all_credited_ranges": [
+      [
+        "django/db/models/base.py",
+        1240,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        250
+      ]
+    ],
+    "source_bytes": 11290,
+    "source_budget_remaining": 3046,
+    "classification": "边界",
+    "reason": "C搜索已见69行定义和70行return，却没有完整函数/装饰器span；R1可能反映未读装饰器或仅拒绝搜索证据。当前日志不能独立证明完整实体覆盖，保守归边界。",
+    "subtype": "搜索片段/装饰器口径",
+    "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/django__django-13925/raw-answer.txt",
+    "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/django__django-13925/locator/diagnostic-audit.json",
+    "structured_candidate_literal": "django/apps/config.py:AppConfig._is_default_auto_field_overridden",
+    "unread_context": [
+      {
+        "line": 12,
+        "text": "未核验点"
+      },
+      {
+        "line": 13,
+        "text": "- 未读完：`Model._meta` 构建与 pk 自动创建逻辑（options.py 中 pk 相关方法、base.py 中字段继承处理）未读。"
+      },
+      {
+        "line": 14,
+        "text": "- 未核验：`Options._get_default_pk_class` 的调用点（未读）。"
+      }
+    ],
+    "canonical_path_candidates": [
+      "django/apps/config.py"
+    ],
+    "search_hit_evidence": [
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 64,
+        "text": "    def default_auto_field(self):"
+      },
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 69,
+        "text": "    def _is_default_auto_field_overridden(self):"
+      },
+      {
+        "tool_index": 2,
+        "path": "django/apps/config.py",
+        "line": 70,
+        "text": "        return self.__class__.default_auto_field is not AppConfig.default_auto_field"
+      }
+    ],
+    "read_file_observations": [],
+    "canonical_credited_ranges": [],
+    "function_span": null,
+    "entity_read_intersection": "实体边界未知；仅报告文件已读范围，不冒充完整实体范围",
+    "function_length_status": "未知",
+    "budget_assessment": "未耗尽14,336总字节；不能将缺口归于总字节上限。可能有4096单页截断、未续读、cursor错误、请求次数结束、所选范围不足或实体身份问题，见原工具记录。"
+  }
+]

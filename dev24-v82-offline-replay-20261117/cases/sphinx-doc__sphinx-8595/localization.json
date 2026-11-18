@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "instance_id": "sphinx-doc__sphinx-8595",
+  "base_commit": "b19bce971e82f2497d67fdacdeca8db08ae0ba56",
+  "result": {
+    "answer": "已读到的事实（附文件:行号）\n- sphinx/ext/autodoc/__init__.py:989-992：ModuleDocumenter.__init__ 将 self.__all__ 初始化为 None。\n- sphinx/ext/autodoc/__init__.py:1015-1031：import_object 仅在未设置 ignore_module_all 时调用 inspect.getall(self.object) 赋值 self.__all__；AttributeError/ValueError 时仅告警并保留原值。\n- sphinx/ext/autodoc/__init__.py:1046-1066：get_module_members 遍历 dir(self.object) 收集成员，未见对 self.__all__ 的过滤（该函数体在 1066 处被截断，后续未读）。\n- sphinx/ext/autodoc/importer.py:184-245：get_object_members 完整函数体不含 __all__ 过滤逻辑，仅处理 enum、__slots__、dir()、注解与 analyzer 属性。\n- 搜索命中（未读正文）：sphinx/ext/autodoc/__init__.py:1077 与 1083 出现 `if not self.__all__` 与 `if member.__name__ not in self.__all__`，位于 filter_members 附近；sphinx/util/inspect.py:145-158 的 getall 在 __all__ 为 None 时返回 None，否则校验为字符串列表/元组。\n\n推断\n- 待验证假设：空列表 `__all__ = []` 在 sphinx/ext/autodoc/__init__.py:ModuleDocumenter.import_object 中被正确读入 self.__all__，但 sphinx/ext/autodoc/__init__.py:filter_members 中 `if not self.__all__` 的判空把空列表与 None 同等对待，从而跳过按 __all__ 过滤，导致 foo/bar/baz 全部输出。\n- 待验证假设：修复点应在 filter_members 区分 `self.__all__ is None`（无 __all__，不过滤）与 `self.__all__ == []`（过滤掉全部成员），而非改动 sphinx/ext/autodoc/importer.py:get_object_members。\n\n未核验点\n- sphinx/ext/autodoc/__init__.py:1066 之后的分页（cursor=rf1_2956b5d1211b8d2ac7b508680afe40f8e39e12224414004be83f61d11633e275）未续读，filter_members 完整函数体（含 1077、1083 行上下文）未读完，上述推断基于搜索命中行而非完整正文。\n- sphinx/util/inspect.py:getall 完整函数体未读（仅搜索命中 145-158 行）。\n- 未追踪 get_object_members 与 filter_members 之间的实际调用链，也未确认 ModuleDocumenter 是否走 filter_members 路径。\n- 未运行任何测试或复现脚本，行为未验证。\n\n最小验证：`python -m pytest -q tests/test_ext_autodoc.py -k all`（或断言：对 `__all__ = []` 的模块调用 ModuleDocumenter.filter_members 后返回空列表）\n\n以下内容未在阅读记录中核验：\n- [R4] sphinx/util/inspect.py:145-158",
+    "entities": [
+      "sphinx/ext/autodoc/__init__.py:ModuleDocumenter.import_object",
+      "sphinx/ext/autodoc/__init__.py:ModuleDocumenter.get_module_members",
+      "sphinx/ext/autodoc/importer.py:get_object_members",
+      "sphinx/util/inspect.py:getall"
+    ],
+    "files": [
+      "sphinx/ext/autodoc/__init__.py",
+      "sphinx/ext/autodoc/importer.py",
+      "sphinx/util/inspect.py"
+    ]
+  }
+}

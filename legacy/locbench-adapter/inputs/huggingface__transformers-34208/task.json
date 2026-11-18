@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-34208",
+  "repo": "huggingface/transformers",
+  "base_commit": "343c8cb86f2ab6a51e7363ee11f69afb1c9e839e",
+  "problem_statement": "Boolean as tool input\n### Feature request\r\n\r\nIt would be great if `boolean` was authorized as input to a `Tool`\r\n\r\n### Motivation\r\n\r\nI am willing to use my own tools with transformers CodeAgent ; using the method `tool`\r\nI have a proper function `func` with typing and doc-strings as required. One of the input of the function is a `bool`.\r\nWhen I try to run `tool(func)` I get: `Exception: Input 'perte_de_salaire': type 'boolean' is not an authorized value, should be one of ['string', 'integer', 'number', 'image', 'audio', 'any']`.\r\n\r\nThe Exception is rather clear, but why wouldn't a type as basic as `boolean` not be allowed? Especially since any is authorized. This is clearly a limitation to using the library.\r\n\r\n### Your contribution\r\n\r\nI seems like a few lines of code to change in tools.py (https://github.com/huggingface/transformers/blob/main/src/transformers/agents/tools.py)\n"
+}

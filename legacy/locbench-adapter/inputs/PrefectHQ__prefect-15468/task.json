@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-15468",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "8ebcefd79839168433fa2080c101221131050e05",
+  "problem_statement": "Add ability to configure `ConcurrenyOptions` to the CLI\n### Describe the current behavior\r\n\r\nCurrently users can set the the concurrency_limit for a deployment when creating it with the CLI by specifying the limit with and int as so: `deploy \"my-deployment -cl 1\". \r\n\r\nUpcoming work #15291, adds options for handling concurrency limiting which we will need add to the CLI.\r\n\r\n### Describe the proposed behavior\r\n\r\nI think that it while it's possible to create a custom type in typer and configure them as so `deploy \"my-deployment\" -cl 1 --concurrency-options = {'collisions-strategy' = 'cancel-new'}`, it makes for a better user experience if we flatten it. This could be done for each subsequent options that gets added and along with sane defaults, users wouldn't be setting a lot of these.\r\n\r\n### Example Use\r\n\r\n`deploy \"my-deployment\" -cl 42 --collision-strategy \"cancel-new\"`\r\n\r\n### Additional context\r\n\r\n_No response_\n"
+}

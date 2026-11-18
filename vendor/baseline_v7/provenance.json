@@ -1,0 +1,122 @@
+[
+  {
+    "copy": "vendor/baseline_v7/path_retrieval_v4/__init__.py",
+    "historical_source": "workspace/experiments/path_retrieval_v4/__init__.py",
+    "sha256": "1a9a9cb149350f45ea7cbd376b0c2890e64fe12f58ae576bf2fd49686c4d6a3a"
+  },
+  {
+    "copy": "vendor/baseline_v7/path_retrieval_v4/retriever.py",
+    "historical_source": "workspace/experiments/path_retrieval_v4/retriever.py",
+    "sha256": "db9f793d4a36fc7e2ebc62ccb7d236235bcc1f5e3045bd7cb5f980499f9a18ba"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/__init__.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/__init__.py",
+    "sha256": "c7571ce6af8478ab453c732403905940ae65757b1a13f17d9aecd9e207a49652"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/evaluate.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/evaluate.py",
+    "sha256": "e5650f923010e21d850a965ee835ea10ba044a16f1dcc7f21a76bf466ab8fb72"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/offline_adapter.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/offline_adapter.py",
+    "sha256": "4e3710c18cc9823cd60a44ecd768d3a1f55234174bfac7762da4a69a0965a6a3"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/prepare.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/prepare.py",
+    "sha256": "568c30b48f6d092d53812b71faf2da1890eb2efdc5c611f5185eb7eeb135b854"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/retriever.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/retriever.py",
+    "sha256": "40a1f183a39aa3d8bcf5d1a409379b6ef48ea2cd44a4c7a0bc8a89a85a180e57"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/run.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/run.py",
+    "sha256": "e2e91f1973ecb04ea2fe5550c8c71c56295e5f52d5c55edee983b85834f65aca"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/sdk_check.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/sdk_check.py",
+    "sha256": "309e739a3692c59eba0b86481916314204b1d18786f5f4defabd751e6b0fee4d"
+  },
+  {
+    "copy": "vendor/baseline_v7/retrieval_evidence_v6/worker.py",
+    "historical_source": "workspace/experiments/retrieval_evidence_v6/worker.py",
+    "sha256": "d2fd600f1c5da4e7ae682444cec85e81f1fe8905580cdbad261766dbfada98b8"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/__init__.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/__init__.py",
+    "sha256": "b46435a62d7ce68056ee9b23103897c2015dfc4bdcc150bad039f47790fd9df5"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/backends.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/backends.py",
+    "sha256": "09accb517f5cdae8ad875725730cae2e31b9370ed3ba2e36ec59425d8b4423bb"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/batch.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/batch.py",
+    "sha256": "1a2117d6c13b836de87ee0a52b3b47793224bd49e07e05da0761e9fe6de1879a"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/common_contract.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/common_contract.py",
+    "sha256": "bd4585d888b605696eebb42401fecbdbe474f00bd3147a261e289aef5d6e15e0"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/cumulative.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/cumulative.py",
+    "sha256": "42aab4876f0ed34b6a9f12ce64c6a7676dd3ca7f2d26d1a689685070f2ac8dd5"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/finish_policy.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/finish_policy.py",
+    "sha256": "fdfe78e5334eacb8150130d089a63327fb321cb06213f7df1650d76438003fc9"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/fixtures.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/fixtures.py",
+    "sha256": "03515b6ce6e5a846ac4528149c7e3c60cfc58940431213bd288faa5033f26ec0"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/freeze.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/freeze.py",
+    "sha256": "befbbb523f0cdb67fa6a14de610ba6902355e83b4f12dd1d8d572599f5792b77"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/guard.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/guard.py",
+    "sha256": "85cdf750f260c36e6ee83e075f81639817d2eda76f60f32228b56a9b1203ef5a"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/launch.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/launch.py",
+    "sha256": "fb0ef577029e1d20415bd2abb53107f0d5319b7c2467c7f4dfe776d941ab69ec"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/parent.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/parent.py",
+    "sha256": "4ee4d06850ecb8ccdeddc2c948a37c5c3e7c6b674f57ac2348e6e2791e43eee6"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/run.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/run.py",
+    "sha256": "5fe60b8894c252a837e4327da61bc034f6de919e6ba8337c9cefc67fe07404f9"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/sdk_adapter.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/sdk_adapter.py",
+    "sha256": "964e76933d93bc826b5941b2b37c9e43af48fffdde93738b887c46afa2d1191b"
+  },
+  {
+    "copy": "vendor/baseline_v7/sdk_finish_selfcheck_v7/worker.py",
+    "historical_source": "workspace/experiments/sdk_finish_selfcheck_v7/worker.py",
+    "sha256": "0cf8512503b6f30e1fef76cf8a65a5211351f15158801e217ae175f383d46eb3"
+  }
+]

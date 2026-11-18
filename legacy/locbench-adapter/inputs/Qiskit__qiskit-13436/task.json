@@ -1,0 +1,6 @@
+{
+  "instance_id": "Qiskit__qiskit-13436",
+  "repo": "Qiskit/qiskit",
+  "base_commit": "2bf578eb00808744f80f30324148e946a6214a1d",
+  "problem_statement": "Statevector._expectation_value_pauli returns incorrect result in certain cases\nThe calculation for the expectation value of the __identity operator__ seems incorrect when the statevector is __not normalized__ to 1.\r\n\r\nI think the reason is that one should use the norm squared rather than the norm in the following lines.\r\nhttps://github.com/Qiskit/qiskit/blob/1be2c5aa103f1991f2fdc75a77a09f82635b8431/qiskit/quantum_info/states/statevector.py#L478-L479\r\n\r\n---\r\n\r\nThe whole function is attached below to provide context.\r\n\r\nhttps://github.com/Qiskit/qiskit/blob/1be2c5aa103f1991f2fdc75a77a09f82635b8431/qiskit/quantum_info/states/statevector.py#L458-L491\n"
+}

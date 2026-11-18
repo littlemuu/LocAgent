@@ -1,0 +1,23 @@
+{
+  "django__django-13033": {
+    "reason": "将外键 attname 与查询路径最后一段 pieces[-1] 比较，修正带关联前缀的排序判断；原 harness 判定 resolved。",
+    "patch": "completed-snapshot/django__django-13033/C/patch.diff",
+    "result": "completed-snapshot/django__django-13033/C/harness/evaluation.json"
+  },
+  "sympy__sympy-18698": {
+    "reason": "C 已把差异追到 _symbolic_factor_list，但随后反复运行同一探针并用满40次，未编辑，原评分未resolved。",
+    "evidence": "delivery/failure-audit/sympy__sympy-18698/trace.md"
+  },
+  "astropy__astropy-12907": {
+    "reason": "把 _cstack 右下块的填充常数 1 改为实际 right 矩阵，保留嵌套模型的可分离结构，原 harness 判定 resolved。",
+    "patch": "completed-snapshot/astropy__astropy-12907/C/patch.diff"
+  },
+  "django__django-13964": {
+    "reason": "把未同步的外键值判断从仅 None 扩展到 field.empty_values，并将缓存删除改为容错 pop；原 harness 判定 resolved。",
+    "patch": "completed-snapshot/django__django-13964/C/patch.diff"
+  },
+  "django__django-13925": {
+    "reason": "在 _check_default_pk 中排除关联主键，避免对多表继承产生的关系主键误报警告，原 harness 判定 resolved。",
+    "patch": "evidence/run/trial/django__django-13925/C/patch.diff"
+  }
+}

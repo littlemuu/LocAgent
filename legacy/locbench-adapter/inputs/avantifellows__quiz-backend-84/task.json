@@ -1,0 +1,6 @@
+{
+  "instance_id": "avantifellows__quiz-backend-84",
+  "repo": "avantifellows/quiz-backend",
+  "base_commit": "f970b54634a9a9ba000aaf76d05338a5d77b0d60",
+  "problem_statement": "At some places we're updating just one key of an object or one element of an array but we send the whole object to MongoDB to update which is inefficient.\n\n"
+}

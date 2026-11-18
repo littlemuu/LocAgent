@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-18105",
+  "repo": "django/django",
+  "base_commit": "dd46cab6e076ec766ef0727a16f4219e3e6cb552",
+  "problem_statement": "Optimize post-migrate permission creation\nDescription\n\t\t\n(last modified by Adam Johnson)\t\t\nI have often seen django.contrib.auth.management.create_permissions() take a significant amount of time in test run profiles. It can be optimized by batching more of its operations, including making ContentTypeManager.get_for_models() use batch creation.\nFor a comparison, I profiled 1518 of Django’s tests in modules called “models”:\n$ python -m cProfile -o profile runtests.py --parallel 1 *model*\n$ python -m pstats profile <<< 'sort cumtime\nstats 10000' | less\nBefore optimization stats:\nTotal 11,938,857 function calls taking 5.349 seconds.\n88 calls to create_permissions() take 456ms, ~8.5% of the total time.\nAfter optimization stats:\nTotal 11,359,071 function calls taking 5.035 seconds.\n88 calls to create_permissions() now take 239ms, ~4.7% of the toal time.\n217ms and 579,786 function calls saved.\nOptimization is limited because the post_migrate signal runs once per migrated app config, so there’s no chance to bulk create *all* content types and permissions at once. If we introduced a new “all migrated apps” signal, that could reduce runtime further by batching all creation.\n"
+}

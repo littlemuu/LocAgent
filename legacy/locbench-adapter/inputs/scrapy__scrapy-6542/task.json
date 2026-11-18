@@ -1,0 +1,6 @@
+{
+  "instance_id": "scrapy__scrapy-6542",
+  "repo": "scrapy/scrapy",
+  "base_commit": "ab5cb7c7d9e268b501009d991d97ca19b6f7fe96",
+  "problem_statement": "return in finally can swallow exception\n### Description\r\n\r\nThere are two places in `scrapy/contracts/__init__.py` where a `finally:` body contains a `return` statement, which would swallow any in-flight exception. \r\n\r\nThis means that if a `BaseException` (such as `KeyboardInterrupt`) is raised from the body, or any exception is raised from one of the `except:` clause, it will not propagate on as expected. \r\n\r\nThe pylint warning about this was suppressed in [this commit](https://github.com/scrapy/scrapy/commit/991121fa91aee4d428ae09e75427d4e91970a41b) but it doesn't seem like there was justification for that.\r\n\r\nThese are the two locations:\r\nhttps://github.com/scrapy/scrapy/blame/b4bad97eae6bcce790a626d244c63589f4134408/scrapy/contracts/__init__.py#L56\r\n\r\nhttps://github.com/scrapy/scrapy/blame/b4bad97eae6bcce790a626d244c63589f4134408/scrapy/contracts/__init__.py#L86\r\n\r\nSee also https://docs.python.org/3/tutorial/errors.html#defining-clean-up-actions.\n"
+}

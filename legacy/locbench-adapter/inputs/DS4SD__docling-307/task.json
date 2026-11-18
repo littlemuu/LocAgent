@@ -1,0 +1,6 @@
+{
+  "instance_id": "DS4SD__docling-307",
+  "repo": "DS4SD/docling",
+  "base_commit": "1239ade2750349d13d4e865d88449b232bbad944",
+  "problem_statement": "In a specific PowerPoint, an issue with missing text occurred during parsing.\n### Bug\r\n<!-- In a specific PowerPoint, an issue with missing text occurred during parsing. -->\r\n...\r\n\r\n[specific PowerPoint]\r\n[powerpoint_sample.pptx](https://github.com/user-attachments/files/17694015/powerpoint_sample.pptx)\r\n\r\n...\r\n\r\n### Python version\r\ndocling                   2.4.0\r\nPython version: 3.12.7\r\n...\r\n\r\n\n"
+}

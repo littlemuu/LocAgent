@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-7189",
+  "repo": "modin-project/modin",
+  "base_commit": "6d64e08fc8e124b7a6ba2aecd4062dfe7fef90f1",
+  "problem_statement": "Add extra check for `NPartitions` and `CpuCount` classes\n\n"
+}

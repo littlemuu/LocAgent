@@ -1,0 +1,6 @@
+{
+  "instance_id": "pulp__pulp_rpm-3224",
+  "repo": "pulp/pulp_rpm",
+  "base_commit": "6b999b4d8a16d936927e3fc9dec74fe506c25226",
+  "problem_statement": "Switch to values() instead of select_related\n**Version**\r\nall\r\n**Describe the bug**\r\nSome queries use select_related, if we do not need the model instance, we could just use values() that will produce queryset dict results instead.\r\n\r\n**To Reproduce**\r\nSteps to reproduce the behavior:\r\n\r\n**Expected behavior**\r\nA clear and concise description of what you expected to happen.\r\n\r\n**Additional context**\r\nAdd any other context about the problem here.  Please provide links to any previous discussions via Discourse or Bugzilla.\r\n\nDuring publish metadata generation load just one Artifact checksum type\n**Version**\r\nall\r\n\r\n**Describe the bug**\r\nThere is an overhead which consists in loading all artifact checksum types during publish repodata generation. It's enough to load just one, the one specified in package_checksum_type\r\n\r\n**To Reproduce**\r\nSteps to reproduce the behavior:\r\n\r\n**Expected behavior**\r\nA clear and concise description of what you expected to happen.\r\n\r\n**Additional context**\r\nAdd any other context about the problem here.  Please provide links to any previous discussions via Discourse or Bugzilla.\r\n\n"
+}

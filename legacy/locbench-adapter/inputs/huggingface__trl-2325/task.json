@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__trl-2325",
+  "repo": "huggingface/trl",
+  "base_commit": "74e20cbbbcbac7ac8d426df09eda5f310c637def",
+  "problem_statement": "Several problems in RLOOTrainer\n### System Info\n\nmain\n\n### Information\n\n- [X] The official example scripts\n- [ ] My own modified scripts\n\n### Tasks\n\n- [X] An officially supported task in the `examples` folder\n- [ ] My own task or dataset (give details below)\n\n### Reproduction\n\n1. metrics[\"loss/value_avg\"] = self.accelerator.gather(vf_loss_stats).mean().item()\r\nthis metrics is useless since we don't use value func in RLOO\r\n\r\n2. self.state.epoch = self.state.episode / self.train_dataset_len  # used by self.log \r\nThis will cause problems on calculation since the true epoch count is (self.state.episode / (args.rloo_k * self.train_dataset_len) Since every instruction is repeated args.rloo_k times\r\n\r\n3. Multiple self.state.global_step += 1\r\nwill cause the saving process to go wrong\r\n\r\n\r\n\n\n### Expected behavior\n\nthis to be right\n"
+}

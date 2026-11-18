@@ -1,0 +1,193 @@
+TOOL 1: locagent_retrieve
+ARGS: {"offset": 0, "query": "astropy/modeling/separable.py:separability_matrix"}
+META: {"next_offset": null}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 astropy/modeling/separable.py:separability_matrix [exact_id]
+path=astropy/modeling/separable.py; lines=66-102; implementation_start=97; read_file(path="astropy/modeling/separable.py", start_line=66, end_line=102)
+Docstring lines 67-96; preview prioritizes implementation. read_file preserves complete text.
+66: def separability_matrix(transform):
+... lines 67-96 omitted ...
+97:     if transform.n_inputs == 1 and transform.n_outputs > 1:
+98:         return np.ones((transform.n_outputs, transform.n_inputs),
+99:                        dtype=np.bool_)
+100:     separable_matrix = _separable(transform)
+101:     separable_matrix = np.where(separable_matrix != 0, True, False)
+102:     return separable_matrix
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+TOOL 2: search_text
+ARGS: {"offset": 0, "query": "def separability_matrix"}
+META: {"next_offset": null}
+astropy/modeling/separable.py:66: def separability_matrix(transform):
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 160, "path": "astropy/modeling/separable.py", "start_line": 1}
+META: {"end_column": 38, "end_line": 99, "next_cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8", "start_column": 0, "start_line": 1, "total_lines": 317}
+1: # Licensed under a 3-clause BSD style license - see LICENSE.rst
+2: 
+3: """
+4: Functions to determine if a model is separable, i.e.
+5: if the model outputs are independent.
+6: 
+7: It analyzes ``n_inputs``, ``n_outputs`` and the operators
+8: in a compound model by stepping through the transforms
+9: and creating a ``coord_matrix`` of shape (``n_outputs``, ``n_inputs``).
+10: 
+11: 
+12: Each modeling operator is represented by a function which
+13: takes two simple models (or two ``coord_matrix`` arrays) and
+14: returns an array of shape (``n_outputs``, ``n_inputs``).
+15: 
+16: """
+17: 
+18: import numpy as np
+19: 
+20: from .core import Model, ModelDefinitionError, CompoundModel
+21: from .mappings import Mapping
+22: 
+23: 
+24: __all__ = ["is_separable", "separability_matrix"]
+25: 
+26: 
+27: def is_separable(transform):
+28:     """
+29:     A separability test for the outputs of a transform.
+30: 
+31:     Parameters
+32:     ----------
+33:     transform : `~astropy.modeling.core.Model`
+34:         A (compound) model.
+35: 
+36:     Returns
+37:     -------
+38:     is_separable : ndarray
+39:         A boolean array with size ``transform.n_outputs`` where
+40:         each element indicates whether the output is independent
+41:         and the result of a separable transform.
+42: 
+43:     Examples
+44:     --------
+45:     >>> from astropy.modeling.models import Shift, Scale, Rotation2D, Polynomial2D
+46:     >>> is_separable(Shift(1) & Shift(2) | Scale(1) & Scale(2))
+47:         array([ True,  True]...)
+48:     >>> is_separable(Shift(1) & Shift(2) | Rotation2D(2))
+49:         array([False, False]...)
+50:     >>> is_separable(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]) | \
+51:         Polynomial2D(1) & Polynomial2D(2))
+52:         array([False, False]...)
+53:     >>> is_separable(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]))
+54:         array([ True,  True,  True,  True]...)
+55: 
+56:     """
+57:     if transform.n_inputs == 1 and transform.n_outputs > 1:
+58:         is_separable = np.array([False] * transform.n_outputs).T
+59:         return is_separable
+60:     separable_matrix = _separable(transform)
+61:     is_separable = separable_matrix.sum(1)
+62:     is_separable = np.where(is_separable != 1, False, True)
+63:     return is_separable
+64: 
+65: 
+66: def separability_matrix(transform):
+67:     """
+68:     Compute the correlation between outputs and inputs.
+69: 
+70:     Parameters
+71:     ----------
+72:     transform : `~astropy.modeling.core.Model`
+73:         A (compound) model.
+74: 
+75:     Returns
+76:     -------
+77:     separable_matrix : ndarray
+78:         A boolean correlation matrix of shape (n_outputs, n_inputs).
+79:         Indicates the dependence of outputs on inputs. For completely
+80:         independent outputs, the diagonal elements are True and
+81:         off-diagonal elements are False.
+82: 
+83:     Examples
+84:     --------
+85:     >>> from astropy.modeling.models import Shift, Scale, Rotation2D, Polynomial2D
+86:     >>> separability_matrix(Shift(1) & Shift(2) | Scale(1) & Scale(2))
+87:         array([[ True, False], [False,  True]]...)
+88:     >>> separability_matrix(Shift(1) & Shift(2) | Rotation2D(2))
+89:         array([[ True,  True], [ True,  True]]...)
+90:     >>> separability_matrix(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]) | \
+91:         Polynomial2D(1) & Polynomial2D(2))
+92:         array([[ True,  True], [ True,  True]]...)
+93:     >>> separability_matrix(Shift(1) & Shift(2) | Mapping([0, 1, 0, 1]))
+94:         array([[ True, False], [False,  True], [ True, False], [False,  True]]...)
+95: 
+96:     """
+97:     if transform.n_inputs == 1 and transform.n_outputs > 1:
+98:         return np.ones((transform.n_outputs, transform.n_inputs),
+99:                        dtype=np.bool_)
+
+
+TOOL 4: read_file
+ARGS: {"cursor": "rf1_ac8226b7dec16b3d1751f4b947deabcf36e74f9063ef48c0527719230b5bfda8", "end_line": null, "path": "astropy/modeling/separable.py", "start_line": null}
+META: {"end_column": 35, "end_line": 160, "next_cursor": null, "start_column": 0, "start_line": 100, "total_lines": 317}
+100:     separable_matrix = _separable(transform)
+101:     separable_matrix = np.where(separable_matrix != 0, True, False)
+102:     return separable_matrix
+103: 
+104: 
+105: def _compute_n_outputs(left, right):
+106:     """
+107:     Compute the number of outputs of two models.
+108: 
+109:     The two models are the left and right model to an operation in
+110:     the expression tree of a compound model.
+111: 
+112:     Parameters
+113:     ----------
+114:     left, right : `astropy.modeling.Model` or ndarray
+115:         If input is of an array, it is the output of `coord_matrix`.
+116: 
+117:     """
+118:     if isinstance(left, Model):
+119:         lnout = left.n_outputs
+120:     else:
+121:         lnout = left.shape[0]
+122:     if isinstance(right, Model):
+123:         rnout = right.n_outputs
+124:     else:
+125:         rnout = right.shape[0]
+126:     noutp = lnout + rnout
+127:     return noutp
+128: 
+129: 
+130: def _arith_oper(left, right):
+131:     """
+132:     Function corresponding to one of the arithmetic operators
+133:     ['+', '-'. '*', '/', '**'].
+134: 
+135:     This always returns a nonseparable output.
+136: 
+137: 
+138:     Parameters
+139:     ----------
+140:     left, right : `astropy.modeling.Model` or ndarray
+141:         If input is of an array, it is the output of `coord_matrix`.
+142: 
+143:     Returns
+144:     -------
+145:     result : ndarray
+146:         Result from this operation.
+147:     """
+148:     # models have the same number of inputs and outputs
+149:     def _n_inputs_outputs(input):
+150:         if isinstance(input, Model):
+151:             n_outputs, n_inputs = input.n_outputs, input.n_inputs
+152:         else:
+153:             n_outputs, n_inputs = input.shape
+154:         return n_inputs, n_outputs
+155: 
+156:     left_inputs, left_outputs = _n_inputs_outputs(left)
+157:     right_inputs, right_outputs = _n_inputs_outputs(right)
+158: 
+159:     if left_inputs != right_inputs or left_outputs != right_outputs:
+160:         raise ModelDefinitionError(
+

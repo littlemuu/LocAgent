@@ -1,0 +1,21 @@
+已读到的事实（附文件:行号）
+- astropy/io/ascii/rst.py:60-61：RST.__init__ 只接受 self，调用 super().__init__(delimiter_pad=None, bookend=False)，未接收或转发 header_rows，故传入 header_rows 会抛 TypeError。
+- astropy/io/ascii/rst.py:63-66：RST.write 调用 super().write(lines) 后取 lines[1] 作为上下边框，即假定第 2 行是 '=' 分隔行。
+- astropy/io/ascii/fixedwidth.py:339-357：FixedWidth.__init__ 接受 header_rows（默认 ["name"]），并设置 self.header.header_rows 与 self.data.header_rows。
+- astropy/io/ascii/fixedwidth.py:261-298：FixedWidthData.write 按 header_rows 逐行生成表头，再在 position_line 非 None 时插入 position_char 行。
+- astropy/io/ascii/rst.py:16-20：SimpleRSTHeader 设 position_line=0、start_line=1、position_char="="。
+
+推断
+- 待验证假设：根因是 astropy/io/ascii/rst.py:RST.__init__ 未暴露 header_rows 参数，而父类 astropy/io/ascii/fixedwidth.py:FixedWidth.__init__ 已支持，故只需在 RST.__init__ 增加 header_rows 并转发即可。
+- 待验证假设：即使转发 header_rows，astropy/io/ascii/rst.py:RST.write 的 lines[1] 边框逻辑在多表头行下会取错行，需改为按 position_line 定位分隔行。
+- 待验证假设：SimpleRSTHeader.position_line=0 与 SimpleRSTData.start_line=3 的固定偏移在 header_rows 长度变化时可能不再匹配。
+
+未核验点
+- 未读 FixedWidth.write 与 FixedWidthHeader 其余方法（fixedwidth.py 1-239、300-330、420-460 未读）。
+- 未读 rst 读取路径与测试文件，未确认读取端对多表头行的支持。
+- 未运行任何验证。
+
+最小验证：`python -c "from astropy.table import QTable; import astropy.units as u; t=QTable({'wave':[350,950]*u.nm}); t.write(__import__('sys').stdout, format='ascii.rst', header_rows=['name','unit'])"`
+
+以下内容未在阅读记录中核验：
+- [R1] astropy/io/ascii/fixedwidth.py:FixedWidthData.write

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": [
+    "57 C frozen files and AB binding unchanged",
+    "42 baseline files equal original v5",
+    "dev24 data rows and harness inputs byte identical for all24",
+    "holdout metadata loader enforces original ids hash",
+    "spec_for/evaluate/main byte identical",
+    "ABC/BCA/CAB order validated",
+    "once marker durable and duplicate/uncertain stages refused",
+    "single-stage failure allows independent subsequent stage",
+    "McNemar exact and Holm fixtures",
+    "fixed50 versus complete-case missing outcome policy",
+    "all Python sources compile"
+  ],
+  "API_calls": 0,
+  "bindings": {
+    "C": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+    "AB": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+    "ids_sha256": "5226d5870987a2f9d161b98077aa64788f6e3426d1cea326385694c47922acd6"
+  }
+}

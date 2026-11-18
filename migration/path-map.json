@@ -1,0 +1,673 @@
+{
+  "roots": [
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-12/task",
+      "destination": "workspace"
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/locagent-demo-20261108",
+      "destination": "legacy/locagent-demo"
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/locagent-locbench-adapter-20261110",
+      "destination": "legacy/locbench-adapter"
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch134-20261113",
+      "destination": "benchmarks/batch134"
+    }
+  ],
+  "source_snapshots": [
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch104-20261113/registry/bundle-AzureAD__microsoft-authentication-library-for-python-407/repo",
+      "destination": "benchmarks/sources/AzureAD__microsoft-authentication-library-for-python-407-7e95c6bf52ee",
+      "source_files": 43
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch11-20261111/registry/bundle-AzureAD__microsoft-authentication-library-for-python-454/repo",
+      "destination": "benchmarks/sources/AzureAD__microsoft-authentication-library-for-python-454-ddb5aef8cebe",
+      "source_files": 43
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch26-20261112/registry/bundle-CWorthy-ocean__roms-tools-227/repo",
+      "destination": "benchmarks/sources/CWorthy-ocean__roms-tools-227-e2eebd780a9d",
+      "source_files": 39
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch01-20261111/registry/bundle-Chainlit__chainlit-1441/repo",
+      "destination": "benchmarks/sources/Chainlit__chainlit-1441-106729626919",
+      "source_files": 112
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch33-20261112/registry/bundle-CrossGL__crosstl-229/repo",
+      "destination": "benchmarks/sources/CrossGL__crosstl-229-4b38ea4325c1",
+      "source_files": 78
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch118-20261113/registry/bundle-DS4SD__docling-302/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-302-e15f3de0e8df",
+      "source_files": 64
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch25-20261112/registry/bundle-DS4SD__docling-307/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-307-ecdcec1a264c",
+      "source_files": 64
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch71-20261113/registry/bundle-DS4SD__docling-314/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-314-a2a808f178b0",
+      "source_files": 65
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch118-20261113/registry/bundle-DS4SD__docling-322/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-322-3f583ce3a1c4",
+      "source_files": 65
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch33-20261112/registry/bundle-DS4SD__docling-330/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-330-87548ddb88d8",
+      "source_files": 65
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch105-20261113/registry/bundle-DS4SD__docling-442/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-442-f4e57aac4238",
+      "source_files": 69
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch09-20261111/registry/bundle-DS4SD__docling-472/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-472-e7d361a13257",
+      "source_files": 70
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch68-20261113/registry/bundle-DS4SD__docling-528/repo",
+      "destination": "benchmarks/sources/DS4SD__docling-528-a6fa55e7fa87",
+      "source_files": 72
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch83-20261113/registry/bundle-Delgan__loguru-1239/repo",
+      "destination": "benchmarks/sources/Delgan__loguru-1239-3cf63e41cd51",
+      "source_files": 163
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch08-20261111/registry/bundle-Innopoints__backend-124/repo",
+      "destination": "benchmarks/sources/Innopoints__backend-124-de31081e07af",
+      "source_files": 47
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch53-20261112/registry/bundle-JoinMarket-Org__joinmarket-clientserver-1180/repo",
+      "destination": "benchmarks/sources/JoinMarket-Org__joinmarket-clientserver-1180-1be4e94df8f4",
+      "source_files": 135
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch30-20261112/registry/bundle-Netflix__metaflow-2141/repo",
+      "destination": "benchmarks/sources/Netflix__metaflow-2141-840a18f56937",
+      "source_files": 417
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch36-20261112/registry/bundle-Ouranosinc__xclim-477/repo",
+      "destination": "benchmarks/sources/Ouranosinc__xclim-477-a7773a10932b",
+      "source_files": 72
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch114-20261113/registry/bundle-SYSTRAN__faster-whisper-1141/repo",
+      "destination": "benchmarks/sources/SYSTRAN__faster-whisper-1141-a2a58ca5cc34",
+      "source_files": 19
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch74-20261113/registry/bundle-SYSTRAN__faster-whisper-1157/repo",
+      "destination": "benchmarks/sources/SYSTRAN__faster-whisper-1157-ec196f31e737",
+      "source_files": 19
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch96-20261113/registry/bundle-Standard-Labs__real-intent-102/repo",
+      "destination": "benchmarks/sources/Standard-Labs__real-intent-102-639cc2cb86ad",
+      "source_files": 43
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch89-20261113/registry/bundle-Standard-Labs__real-intent-27/repo",
+      "destination": "benchmarks/sources/Standard-Labs__real-intent-27-6dab1054bc02",
+      "source_files": 22
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch55-20261112/registry/bundle-TagStudioDev__TagStudio-735/repo",
+      "destination": "benchmarks/sources/TagStudioDev__TagStudio-735-47ea8427b9f8",
+      "source_files": 116
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch58-20261112/registry/bundle-TransformerLensOrg__TransformerLens-333/repo",
+      "destination": "benchmarks/sources/TransformerLensOrg__TransformerLens-333-fef013930ed1",
+      "source_files": 48
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch43-20261112/registry/bundle-UKPLab__sentence-transformers-3035/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3035-749d7838b7ec",
+      "source_files": 223
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch131-20261113/registry/bundle-UKPLab__sentence-transformers-3073/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3073-9b782032f56e",
+      "source_files": 225
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch86-20261113/registry/bundle-UKPLab__sentence-transformers-3076/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3076-40abf5a0b087",
+      "source_files": 225
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch101-20261113/registry/bundle-UKPLab__sentence-transformers-3096/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3096-3d0122f2360d",
+      "source_files": 227
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch69-20261113/registry/bundle-UKPLab__sentence-transformers-3122/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3122-99aa08fbda18",
+      "source_files": 226
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch98-20261113/registry/bundle-UKPLab__sentence-transformers-3126/repo",
+      "destination": "benchmarks/sources/UKPLab__sentence-transformers-3126-761d780823db",
+      "source_files": 226
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch82-20261113/registry/bundle-aiortc__aiortc-795/repo",
+      "destination": "benchmarks/sources/aiortc__aiortc-795-8f21f4f9862f",
+      "source_files": 71
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch68-20261113/registry/bundle-alexa-pi__AlexaPi-188/repo",
+      "destination": "benchmarks/sources/alexa-pi__AlexaPi-188-da6a8fb98579",
+      "source_files": 27
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch05-20261111/registry/bundle-ansys__pymapdl-3705/repo",
+      "destination": "benchmarks/sources/ansys__pymapdl-3705-803ff9671e76",
+      "source_files": 281
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch101-20261113/registry/bundle-avantifellows__quiz-backend-84/repo",
+      "destination": "benchmarks/sources/avantifellows__quiz-backend-84-1d93d80fdd13",
+      "source_files": 23
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch90-20261113/registry/bundle-dask__dask-10750/repo",
+      "destination": "benchmarks/sources/dask__dask-10750-e48aafae7fdb",
+      "source_files": 256
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch38-20261112/registry/bundle-dask__dask-10754/repo",
+      "destination": "benchmarks/sources/dask__dask-10754-8fbee5b41448",
+      "source_files": 256
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch99-20261113/registry/bundle-dask__dask-10796/repo",
+      "destination": "benchmarks/sources/dask__dask-10796-b6ad91b45421",
+      "source_files": 256
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch55-20261112/registry/bundle-dask__dask-10963/repo",
+      "destination": "benchmarks/sources/dask__dask-10963-89d683f2ca2f",
+      "source_files": 259
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch98-20261113/registry/bundle-dask__dask-11183/repo",
+      "destination": "benchmarks/sources/dask__dask-11183-7b3099064cc1",
+      "source_files": 258
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-queue-tail-20261111/registry/bundle-dask__dask-11354/repo",
+      "destination": "benchmarks/sources/dask__dask-11354-87a514e17ac7",
+      "source_files": 262
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch59-20261112/registry/bundle-dask__dask-11393/repo",
+      "destination": "benchmarks/sources/dask__dask-11393-08e8d0ed7a9b",
+      "source_files": 264
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch18-20261111/registry/bundle-dask__dask-11434/repo",
+      "destination": "benchmarks/sources/dask__dask-11434-8de88c43ead0",
+      "source_files": 264
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch10-20261111/registry/bundle-dask__dask-11450/repo",
+      "destination": "benchmarks/sources/dask__dask-11450-c3c41d237e3b",
+      "source_files": 264
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch74-20261113/registry/bundle-dask__dask-11479/repo",
+      "destination": "benchmarks/sources/dask__dask-11479-4db1322cb6fa",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch105-20261113/registry/bundle-dask__dask-11491/repo",
+      "destination": "benchmarks/sources/dask__dask-11491-89a1f4dc8ae7",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch29-20261112/registry/bundle-dask__dask-11541/repo",
+      "destination": "benchmarks/sources/dask__dask-11541-9ae120da0940",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch115-20261113/registry/bundle-dask__dask-11605/repo",
+      "destination": "benchmarks/sources/dask__dask-11605-5eef9f7f665e",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch44-20261112/registry/bundle-dask__dask-11608/repo",
+      "destination": "benchmarks/sources/dask__dask-11608-95d59b6c8184",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch98-20261113/registry/bundle-dask__dask-11609/repo",
+      "destination": "benchmarks/sources/dask__dask-11609-25b9c3ebc02f",
+      "source_files": 265
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-queue-tail-20261111/registry/bundle-duncanscanga__VDRS-Solutions-73/repo",
+      "destination": "benchmarks/sources/duncanscanga__VDRS-Solutions-73-a2eab19bee4a",
+      "source_files": 12
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch91-20261113/registry/bundle-explodinggradients__ragas-1627/repo",
+      "destination": "benchmarks/sources/explodinggradients__ragas-1627-ca51fd62be6b",
+      "source_files": 108
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch58-20261112/registry/bundle-flet-dev__flet-4314/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4314-1023878058db",
+      "source_files": 299
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch80-20261113/registry/bundle-flet-dev__flet-4340/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4340-ae7175806487",
+      "source_files": 300
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch80-20261113/registry/bundle-flet-dev__flet-4384/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4384-6762b479136b",
+      "source_files": 300
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-flet-dev__flet-4388/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4388-292e5184de39",
+      "source_files": 300
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch131-20261113/registry/bundle-flet-dev__flet-4425/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4425-0c940ff98c79",
+      "source_files": 305
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch59-20261112/registry/bundle-flet-dev__flet-4452/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4452-b7b7a48d3568",
+      "source_files": 304
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch124-20261113/registry/bundle-flet-dev__flet-4554/repo",
+      "destination": "benchmarks/sources/flet-dev__flet-4554-59503cf84f73",
+      "source_files": 304
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch15-20261111/registry/bundle-fortra__impacket-1636/repo",
+      "destination": "benchmarks/sources/fortra__impacket-1636-98a3cb57c0fb",
+      "source_files": 294
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch14-20261111/registry/bundle-fortra__impacket-1860/repo",
+      "destination": "benchmarks/sources/fortra__impacket-1860-8f38a7e13bbf",
+      "source_files": 301
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-fractal-analytics-platform__fractal-tasks-core-889/repo",
+      "destination": "benchmarks/sources/fractal-analytics-platform__fractal-tasks-core-889-01d18a0c3e0c",
+      "source_files": 141
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch55-20261112/registry/bundle-freedomofpress__securedrop-client-944/repo",
+      "destination": "benchmarks/sources/freedomofpress__securedrop-client-944-909046d38c16",
+      "source_files": 74
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch12-20261111/registry/bundle-fulcrumgenomics__prymer-99/repo",
+      "destination": "benchmarks/sources/fulcrumgenomics__prymer-99-9db7af059874",
+      "source_files": 57
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch108-20261113/registry/bundle-gammasim__simtools-1183/repo",
+      "destination": "benchmarks/sources/gammasim__simtools-1183-9f1ae3b5a46f",
+      "source_files": 158
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-gaogaotiantian__viztracer-528/repo",
+      "destination": "benchmarks/sources/gaogaotiantian__viztracer-528-0bd641959ad6",
+      "source_files": 72
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch05-20261111/registry/bundle-huggingface__accelerate-3261/repo",
+      "destination": "benchmarks/sources/huggingface__accelerate-3261-3112ac1537f9",
+      "source_files": 165
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch46-20261112/registry/bundle-huggingface__optimum-benchmark-266/repo",
+      "destination": "benchmarks/sources/huggingface__optimum-benchmark-266-2dff33c84a60",
+      "source_files": 107
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch114-20261113/registry/bundle-huggingface__trl-2332/repo",
+      "destination": "benchmarks/sources/huggingface__trl-2332-11c2020b615c",
+      "source_files": 142
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch130-20261113/registry/bundle-huggingface__trl-2398/repo",
+      "destination": "benchmarks/sources/huggingface__trl-2398-8bd71a005071",
+      "source_files": 146
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch104-20261113/registry/bundle-huggingface__trl-2433/repo",
+      "destination": "benchmarks/sources/huggingface__trl-2433-06aa977411ac",
+      "source_files": 148
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch128-20261113/registry/bundle-huggingface__trl-2450/repo",
+      "destination": "benchmarks/sources/huggingface__trl-2450-9adb4034afda",
+      "source_files": 148
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch84-20261113/registry/bundle-hyeneung__tech-blog-hub-site-49/repo",
+      "destination": "benchmarks/sources/hyeneung__tech-blog-hub-site-49-d99340b0d746",
+      "source_files": 39
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-instructor-ai__instructor-1254/repo",
+      "destination": "benchmarks/sources/instructor-ai__instructor-1254-08456e10aee6",
+      "source_files": 261
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-next-batch-20261111/registry/bundle-jazzband__django-two-factor-auth-390/repo",
+      "destination": "benchmarks/sources/jazzband__django-two-factor-auth-390-4258e05e10aa",
+      "source_files": 68
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-next-batch-20261111/registry/bundle-jobatabs__textec-53/repo",
+      "destination": "benchmarks/sources/jobatabs__textec-53-b98f367ab295",
+      "source_files": 17
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch91-20261113/registry/bundle-justin13601__ACES-145/repo",
+      "destination": "benchmarks/sources/justin13601__ACES-145-49a9478390a8",
+      "source_files": 22
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch124-20261113/registry/bundle-langchain-ai__langgraph-2571/repo",
+      "destination": "benchmarks/sources/langchain-ai__langgraph-2571-bc95033ffaaa",
+      "source_files": 195
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-langchain-ai__langgraph-2724/repo",
+      "destination": "benchmarks/sources/langchain-ai__langgraph-2724-c1043aadea86",
+      "source_files": 199
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch44-20261112/registry/bundle-langchain-ai__langgraph-2735/repo",
+      "destination": "benchmarks/sources/langchain-ai__langgraph-2735-f316649feae8",
+      "source_files": 202
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch125-20261113/registry/bundle-locustio__locust-2976/repo",
+      "destination": "benchmarks/sources/locustio__locust-2976-23a6c0214700",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch06-20261111/registry/bundle-matchms__matchms-backup-187/repo",
+      "destination": "benchmarks/sources/matchms__matchms-backup-187-372c1d8ae676",
+      "source_files": 72
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch12-20261111/registry/bundle-micropython__micropython-lib-947/repo",
+      "destination": "benchmarks/sources/micropython__micropython-lib-947-6d09695c3b78",
+      "source_files": 487
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch108-20261113/registry/bundle-nltk__nltk-3335/repo",
+      "destination": "benchmarks/sources/nltk__nltk-3335-6b73ed515a46",
+      "source_files": 361
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch16-20261111/registry/bundle-okta__okta-jwt-verifier-python-59/repo",
+      "destination": "benchmarks/sources/okta__okta-jwt-verifier-python-59-c0a31248e3d6",
+      "source_files": 18
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch13-20261111/registry/bundle-openwisp__openwisp-users-286/repo",
+      "destination": "benchmarks/sources/openwisp__openwisp-users-286-40c3ac6f4a0f",
+      "source_files": 82
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-phidatahq__phidata-1563/repo",
+      "destination": "benchmarks/sources/phidatahq__phidata-1563-8d7f966a82cc",
+      "source_files": 1290
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch23-20261112/registry/bundle-plone__plone.restapi-859/repo",
+      "destination": "benchmarks/sources/plone__plone.restapi-859-e13ced0d76fe",
+      "source_files": 222
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch79-20261113/registry/bundle-ranaroussi__yfinance-2139/repo",
+      "destination": "benchmarks/sources/ranaroussi__yfinance-2139-64621b5dbd1d",
+      "source_files": 42
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-roboflow__supervision-1698/repo",
+      "destination": "benchmarks/sources/roboflow__supervision-1698-aeaa835f8e3b",
+      "source_files": 132
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch108-20261113/registry/bundle-roboflow__supervision-1739/repo",
+      "destination": "benchmarks/sources/roboflow__supervision-1739-58e63a72067e",
+      "source_files": 132
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-queue-tail-20261111/registry/bundle-rwth-i6__sisyphus-191/repo",
+      "destination": "benchmarks/sources/rwth-i6__sisyphus-191-81ec33d6688a",
+      "source_files": 54
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch02-20261111/registry/bundle-sancus-tee__sancus-compiler-36/repo",
+      "destination": "benchmarks/sources/sancus-tee__sancus-compiler-36-496fc23bfc80",
+      "source_files": 7
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch133-20261113/registry/bundle-scrapy__scrapy-6542/repo",
+      "destination": "benchmarks/sources/scrapy__scrapy-6542-aff6296ee5fc",
+      "source_files": 349
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch08-20261111/registry/bundle-sgkit-dev__sgkit-447/repo",
+      "destination": "benchmarks/sources/sgkit-dev__sgkit-447-6ea308d28ad6",
+      "source_files": 87
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch20-20261111/registry/bundle-sopel-irc__sopel-2285/repo",
+      "destination": "benchmarks/sources/sopel-irc__sopel-2285-e640475b728a",
+      "source_files": 124
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch14-20261111/registry/bundle-spacetelescope__stcal-337/repo",
+      "destination": "benchmarks/sources/spacetelescope__stcal-337-733777323c6f",
+      "source_files": 59
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch24-20261112/registry/bundle-spotify__luigi-3308/repo",
+      "destination": "benchmarks/sources/spotify__luigi-3308-42c4835ca113",
+      "source_files": 255
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch49-20261112/registry/bundle-spotify__luigi-3324/repo",
+      "destination": "benchmarks/sources/spotify__luigi-3324-d366a39c9e16",
+      "source_files": 259
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch09-20261111/registry/bundle-sqlfluff__sqlfluff-6312/repo",
+      "destination": "benchmarks/sources/sqlfluff__sqlfluff-6312-f6651031ffce",
+      "source_files": 369
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch43-20261112/registry/bundle-sqlfluff__sqlfluff-6391/repo",
+      "destination": "benchmarks/sources/sqlfluff__sqlfluff-6391-0bbb26c8e925",
+      "source_files": 371
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch41-20261112/registry/bundle-sqlfluff__sqlfluff-6399/repo",
+      "destination": "benchmarks/sources/sqlfluff__sqlfluff-6399-3ddb07694e1a",
+      "source_files": 379
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch87-20261113/registry/bundle-sqlfluff__sqlfluff-6444/repo",
+      "destination": "benchmarks/sources/sqlfluff__sqlfluff-6444-5693d35cee97",
+      "source_files": 377
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch39-20261112/registry/bundle-sqlfluff__sqlfluff-6554/repo",
+      "destination": "benchmarks/sources/sqlfluff__sqlfluff-6554-10201ca2c7c9",
+      "source_files": 384
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch08-20261111/registry/bundle-stanfordnlp__dspy-1741/repo",
+      "destination": "benchmarks/sources/stanfordnlp__dspy-1741-b4fcdb5f2520",
+      "source_files": 269
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch79-20261113/registry/bundle-tarantool__ansible-cartridge-172/repo",
+      "destination": "benchmarks/sources/tarantool__ansible-cartridge-172-a2665d9ecd3b",
+      "source_files": 31
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch69-20261113/registry/bundle-tobymao__sqlglot-3167/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-3167-6523c0a1ab82",
+      "source_files": 146
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-queue-tail-20261111/registry/bundle-tobymao__sqlglot-3417/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-3417-562dcd2b6e72",
+      "source_files": 147
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch15-20261111/registry/bundle-tobymao__sqlglot-3436/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-3436-af152bacb7b6",
+      "source_files": 147
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch90-20261113/registry/bundle-tobymao__sqlglot-3901/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-3901-0d846bb22458",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch40-20261112/registry/bundle-tobymao__sqlglot-4366/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4366-316730a6edf0",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch31-20261112/registry/bundle-tobymao__sqlglot-4369/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4369-b890a34ab8bf",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch110-20261113/registry/bundle-tobymao__sqlglot-4415/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4415-5c5e1089c87e",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch47-20261112/registry/bundle-tobymao__sqlglot-4480/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4480-cb65053ecefa",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch62-20261112/registry/bundle-tobymao__sqlglot-4515/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4515-cd0a1ad6d8ff",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch129-20261113/registry/bundle-tobymao__sqlglot-4519/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4519-95b1bae117fa",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch50-20261112/registry/bundle-tobymao__sqlglot-4523/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4523-00517cf29d3e",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch27-20261112/registry/bundle-tobymao__sqlglot-4524/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4524-c0771fbbb5d9",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch92-20261113/registry/bundle-tobymao__sqlglot-4526/repo",
+      "destination": "benchmarks/sources/tobymao__sqlglot-4526-dd6c372e0099",
+      "source_files": 122
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch76-20261113/registry/bundle-traceloop__openllmetry-2577/repo",
+      "destination": "benchmarks/sources/traceloop__openllmetry-2577-e55e705f6c76",
+      "source_files": 363
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch33-20261112/registry/bundle-twisted__klein-773/repo",
+      "destination": "benchmarks/sources/twisted__klein-773-8701e438f366",
+      "source_files": 65
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch55-20261112/registry/bundle-ultralytics__ultralytics-17499/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-17499-2f981c8dffac",
+      "source_files": 159
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch16-20261111/registry/bundle-ultralytics__ultralytics-17544/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-17544-473bd1880e4d",
+      "source_files": 160
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch66-20261112/registry/bundle-ultralytics__ultralytics-17728/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-17728-5376f81ea043",
+      "source_files": 160
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch66-20261112/registry/bundle-ultralytics__ultralytics-17810/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-17810-7431f7a2e302",
+      "source_files": 160
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch59-20261112/registry/bundle-ultralytics__ultralytics-17872/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-17872-7820379bf754",
+      "source_files": 161
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch126-20261113/registry/bundle-ultralytics__ultralytics-18212/repo",
+      "destination": "benchmarks/sources/ultralytics__ultralytics-18212-59263a2e0155",
+      "source_files": 161
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch109-20261113/registry/bundle-vitalik__django-ninja-1349/repo",
+      "destination": "benchmarks/sources/vitalik__django-ninja-1349-7174a897cc7a",
+      "source_files": 169
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch38-20261112/registry/bundle-vllm-project__vllm-5473/repo",
+      "destination": "benchmarks/sources/vllm-project__vllm-5473-5bd429e31b41",
+      "source_files": 462
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-11/task/locbench-batch-expansion-20261111/registry/bundle-xCDAT__xcdat-689/repo",
+      "destination": "benchmarks/sources/xCDAT__xcdat-689-d597bfe02148",
+      "source_files": 26
+    },
+    {
+      "source": "/Users/xiaomu/Documents/Codex/2026-11-10/task/locbench-remaining-batch79-20261113/registry/bundle-zarr-developers__zarr-python-738/repo",
+      "destination": "benchmarks/sources/zarr-developers__zarr-python-738-9eb4793896bc",
+      "source_files": 36
+    }
+  ],
+  "original_paths_preserved_in_frozen_records": true
+}

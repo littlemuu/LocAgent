@@ -1,0 +1,6 @@
+from pathlib import Path
+import json,time
+root=Path(__file__).resolve().parents[1];run=root/'verification/remaining16-run'
+if not (run/'state.json').exists():print('Not started');raise SystemExit
+s=json.loads((run/'state.json').read_text());l=json.loads((run/'ledger.json').read_text());rr=l['calls'];known=[r for r in rr if r['status']=='received'];progress=json.loads((run/'trial-progress.json').read_text()) if (run/'trial-progress.json').exists() else {'episodes':[]}
+print(json.dumps({'elapsed_seconds':round(time.time()-s['started_at']),'active':[k for k,v in s['steps'].items() if v['status']=='running'],'failed':s.get('failed'),'completed_episodes':len(progress['episodes']),'empty_patches':sum(e['empty_patch'] for e in progress['episodes']),'resolved':sum(e['resolved'] is True for e in progress['episodes']),'requests_started':len(rr),'requests_received':len(known),'input_tokens':sum(r['usage']['prompt_tokens'] for r in known),'output_tokens':sum(r['usage']['completion_tokens'] for r in known),'cost_upper_cny':sum(r['charged_upper_microcny'] for r in known)/1e6,'reserved_cny':sum(r['reserved_microcny'] for r in rr if r['status']!='received')/1e6,'ledger_stopped':l['stopped'],'all_completed':(run/'completed.json').exists(),'key_present':Path('/home/ubuntu/.config/locagent/remaining16.env').exists()},ensure_ascii=False))

@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "description": "Minimal public finish arguments and node-type facts from four saved invalid submissions. No raw responses, usage, credentials, authorization data or indexes. Historical scores stay unchanged.",
+  "cases": [
+    {
+      "name": "psf__requests-2317-false",
+      "sample": "psf__requests-2317",
+      "suppress_repeats": false,
+      "base_commit": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+      "original_raw_response_sha256": "2ebe627e4e9780aac97eb4ac8dc2b112d23334b1cc44958e1fb618c907e367e0",
+      "arguments_json": "{\"files\": [\"requests/sessions.py\", \"requests/models.py\", \"requests/utils.py\", \"requests/compat.py\", \"requests/api.py\"], \"entities\": [\"requests/sessions.py:Session.request\", \"requests/models.py:PreparedRequest.prepare_method\", \"requests/utils.py:to_native_string\", \"requests/compat.py:builtin_str\", \"requests/api.py:request\"]}",
+      "graph_nodes": [
+        {
+          "id": "requests/api.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/api.py:request",
+          "type": "function"
+        },
+        {
+          "id": "requests/compat.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py:PreparedRequest.prepare_method",
+          "type": "function"
+        },
+        {
+          "id": "requests/sessions.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/sessions.py:Session.request",
+          "type": "function"
+        },
+        {
+          "id": "requests/utils.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/utils.py:to_native_string",
+          "type": "function"
+        }
+      ],
+      "known_valid_target": "requests/sessions.py:Session.request",
+      "expected_termination": "invalid_finish",
+      "expected_recall": 0
+    },
+    {
+      "name": "psf__requests-2317-true",
+      "sample": "psf__requests-2317",
+      "suppress_repeats": true,
+      "base_commit": "091991be0da19de9108dbe5e3752917fea3d7fdc",
+      "original_raw_response_sha256": "59030cd9866225a46e7e93baf2caae4ca190df76de3bd0697028a28d67c291fc",
+      "arguments_json": "{\"files\": [\"requests/sessions.py\", \"requests/utils.py\", \"requests/models.py\", \"requests/compat.py\", \"requests/api.py\"], \"entities\": [\"requests/sessions.py:Session.request\", \"requests/utils.py:to_native_string\", \"requests/models.py:PreparedRequest.prepare_method\", \"requests/compat.py\", \"requests/api.py:request\"]}",
+      "graph_nodes": [
+        {
+          "id": "requests/api.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/api.py:request",
+          "type": "function"
+        },
+        {
+          "id": "requests/compat.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py:PreparedRequest.prepare_method",
+          "type": "function"
+        },
+        {
+          "id": "requests/sessions.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/sessions.py:Session.request",
+          "type": "function"
+        },
+        {
+          "id": "requests/utils.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/utils.py:to_native_string",
+          "type": "function"
+        }
+      ],
+      "known_valid_target": "requests/sessions.py:Session.request",
+      "expected_termination": "invalid_finish",
+      "expected_recall": 0
+    },
+    {
+      "name": "psf__requests-863-false",
+      "sample": "psf__requests-863",
+      "suppress_repeats": false,
+      "base_commit": "a0df2cbb10419037d11d04352b3175405ab52941",
+      "original_raw_response_sha256": "ab072f52e0dc4e525e004f84431a9374eff612b7db0c50834b3c3cd2713cb97c",
+      "arguments_json": "{\"files\": [\"requests/models.py\", \"requests/hooks.py\", \"requests/sessions.py\"], \"entities\": [\"requests/models.py:Request.__init__\", \"requests/models.py:Request.register_hook\", \"requests/hooks.py:dispatch_hook\", \"requests/models.py:Request.deregister_hook\", \"requests/sessions.py:Session.request\"]}",
+      "graph_nodes": [
+        {
+          "id": "requests/hooks.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/hooks.py:dispatch_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/models.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py:Request",
+          "type": "class"
+        },
+        {
+          "id": "requests/models.py:Request.deregister_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/models.py:Request.register_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/sessions.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/sessions.py:Session.request",
+          "type": "function"
+        }
+      ],
+      "known_valid_target": "requests/models.py:Request.register_hook",
+      "expected_termination": "invalid_finish",
+      "expected_recall": 0
+    },
+    {
+      "name": "psf__requests-863-true",
+      "sample": "psf__requests-863",
+      "suppress_repeats": true,
+      "base_commit": "a0df2cbb10419037d11d04352b3175405ab52941",
+      "original_raw_response_sha256": "b1685aaa34a4e36740f534145d2a0f363883bf250f072e0fabed536a183717bd",
+      "arguments_json": "{\"files\": [\"requests/models.py\", \"requests/hooks.py\", \"requests/sessions.py\"], \"entities\": [\"requests/models.py:Request.__init__\", \"requests/models.py:Request.register_hook\", \"requests/hooks.py:dispatch_hook\", \"requests/models.py:Request.deregister_hook\", \"requests/sessions.py:Session.request\"]}",
+      "graph_nodes": [
+        {
+          "id": "requests/hooks.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/hooks.py:dispatch_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/models.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/models.py:Request",
+          "type": "class"
+        },
+        {
+          "id": "requests/models.py:Request.deregister_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/models.py:Request.register_hook",
+          "type": "function"
+        },
+        {
+          "id": "requests/sessions.py",
+          "type": "file"
+        },
+        {
+          "id": "requests/sessions.py:Session.request",
+          "type": "function"
+        }
+      ],
+      "known_valid_target": "requests/models.py:Request.register_hook",
+      "expected_termination": "invalid_finish",
+      "expected_recall": 0
+    }
+  ]
+}

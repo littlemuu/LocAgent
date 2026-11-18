@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-11541",
+  "repo": "dask/dask",
+  "base_commit": "5b115c4360fec6a4aa6e0edf8ad1d89a87c986dd",
+  "problem_statement": "bug in dask.array.reshape_blockwise\n**Minimal Complete Verifiable Example**:\r\n\r\n```python\r\nimport dask.array\r\n\r\nreshape_blockwise(dask.array.ones((3,)), shape=(3,), chunks=((3,),))\r\n```\r\n```\r\nValueError: Setting chunks is not allowed when reducing the number of dimensions.\r\n```\r\n\r\ncc @phofl \r\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "twisted__klein-773",
+  "repo": "twisted/klein",
+  "base_commit": "04db6d26fd6f8dc749868268518957c8238c09d6",
+  "problem_statement": "Klein adds significant performance overhead over a twisted.web server\nA minimal hello world benchmark, just routing \"/\" and returning a string, is half the speed of the equivalent minimal twisted.web server.\r\n\r\nI will start investigating where the performance overhead is, and hopefully find some places to optimize.\n"
+}

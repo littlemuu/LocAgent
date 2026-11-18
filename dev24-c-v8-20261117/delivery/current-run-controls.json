@@ -1,0 +1,6 @@
+{
+  "control/launch.sh": "51da1d910cf25ed65d1e7150c4754e288332cfab16054313a091a8091a885f28",
+  "control/observe.py": "7b4892c96a0c0cbbcebe02f046aad05397e1d3014776ed01706951b8fde1c5eb",
+  "control/remote_preflight.py": "7ed11759450d37be667dc6f28dd2fe871def4325aa10ddf18e6ab7e440afbddf",
+  "control/run_c.py": "a47114d2dc32db9c609df4bc6b2627f416d589c39b93244054cc1a660d723298"
+}

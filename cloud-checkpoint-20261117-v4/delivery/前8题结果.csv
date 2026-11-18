@@ -1,0 +1,17 @@
+﻿序号,题号,组别,状态,是否空补丁,首次源码编辑请求,resolved,输入token_含B定位,输出token_含B定位,费用计量估算元_含B定位,费用保守上界元_含B定位,耗时秒_含B定位,编码请求数
+1,sympy__sympy-21379,A,completed,True,未编辑,False,439630,7074,0.14382384,0.935852,112.55,40
+1,sympy__sympy-21379,B,completed,True,未编辑,False,540740,5038,0.14937312,1.121784,170.54,40
+2,astropy__astropy-14182,A,completed,False,12,False,476649,5150,0.11365832,0.994498,88.37,33
+2,astropy__astropy-14182,B,completed,False,4,False,374772,5606,0.10999136,0.794392,116.81,34
+3,matplotlib__matplotlib-23314,A,completed,False,5,True,46026,1254,0.01203016,0.102084,132.37,13
+3,matplotlib__matplotlib-23314,B,completed,False,2,True,43011,1983,0.02296988,0.101886,150.74,8
+4,pytest-dev__pytest-7432,A,completed,False,2,True,92103,2298,0.02126428,0.202590,59.02,14
+4,pytest-dev__pytest-7432,B,completed,False,2,True,72141,2976,0.02421012,0.168090,65.20,12
+5,scikit-learn__scikit-learn-13779,A,completed,False,6,True,166358,1723,0.03187912,0.346500,219.99,15
+5,scikit-learn__scikit-learn-13779,B,completed,False,2,True,36976,1466,0.02101344,0.085680,221.18,4
+6,django__django-13033,A,completed,True,未编辑,False,567665,3336,0.07460772,1.162018,89.53,40
+6,django__django-13033,B,completed,False,2,True,43893,2039,0.01993636,0.104098,69.34,7
+7,pylint-dev__pylint-7080,A,completed,True,未编辑,False,797033,4892,0.09456836,1.633202,121.86,40
+7,pylint-dev__pylint-7080,B,completed,False,6,False,234387,2609,0.04813308,0.489646,117.41,13
+8,sphinx-doc__sphinx-11445,A,completed,False,5,False,473204,7622,0.08447152,1.007384,101.64,40
+8,sphinx-doc__sphinx-11445,B,completed,False,2,False,59971,2401,0.02479292,0.139150,54.01,8

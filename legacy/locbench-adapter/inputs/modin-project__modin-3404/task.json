@@ -1,0 +1,6 @@
+{
+  "instance_id": "modin-project__modin-3404",
+  "repo": "modin-project/modin",
+  "base_commit": "41213581b974760928ed36f05c479937dcdfea55",
+  "problem_statement": "Expansion DMatrix on 6 new parameters\nNeed add new parameters and functions in class DMatrix\r\n\r\nSupport parameters ``missing``, ``feature_names``, ``feature_types``, ``feature_weights``, ``silent``, ``enable_categorical``.\n"
+}

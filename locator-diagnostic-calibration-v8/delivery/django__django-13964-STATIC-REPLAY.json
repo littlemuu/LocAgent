@@ -1,0 +1,62 @@
+{
+  "execution_mode": "static-old-answer-calibration-NOT-live-v8",
+  "quality_measured": false,
+  "packet": {
+    "answer": "已读到的事实（附文件:行号）\ndjango/db/models/fields/related.py:640-660 已收到这些完整源码行；仅表示阅读覆盖。\ndjango/db/models/fields/related_descriptors.py:203-268 已收到这些完整源码行；仅表示阅读覆盖。\n推断\n待验证假设：候选位置可能与问题有关；当前证据不足以提出可靠的具体根因判断。\n未核验点\n原诊断未通过证据校验；关键调用链未核验。\ndjango/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__：函数/实体源码已读完，行为未验证。\ndjango/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields：未读完，不能作为确定根因依据。\ndjango/db/models/base.py:Model._prepare_related_fields_for_save：未读完，不能作为确定根因依据。\n最小验证：`python -m pytest -q`（未运行；一般回归入口，不能单独验证具体根因）。",
+    "entities": [
+      "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__",
+      "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields",
+      "django/db/models/base.py:Model._prepare_related_fields_for_save"
+    ],
+    "files": [
+      "django/db/models/fields/related_descriptors.py",
+      "django/db/models/fields/related.py",
+      "django/db/models/base.py"
+    ]
+  },
+  "audit": {
+    "policy": "locator-diagnostic-calibration-v8",
+    "raw_packet": {
+      "answer": "Root cause is in ForwardManyToOneDescriptor.__set__ (django/db/models/fields/related_descriptors.py:203-268). At assignment time it copies the related object's PK into the local FK attname: `for lh_field, rh_field in self.field.related_fields: setattr(instance, lh_field.attname, getattr(value, rh_field.attname))` (lines 256-257). When `Product()` is created without a sku, `value.sku` is '' (CharField default), so `order.product_id` is snapshotted as ''. Later setting `order.product.sku = \"foo\"` mutates only the Product instance; the already-copied `product_id` on Order is never refreshed, so `order.save()` writes ''. The descriptor also caches the related object (line 261), so `__get__` returns the in-memory Product and hides the stale FK. In the working case, `Product(sku=\"foo\")` is assigned after the PK exists, so the copy is correct.\n\nA likely fix location is save-time reconciliation: Model._prepare_related_fields_for_save (django/db/models/base.py:911) is where Django validates/refreshes related fields before writing, and it could re-sync local FK values from the cached related object's current PK. Note get_instance_value_for_fields (django/db/models/fields/related.py:652-660) has a special case using `instance.pk` when the field is a primary key, which is relevant to how non-auto PKs are read. I did not read the full bodies of _prepare_related_fields_for_save or get_instance_value_for_fields (investigation closed at the call limit), so the exact fix site and whether the bug is purely the stale copy versus also a PK-fetch issue remain partly unverified.",
+      "entities": [
+        "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__",
+        "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields",
+        "django/db/models/base.py:Model._prepare_related_fields_for_save"
+      ],
+      "files": [
+        "django/db/models/fields/related_descriptors.py",
+        "django/db/models/fields/related.py",
+        "django/db/models/base.py"
+      ]
+    },
+    "violations": [
+      "R2_three_sections",
+      "R3_unverified_strong_claim",
+      "R4_citation_not_delivered:django/db/models/base.py:911",
+      "R1_body_incomplete_unmarked:django/db/models/base.py:Model._prepare_related_fields_for_save",
+      "R1_body_incomplete_unmarked:django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields"
+    ],
+    "fallback": true,
+    "delivered_full_line_ranges": [
+      [
+        "django/db/models/fields/related.py",
+        640,
+        660
+      ],
+      [
+        "django/db/models/fields/related_descriptors.py",
+        203,
+        268
+      ]
+    ],
+    "pending_read_pages": {},
+    "entity_body_complete": {
+      "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__": true,
+      "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields": false,
+      "django/db/models/base.py:Model._prepare_related_fields_for_save": false
+    },
+    "call_chain_complete": false,
+    "behavior_verified": false,
+    "quality_measured": false
+  }
+}

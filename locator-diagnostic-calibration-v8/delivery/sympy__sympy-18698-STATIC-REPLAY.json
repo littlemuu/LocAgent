@@ -1,0 +1,72 @@
+{
+  "execution_mode": "static-old-answer-calibration-NOT-live-v8",
+  "quality_measured": false,
+  "packet": {
+    "answer": "已读到的事实（附文件:行号）\nsympy/polys/polytools.py:3210-3240 已收到这些完整源码行；仅表示阅读覆盖。\nsympy/polys/sqfreetools.py:281-340 已收到这些完整源码行；仅表示阅读覆盖。\n推断\n待验证假设：候选位置可能与问题有关；当前证据不足以提出可靠的具体根因判断。\n未核验点\n原诊断未通过证据校验；关键调用链未核验。\nsympy/polys/sqfreetools.py:dup_sqf_list：函数/实体源码已读完，行为未验证。\nsympy/polys/polytools.py:Poly.sqf_list：函数/实体源码已读完，行为未验证。\nsympy/polys/polytools.py:sqf_list：未读完，不能作为确定根因依据。\nsympy/polys/polyclasses.py:DMP.sqf_list：未读完，不能作为确定根因依据。\nsympy/polys/rings.py:PolyElement.sqf_list：未读完，不能作为确定根因依据。\n最小验证：`python -m pytest -q`（未运行；一般回归入口，不能单独验证具体根因）。",
+    "entities": [
+      "sympy/polys/sqfreetools.py:dup_sqf_list",
+      "sympy/polys/polytools.py:Poly.sqf_list",
+      "sympy/polys/polytools.py:sqf_list",
+      "sympy/polys/polyclasses.py:DMP.sqf_list",
+      "sympy/polys/rings.py:PolyElement.sqf_list"
+    ],
+    "files": [
+      "sympy/polys/sqfreetools.py",
+      "sympy/polys/polytools.py",
+      "sympy/polys/polyclasses.py",
+      "sympy/polys/rings.py",
+      "sympy/polys/compatibility.py"
+    ]
+  },
+  "audit": {
+    "policy": "locator-diagnostic-calibration-v8",
+    "raw_packet": {
+      "answer": "The user's report is a misunderstanding of the output, not a bug in the algorithm. In sqf_list, the second element of each (factor, multiplicity) pair is the multiplicity, and the factors are grouped by multiplicity. For (x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3 the correct square-free decomposition is indeed (1, [(x**2+1, 1), (x-1, 2), (x-2, 3), (x-3, 3)]): the two distinct cubic-multiplicity factors (x-2) and (x-3) each have multiplicity 3, so they appear as two separate entries both with exponent 3. They are NOT combined into (x**2-5x+6, 3) because square-free factorization returns irreducible-ish square-free factors, not products of distinct factors sharing a multiplicity. The second example, x**5-2x**4-2x**3+4x**2+x-2 = (x-2)(x**2-1)**2, correctly yields (1, [(x-2, 1), (x**2-1, 2)]) because x**2-1 is itself square-free (it factors as (x-1)(x+1), both multiplicity 2, but sqf_list over ZZ does not split it further since x**2-1 is square-free). So both outputs are consistent with the documented semantics.\n\nEvidence: dup_sqf_list (sympy/polys/sqfreetools.py:281-335) builds result by appending (g, i) for each multiplicity i, so distinct factors with the same multiplicity i are appended as separate tuples with the same exponent. Poly.sqf_list (sympy/polys/polytools.py:3210-3237) simply wraps this. The docstring examples (lines 3222-3229) confirm the (factor, multiplicity) format. Uncertainty: I did not inspect dup_gf_sqf_list or the exact ordering logic, but the reported behavior matches the documented contract, so no code change is warranted; the user's expectation of merging same-multiplicity factors is the inconsistency.",
+      "entities": [
+        "sympy/polys/sqfreetools.py:dup_sqf_list",
+        "sympy/polys/polytools.py:Poly.sqf_list",
+        "sympy/polys/polytools.py:sqf_list",
+        "sympy/polys/polyclasses.py:DMP.sqf_list",
+        "sympy/polys/rings.py:PolyElement.sqf_list"
+      ],
+      "files": [
+        "sympy/polys/sqfreetools.py",
+        "sympy/polys/polytools.py",
+        "sympy/polys/polyclasses.py",
+        "sympy/polys/rings.py",
+        "sympy/polys/compatibility.py"
+      ]
+    },
+    "violations": [
+      "R2_three_sections",
+      "R3_unverified_strong_claim",
+      "R1_body_incomplete_unmarked:sympy/polys/polyclasses.py:DMP.sqf_list",
+      "R1_body_incomplete_unmarked:sympy/polys/polytools.py:sqf_list",
+      "R1_body_incomplete_unmarked:sympy/polys/rings.py:PolyElement.sqf_list"
+    ],
+    "fallback": true,
+    "delivered_full_line_ranges": [
+      [
+        "sympy/polys/polytools.py",
+        3210,
+        3240
+      ],
+      [
+        "sympy/polys/sqfreetools.py",
+        281,
+        340
+      ]
+    ],
+    "pending_read_pages": {},
+    "entity_body_complete": {
+      "sympy/polys/sqfreetools.py:dup_sqf_list": true,
+      "sympy/polys/polytools.py:Poly.sqf_list": true,
+      "sympy/polys/polytools.py:sqf_list": false,
+      "sympy/polys/polyclasses.py:DMP.sqf_list": false,
+      "sympy/polys/rings.py:PolyElement.sqf_list": false
+    },
+    "call_chain_complete": false,
+    "behavior_verified": false,
+    "quality_measured": false
+  }
+}

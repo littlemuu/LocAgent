@@ -1,0 +1,6 @@
+{
+  "instance_id": "keras-team__keras-20537",
+  "repo": "keras-team/keras",
+  "base_commit": "5d36ee1f219bb650dd108c35b257c783cd034ffd",
+  "problem_statement": "BUG in load_weights_from_hdf5_group_by_name\nhttps://github.com/keras-team/keras/blob/5d36ee1f219bb650dd108c35b257c783cd034ffd/keras/src/legacy/saving/legacy_h5_format.py#L521-L525\r\n\r\nmodel.trainable_weights + model.non_trainable_weights references all weights instead of top-level\n"
+}

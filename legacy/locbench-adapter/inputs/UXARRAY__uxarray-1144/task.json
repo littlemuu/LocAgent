@@ -1,0 +1,6 @@
+{
+  "instance_id": "UXARRAY__uxarray-1144",
+  "repo": "UXARRAY/uxarray",
+  "base_commit": "81ac5bd50ed2a2faca24008dc261029be30c37c4",
+  "problem_statement": "Slowdown in `__repr__` due to `n_nodes_per_face` construction triggering\nWhen printing a `Grid`, there is an unnecessary trigger to the `n_nodes_per_face` variable, which has a noticeable impact on performance for larger grids. \n"
+}

@@ -1,0 +1,18 @@
+{
+  "sampling_manifest_identical": true,
+  "ids_sha256": "febb6210cee4be652d9b1e6dceb84aec9181bcb3540493e0ff9bd4545209d552",
+  "holdout_overlap_count": 0,
+  "live_ab_same_fields": {
+    "system_prompt_sha256": true,
+    "tool_schema_sha256": true,
+    "budget": true
+  },
+  "live_patch_bytes": {
+    "A": 0,
+    "B": 0
+  },
+  "new_config_coding_output_limit": 4096,
+  "paid_config_coding_output_limit": 2048,
+  "offline_tests": 13,
+  "paid_requests_after_first_failure": 0
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "okta__okta-jwt-verifier-python-59",
+  "repo": "okta/okta-jwt-verifier-python",
+  "base_commit": "cb4e6780c55c234690299fa4ccef5ad33746c2c2",
+  "problem_statement": "Dependency python-Jose appears to be unmaintained\nHey - just a heads-up that it appears this library is using `python-jose` as a dependency, which hasn't been updated in ~2 years. Maintainers haven't shown any activity in GitHub for issues or pull requests in quite a while, either. It would probably be prudent to pivot to PyJWT or JWCrypto, before CVEs start cropping up against the abandoned library.\nDependency python-Jose appears to be unmaintained\nHey - just a heads-up that it appears this library is using `python-jose` as a dependency, which hasn't been updated in ~2 years. Maintainers haven't shown any activity in GitHub for issues or pull requests in quite a while, either. It would probably be prudent to pivot to PyJWT or JWCrypto, before CVEs start cropping up against the abandoned library.\n"
+}

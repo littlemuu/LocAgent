@@ -1,0 +1,6 @@
+{
+  "instance_id": "feast-dev__feast-4727",
+  "repo": "feast-dev/feast",
+  "base_commit": "e9cd3733f041da99bb1e84843ffe5af697085c34",
+  "problem_statement": "Wrong permission asserts on materialize endpoints \n## Expected Behavior \r\nThe `assert_permissions` function expects a `resources` of type `FeastObject`.\r\n\r\n## Current Behavior\r\nMaterialization endpoints in `feature_server` module receive instead a `str`, as in [/materialize](https://github.com/feast-dev/feast/blob/60fbc62080950549f28b9411e00926be168bea56/sdk/python/feast/feature_server.py#L256-L258) and [/materialize_incremental](https://github.com/feast-dev/feast/blob/60fbc62080950549f28b9411e00926be168bea56/sdk/python/feast/feature_server.py#L269-L271)\r\n\r\n## Possible Solution\r\nFetch the `FeatureView`s like the [/write-to-online-store](https://github.com/feast-dev/feast/blob/60fbc62080950549f28b9411e00926be168bea56/sdk/python/feast/feature_server.py#L226C9-L235C14) endpoint\r\n\n"
+}

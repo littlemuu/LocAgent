@@ -1,0 +1,6 @@
+{
+  "instance_id": "ansys__pymapdl-3705",
+  "repo": "ansys/pymapdl",
+  "base_commit": "7e86b2a110e37383797654ee4e338d53c00df296",
+  "problem_statement": "`requires_package` is very slow\n              It seems that `requires_package` is very slow:\r\n\r\n![image](https://github.com/user-attachments/assets/186c6084-3765-4349-8205-81bdddae9c8e)\r\n\r\n_Originally posted by @germa89 in https://github.com/ansys/pymapdl/issues/3703#issuecomment-2615615323_\r\n            \n"
+}

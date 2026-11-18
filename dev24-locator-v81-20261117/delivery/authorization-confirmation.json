@@ -1,0 +1,9 @@
+{
+  "at": 1794906286.297639,
+  "message": "确认本轮 v8.1 仅定位开机授权",
+  "instance": "ins-1njewmmg",
+  "API_limit_cny": 5,
+  "scope": "dev24 locator only once",
+  "coding_agent": false,
+  "harness": false
+}

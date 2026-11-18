@@ -1,0 +1,6 @@
+{
+  "instance_id": "numpy__numpy-27598",
+  "repo": "numpy/numpy",
+  "base_commit": "a905925ef40a7551d16d78d81c7e6d08b59559e4",
+  "problem_statement": "DOC: Examples in docstrings – tracking issue\n\"Examples, more examples, and more detailed examples\" is the recurrent theme in the feedback about the NumPy documentation we received via the 2020 and 2021 NumPy user surveys. \r\n\r\nIf you come across a docstring where a function is missing an example or more/better examples are needed, please add a comment below.\r\n\r\n**Re: the “sprintable” label** This could be a good activity for a sprint with new contributors as most of them are NumPy users. However, one doesn’t have to be a sprint participant to contribute to this initiative.\r\n\r\n\n"
+}

@@ -1,0 +1,7 @@
+{
+  "frozen_at": "2026-11-12T15:45:58.805441+00:00",
+  "rule": "Two independent binary scores for each of 48 criteria. Agreements stand. Each disagreement goes to a third fresh-context reviewer given only the same masked question, answer, source and disputed criterion, without prior scores or reasons. Majority of three decides disputed criteria. Freeze all reviews before unblinding. Report individual scores, disagreement locations and final majority scores. Do not use extra accuracy notes as an undisclosed penalty.",
+  "unblinding": "Only after completed reviewer files and SHA256 digests have been frozen.",
+  "independent_human_review": false,
+  "new_model_api_calls": 0
+}

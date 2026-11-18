@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-6157",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "bd9673c9deaebbd52b6303dd991d9bbe6821d090",
+  "problem_statement": "rds_instance_no_public_access reports incorrect SG\n### Steps to Reproduce\n\n1. prowler aws -c rds_instance_no_public_access\r\n2. AWS\r\n3. N/A\r\n4. See finding's `status_detail`\n\n### Expected behavior\n\nThe status detail should correctly identify the Security Group(s) that contain the rule(s)\n\n### Actual Result with Screenshots or Logs\n\nOnly one group is in the detail, and it may not be the group that actually has the rule(s). Result may change between runs\r\n![rds_check_correct](https://github.com/user-attachments/assets/743e8e8f-cd97-40f1-8e7e-e85f94c1eb1d)\r\n![rds_check_incorrect](https://github.com/user-attachments/assets/fe7dd840-a636-4ff5-b19f-ef8a6eac5bfc)\r\n\n\n### How did you install Prowler?\n\nFrom pip package (pip install prowler)\n\n### Environment Resource\n\nECS/Locally\n\n### OS used\n\nAmazon Linux 2/WSL\n\n### Prowler version\n\nProwler 4.5.3 (You are running the latest version, yay!)\n\n### Pip version\n\npip 22.0.2 from /usr/lib/python3/dist-packages/pip (python 3.10)\n\n### Context\n\nNo changes made between scan runs.\r\n`Default` SG is attached but has no rules.\n"
+}

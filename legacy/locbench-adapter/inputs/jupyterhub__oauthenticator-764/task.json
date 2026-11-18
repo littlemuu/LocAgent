@@ -1,0 +1,6 @@
+{
+  "instance_id": "jupyterhub__oauthenticator-764",
+  "repo": "jupyterhub/oauthenticator",
+  "base_commit": "f4da2e8eedeec009f2d1ac749b6da2ee160652b0",
+  "problem_statement": "The google authenticator's calls to check groups is done sync, can it be made async?\nQuickly written, I can fill this in in more detail later.\n"
+}

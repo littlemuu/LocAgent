@@ -1,0 +1,6 @@
+{
+  "instance_id": "Happy-Algorithms-League__hal-cgp-180",
+  "repo": "Happy-Algorithms-League/hal-cgp",
+  "base_commit": "5421d9cdf0812ab3098d54c201ee115fa3129bce",
+  "problem_statement": "Issue warning when `mutation_rate` is high and `mutate` potentially takes long\n#157 made sure that exactly the correct number of mutations occurs in a genome by checking that the mutated genome differs from the original one in `n_mutations` position. when using a high mutation rate and small number of primitives, this can lead to a long runtime for `mutate` as it struggles to find positions in the genome to mutate and alternative genes to insert. we should figure out exactly under which conditions this tends to occur and issue a user warning when we detect such a situation.\r\n\r\n@HenrikMettler, since you're already familiar with that part of the code, maybe you want to look into this?\n"
+}

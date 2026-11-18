@@ -1,0 +1,6 @@
+{
+  "instance_id": "dask__dask-11608",
+  "repo": "dask/dask",
+  "base_commit": "24c492095a791696ce6611e9d2294274f4592911",
+  "problem_statement": "`NestedContainer.to_container` method gets tracked individually per NestedContainer object\nLooking into https://github.com/dask/distributed/issues/8958, I've noticed that for each `NestedContainer` object, its bound `to_container` method is tracked individually by the GC. This accounts for ~500k of 9MM objects in my workload. It would probably be better to stop tracking these individually.\n"
+}

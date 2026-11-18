@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-30241",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "551d56c254197c4b6ad63974d749824ed2c7bc58",
+  "problem_statement": "Missing format string arguments\nThis assertion error string is not properly formatted as the 2 format arguments `y_pred.shape` and `y.shape` are missing:\r\n\r\nhttps://github.com/scikit-learn/scikit-learn/blob/551d56c254197c4b6ad63974d749824ed2c7bc58/sklearn/utils/estimator_checks.py#L2139\r\n\r\n```python\r\nassert y_pred.shape == y.shape, (\r\n    \"The shape of the prediction for multioutput data is incorrect.\"\r\n    \" Expected {}, got {}.\"\r\n)\r\n```\r\n\r\nshould become\r\n\r\n```python\r\nassert y_pred.shape == y.shape, (\r\n    \"The shape of the prediction for multioutput data is incorrect.\"\r\n    \" Expected {}, got {}.\".format(y_pred.shape, y.shape)\r\n)\r\n```\n"
+}

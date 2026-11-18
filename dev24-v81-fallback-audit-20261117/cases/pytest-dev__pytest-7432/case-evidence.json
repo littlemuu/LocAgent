@@ -1,0 +1,104 @@
+{
+  "index": 4,
+  "instance_id": "pytest-dev__pytest-7432",
+  "fallback": true,
+  "raw_answer_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-v81-fallback-audit-20261117/cases/pytest-dev__pytest-7432/raw-answer.txt",
+  "raw_audit_path": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pytest-dev__pytest-7432/locator/diagnostic-audit.json",
+  "raw_finish_wire_paths": [
+    "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-locator-v81-20261117/evidence/run/trial/pytest-dev__pytest-7432/locator-wire/response-15.json"
+  ],
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- src/_pytest/skipping.py:261-305 完整读到 pytest_runtest_makereport 函数体（含 docstring 区段与全部 elif 分支）。\n- src/_pytest/skipping.py:273-274 分支 `elif item.config.option.runxfail: pass  # don't interfere` 位于 skip 位置修正分支之前。\n- src/_pytest/skipping.py:294-305 是唯一把 rep.longrepr 从 tuple 改写为 `(filename, line + 1, reason)` 的分支，条件为 `skipped_by_mark_key` 为真、`rep.skipped` 且 longrepr 为 tuple。\n- src/_pytest/skipping.py:232-239 pytest_runtest_setup 在 skip 标记命中时置 `skipped_by_mark_key = True` 并调用 `skip(skipped.reason)`。\n- src/_pytest/skipping.py:241-244 仅在 `not runxfail` 时写入 xfailed_key，说明 runxfail 只应影响 xfail 路径。\n\n推断\n- 待验证假设：`--runxfail` 使 src/_pytest/skipping.py:pytest_runtest_makereport 在 273 行提前 `pass` 返回，从而跳过 294-305 的 skip 位置重写，导致 longrepr 保留 pytest 内部 raise 位置（即 skipping.py 自身行号）。\n- 待验证假设：修复方向是把 skip 位置修正分支移到 runxfail 判断之前，或让 runxfail 分支只跳过 xfail 相关处理而不跳过 skip 重写。\n- 待验证假设：src/_pytest/skipping.py:pytest_runtest_setup 已正确设置 skipped_by_mark_key，故 294 行条件本身在 runxfail 下仍成立，问题仅在分支顺序。\n\n未核验点\n- 未读 src/_pytest/skipping.py 其余部分（1-224、306-314），未确认是否有其他 hook 也改写 longrepr。\n- 未读 testing/test_skipping.py:233、334、352 的既有 runxfail 测试，未确认是否已有覆盖 skip 位置的用例。\n- 未运行任何测试，未验证 reportinfo() 在 runxfail 下的返回值。\n\n最小验证：`python -m pytest testing/test_skipping.py -q -k runxfail`（并新增断言：`--runxfail -rs` 输出中 SKIPPED 行指向测试文件而非 src/_pytest/skipping.py）",
+    "entities": [
+      "src/_pytest/skipping.py:pytest_runtest_makereport",
+      "src/_pytest/skipping.py:pytest_runtest_setup"
+    ],
+    "files": [
+      "src/_pytest/skipping.py"
+    ]
+  },
+  "source_bytes": 6335,
+  "source_budget": 14336,
+  "requests": 3,
+  "tool_calls": 4,
+  "ranges": [
+    [
+      "src/_pytest/skipping.py",
+      225,
+      310
+    ]
+  ],
+  "pending": {},
+  "entity_body_complete": {
+    "src/_pytest/skipping.py:pytest_runtest_makereport": true,
+    "src/_pytest/skipping.py:pytest_runtest_setup": true
+  },
+  "tool_audit": [
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "runxfail"
+      },
+      "calls": 1,
+      "result": {
+        "next_offset": null,
+        "text": "src/_pytest/skipping.py:33:         \"--runxfail\",\nsrc/_pytest/skipping.py:35:         dest=\"runxfail\",\nsrc/_pytest/skipping.py:50:     if config.option.runxfail:\nsrc/_pytest/skipping.py:241:     if not item.config.option.runxfail:\nsrc/_pytest/skipping.py:253:     if not item.config.option.runxfail:\nsrc/_pytest/skipping.py:273:     elif item.config.option.runxfail:\ntesting/test_skipping.py:233:         result = testdir.runpytest(\"--runxfail\")\ntesting/test_skipping.py:334:         result = testdir.runpytest(p, \"--runxfail\")\ntesting/test_skipping.py:352:         result = testdir.runpytest(p, \"--runxfail\")"
+      },
+      "source_bytes": 657,
+      "tool": "search_text"
+    },
+    {
+      "arguments": {
+        "offset": 0,
+        "query": "src/_pytest/skipping.py:pytest_runtest_makereport"
+      },
+      "calls": 2,
+      "result": {
+        "next_offset": null,
+        "text": "Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.\n#1 src/_pytest/skipping.py:pytest_runtest_makereport [exact_id]\npath=src/_pytest/skipping.py; lines=261-305; implementation_start=262; read_file(path=\"src/_pytest/skipping.py\", start_line=261, end_line=305)\n261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):\n262:     outcome = yield\n263:     rep = outcome.get_result()\n264:     xfailed = item._store.get(xfailed_key, None)\n265:     # unittest special case, see setting of unexpectedsuccess_key\n266:     if unexpectedsuccess_key in item._store and rep.when == \"call\":\n267:         reason = item._store[unexpectedsuccess_key]\n268:         if reason:\n269:             rep.longrepr = \"Unexpected success: {}\".format(reason)\n270:         else:\n271:             rep.longrepr = \"Unexpected success\"\n272:         rep.outcome = \"failed\"\n273:     elif item.config.option.runxfail:\n274:         pass  # don't interfere\n275:     elif call.excinfo and isinstance(call.excinfo.value, xfail.Exception):\n276:         assert call.excinfo.value.msg is not None\n277:         rep.wasxfail = \"reason: \" + call.excinfo.value.msg\n... lines 278-301 omitted ...\n302:         _, _, reason = rep.longrepr\n303:         filename, line = item.reportinfo()[:2]\n304:         assert line is not None\n305:         rep.longrepr = str(filename), line + 1, reason\nPreview incomplete; omitted/overlapping lines remain available via read_file.\n\n"
+      },
+      "source_bytes": 2249,
+      "tool": "locagent_retrieve"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 310,
+        "path": "src/_pytest/skipping.py",
+        "start_line": 255
+      },
+      "calls": 3,
+      "result": {
+        "end_column": 26,
+        "end_line": 310,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 255,
+        "text": "255:             xfail(\"[NOTRUN] \" + xfailed.reason)\n256: \n257:     yield\n258: \n259: \n260: @hookimpl(hookwrapper=True)\n261: def pytest_runtest_makereport(item: Item, call: CallInfo[None]):\n262:     outcome = yield\n263:     rep = outcome.get_result()\n264:     xfailed = item._store.get(xfailed_key, None)\n265:     # unittest special case, see setting of unexpectedsuccess_key\n266:     if unexpectedsuccess_key in item._store and rep.when == \"call\":\n267:         reason = item._store[unexpectedsuccess_key]\n268:         if reason:\n269:             rep.longrepr = \"Unexpected success: {}\".format(reason)\n270:         else:\n271:             rep.longrepr = \"Unexpected success\"\n272:         rep.outcome = \"failed\"\n273:     elif item.config.option.runxfail:\n274:         pass  # don't interfere\n275:     elif call.excinfo and isinstance(call.excinfo.value, xfail.Exception):\n276:         assert call.excinfo.value.msg is not None\n277:         rep.wasxfail = \"reason: \" + call.excinfo.value.msg\n278:         rep.outcome = \"skipped\"\n279:     elif not rep.skipped and xfailed:\n280:         if call.excinfo:\n281:             raises = xfailed.raises\n282:             if raises is not None and not isinstance(call.excinfo.value, raises):\n283:                 rep.outcome = \"failed\"\n284:             else:\n285:                 rep.outcome = \"skipped\"\n286:                 rep.wasxfail = xfailed.reason\n287:         elif call.when == \"call\":\n288:             if xfailed.strict:\n289:                 rep.outcome = \"failed\"\n290:                 rep.longrepr = \"[XPASS(strict)] \" + xfailed.reason\n291:             else:\n292:                 rep.outcome = \"passed\"\n293:                 rep.wasxfail = xfailed.reason\n294:     elif (\n295:         item._store.get(skipped_by_mark_key, True)\n296:         and rep.skipped\n297:         and type(rep.longrepr) is tuple\n298:     ):\n299:         # skipped by mark.skipif; change the location of the failure\n300:         # to point to the item definition, otherwise it will display\n301:         # the location of where the skip exception was raised within pytest\n302:         _, _, reason = rep.longrepr\n303:         filename, line = item.reportinfo()[:2]\n304:         assert line is not None\n305:         rep.longrepr = str(filename), line + 1, reason\n306: \n307: \n308: def pytest_report_teststatus(report: BaseReport) -> Optional[Tuple[str, str, str]]:\n309:     if hasattr(report, \"wasxfail\"):\n310:         if report.skipped:\n",
+        "total_lines": 314
+      },
+      "source_bytes": 4895,
+      "tool": "read_file"
+    },
+    {
+      "arguments": {
+        "cursor": null,
+        "end_line": 260,
+        "path": "src/_pytest/skipping.py",
+        "start_line": 225
+      },
+      "calls": 4,
+      "result": {
+        "end_column": 27,
+        "end_line": 260,
+        "next_cursor": null,
+        "start_column": 0,
+        "start_line": 225,
+        "text": "225: # Whether skipped due to skip or skipif marks.\n226: skipped_by_mark_key = StoreKey[bool]()\n227: # Saves the xfail mark evaluation. Can be refreshed during call if None.\n228: xfailed_key = StoreKey[Optional[Xfail]]()\n229: unexpectedsuccess_key = StoreKey[str]()\n230: \n231: \n232: @hookimpl(tryfirst=True)\n233: def pytest_runtest_setup(item: Item) -> None:\n234:     item._store[skipped_by_mark_key] = False\n235: \n236:     skipped = evaluate_skip_marks(item)\n237:     if skipped:\n238:         item._store[skipped_by_mark_key] = True\n239:         skip(skipped.reason)\n240: \n241:     if not item.config.option.runxfail:\n242:         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)\n243:         if xfailed and not xfailed.run:\n244:             xfail(\"[NOTRUN] \" + xfailed.reason)\n245: \n246: \n247: @hookimpl(hookwrapper=True)\n248: def pytest_runtest_call(item: Item) -> Generator[None, None, None]:\n249:     xfailed = item._store.get(xfailed_key, None)\n250:     if xfailed is None:\n251:         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)\n252: \n253:     if not item.config.option.runxfail:\n254:         if xfailed and not xfailed.run:\n255:             xfail(\"[NOTRUN] \" + xfailed.reason)\n256: \n257:     yield\n258: \n259: \n260: @hookimpl(hookwrapper=True)\n",
+        "total_lines": 314
+      },
+      "source_bytes": 6335,
+      "tool": "read_file"
+    }
+  ]
+}

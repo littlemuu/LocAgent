@@ -1,0 +1,6 @@
+{
+  "instance_id": "OpenEnergyPlatform__open-MaStR-598",
+  "repo": "OpenEnergyPlatform/open-MaStR",
+  "base_commit": "bd44ce26986a0c41b25250951a4a9a391723d690",
+  "problem_statement": "Increase parsing speed\nThis task contains several steps:\r\n\r\n1. Search different ways that might increase parsing speed. Parsing is done right now by the `pandas.read_xml` method [here](https://github.com/OpenEnergyPlatform/open-MaStR/blob/d17a92c17912f7f96814d309859dc495f942c07a/open_mastr/xml_download/utils_write_to_database.py#L158). Several alternatives are:\r\n  * `polars`, `duckdb`, `pyspark` might have xml parsers and might be faster\r\n  * use plain xml parsing from python (without pandas)\r\n  * ...\r\n\r\n2. Writing to sqlite database right now is done by `pandas.to_sql` [here](https://github.com/OpenEnergyPlatform/open-MaStR/blob/d17a92c17912f7f96814d309859dc495f942c07a/open_mastr/xml_download/utils_write_to_database.py#L182C5-L182C26). There might be other faster methods depending on step 1.\r\n3. Construct a benchmark in an own repository. Use a benchmark xml file from the Marktstammdatenregister and test different implementations for parsing them.\r\n4. Decide for a best method and implement it in `open-mastr`\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "zarr-developers__zarr-python-738",
+  "repo": "zarr-developers/zarr-python",
+  "base_commit": "7c31f041ca8baab860564d9c6332c52f19777e80",
+  "problem_statement": "Optimize storing fill_value to Array\nWould be nice if when storing a scalar or an array that contains only the `fill_value` of the `Array`, the chunk is merely deleted (if it exists) instead of writing out a chunk that contains only the `fill_value` for all elements. The `Array` should behave identically in either case. The only benefit is that storage is cutdown automatically in this case. A situation where this may come up is when copying one `Array` to another.\n"
+}

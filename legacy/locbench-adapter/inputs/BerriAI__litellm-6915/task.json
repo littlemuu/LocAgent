@@ -1,0 +1,6 @@
+{
+  "instance_id": "BerriAI__litellm-6915",
+  "repo": "BerriAI/litellm",
+  "base_commit": "fd2d4254bcd01e924ca4dded36ee4714c33734af",
+  "problem_statement": "[Bug]: supported params are out of date for fireworks AI\n### What happened?\n\nwhen calling fireworks models, litellm is complianing: logprobs is not supproted but it's actually supported by fireworks ai.\r\nref: https://docs.fireworks.ai/api-reference/post-completions\n\n### Relevant log output\n\n_No response_\n\n### Twitter / LinkedIn details\n\n_No response_\n"
+}

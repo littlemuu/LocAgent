@@ -1,0 +1,6 @@
+{
+  "instance_id": "matchms__matchms-backup-187",
+  "repo": "matchms/matchms-backup",
+  "base_commit": "da8debd649798367ed29102b2965a1ab0e6f4938",
+  "problem_statement": "openbabel has contagious license\nhttps://tldrlegal.com/license/gnu-general-public-license-v2\n"
+}

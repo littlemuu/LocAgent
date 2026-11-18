@@ -1,0 +1,6 @@
+{
+  "instance_id": "internetarchive__openlibrary-3196",
+  "repo": "internetarchive/openlibrary",
+  "base_commit": "061f07ec54cec6ffd169580641eb87144fe7ea14",
+  "problem_statement": "XSS issues on books page\n<!-- What problem are we solving? What does the experience look like today? What are the symptoms? -->\r\nXSS issues\r\n\r\n### Evidence / Screenshot (if possible)\r\n\r\n### Relevant url?\r\n\r\nhttps://openlibrary.org/books/OL27912983M/'_script_alert(_Ultra_Security_)_script\r\nhttps://twitter.com/BugsBun75181771/status/1228314510563385346\r\n\r\n### Details\r\n\r\n- **Logged in (Y/N)?** \r\n- **Browser type/version?** \r\n- **Operating system?** \r\n- **Environment (prod/dev/local)?** prod\r\n<!-- If not sure, put prod -->\r\n\r\n### Proposal & Constraints\r\n<!-- What is the proposed solution / implementation? Is there a precedent of this approach succeeding elsewhere? -->\r\n\r\n### Related files\r\n<!-- Files related to this issue; this is super useful for new contributors who might want to help! If you're not sure, leave this blank; a maintainer will add them. -->\r\n\r\n### Stakeholders\r\n<!-- @ tag stakeholders of this bug -->\r\n\n"
+}

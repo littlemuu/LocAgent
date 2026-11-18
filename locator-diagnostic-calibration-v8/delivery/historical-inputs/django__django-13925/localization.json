@@ -1,0 +1,19 @@
+{
+  "base_commit": "0c42cdf0d2422f4c080e93594d5d15381d6e955e",
+  "instance_id": "django__django-13925",
+  "result": {
+    "answer": "The W042 warning is emitted by Model._check_default_pk (django/db/models/base.py:1298-1320). Its condition is simply `cls._meta.pk.auto_created and not settings.is_overridden('DEFAULT_AUTO_FIELD') and not cls._meta.app_config._is_default_auto_field_overridden`. It does not distinguish a PK that was auto-created on the model itself from one inherited/promoted from a parent, so any model whose `_meta.pk.auto_created` is True triggers the warning.\n\nWhere auto_created comes from: Options._prepare (django/db/models/options.py:271-287). For a model with no explicit pk and no parents, it creates `pk_class(verbose_name='ID', primary_key=True, auto_created=True)` (line 286). For a child model with parents, it promotes the first parent link and sets `field.primary_key = True` (lines 272-283) without clearing auto_created, so the inherited PK keeps auto_created=True from the ancestor's auto field. That is why models inheriting from a base like `Entity` (whose PK is an auto-created AutoField) still report W042 even though the user never asked for a new auto PK on the child.\n\nSo the report is consistent with a real bug/limitation in the 3.2 check: the check keys off `pk.auto_created` rather than whether the model itself defined the PK. The fix would be in _check_default_pk (e.g. also require the PK to be a local field / not inherited), not in _prepare. I could not read the W042 tests (tests/check_framework/test_model_checks.py read failed), so I cannot confirm whether a test already covers inherited PKs; that is the main uncertainty. The hint text and app-config override logic (django/apps/config.py:64-70) are unrelated to the false positive.",
+    "entities": [
+      "django/db/models/base.py:Model._check_default_pk",
+      "django/db/models/options.py:Options._prepare",
+      "django/db/models/options.py:Options._get_default_pk_class",
+      "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+    ],
+    "files": [
+      "django/db/models/base.py",
+      "django/db/models/options.py",
+      "django/apps/config.py"
+    ]
+  },
+  "version": 1
+}

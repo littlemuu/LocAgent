@@ -1,0 +1,39 @@
+{
+  "mode": "synthetic SDK protocol test; NOT real v8 quality",
+  "requests_B": 4,
+  "requests_C": 4,
+  "SDK_tool_schema_B": "4f9f105004ff571b15f3bf886e21b46ab3708aa681518d2616e9e4812379bc00",
+  "SDK_tool_schema_C": "4f9f105004ff571b15f3bf886e21b46ab3708aa681518d2616e9e4812379bc00",
+  "wire_tool_schemas_B": [
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "0930d3ea03fd1f82d924e8e1f86e455bf58625549fc28f33b834d97d28e72a0a"
+  ],
+  "wire_tool_schemas_C": [
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "d71e80284bbe6f25a56335644380a8b06f82962e60c82f669224bfd8cfca4f10",
+    "0930d3ea03fd1f82d924e8e1f86e455bf58625549fc28f33b834d97d28e72a0a"
+  ],
+  "budget_B": {
+    "max_requests": 4,
+    "max_output_tokens": 2048,
+    "input_tokens": 128000,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "budget_C": {
+    "max_requests": 4,
+    "max_output_tokens": 2048,
+    "input_tokens": 128000,
+    "output_tokens": 8192,
+    "source_bytes": 14336,
+    "timeout_seconds": 300,
+    "wire_request_bytes": 65536
+  },
+  "model": "deepseek-flash",
+  "raw_rejected_answer_retained": true
+}

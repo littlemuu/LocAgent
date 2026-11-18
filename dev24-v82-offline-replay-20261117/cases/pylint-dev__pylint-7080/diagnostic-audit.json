@@ -1,0 +1,69 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- pylint/lint/pylinter.py:585-619：`_discover_files` 在 `os.walk` 中对每个 `root` 调用 `_is_ignored_file(root, self.config.ignore, self.config.ignore_patterns, self.config.ignore_paths)`，命中则把 `root` 加入 `skip_subtrees` 并 `continue`；未命中时若含 `__init__.py` 则 yield 该目录，否则 yield 目录下所有 `.py` 文件。\n- pylint/lint/pylinter.py:634-635：`check` 在 `self.config.recursive` 为真时用 `_discover_files` 的结果替换 `files_or_modules`。\n- pylint/lint/pylinter.py:767-770：`_iterate_file_descrs` 对 `_expand_files` 的每个描述符再调用 `should_analyze_file` 过滤。\n- pylint/lint/pylinter.py:772-779：`_expand_files` 把 `self._ignore_paths` 传给 `expand_modules`。\n- pylint/lint/pylinter.py:1014（搜索命中，未读正文）：`self._ignore_paths = self.linter.config.ignore_paths`。\n\n推断\n- 待验证假设：`_discover_files` 只对目录 `root` 做 `ignore_paths` 匹配，而 `src/gen` 若不含 `__init__.py`，其文件是在父目录 `src` 的遍历中被 yield 的，`src` 本身不匹配 `^src/gen/.*$`，因此 `src/gen/*.py` 未被过滤——这能解释报告中的 `src\\gen\\*.py` 仍被检查。\n- 待验证假设：`_is_ignored_file` 对 `ignore_paths` 的匹配语义（是否用 `re.match` 于绝对路径、是否对文件路径也生效）决定该假设成立与否；其函数体未读到。\n- 待验证假设：`expand_modules` 内部是否对 `ignore_paths` 做文件级过滤，若不做则 `_expand_files` 路径同样漏掉 `src/gen` 下的文件。\n\n未核验点\n- `_is_ignored_file` 函数体未读（仅见调用点）。\n- `expand_modules`（pylint/lint/expand_modules.py）未读。\n- `should_analyze_file` 函数体未读。\n- pylinter.py 两处分页未续读：cursor=rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2（661-714 之后）与 cursor=rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161（760-800 之后）。\n- 未运行任何验证，未证明调用链穷尽。\n\n最小验证：`python -m pytest tests/lint/unittest_lint.py -q -k recursive_ignore`（仅针对上述假设，不单独证明根因）",
+    "entities": [
+      "pylint/lint/pylinter.py:PyLinter._discover_files",
+      "pylint/lint/pylinter.py:PyLinter.check",
+      "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+      "pylint/lint/pylinter.py:PyLinter._expand_files"
+    ],
+    "files": [
+      "pylint/lint/pylinter.py"
+    ]
+  },
+  "violations": [
+    "R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs"
+  ],
+  "violation_count": 1,
+  "rule_counts": {
+    "R1": 1,
+    "R2": 0,
+    "R3": 0,
+    "R4": 0
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [
+    {
+      "rule": "R1",
+      "violation": "R1_body_incomplete_unmarked:pylint/lint/pylinter.py:PyLinter._iterate_file_descrs",
+      "targets": [
+        "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs"
+      ]
+    }
+  ],
+  "disclosure_count": 1,
+  "disclosure_attached": true,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "pylint/lint/pylinter.py",
+      580,
+      714
+    ],
+    [
+      "pylint/lint/pylinter.py",
+      760,
+      800
+    ]
+  ],
+  "pending_read_pages": {
+    "rf1_1b099d8eee39f638d9981f25ca1ed18d40cbbd1d9f42b6bfd0ef39c9617f3161": "pylint/lint/pylinter.py",
+    "rf1_63bf19ad360819c9be417057f231785f9d672e34a3ca51579058d25cad07e9e2": "pylint/lint/pylinter.py"
+  },
+  "entity_body_complete": {
+    "pylint/lint/pylinter.py:PyLinter._discover_files": true,
+    "pylint/lint/pylinter.py:PyLinter.check": true,
+    "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs": false,
+    "pylint/lint/pylinter.py:PyLinter._expand_files": true
+  },
+  "entity_def_spans": {},
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [
+    "pylint/lint/pylinter.py:PyLinter._iterate_file_descrs"
+  ],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

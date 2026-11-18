@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "complete_pairs": 24,
+  "completed_episodes": 48,
+  "plaintext_credential_scan_matches": 0,
+  "archives_contain_no_env_files": true,
+  "archive_layout_matches_reproduction_commands": true,
+  "actual_account_bill_read": false,
+  "additional_repetitions_run": false
+}

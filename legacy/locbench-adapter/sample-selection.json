@@ -1,0 +1,17 @@
+{
+  "rule": "lexicographically first instance in three preselected manageable repos; convenience sample, not accuracy estimate",
+  "cases": [
+    {
+      "instance_id": "Delgan__loguru-1239",
+      "python_files": 163
+    },
+    {
+      "instance_id": "py-pdf__pypdf-2644",
+      "python_files": 81
+    },
+    {
+      "instance_id": "networkx__networkx-7721",
+      "python_files": 662
+    }
+  ]
+}

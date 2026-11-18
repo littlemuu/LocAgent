@@ -1,0 +1,33 @@
+{
+  "binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "cases": 24,
+  "full_fallback": 0,
+  "disclosure_cases": 12,
+  "unchanged_without_disclosure": 12,
+  "disclosure_items": 16,
+  "residual_rules": {
+    "R1": 9,
+    "R2": 0,
+    "R3": 0,
+    "R4": 7
+  },
+  "validator_errors": 0,
+  "original_body_preserved": 24,
+  "true_violations_disclosed": 7,
+  "false_positives_removed": 31,
+  "boundaries_remaining": 9,
+  "boundaries_removed": 8,
+  "new_findings_vs_55_reviewed": [],
+  "max_packet_bytes": 3309,
+  "packet_byte_limit": 14336,
+  "model_calls": 0,
+  "API_calls": 0,
+  "new_API_cost_cny": 0,
+  "cloud_started": false,
+  "Coding_Agent": "未运行",
+  "harness": "未运行",
+  "fresh_locator_investigation": "未运行",
+  "holdout_access": false,
+  "blocked_external_actions": [],
+  "scope": "Offline policy replay only; not a new model result/resolved measurement. Original search snippets support narrow facts only; original v8.1 coverage and retrieval metadata are used when full AST spans were not saved."
+}

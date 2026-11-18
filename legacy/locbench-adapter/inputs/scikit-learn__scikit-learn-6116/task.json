@@ -1,0 +1,6 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-6116",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "5e4f524f8408e5a0efb96f8128504f8ca747a95e",
+  "problem_statement": "GradientBoostingClassifier.fit accepts sparse X, but .predict does not\nI have a sparse dataset that is too large for main memory if I call `X.todense()`.  If I understand correctly, `GradientBoostingClassifier.fit` will accept my sparse `X`, but it is not currently possible to use `GradientBoostingClassifier.predict` on the results.  It would be great if that were not the case.\n\nHere is a minimal example of the issue:\n\n```\nfrom scipy import sparse\nfrom sklearn.datasets.samples_generator import make_classification\nfrom sklearn.ensemble import GradientBoostingClassifier\n\nX, y = make_classification(n_samples=20, n_features=5, random_state=0)\nX_sp = sparse.coo_matrix(X)\n\nclf = GradientBoostingClassifier()\nclf.fit(X,y)\nclf.predict(X)  # works\n\nclf.fit(X_sp, y)  # works\nclf.predict(X_sp)  # fails with TypeError: A sparse matrix was passed, but dense data is required.\n```\n\n"
+}

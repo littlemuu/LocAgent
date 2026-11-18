@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "original_offline_tests": 22,
+  "new_calibration_tests": 22,
+  "old_answers": 5,
+  "audited_sentences": 50,
+  "historical_input_hashes_verified": 10,
+  "unchanged_B_files": 42,
+  "historical_freezes_unchanged": 4,
+  "real_C_status": "未运行",
+  "new_API_calls": 0,
+  "cloud_started": false,
+  "SSH_used": false,
+  "holdout_content_read": false,
+  "reference_patch_read": false,
+  "AB_rerun": false,
+  "report_links_verified": true,
+  "config_sha256": "ba2853f4824b54ab32f6091b916f11fed05bd80eb9fb41d95040668a2b588ab5",
+  "v8_binding": "c072f4f8c9764f0311fabb7f52dfabbcdc04ba0369473296cba75547d54edf3a"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "matrix-org__synapse-8744",
+  "repo": "matrix-org/synapse",
+  "base_commit": "03e392f787df3fb8d23aca0964695a5caa075940",
+  "problem_statement": "When enabling EDU support for appservices, synapse will start from stream position 0 when fetching presence/receipts\nWhich is very expensive if you were say, matrix.org. If the appservice hasn't got a stream position in the database, we should go from a reasonable point in time.\n"
+}

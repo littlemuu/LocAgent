@@ -1,0 +1,6 @@
+{
+  "instance_id": "Netflix__metaflow-2141",
+  "repo": "Netflix/metaflow",
+  "base_commit": "0bc4a9683ba67eedd756a8dc777916020587d5f7",
+  "problem_statement": "BUG: Data store error - AWS batch/step execution\n**Environment:**\r\nmetaflow version: 2.12.29\r\nPython 3.11 (Docker Image from public.ecr.aws/docker/library/python:3.11)\r\nRunning on AWS Batch\r\n\r\n**Description:**\r\nTested with version 2.12.28 and it runs successfully, with this latest version we get:\r\nData store error: No completed attempts of the task was found for task `MyFlow/sfn-*/_parameters/*-params`.\r\n\r\nMaybe worth mentioning that we include a json file into `MyFlow` like:\r\n```\r\n\r\njson_config = IncludeFile(\r\n        name=\"my_config\",\r\n        required=True,\r\n        help=\"The Configuration\",\r\n        default=f\"./{PARAMS_JSON}\",\r\n    )\r\n\r\n```\r\n\n"
+}

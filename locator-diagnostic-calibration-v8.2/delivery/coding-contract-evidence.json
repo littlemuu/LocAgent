@@ -1,0 +1,46 @@
+{
+  "mode": "synthetic coding first-request parity; NOT real C run",
+  "packet_envelope": [
+    "version",
+    "instance_id",
+    "base_commit",
+    "result"
+  ],
+  "result_keys": [
+    "files",
+    "entities",
+    "answer"
+  ],
+  "request_hash_with_only_packet_removed_B": "4340882f49cb7a811bfacd75650f0e8b32972a03211a6f97d648f62f87a2978e",
+  "request_hash_with_only_packet_removed_C": "4340882f49cb7a811bfacd75650f0e8b32972a03211a6f97d648f62f87a2978e",
+  "contracts": [
+    {
+      "system_prompt_sha256": "3f506e5eb91c541b3d8382586e110dd08418f5e121adb243fadfcd84128d1567",
+      "tool_schema_sha256": "cd757b1718d62ec236aecf9172e8753775be2c03168b629c75c751f8ea5b8864",
+      "budget": {
+        "max_requests": 40,
+        "max_output_tokens": 4096,
+        "input_tokens": 1000000,
+        "output_tokens": 64000,
+        "evidence_bytes": 262144,
+        "tool_output_bytes": 16384,
+        "timeout_seconds": 2700,
+        "command_timeout_seconds": 120
+      }
+    },
+    {
+      "system_prompt_sha256": "3f506e5eb91c541b3d8382586e110dd08418f5e121adb243fadfcd84128d1567",
+      "tool_schema_sha256": "cd757b1718d62ec236aecf9172e8753775be2c03168b629c75c751f8ea5b8864",
+      "budget": {
+        "max_requests": 40,
+        "max_output_tokens": 4096,
+        "input_tokens": 1000000,
+        "output_tokens": 64000,
+        "evidence_bytes": 262144,
+        "tool_output_bytes": 16384,
+        "timeout_seconds": 2700,
+        "command_timeout_seconds": 120
+      }
+    }
+  ]
+}

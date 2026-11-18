@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60457",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "844b3191bd45b95cbaae341048bf7f367f086f2f",
+  "problem_statement": "DOC: Add examples for float_format in to_csv documentation\n### Pandas version checks\r\n\r\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\r\n\r\n\r\n### Location of the documentation\r\n\r\nhttps://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html\r\n\r\n### Documentation problem\r\n\r\nThe float_format parameter in to_csv is explained but lacks examples. Users might struggle to understand how to apply this parameter effectively without concrete examples in the documentation.\r\n\r\n### Suggested fix for documentation\r\n\r\nI suggest adding examples for float_format to make the documentation more beginner-friendly. Examples could include:\r\n\r\n```\r\n# Format floats to two decimal places\r\ndf.to_csv(\"example1.csv\", float_format=\"%.2f\")\r\n\r\n# Use scientific notation\r\ndf.to_csv(\"example2.csv\", float_format=\"{:.2e}\".format)\r\n```\n"
+}

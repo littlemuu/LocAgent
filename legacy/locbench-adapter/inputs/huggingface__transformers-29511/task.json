@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__transformers-29511",
+  "repo": "huggingface/transformers",
+  "base_commit": "bc764f42639d245114eaa077b4712aac5643603b",
+  "problem_statement": "Add support for models trained using MLX\n### Feature request\n\nIt would be great if model weights trained and saved through MLX could be easily loaded using the Transformers library. This way, MLX users and Transformers users can more freely collaborate when making open source models.\r\n\n\n### Motivation\n\nCurrently, Transformers only supports safetensors files with metadata for format in `[\"pt\", \"tf\", \"flax\"]`. If Transformers can add `\"mlx\"` to the list, and if MLX can add `metadata={\"format\":\"mlx\"}` when saving safetensors, this can be achieved.\r\n\r\nHere is a related issue I created on the `mlx_lm` side:\r\nhttps://github.com/ml-explore/mlx/issues/743#issuecomment-1965427589\r\n\r\nHere is a related PR on the `mlx_lm` repo: https://github.com/ml-explore/mlx-examples/pull/496\n\n### Your contribution\n\nI can send a PR to modify the exact code shortly after.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "pylint-dev__pylint-10075",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "0687c851e14cf187bb213128c4f23feecd0105ac",
+  "problem_statement": "[uba] Fix new false negative from #10034\n```\r\ndef nonlocal_in_outer_frame_ok(callback, condition_a, condition_b):\r\n    def outer():\r\n        nonlocal callback\r\n        def inner():\r\n            if condition_a:\r\n                def inner2():\r\n                    callback()  # possibly-used-before-assignment?\r\n                inner2()\r\n            else:\r\n                if condition_b:\r\n                    def callback():\r\n                        pass\r\n        inner()\r\n    outer()\r\n```\r\nwe should probably raise a message here?\n\n_Originally posted by @zenlyj in https://github.com/pylint-dev/pylint/pull/10034#issuecomment-2453421927_\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "sqlfluff__sqlfluff-5805",
+  "repo": "sqlfluff/sqlfluff",
+  "base_commit": "d28db5732dc5fc28c4b60690bc3f44966f89e5c2",
+  "problem_statement": "Add support for a `--stdin-filename` cli option\n### Search before asking\n\n- [X] I searched the [issues](https://github.com/sqlfluff/sqlfluff/issues) and found no similar issues.\n\n\n### Description\n\nTools such as `black` and `ruff` support a `--stdin-filename` option for interpreting configuration options when passing file contents via stdin. I'd suggest adding something similar to this to improve functionality with the vscode-sqlfluff extension.\n\n### Use case\n\nCurrently, the usage with the vscode-sqlfluff extension requires passing the contents of the file to the sqlfluff cli via stdin. This removes a number of expected configurations based on the file's location. The `--stdin-filename` option would allow reenabling those configurations as if stdin was a file in that location.\n\n### Dialect\n\nAll\n\n### Are you willing to work on and submit a PR to address the issue?\n\n- [X] Yes I am willing to submit a PR!\n\n### Code of Conduct\n\n- [X] I agree to follow this project's [Code of Conduct](https://github.com/sqlfluff/sqlfluff/blob/main/CODE_OF_CONDUCT.md)\n\n"
+}

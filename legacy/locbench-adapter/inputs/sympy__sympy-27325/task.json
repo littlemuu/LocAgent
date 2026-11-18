@@ -1,0 +1,6 @@
+{
+  "instance_id": "sympy__sympy-27325",
+  "repo": "sympy/sympy",
+  "base_commit": "fbe647fb34f90de01946fcaa1314207f11e5b26e",
+  "problem_statement": "rewrite(abs) should call rewrite(Abs)\n```py\n>>> sign(x).rewrite(abs)\nsign(x)\n>>> sign(x).rewrite(Abs)\nPiecewise((0, Eq(x, 0)), (x/Abs(x), True))\n```\n\nThis is because `rewrite(x)` just dispatches to the method called `_eval_rewrite_as_x`, and the method here is called `_eval_rewrite_as_Abs` since `Abs` is the name of the class. But most people use `abs`, the built-in function which dispatches to `Abs`. So it should be special-cased in rewrite to call `Abs`. \n"
+}

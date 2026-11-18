@@ -1,0 +1,41 @@
+130: def _arith_oper(left, right):
+131:     """
+132:     Function corresponding to one of the arithmetic operators
+133:     ['+', '-'. '*', '/', '**'].
+134: 
+135:     This always returns a nonseparable output.
+136: 
+137: 
+138:     Parameters
+139:     ----------
+140:     left, right : `astropy.modeling.Model` or ndarray
+141:         If input is of an array, it is the output of `coord_matrix`.
+142: 
+143:     Returns
+144:     -------
+145:     result : ndarray
+146:         Result from this operation.
+147:     """
+148:     # models have the same number of inputs and outputs
+149:     def _n_inputs_outputs(input):
+150:         if isinstance(input, Model):
+151:             n_outputs, n_inputs = input.n_outputs, input.n_inputs
+152:         else:
+153:             n_outputs, n_inputs = input.shape
+154:         return n_inputs, n_outputs
+155: 
+156:     left_inputs, left_outputs = _n_inputs_outputs(left)
+157:     right_inputs, right_outputs = _n_inputs_outputs(right)
+158: 
+159:     if left_inputs != right_inputs or left_outputs != right_outputs:
+160:         raise ModelDefinitionError(
+161:             "Unsupported operands for arithmetic operator: left (n_inputs={}, "
+162:             "n_outputs={}) and right (n_inputs={}, n_outputs={}); "
+163:             "models must have the same n_inputs and the same "
+164:             "n_outputs for this operator.".format(
+165:                 left_inputs, left_outputs, right_inputs, right_outputs))
+166: 
+167:     result = np.ones((left_outputs, left_inputs))
+168:     return result
+169: 
+170: 

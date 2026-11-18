@@ -1,0 +1,6 @@
+{
+  "instance_id": "keras-team__keras-20456",
+  "repo": "keras-team/keras",
+  "base_commit": "fe8407620aa9b1aa1ea21c36fe3c44db1b66883e",
+  "problem_statement": "Add a warning for mismatched inputs structure in `Functional`\nThere are several issues related to mismatched inputs structure:\r\n- #20166\r\n- #20136\r\n- #20086\r\nand more...\r\n\r\nAs a result, it would be beneficial to add a warning for users.\r\nUltimately, we might want to raise an error when a mismatch occurs. Otherwise, it could lead to subtle issues if the inputs have the same shape and dtype, as the computation could be incorrect even though the code runs.\n"
+}

@@ -1,0 +1,22 @@
+已读到的事实（附文件:行号）
+- django/db/models/base.py:1298-1320：`_check_default_pk` 的触发条件只有三项：`cls._meta.pk.auto_created` 为真、`settings.is_overridden('DEFAULT_AUTO_FIELD')` 为假、`cls._meta.app_config._is_default_auto_field_overridden` 为假；三者同时成立才返回 models.W042。
+- django/db/models/base.py:1265-1296：`check()` 在 `not cls._meta.swapped` 分支内无条件把 `_check_default_pk()` 加入 errors，未对抽象基类/继承链做额外过滤。
+- django/db/models/options.py:221-250：`_get_default_pk_class` 从 `app_config.default_auto_field` 或 `settings.DEFAULT_AUTO_FIELD` 取路径，并校验其为 AutoField 子类。
+- django/apps/config.py:64-70：`default_auto_field` 属性与 `_is_default_auto_field_overridden` 仅比较类属性是否被覆盖。
+- tests/check_framework/test_model_checks.py:389-412：测试覆盖了 app 级 default_auto_field 与 setting 两种抑制路径。
+
+推断
+- 待验证假设：W042 的判定只看 `cls._meta.pk.auto_created`，而继承自带显式主键的父类时，子类 `_meta.pk` 若仍指向父类自动生成的 id 字段（auto_created=True），就会误报；修复方向应是在 django/db/models/base.py:Model._check_default_pk 中排除 pk 来自父类/非本模型自动创建的情形。
+- 待验证假设：`_meta.pk.auto_created` 的赋值来源未在本次证据中出现（搜索仅命中 base.py:364、options.py:439 的 manager.auto_created），因此无法确认继承场景下该标志的实际取值路径。
+
+未核验点
+- 未读完：`Model._meta` 构建与 pk 自动创建逻辑（options.py 中 pk 相关方法、base.py 中字段继承处理）未读。
+- 未核验：`Options._get_default_pk_class` 的调用点（未读）。
+- 未运行任何验证，未证明调用链穷尽。
+
+最小验证：`python -m pytest tests/check_framework/test_model_checks.py -q -k default_pk`（仅作回归入口，不能单独证明根因）
+
+以下内容未在阅读记录中核验：
+- [R4] django/apps/config.py:64-70
+- [R4] tests/check_framework/test_model_checks.py:389-412
+- [R1] django/apps/config.py:AppConfig._is_default_auto_field_overridden

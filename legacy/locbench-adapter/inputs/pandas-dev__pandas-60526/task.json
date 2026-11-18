@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-60526",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "8a286fa16f3160e939b192cbe8e218992a84e6fc",
+  "problem_statement": "DOC: Update variables a and b to names consistent with comment documentation\n### Pandas version checks\n\n- [X] I have checked that the issue still exists on the latest versions of the docs on `main` [here](https://pandas.pydata.org/docs/dev/)\n\n\n### Location of the documentation\n\nhttps://github.com/pandas-dev/pandas/blob/main/pandas/core/computation/expressions.py\n\n### Documentation problem\n\nLines 234 and 235 explain what a and b are in detail (left and right operands), but there are many of those same variables earlier in the file, making it harder to understand what they represent.\n\n### Suggested fix for documentation\n\nAssuming a and b represent right and left operands throughout each function, change these variable names to right_op and left_op instead throughout all functions to have more descriptive variable names\n"
+}

@@ -1,0 +1,50 @@
+{
+  "instance_id": "tobymao__sqlglot-3417",
+  "base_commit": "e1b6483d5e26d556f6a3dd82c6d35f475c189c2b",
+  "gold_entities": [
+    "sqlglot/parser.py:Parser._parse_set_item_assignment"
+  ],
+  "gold_files": [
+    "sqlglot/parser.py"
+  ],
+  "official_normalized_gold": [
+    "sqlglot/parser.py:Parser._parse_set_item_assignment"
+  ],
+  "mapping": {
+    "instance_id": "tobymao__sqlglot-3417",
+    "status": "ready",
+    "source_id": "prepared-291657fda2e7367ef2bda54c1af83abdd6417c7985dd6f895d69475539e876b7",
+    "scorer_sha256": "7f3ff294cd3ad142978e468fe81a2643d0bf9d23635bc25afef1aa40e8c7c559",
+    "gold_mappings": [
+      {
+        "label": "sqlglot/parser.py:Parser._parse_set_item_assignment",
+        "strict_ast": {
+          "kind": "function",
+          "start_line": 5969,
+          "end_line": 5987,
+          "ancestor_functions": []
+        },
+        "bm25_overlap_chunks": 1,
+        "test_or_hidden_policy_excluded": false
+      }
+    ],
+    "patch_checks": [
+      {
+        "path": "sqlglot/parser.py",
+        "patch_old_blob": "b0a25167ba",
+        "verified_blob": "b0a25167ba022d1d9dfc9f083c6ba24bd2e66964"
+      }
+    ],
+    "oracle_contract": true,
+    "empty_contract": true,
+    "class_slot_contract": true,
+    "added_functions_excluded": [],
+    "changed_function_labels_not_unique_root_cause": true,
+    "semantic_review": "pending",
+    "model_calls": 0,
+    "quality_evaluated": false,
+    "persisted_bm25_query_passed": true
+  },
+  "labels_sha256": "77a8da5074f7fb59df759cab285aafd53b3ec679e3b9d1cab5aae72144a7b472",
+  "semantics": "Changed functions in reference patch; not a unique root-cause oracle."
+}

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "item-d462b788",
+    "question": "A task starts with default settings, a project mapping, and a request mapping. Explain which values win, whether false and zero are treated as missing, what happens to unknown keys, and whether invalid overridden values reach the worker. Trace the relevant functions across files, cite source evidence, and state uncertainty. Do not modify or execute source.",
+    "source_root": "sources/d02_config",
+    "answer": {
+      "answer": "Precedence: request > project > defaults. resolve_settings (runner/settings.py:4-11) copies DEFAULTS (runner/defaults.py:1: attempts=3, timeout=10, enabled=True), then iterates layers in order (project, request), so the request layer is applied last and wins over the project layer, which wins over defaults.\n\nFalse and zero are NOT treated as missing. The guard is `if key in layer and layer[key] is not None` (settings.py:8), so only an absent key or an explicit None falls through to the lower layer. A project value of enabled=False or attempts=0 is accepted and overrides the default; only None is skipped. Note this means a request value of None silently inherits the project value rather than clearing it.\n\nUnknown keys are dropped. The inner loop iterates `for key in DEFAULTS` (settings.py:7), so any key not in DEFAULTS is never copied into `merged` and never reaches validation or the worker. There is no error or warning for unknown keys.\n\nInvalid overridden values do not reach the worker. validate_settings(merged) is called on the fully merged dict before return (settings.py:10), and it raises ValueError for non-int or negative attempts, non-int or non-positive timeout, and non-bool enabled (runner/validation.py:2-7). Because validation runs after merging, a bad project value can be masked by a valid request value, and vice versa a bad request value fails the whole launch. launch (runner/api.py:5-6) calls resolve_settings then start_worker, so an exception propagates and start_worker is never invoked; start_worker (runner/worker.py:1-4) only reads enabled/attempts/timeout and returns started=False when disabled.\n\nUncertainty: validation uses `type(x) is not int`, so bools are rejected for attempts/timeout but subclasses of int are also rejected; I did not see any caller that catches ValueError, so whether the error surfaces as an exception to the API caller is unconfirmed. runner/reports.py only contains a docstring-like string and appears unrelated.",
+      "entities": [
+        "runner/settings.py:resolve_settings",
+        "runner/validation.py:validate_settings",
+        "runner/api.py:launch",
+        "runner/worker.py:start_worker",
+        "runner/defaults.py:DEFAULTS"
+      ],
+      "files": [
+        "runner/settings.py",
+        "runner/defaults.py",
+        "runner/validation.py",
+        "runner/api.py",
+        "runner/worker.py"
+      ]
+    },
+    "criteria": [
+      "Priority defaults < project < request, only known default keys, None does not override.",
+      "False and zero are not missing: false enabled is retained; zero attempts allowed, zero timeout invalid.",
+      "Exact types enforced: bool cannot stand in for integer; invalid final value raises before worker call; an invalid lower value may be replaced by a valid higher value.",
+      "Enabled false returns started false; valid enabled true uses resolved attempts/timeout; no environment layer or arbitrary unknown setting propagation."
+    ],
+    "score_only_criterion_indices": [
+      4
+    ]
+  }
+]

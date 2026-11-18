@@ -1,0 +1,6 @@
+{
+  "instance_id": "wandb__wandb-8931",
+  "repo": "wandb/wandb",
+  "base_commit": "70058a9e7bf09249d546226192ad3f8b0de04cb7",
+  "problem_statement": "[Bug]: \"wandb.Video requires moviepy when passing raw data\" Error due to new moviepy version\n### Describe the bug\n\nThe moviepy package was updated to 2.x and removed the `moviepy.editor` namespace (see [here](https://zulko.github.io/moviepy/getting_started/updating_to_v2.html)), breaking the `Video.encode` method. \nFixing by either migrating to moviepy 2.x or pinning the earlier version.\n\nVersion info:\nNixOS 24.05\nPython 3.11.10\nwandb 0.18.7\nmoviepy 2.1.1\n"
+}

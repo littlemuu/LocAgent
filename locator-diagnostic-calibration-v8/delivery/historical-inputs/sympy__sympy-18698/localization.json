@@ -1,0 +1,22 @@
+{
+  "base_commit": "3dff1b98a78f28c953ae2140b69356b8391e399c",
+  "instance_id": "sympy__sympy-18698",
+  "result": {
+    "answer": "The user's report is a misunderstanding of the output, not a bug in the algorithm. In sqf_list, the second element of each (factor, multiplicity) pair is the multiplicity, and the factors are grouped by multiplicity. For (x**2+1)*(x-1)**2*(x-2)**3*(x-3)**3 the correct square-free decomposition is indeed (1, [(x**2+1, 1), (x-1, 2), (x-2, 3), (x-3, 3)]): the two distinct cubic-multiplicity factors (x-2) and (x-3) each have multiplicity 3, so they appear as two separate entries both with exponent 3. They are NOT combined into (x**2-5x+6, 3) because square-free factorization returns irreducible-ish square-free factors, not products of distinct factors sharing a multiplicity. The second example, x**5-2x**4-2x**3+4x**2+x-2 = (x-2)(x**2-1)**2, correctly yields (1, [(x-2, 1), (x**2-1, 2)]) because x**2-1 is itself square-free (it factors as (x-1)(x+1), both multiplicity 2, but sqf_list over ZZ does not split it further since x**2-1 is square-free). So both outputs are consistent with the documented semantics.\n\nEvidence: dup_sqf_list (sympy/polys/sqfreetools.py:281-335) builds result by appending (g, i) for each multiplicity i, so distinct factors with the same multiplicity i are appended as separate tuples with the same exponent. Poly.sqf_list (sympy/polys/polytools.py:3210-3237) simply wraps this. The docstring examples (lines 3222-3229) confirm the (factor, multiplicity) format. Uncertainty: I did not inspect dup_gf_sqf_list or the exact ordering logic, but the reported behavior matches the documented contract, so no code change is warranted; the user's expectation of merging same-multiplicity factors is the inconsistency.",
+    "entities": [
+      "sympy/polys/sqfreetools.py:dup_sqf_list",
+      "sympy/polys/polytools.py:Poly.sqf_list",
+      "sympy/polys/polytools.py:sqf_list",
+      "sympy/polys/polyclasses.py:DMP.sqf_list",
+      "sympy/polys/rings.py:PolyElement.sqf_list"
+    ],
+    "files": [
+      "sympy/polys/sqfreetools.py",
+      "sympy/polys/polytools.py",
+      "sympy/polys/polyclasses.py",
+      "sympy/polys/rings.py",
+      "sympy/polys/compatibility.py"
+    ]
+  },
+  "version": 1
+}

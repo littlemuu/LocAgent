@@ -1,0 +1,53 @@
+test_bad_vectors_fail (test_rag_offline.RagTests.test_bad_vectors_fail) ... ok
+test_binary_skipped (test_rag_offline.RagTests.test_binary_skipped) ... ok
+test_chunk_size_is_versioned (test_rag_offline.RagTests.test_chunk_size_is_versioned) ... ok
+test_config_and_version_reject_invalid (test_rag_offline.RagTests.test_config_and_version_reject_invalid) ... ok
+test_default_is_identity_no_provider (test_rag_offline.RagTests.test_default_is_identity_no_provider) ... ok
+test_entity_lines_decorators_and_nested (test_rag_offline.RagTests.test_entity_lines_decorators_and_nested) ... ok
+test_exact_order_and_empty_query (test_rag_offline.RagTests.test_exact_order_and_empty_query) ... ok
+test_failed_build_does_not_publish_cache (test_rag_offline.RagTests.test_failed_build_does_not_publish_cache) ... ok
+test_filter_paths (test_rag_offline.RagTests.test_filter_paths) ... ok
+test_foreign_index_never_silent_fallback (test_rag_offline.RagTests.test_foreign_index_never_silent_fallback) ... ok
+test_hybrid_combines_and_dense_skips_lexical (test_rag_offline.RagTests.test_hybrid_combines_and_dense_skips_lexical) ... ok
+test_hybrid_lexical_failure_visible (test_rag_offline.RagTests.test_hybrid_lexical_failure_visible) ... ok
+test_invalid_python_fails (test_rag_offline.RagTests.test_invalid_python_fails) ... ok
+test_line_shift_reuses_vector_not_membership (test_rag_offline.RagTests.test_line_shift_reuses_vector_not_membership) ... ok
+test_long_function_bounded_and_lossless (test_rag_offline.RagTests.test_long_function_bounded_and_lossless) ... ok
+test_not_ready_fallback_explicit (test_rag_offline.RagTests.test_not_ready_fallback_explicit) ... ok
+test_provider_error_fallback (test_rag_offline.RagTests.test_provider_error_fallback) ... ok
+test_repo_commit_model_chunker_isolation (test_rag_offline.RagTests.test_repo_commit_model_chunker_isolation) ... ok
+test_rrf_duplicates_and_tie (test_rag_offline.RagTests.test_rrf_duplicates_and_tie) ... ok
+test_rrf_rejects_mixed_versions (test_rag_offline.RagTests.test_rrf_rejects_mixed_versions) ... ok
+test_snapshot_and_chunk_limits (test_rag_offline.RagTests.test_snapshot_and_chunk_limits) ... ok
+test_bm25_identity (test_rag_graph_adapter.GraphAdapterTests.test_bm25_identity) ... ok
+test_fake_agent_tool_loop_uses_adapter (test_rag_graph_adapter.GraphAdapterTests.test_fake_agent_tool_loop_uses_adapter) ... Matplotlib created a temporary cache directory at /var/folders/m9/cv7f_25x7k31d58gds1pkyj00000gn/T/matplotlib-p44g0lmh because the default path (/Users/xiaomu/.matplotlib) is not a writable directory; it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+Matplotlib is building the font cache; this may take a moment.
+ok
+test_fallback_preserves_missing_index_results (test_rag_graph_adapter.GraphAdapterTests.test_fallback_preserves_missing_index_results) ... ok
+test_fallback_preserves_provider_error_results (test_rag_graph_adapter.GraphAdapterTests.test_fallback_preserves_provider_error_results) ... ok
+test_hybrid_maps_to_existing_graph_entities (test_rag_graph_adapter.GraphAdapterTests.test_hybrid_maps_to_existing_graph_entities) ... ok
+test_reject_cross_task (test_rag_graph_adapter.GraphAdapterTests.test_reject_cross_task) ... ok
+test_explicit_nonthinking_and_model_override_are_bound (test_rag_graph_adapter.PayloadModeTests.test_explicit_nonthinking_and_model_override_are_bound) ... ok
+test_generic_default_omits_provider_specific_parameter (test_rag_graph_adapter.PayloadModeTests.test_generic_default_omits_provider_specific_parameter) ... ok
+test_dense_and_hybrid_top_k_after_entity_dedup (test_rag_review_regressions.ReviewRegressionTests.test_dense_and_hybrid_top_k_after_entity_dedup) ... ok
+test_duplicate_lexical_nodes_do_not_change_fusion (test_rag_review_regressions.ReviewRegressionTests.test_duplicate_lexical_nodes_do_not_change_fusion) ... ok
+test_expression_depth_does_not_add_recursive_scope_walk (test_rag_review_regressions.ReviewRegressionTests.test_expression_depth_does_not_add_recursive_scope_walk) ... ok
+test_formfeed_function_text (test_rag_review_regressions.ReviewRegressionTests.test_formfeed_function_text) ... ok
+test_handler_and_match_entities (test_rag_review_regressions.ReviewRegressionTests.test_handler_and_match_entities) ... ok
+test_module_rrf_agreement_across_chunk_parts (test_rag_review_regressions.ReviewRegressionTests.test_module_rrf_agreement_across_chunk_parts) ... ok
+test_nested_scopes_handler_star_and_match_no_duplicates (test_rag_review_regressions.ReviewRegressionTests.test_nested_scopes_handler_star_and_match_no_duplicates) ... ok
+test_physical_newlines_controls_and_following_function (test_rag_review_regressions.ReviewRegressionTests.test_physical_newlines_controls_and_following_function) ... ok
+test_ties_deterministic_and_outside_membership_rejected (test_rag_review_regressions.ReviewRegressionTests.test_ties_deterministic_and_outside_membership_rejected) ... ok
+test_dense_weight_two (test_offline_bailian_rrf.OfflineRrfTests.test_dense_weight_two) ... ok
+test_duplicate_entity_rejected (test_offline_bailian_rrf.OfflineRrfTests.test_duplicate_entity_rejected) ... ok
+test_each_arm_truncates_before_union (test_offline_bailian_rrf.OfflineRrfTests.test_each_arm_truncates_before_union) ... ok
+test_equal_rrf_formula_and_tie (test_offline_bailian_rrf.OfflineRrfTests.test_equal_rrf_formula_and_tie) ... ok
+test_k_ten (test_offline_bailian_rrf.OfflineRrfTests.test_k_ten) ... ok
+test_max_entity_then_positive_filter_and_lexical_ties (test_offline_bailian_rrf.OfflineRrfTests.test_max_entity_then_positive_filter_and_lexical_ties) ... ok
+test_missing_gold_scores_zero_same_denominator (test_offline_bailian_rrf.OfflineRrfTests.test_missing_gold_scores_zero_same_denominator) ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 11.665s
+
+OK
+{"tests": 45, "failures": 0, "errors": 0, "skips": 0, "network_attempts": 0, "synthetic_embeddings_only": true}

@@ -1,0 +1,14 @@
+{
+  "dataset": "czlll/Loc-Bench_V1",
+  "dataset_revision": "c44cf3b74e07ca642cec841b471a9939907c12a7",
+  "upstream_repo": "gersteinlab/LocAgent",
+  "upstream_commit": "4935b557326c154bad8e8dcf3747cc8d32d1f387",
+  "sha256": {
+    "scoring-only/README.md": "c60373e9532cfe6ddf663d3b8a1e465a80648ff0622f562e2e5c0518eea50951",
+    "scoring-only/test-00000-of-00001.parquet": "8df0833c2c1276c5837aab923d489ab97d7654529abe759d0f59242c4978a662",
+    "upstream/eval_metric.py": "efbdd208f438f450cc7798fb09e88a8d1e6a1b092f295e19e38b67967f352187",
+    "upstream/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "upstream/dataset-api.json": "d787f52c50658a89eae85389dc745d6f596f34585870200a7e31ff5d3b85f38c",
+    "upstream/README.md": "2f85a7222c51c7d52873e6acfaf94c9333b4b1f0016f1bf5c6352effa7d19454"
+  }
+}

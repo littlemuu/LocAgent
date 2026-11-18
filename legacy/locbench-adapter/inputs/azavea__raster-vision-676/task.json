@@ -1,0 +1,6 @@
+{
+  "instance_id": "azavea__raster-vision-676",
+  "repo": "azavea/raster-vision",
+  "base_commit": "b5321235b9ebde6c9f8cc1afb84555c56209b2ec",
+  "problem_statement": "Improve vector tile performance\nThere are a few ways to improve vector tile performance if needed:\r\n- [x] Download vector tile files to cache\r\n- [x]  Filter features before doing merge and  crop step\r\n- [x] In-memory cache (ideally LRU)\r\n\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "phidatahq__phidata-1589",
+  "repo": "phidatahq/phidata",
+  "base_commit": "2c18b480f349eee62e16a794a250ed8549558cb1",
+  "problem_statement": "Duplicate key value violates unique constraint with recursive chunking\nWhen use `RecursiveChunking` with large files, some errors happen:\r\n\r\n```\r\nERROR    Error with batch starting at index 0: (psycopg.errors.UniqueViolation) duplicate key value violates unique constraint \"recipes_agentic_recursive_chunking_pkey\"\r\n         DETAIL:  Key (id)=(relativity_1) already exists.\r\n```\r\n\n"
+}

@@ -1,0 +1,7 @@
+{
+  "v8_binding": "c072f4f8c9764f0311fabb7f52dfabbcdc04ba0369473296cba75547d54edf3a",
+  "evaluator_source": "v5 unchanged-core-runtime-v4.zip exact dev24 evaluator member",
+  "evaluator_sha256": "65942c4c5eb8657866e0300dfbb7a4a77eadde269dabea374b1f3c2ec53b9f23",
+  "reference_patch_read_by_agent": false,
+  "trial_order_matches_v5": true
+}

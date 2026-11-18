@@ -1,0 +1,6 @@
+{
+  "instance_id": "albumentations-team__albumentations-2183",
+  "repo": "albumentations-team/albumentations",
+  "base_commit": "47c24503e0636f258e2af2b18e552d52271308bf",
+  "problem_statement": "[RandomSunFlare] Add transparency to RandomSunFlare\n![image](https://github.com/user-attachments/assets/2c1a7dec-77db-4150-86df-d484da5e2e31)\r\n\r\nSunflare obscures the object\n"
+}

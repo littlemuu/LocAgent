@@ -1,0 +1,6 @@
+{
+  "instance_id": "kiasambrook__tfl-live-tracker-7",
+  "repo": "kiasambrook/tfl-live-tracker",
+  "base_commit": "b38f2a397075ec42d8f2f14eaffcdc5661a6a20b",
+  "problem_statement": "Cache Station List\n### Summary\r\nCurrently the station list is refreshed everytime the program is launched, it would probably be best to cache this to improve performance of app and prevent being rate limited by API.\r\n\r\n### Tasks\r\n- Cache the list of stations\r\n- Data stored should include ID, name, and location\r\n\r\n\n"
+}

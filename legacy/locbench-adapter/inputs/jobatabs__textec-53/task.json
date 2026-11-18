@@ -1,0 +1,6 @@
+{
+  "instance_id": "jobatabs__textec-53",
+  "repo": "jobatabs/textec",
+  "base_commit": "951409c20a2cf9243690b9bda7f7a22bb7c999a7",
+  "problem_statement": "Fix code scanning alert - SQL doesn't use :symbols\nTracking issue for:\r\n- [x] https://github.com/jobatabs/textec/security/code-scanning/3\r\n\n"
+}

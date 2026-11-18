@@ -1,0 +1,6 @@
+{
+  "instance_id": "DS4SD__docling-330",
+  "repo": "DS4SD/docling",
+  "base_commit": "bf2a85f1d45bcff38ff5f9b6269dd1edf7cff0ae",
+  "problem_statement": "Identification of images in docx\nHello everyone,\r\nim working on docx document type with docling.\r\nMy first test was very poor.\r\nI have a docx file which is only a testfile and this contains one image.\r\nThe standard procedure doesnt even recognise the image in the file...\r\nStandard is this:\r\n\r\nfrom docling.document_converter import DocumentConverter\r\n\r\nsource = \"data/example_small.docx\"\r\nconverter = DocumentConverter()\r\nresult = converter.convert(source)\r\nfor item in result.document:\r\nprint(item)\r\n\r\nThe example file is contained here!\r\nAm im wrong with the code or is this a bug?\r\n\r\nGreetings\r\n[example_small.docx](https://github.com/user-attachments/files/17662530/example_small.docx)\r\n[word_sample.docx](https://github.com/user-attachments/files/17662531/word_sample.docx)\r\n\n"
+}

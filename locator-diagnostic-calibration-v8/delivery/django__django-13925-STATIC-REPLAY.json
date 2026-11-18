@@ -1,0 +1,64 @@
+{
+  "execution_mode": "static-old-answer-calibration-NOT-live-v8",
+  "quality_measured": false,
+  "packet": {
+    "answer": "已读到的事实（附文件:行号）\ndjango/db/models/base.py:1280-1330 已收到这些完整源码行；仅表示阅读覆盖。\ndjango/db/models/options.py:200-300 已收到这些完整源码行；仅表示阅读覆盖。\n推断\n待验证假设：候选位置可能与问题有关；当前证据不足以提出可靠的具体根因判断。\n未核验点\n原诊断未通过证据校验；关键调用链未核验。\ndjango/db/models/base.py:Model._check_default_pk：函数/实体源码已读完，行为未验证。\ndjango/db/models/options.py:Options._prepare：函数/实体源码已读完，行为未验证。\ndjango/db/models/options.py:Options._get_default_pk_class：函数/实体源码已读完，行为未验证。\ndjango/apps/config.py:AppConfig._is_default_auto_field_overridden：未读完，不能作为确定根因依据。\n最小验证：`python -m pytest -q`（未运行；一般回归入口，不能单独验证具体根因）。",
+    "entities": [
+      "django/db/models/base.py:Model._check_default_pk",
+      "django/db/models/options.py:Options._prepare",
+      "django/db/models/options.py:Options._get_default_pk_class",
+      "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+    ],
+    "files": [
+      "django/db/models/base.py",
+      "django/db/models/options.py",
+      "django/apps/config.py"
+    ]
+  },
+  "audit": {
+    "policy": "locator-diagnostic-calibration-v8",
+    "raw_packet": {
+      "answer": "The W042 warning is emitted by Model._check_default_pk (django/db/models/base.py:1298-1320). Its condition is simply `cls._meta.pk.auto_created and not settings.is_overridden('DEFAULT_AUTO_FIELD') and not cls._meta.app_config._is_default_auto_field_overridden`. It does not distinguish a PK that was auto-created on the model itself from one inherited/promoted from a parent, so any model whose `_meta.pk.auto_created` is True triggers the warning.\n\nWhere auto_created comes from: Options._prepare (django/db/models/options.py:271-287). For a model with no explicit pk and no parents, it creates `pk_class(verbose_name='ID', primary_key=True, auto_created=True)` (line 286). For a child model with parents, it promotes the first parent link and sets `field.primary_key = True` (lines 272-283) without clearing auto_created, so the inherited PK keeps auto_created=True from the ancestor's auto field. That is why models inheriting from a base like `Entity` (whose PK is an auto-created AutoField) still report W042 even though the user never asked for a new auto PK on the child.\n\nSo the report is consistent with a real bug/limitation in the 3.2 check: the check keys off `pk.auto_created` rather than whether the model itself defined the PK. The fix would be in _check_default_pk (e.g. also require the PK to be a local field / not inherited), not in _prepare. I could not read the W042 tests (tests/check_framework/test_model_checks.py read failed), so I cannot confirm whether a test already covers inherited PKs; that is the main uncertainty. The hint text and app-config override logic (django/apps/config.py:64-70) are unrelated to the false positive.",
+      "entities": [
+        "django/db/models/base.py:Model._check_default_pk",
+        "django/db/models/options.py:Options._prepare",
+        "django/db/models/options.py:Options._get_default_pk_class",
+        "django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+      ],
+      "files": [
+        "django/db/models/base.py",
+        "django/db/models/options.py",
+        "django/apps/config.py"
+      ]
+    },
+    "violations": [
+      "R2_three_sections",
+      "R3_unverified_strong_claim",
+      "R4_citation_not_delivered:django/apps/config.py:64-70",
+      "R1_body_incomplete_unmarked:django/apps/config.py:AppConfig._is_default_auto_field_overridden"
+    ],
+    "fallback": true,
+    "delivered_full_line_ranges": [
+      [
+        "django/db/models/base.py",
+        1280,
+        1330
+      ],
+      [
+        "django/db/models/options.py",
+        200,
+        300
+      ]
+    ],
+    "pending_read_pages": {},
+    "entity_body_complete": {
+      "django/db/models/base.py:Model._check_default_pk": true,
+      "django/db/models/options.py:Options._prepare": true,
+      "django/db/models/options.py:Options._get_default_pk_class": true,
+      "django/apps/config.py:AppConfig._is_default_auto_field_overridden": false
+    },
+    "call_chain_complete": false,
+    "behavior_verified": false,
+    "quality_measured": false
+  }
+}

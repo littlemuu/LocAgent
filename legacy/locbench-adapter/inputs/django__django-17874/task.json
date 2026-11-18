@@ -1,0 +1,6 @@
+{
+  "instance_id": "django__django-17874",
+  "repo": "django/django",
+  "base_commit": "28a3fbe0048883fdd5cefd6ffecb88e351121891",
+  "problem_statement": "Cache Options.verbose_name_raw\nDescription\n\t\t\n(last modified by Adam Johnson)\t\t\nAnother candidate for caching, like #35230, following the same system check profiling.\nThe Model._meta.verbose_name_raw property returns the stringified version of the verbose_name attribute whilst temporarily disabling translations. It is only used in django.contrib.auth for creating permission names.\nI found this property was taking ~15% of the total runtime for system checks on a project with 118 models. calls. Turning it into a cached_property and adding a no-translation fast path saves nearly all this cost, with the below results.\nBefore: 520 calls taking 10ms\nAfter: 105 calls taking ~0ms\n"
+}

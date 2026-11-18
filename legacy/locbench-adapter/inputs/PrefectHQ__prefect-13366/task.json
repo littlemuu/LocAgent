@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-13366",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "77d752294bd90a3b8d1be1600d16b9a2509eebe2",
+  "problem_statement": "Remove `prefect deployment build` CLI from the `main` branch\nRemove the `prefect.cli.deployment.build` function and any references to it. Any private code that was used solely for that function should also be deleted. This CLI command will be included in 2.x releases, but will not be included in the 3.0 release.\n"
+}

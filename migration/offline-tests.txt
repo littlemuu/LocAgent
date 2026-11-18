@@ -1,0 +1,47 @@
+test_cumulative_accounting_and_boundaries (test_sdk_selfcheck_v7_admission.Tests.test_cumulative_accounting_and_boundaries) ... ok
+test_old_authorization_is_not_new_scope (test_sdk_selfcheck_v7_admission.Tests.test_old_authorization_is_not_new_scope) ... ok
+test_parent_validates_all_then_active_child_rechecks_material (test_sdk_selfcheck_v7_admission.Tests.test_parent_validates_all_then_active_child_rechecks_material) ... ok
+test_case_timeout_kills_process_group_without_retry (test_sdk_selfcheck_v7_batch.FiveTests.test_case_timeout_kills_process_group_without_retry) ... ok
+test_changed_case_order_hash_and_budget (test_sdk_selfcheck_v7_batch.FiveTests.test_changed_case_order_hash_and_budget) ... ok
+test_coordinator_launch_failure_stops_all (test_sdk_selfcheck_v7_batch.FiveTests.test_coordinator_launch_failure_stops_all) ... ok
+test_duplicate_parent_and_case_and_wrong_order (test_sdk_selfcheck_v7_batch.FiveTests.test_duplicate_parent_and_case_and_wrong_order) ... ok
+test_expired_batch_remains_auditable_but_cannot_execute (test_sdk_selfcheck_v7_batch.FiveTests.test_expired_batch_remains_auditable_but_cannot_execute) ... ok
+test_extra_answer_material_rejected (test_sdk_selfcheck_v7_batch.FiveTests.test_extra_answer_material_rejected) ... ok
+test_missing_explicit_live_consent (test_sdk_selfcheck_v7_batch.FiveTests.test_missing_explicit_live_consent) ... ok
+test_parent_halt_and_expiry_block_child (test_sdk_selfcheck_v7_batch.FiveTests.test_parent_halt_and_expiry_block_child) ... ok
+test_partial_completion_preserved (test_sdk_selfcheck_v7_batch.FiveTests.test_partial_completion_preserved) ... ok
+test_pending_reservation_preserved_no_next_case (test_sdk_selfcheck_v7_batch.FiveTests.test_pending_reservation_preserved_no_next_case) ... ok
+test_rehearsal_ticket_never_enters_live_transport (test_sdk_selfcheck_v7_batch.FiveTests.test_rehearsal_ticket_never_enters_live_transport) ... ok
+test_six_case_48_requests_and_102_cap (test_sdk_selfcheck_v7_batch.FiveTests.test_six_case_48_requests_and_102_cap) ... ok
+test_wire_truncation_timeout_and_size_stop_before_next (test_sdk_selfcheck_v7_batch.FiveTests.test_wire_truncation_timeout_and_size_stop_before_next) ... ok
+test_backend_arm_maps_to_actual_immutable_implementations (test_sdk_selfcheck_v7_fairness.FairnessTests.test_backend_arm_maps_to_actual_immutable_implementations) ... ok
+test_both_arms_require_same_retrieval_tool_surface (test_sdk_selfcheck_v7_fairness.FairnessTests.test_both_arms_require_same_retrieval_tool_surface) ... ok
+test_real_sdk_initial_wire_only_selfcheck_delta (test_sdk_selfcheck_v7_fairness.FairnessTests.test_real_sdk_initial_wire_only_selfcheck_delta) ... +----------------------------------------------------------------------+
+|  OpenHands SDK v1.62.0                                               |
+|                                                                      |
+|  Report a bug: github.com/OpenHands/software-agent-sdk/issues        |
+|  Get help: openhands.dev/joinslack                                   |
+|  Scale up: openhands.dev/product/sdk                                 |
+|                                                                      |
+|  Set OPENHANDS_SUPPRESS_BANNER=1 to hide this message                |
++----------------------------------------------------------------------+
+
+[11/16/26 20:55:32] INFO     Created new conversation               state.py:645
+                             19c0cc9f-c41a-4929-932c-bb79bb6d1d1a               
+[11/16/26 20:55:32] INFO     Loaded 4 tools from spec                base.py:585
+[11/16/26 20:55:32] INFO     Created new conversation               state.py:645
+                             dbb5a213-6ad9-4541-ac8e-65f3dcd8329d               
+[11/16/26 20:55:32] INFO     Loaded 4 tools from spec                base.py:585
+ok
+test_selfcheck_never_rewrites_predictions (test_sdk_selfcheck_v7_fairness.PromptBoundaryTests.test_selfcheck_never_rewrites_predictions) ... ok
+test_wrong_prompt_cannot_reserve_or_send (test_sdk_selfcheck_v7_fairness.PromptBoundaryTests.test_wrong_prompt_cannot_reserve_or_send) ... ok
+test_exact_scope_and_freshness (test_sdk_selfcheck_v7_launch.LaunchTests.test_exact_scope_and_freshness) ... ok
+test_invalid_confirmation_fails_before_key_or_process (test_sdk_selfcheck_v7_launch.LaunchTests.test_invalid_confirmation_fails_before_key_or_process) ... ok
+test_missing_confirmation_fails_before_key_or_process (test_sdk_selfcheck_v7_launch.LaunchTests.test_missing_confirmation_fails_before_key_or_process) ... ok
+test_process_filter (test_sdk_selfcheck_v7_launch.LaunchTests.test_process_filter) ... ok
+test_existing_launch_or_grant_prevents_key_read (test_sdk_selfcheck_v7_launch.OneUseLaunchTests.test_existing_launch_or_grant_prevents_key_read) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 23.217s
+
+OK

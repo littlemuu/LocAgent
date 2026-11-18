@@ -1,0 +1,6 @@
+{
+  "instance_id": "prowler-cloud__prowler-6119",
+  "repo": "prowler-cloud/prowler",
+  "base_commit": "b984f0423a8ad80fffd5b9dc4853b034f4d5211e",
+  "problem_statement": "False positive on `wafv2_webacl_with_rules` when when ACL provisioned with AWS Firewall Manager\n### Steps to Reproduce\r\n\r\n1. Depoloy ACL with AWS Firewall Manager including any rule group\r\n2. Run prowler against AWS account where ACL is provisioned with Firewall Manager\r\n3. Prowler will add that ACL as failed because the list of managed rules is empty, but it has AWS Firewall Manager provisioned rules\r\n\r\n\r\n### Expected behavior\r\n\r\nit's expected that ACL is managed centrally and may not have rules added directly\r\n\r\n### Actual Result with Screenshots or Logs\r\n\r\n![image](https://github.com/user-attachments/assets/bc4da90e-caf6-4748-9fd1-1cef8e4e41f4)\r\n\r\n![image](https://github.com/user-attachments/assets/54640d49-5e58-44c6-9801-3c1bd1fe9343)\r\n\r\n\r\n\r\n### How did you install Prowler?\r\n\r\nFrom pip package (pip install prowler)\r\n\r\n### Environment Resource\r\n\r\n4. EKS\r\n\r\n### OS used\r\n\r\n1. Amazon Linux 2023\r\n\r\n### Prowler version\r\n\r\n5.0.0\r\n\r\n### Pip version\r\n\r\n24.0\r\n\r\n### Context\r\n\r\n_No response_\n"
+}

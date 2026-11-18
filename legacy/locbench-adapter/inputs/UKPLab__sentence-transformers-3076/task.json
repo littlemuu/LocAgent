@@ -1,0 +1,6 @@
+{
+  "instance_id": "UKPLab__sentence-transformers-3076",
+  "repo": "UKPLab/sentence-transformers",
+  "base_commit": "348190d46b0c010c7a4693f198f0ddf70c6ceb35",
+  "problem_statement": "BinaryClassificationEvaluator returns np.float32() and np.float64()\nI came across the problem where\r\n\r\n```python\r\noutput_scores[similarity_fn_name] = {\r\n  \"accuracy\": acc,\r\n  \"accuracy_threshold\": acc_threshold,\r\n  \"f1\": f1,\r\n  \"f1_threshold\": f1_threshold,\r\n  \"precision\": precision,\r\n  \"recall\": recall,\r\n  \"ap\": ap,\r\n}\r\n```\r\n\r\nis returning outputs in `np.float32()` and `np.float64()` which cause problems during model saving, as the `json/encoder.py` sees those types as `not JSON serializable`.\r\n\r\nBy changing the code snippet to\r\n\r\n```python\r\noutput_scores[similarity_fn_name] = {\r\n  \"accuracy\": acc.item(),\r\n  \"accuracy_threshold\": acc_threshold.item(),\r\n  \"f1\": f1.item(),\r\n  \"f1_threshold\": f1_threshold.item(),\r\n  \"precision\": precision,\r\n  \"recall\": recall.item(),\r\n  \"ap\": ap.item(),\r\n}\r\n```\r\n\r\nthe elements get copied to a standard Python scalar each (note: `precision` already is) and then behave like expected during saving.\n"
+}

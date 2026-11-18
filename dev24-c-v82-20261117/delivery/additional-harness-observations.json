@@ -1,0 +1,13 @@
+{
+  "sphinx-doc__sphinx-8595": {
+    "resolved_original": false,
+    "observation": "评测测试补丁新增 empty_all.py 与 C 已新建文件同名，git apply 报 already exists；随后 tests/test_ext_autodoc_automodule.py 不存在，pytest exit 4。",
+    "test_output": "completed-snapshot/sphinx-doc__sphinx-8595/C/harness/logs/run_evaluation/smoke/locagent-deepseek-flash-C/sphinx-doc__sphinx-8595/test_output.txt"
+  },
+  "sphinx-doc__sphinx-8721": {
+    "resolved_original": false,
+    "observation": "原测试总览为4 passed/1 failed，唯一列出的失败为 test_viewcode；harness report 将目标及其他三项列为 failure。仅标注输出/评分口径差异，未重新运行来隔离原因，也不重新评分。",
+    "test_output": "completed-snapshot/sphinx-doc__sphinx-8721/C/harness/logs/run_evaluation/smoke/locagent-deepseek-flash-C/sphinx-doc__sphinx-8721/test_output.txt"
+  },
+  "policy": "No rerun, harness modification, or rescoring."
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "PrefectHQ__prefect-14608",
+  "repo": "PrefectHQ/prefect",
+  "base_commit": "ad8e126b6a07fd6f8e08c9d50c22dabc247f765b",
+  "problem_statement": "Add `wait` utility for `PrefectFuture`s\nAdd a `wait` utility that mirrors `concurrent.futures.wait`. Should accept an iterable of futures to wait for completion and a timeout. It should return a tuple of futures that have completed and those that have not yet completed.\n"
+}

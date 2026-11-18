@@ -1,0 +1,6 @@
+{
+  "instance_id": "pandas-dev__pandas-35029",
+  "repo": "pandas-dev/pandas",
+  "base_commit": "65319af6e563ccbb02fb5152949957b6aef570ef",
+  "problem_statement": "Deprecate using `xlrd` engine in favor of openpyxl\nxlrd is unmaintained and the previous maintainer has asked us to move towards openpyxl. xlrd works now, but *might* have some issues when Python 3.9 or later gets released and changes some elements of the XML parser, as default usage right now throws a `PendingDeprecationWarning`\r\n\r\nConsidering that I think we need to deprecate using `xlrd` in favor of `openpyxl`. We might not necessarily need to remove the former and it does offer some functionality the latter doesn't (namely reading `.xls` files) but should at the very least start moving towards the latter\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "NCSU-High-Powered-Rocketry-Club__AirbrakesV2-151",
+  "repo": "NCSU-High-Powered-Rocketry-Club/AirbrakesV2",
+  "base_commit": "2d85a6c6bf946636c5e6b4aa74388b9d376289f3",
+  "problem_statement": "Refactor logging to be more clear and performant\nAfter the changes in #146 in the logger to get #147 resolved, our logging process has slightly slowed down due to use of `msgpec.structs.asdict()` instead of `msgspec.to_builtins()`. We can still keep up with the IMU process, but the margin has reduced. \n\nI propose the following optimizations:\n\n1. Make `LoggerDataPacket` a msgspec Struct again. Cost of initializing a new Struct is much cheaper than converting existing ones to a dict anyway.\n2. The main process shouldn't be making the LoggerDataPacket into a dict, we can send it to the Logger process as a struct, and take advantage of the de/encoder now.\n\nRejected idea:\n1. We technically don't need to attach `Context` and `Servo` packets to every LoggerDataPacket, as that just increases the amount of bytes we need to transfer to the other process. But separating that from `LoggerDataPacket` is a bit too unclean, confusing, and increases development time.\n"
+}

@@ -1,0 +1,6 @@
+{
+  "instance_id": "numpy__numpy-27595",
+  "repo": "numpy/numpy",
+  "base_commit": "a905925ef40a7551d16d78d81c7e6d08b59559e4",
+  "problem_statement": "DOC: types for numpy.delete's obj argument don't cover all possibilities\n### Issue with current documentation:\n\nThe docstring for `numpy.delete` specifues the type of the `obj` parameter as:\r\n> **obj : _slice, int or array of ints_**\r\n\r\nIt seem it can also be anything that can be cast as an array of ints, including e.g. an iterator like `range(0,4,2)` or list of ints like `[0,2,3]`. I confirmed this by looking in the source and I think this line is where anything that isn't a slice, int or bool is cast as a `numpy.array`:\r\n\r\nhttps://github.com/numpy/numpy/blob/83bf22579b6eaa8113f6cff67b10fd9524965f23/numpy/lib/_function_base_impl.py#L5317\r\n\r\nThis type specification also doesn't mention that `obj` can be an array of booleans.\n\n### Idea or request for content:\n\nI'd open a PR but am not sure the best wording. I'm looking for something like\r\n\r\n> **obj : _slice, int, array of bools or anything that can be cast as an array of ints_**\r\n\r\nbut that seems a bit verbose. Perhaps there's some NumPy jargon that's more succinct?\n"
+}

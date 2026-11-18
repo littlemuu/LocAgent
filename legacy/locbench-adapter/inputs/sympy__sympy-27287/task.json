@@ -1,0 +1,6 @@
+{
+  "instance_id": "sympy__sympy-27287",
+  "repo": "sympy/sympy",
+  "base_commit": "efa1521b638e4f7f2b9a18e0280a0667a4bb16c8",
+  "problem_statement": "Converting from `numpy.float32(float('inf'))` throws\nsympy==1.13.3\nnumpy==2.1.3\npython 3.10.15\n\n```python\nimport numpy\nimport sympy\nsympy.Float(np.float32(float('inf')))\n```\nthows with:\n```\nTraceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \".../lib/python3.10/site-packages/sympy/core/numbers.py\", line 805, in __new__\n    num = _convert_numpy_types(num)\n  File \".../lib/python3.10/site-packages/sympy/core/sympify.py\", line 93, in _convert_numpy_types\n    p, q = a.as_integer_ratio()\nOverflowError: cannot convert Infinity to integer ratio\n```\n"
+}

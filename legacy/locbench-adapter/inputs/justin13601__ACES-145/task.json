@@ -1,0 +1,6 @@
+{
+  "instance_id": "justin13601__ACES-145",
+  "repo": "justin13601/ACES",
+  "base_commit": "89291a01522d2c23e45aa0ee6a09c32645f4d1b4",
+  "problem_statement": "Task definition matters in terms of memory usage\nAs suggested by @Oufattole, this kind of config seems to use excessive amounts of memory (more than 400 GB on MIMIC-IV in my case)\r\n![image](https://github.com/user-attachments/assets/36e87b96-d4b1-491b-b664-f1f39fd1d2ad)\r\nusing regex mitigates this:\r\n![image](https://github.com/user-attachments/assets/827523c3-8a6e-4362-89c1-0177133762ee)\r\n\r\nhttps://github.com/Oufattole/meds-torch/blob/main/MIMICIV_INDUCTIVE_EXPERIMENTS/configs/tasks/mortality/in_icu/first_24h.yaml\r\n\r\nI'm not sure what the reason could be, but perhaps it's something to attend users to. Tested with es-aces 0.5.1 and command: `aces-cli --multirun hydra/launcher=joblib data=sharded data.standard=meds data.root=\"$MIMICIV_MEDS_DIR/data\" \"data.shard=$(expand_shards $MIMICIV_MEDS_DIR/data)\" cohort_dir=\"$cohort_dir\" cohort_name=\"$TASK_NAME\"`\r\n\r\n\n"
+}

@@ -1,0 +1,36 @@
+{
+  "approved": true,
+  "budget_cny": 30,
+  "ids_sha256": "febb6210cee4be652d9b1e6dceb84aec9181bcb3540493e0ff9bd4545209d552",
+  "trial_ids": [
+    "pydata__xarray-4094",
+    "psf__requests-2317",
+    "pytest-dev__pytest-7490",
+    "sympy__sympy-18698",
+    "astropy__astropy-12907",
+    "sphinx-doc__sphinx-8595",
+    "django__django-13158",
+    "matplotlib__matplotlib-24970",
+    "scikit-learn__scikit-learn-14087",
+    "sphinx-doc__sphinx-8721",
+    "matplotlib__matplotlib-25332",
+    "scikit-learn__scikit-learn-10297",
+    "django__django-13964",
+    "astropy__astropy-14365",
+    "sympy__sympy-13480",
+    "django__django-13925"
+  ],
+  "arm_order": [
+    "A",
+    "B"
+  ],
+  "max_trial_episodes": 32,
+  "core_binding": "a02c0341ebddeba3718d9d4a00e8485e35a62944f088cac982f6c817b7160036",
+  "automatic_retries": 0,
+  "holdout_access": false,
+  "improved_retrieval_arm": false,
+  "temporary_cloud_key_approved": true,
+  "shutdown_without_compute_fees_after": true,
+  "extra_repetitions_authorized": false,
+  "basis": "User explicitly authorized remaining dev24 16 tasks A then B once, unchanged model/prompt/retrieval/tool schema/40-request budget and actual evaluator settings. Current-round API cap CNY30. Failure stops without retries. Delete cloud key and shutdown without compute charges."
+}

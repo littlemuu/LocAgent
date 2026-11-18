@@ -1,0 +1,1 @@
+{"id":"eece503b-7363-43d5-b9f8-bc0ea9468679","timestamp":"2026-11-17T00:43:41.364665","source":"environment","parent_id":"133d44e8-3b52-45ea-904c-52aabbb47f65","code":"RuntimeError","detail":"missing_tool_or_truncated_response","classification":{"kind":"unknown","retryable":false,"user_action":"none"},"kind":"ConversationErrorEvent"}

@@ -1,0 +1,53 @@
+{
+  "status": "completed",
+  "binding": "9def7a0000b202dc8f7127ef6424b596c1155015bc7d248e74203512b02f7cee",
+  "planned": 24,
+  "attempted": 24,
+  "unrun": 0,
+  "delivered": 24,
+  "delivery_success_rate": 1.0,
+  "raw_compliant": 4,
+  "fallback": 20,
+  "fallback_denominator": 24,
+  "fallback_rate": 0.8333333333333334,
+  "validator_error_count": 0,
+  "rule_case_counts": {
+    "R1": 17,
+    "R2": 0,
+    "R3": 2,
+    "R4": 15
+  },
+  "rule_detail_counts": {
+    "R1": 25,
+    "R2": 0,
+    "R3": 2,
+    "R4": 28
+  },
+  "delivered_unread_mark_count": 21,
+  "requests": 94,
+  "received_requests": 94,
+  "prompt_tokens": 453703,
+  "completion_tokens": 31306,
+  "metered_cny": 0.70652088,
+  "cost_upper_cny": 1.157854,
+  "wall_seconds": 2258.8062629699707,
+  "locator_seconds": 278.58185645499975,
+  "coding_agent": "未运行",
+  "harness": "未运行",
+  "resolved": "未运行",
+  "holdout": "未运行",
+  "global_stop_reason": null,
+  "further_runs_authorized": false,
+  "pricing_note": "Provider usage with frozen 2026-11-17 cache/peak schedule, not reconciled provider invoice; peak no-cache upper bound enforces 5 CNY cap",
+  "image_pull_seconds": 1545.992844581604,
+  "new_image_count": 22,
+  "cached_for_reuse": 18,
+  "images_removed_before_retention": [
+    "django__django-13033",
+    "matplotlib__matplotlib-23314",
+    "pylint-dev__pylint-7080",
+    "pytest-dev__pytest-7432",
+    "scikit-learn__scikit-learn-13779",
+    "sphinx-doc__sphinx-11445"
+  ]
+}

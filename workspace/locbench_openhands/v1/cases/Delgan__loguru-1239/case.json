@@ -1,0 +1,287 @@
+{
+  "root": "source",
+  "source_files": [
+    "docs/_extensions/autodoc_stub_file.py",
+    "docs/conf.py",
+    "loguru/__init__.py",
+    "loguru/_asyncio_loop.py",
+    "loguru/_better_exceptions.py",
+    "loguru/_colorama.py",
+    "loguru/_colorizer.py",
+    "loguru/_contextvars.py",
+    "loguru/_ctime_functions.py",
+    "loguru/_datetime.py",
+    "loguru/_defaults.py",
+    "loguru/_error_interceptor.py",
+    "loguru/_file_sink.py",
+    "loguru/_filters.py",
+    "loguru/_get_frame.py",
+    "loguru/_handler.py",
+    "loguru/_locks_machinery.py",
+    "loguru/_logger.py",
+    "loguru/_recattrs.py",
+    "loguru/_simple_sinks.py",
+    "loguru/_string_parsers.py",
+    "tests/__init__.py",
+    "tests/conftest.py",
+    "tests/exceptions/source/backtrace/chained_expression_direct.py",
+    "tests/exceptions/source/backtrace/chained_expression_indirect.py",
+    "tests/exceptions/source/backtrace/chaining_first.py",
+    "tests/exceptions/source/backtrace/chaining_second.py",
+    "tests/exceptions/source/backtrace/chaining_third.py",
+    "tests/exceptions/source/backtrace/enqueue.py",
+    "tests/exceptions/source/backtrace/enqueue_with_others_handlers.py",
+    "tests/exceptions/source/backtrace/frame_values_backward.py",
+    "tests/exceptions/source/backtrace/frame_values_forward.py",
+    "tests/exceptions/source/backtrace/function.py",
+    "tests/exceptions/source/backtrace/head_recursion.py",
+    "tests/exceptions/source/backtrace/missing_attributes_traceback_objects.py",
+    "tests/exceptions/source/backtrace/nested.py",
+    "tests/exceptions/source/backtrace/nested_chained_catch_up.py",
+    "tests/exceptions/source/backtrace/nested_decorator_catch_up.py",
+    "tests/exceptions/source/backtrace/nested_explicit_catch_up.py",
+    "tests/exceptions/source/backtrace/nested_wrapping.py",
+    "tests/exceptions/source/backtrace/no_tb.py",
+    "tests/exceptions/source/backtrace/not_enough_arguments.py",
+    "tests/exceptions/source/backtrace/raising_recursion.py",
+    "tests/exceptions/source/backtrace/suppressed_expression_direct.py",
+    "tests/exceptions/source/backtrace/suppressed_expression_indirect.py",
+    "tests/exceptions/source/backtrace/tail_recursion.py",
+    "tests/exceptions/source/backtrace/too_many_arguments.py",
+    "tests/exceptions/source/diagnose/assertion_error.py",
+    "tests/exceptions/source/diagnose/assertion_error_custom.py",
+    "tests/exceptions/source/diagnose/assertion_error_in_string.py",
+    "tests/exceptions/source/diagnose/attributes.py",
+    "tests/exceptions/source/diagnose/chained_both.py",
+    "tests/exceptions/source/diagnose/encoding.py",
+    "tests/exceptions/source/diagnose/global_variable.py",
+    "tests/exceptions/source/diagnose/indentation_error.py",
+    "tests/exceptions/source/diagnose/keyword_argument.py",
+    "tests/exceptions/source/diagnose/multilines_repr.py",
+    "tests/exceptions/source/diagnose/no_error_message.py",
+    "tests/exceptions/source/diagnose/parenthesis.py",
+    "tests/exceptions/source/diagnose/source_multilines.py",
+    "tests/exceptions/source/diagnose/source_strings.py",
+    "tests/exceptions/source/diagnose/syntax_error.py",
+    "tests/exceptions/source/diagnose/syntax_highlighting.py",
+    "tests/exceptions/source/diagnose/truncating.py",
+    "tests/exceptions/source/diagnose/unprintable_object.py",
+    "tests/exceptions/source/modern/exception_group_catch.py",
+    "tests/exceptions/source/modern/f_string.py",
+    "tests/exceptions/source/modern/grouped_as_cause_and_context.py",
+    "tests/exceptions/source/modern/grouped_max_depth.py",
+    "tests/exceptions/source/modern/grouped_max_length.py",
+    "tests/exceptions/source/modern/grouped_nested.py",
+    "tests/exceptions/source/modern/grouped_simple.py",
+    "tests/exceptions/source/modern/grouped_with_cause_and_context.py",
+    "tests/exceptions/source/modern/match_statement.py",
+    "tests/exceptions/source/modern/notes.py",
+    "tests/exceptions/source/modern/positional_only_argument.py",
+    "tests/exceptions/source/modern/type_hints.py",
+    "tests/exceptions/source/modern/walrus_operator.py",
+    "tests/exceptions/source/others/assertionerror_without_traceback.py",
+    "tests/exceptions/source/others/broken_but_decorated_repr.py",
+    "tests/exceptions/source/others/catch_as_context_manager.py",
+    "tests/exceptions/source/others/catch_as_decorator_with_parentheses.py",
+    "tests/exceptions/source/others/catch_as_decorator_without_parentheses.py",
+    "tests/exceptions/source/others/catch_as_function.py",
+    "tests/exceptions/source/others/catch_message.py",
+    "tests/exceptions/source/others/exception_formatting_coroutine.py",
+    "tests/exceptions/source/others/exception_formatting_function.py",
+    "tests/exceptions/source/others/exception_formatting_generator.py",
+    "tests/exceptions/source/others/exception_in_property.py",
+    "tests/exceptions/source/others/handler_formatting_with_context_manager.py",
+    "tests/exceptions/source/others/handler_formatting_with_decorator.py",
+    "tests/exceptions/source/others/level_name.py",
+    "tests/exceptions/source/others/level_number.py",
+    "tests/exceptions/source/others/message_formatting_with_context_manager.py",
+    "tests/exceptions/source/others/message_formatting_with_decorator.py",
+    "tests/exceptions/source/others/nested_with_reraise.py",
+    "tests/exceptions/source/others/syntaxerror_without_traceback.py",
+    "tests/exceptions/source/others/sys_tracebacklimit.py",
+    "tests/exceptions/source/others/sys_tracebacklimit_negative.py",
+    "tests/exceptions/source/others/sys_tracebacklimit_none.py",
+    "tests/exceptions/source/others/sys_tracebacklimit_unset.py",
+    "tests/exceptions/source/others/zerodivisionerror_without_traceback.py",
+    "tests/exceptions/source/ownership/_init.py",
+    "tests/exceptions/source/ownership/assertion_from_lib.py",
+    "tests/exceptions/source/ownership/assertion_from_local.py",
+    "tests/exceptions/source/ownership/callback.py",
+    "tests/exceptions/source/ownership/catch_decorator.py",
+    "tests/exceptions/source/ownership/catch_decorator_from_lib.py",
+    "tests/exceptions/source/ownership/decorated_callback.py",
+    "tests/exceptions/source/ownership/direct.py",
+    "tests/exceptions/source/ownership/indirect.py",
+    "tests/exceptions/source/ownership/string_lib.py",
+    "tests/exceptions/source/ownership/string_source.py",
+    "tests/exceptions/source/ownership/syntaxerror.py",
+    "tests/exceptions/source/ownership/usersite/somelib/__init__.py",
+    "tests/test_activation.py",
+    "tests/test_add_option_backtrace.py",
+    "tests/test_add_option_catch.py",
+    "tests/test_add_option_colorize.py",
+    "tests/test_add_option_context.py",
+    "tests/test_add_option_diagnose.py",
+    "tests/test_add_option_enqueue.py",
+    "tests/test_add_option_filter.py",
+    "tests/test_add_option_format.py",
+    "tests/test_add_option_kwargs.py",
+    "tests/test_add_option_level.py",
+    "tests/test_add_option_serialize.py",
+    "tests/test_add_sinks.py",
+    "tests/test_ansimarkup_basic.py",
+    "tests/test_ansimarkup_extended.py",
+    "tests/test_bind.py",
+    "tests/test_colorama.py",
+    "tests/test_configure.py",
+    "tests/test_contextualize.py",
+    "tests/test_coroutine_sink.py",
+    "tests/test_datetime.py",
+    "tests/test_deepcopy.py",
+    "tests/test_defaults.py",
+    "tests/test_exceptions_catch.py",
+    "tests/test_exceptions_formatting.py",
+    "tests/test_filesink_compression.py",
+    "tests/test_filesink_delay.py",
+    "tests/test_filesink_permissions.py",
+    "tests/test_filesink_retention.py",
+    "tests/test_filesink_rotation.py",
+    "tests/test_filesink_watch.py",
+    "tests/test_formatting.py",
+    "tests/test_get_frame.py",
+    "tests/test_interception.py",
+    "tests/test_levels.py",
+    "tests/test_locks.py",
+    "tests/test_multiprocessing.py",
+    "tests/test_opt.py",
+    "tests/test_parse.py",
+    "tests/test_patch.py",
+    "tests/test_pickling.py",
+    "tests/test_propagation.py",
+    "tests/test_recattr.py",
+    "tests/test_remove.py",
+    "tests/test_repr.py",
+    "tests/test_standard_handler.py",
+    "tests/test_threading.py",
+    "tests/test_type_hinting.py"
+  ],
+  "issue": "Add unit tests for traceback formatting of RecursionError\nFor example, the following snippet:\r\n\r\n```python\r\nfrom loguru import logger\r\n\r\ndef rec():\r\n    rec()\r\n\r\ntry:\r\n    rec()\r\nexcept Exception:\r\n    logger.exception(\"Oups\")\r\n```\r\n\r\nShould produce the following logs:\r\n\r\n```txt\r\n2024-02-17 12:06:00.577 | ERROR    | __main__:<module>:9 - Oups\r\nTraceback (most recent call last):\r\n\r\n> File \"/home/delgan/Code/loguru/script.py\", line 7, in <module>\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n\r\n  File \"/home/delgan/Code/loguru/script.py\", line 4, in rec\r\n    rec()\r\n    └ <function rec at 0x7a13f1314720>\r\n  [Previous line repeated 996 more times]\r\n\r\nRecursionError: maximum recursion depth exceeded\r\n```\r\n\r\nNote the \"[Previous line repeated 996 more times]\".\r\n\n",
+  "scripts": {
+    "baseline": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-1",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-2",
+            "name": "search_text",
+            "input": {
+              "query": "traceback",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-3",
+            "name": "read_file",
+            "input": {
+              "path": "docs/_extensions/autodoc_stub_file.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-4",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Scripted connectivity fixture only; no model judgment or localization score."
+            }
+          }
+        ]
+      }
+    ],
+    "retrieval": [
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-1",
+            "name": "list_files",
+            "input": {
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-2",
+            "name": "locagent_retrieve",
+            "input": {
+              "query": "traceback",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-3",
+            "name": "read_file",
+            "input": {
+              "path": "docs/_extensions/autodoc_stub_file.py",
+              "offset": 0
+            }
+          }
+        ]
+      },
+      {
+        "stop_reason": "tool_use",
+        "content": [
+          {
+            "type": "tool_use",
+            "id": "fixture-4",
+            "name": "finish",
+            "input": {
+              "files": [],
+              "entities": [],
+              "answer": "Scripted connectivity fixture only; no model judgment or localization score."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

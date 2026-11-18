@@ -1,0 +1,6 @@
+{
+  "instance_id": "hyeneung__tech-blog-hub-site-49",
+  "repo": "hyeneung/tech-blog-hub-site",
+  "base_commit": "940338fead4a77132a4d78b42232265301a20b83",
+  "problem_statement": "[Feature] Migrate from OpenSearch to Elasticsearch to improve Search Performance\n## Work Details\r\n- Current performance with AWS OpenSearch Free Tier shows query times averaging 1.5 seconds.\r\n- Plan to migrate to a self-hosted Elasticsearch instance on EC2(free tier) using Docker.\r\n- Expected outcome: Reduce query times significantly, targeting under 500ms based on preliminary tests showing potential improvements.\r\n\r\n## Task List\r\n- [x] Set up Docker environment on EC2 for Elasticsearch deployment.\r\n- [x] Migrate existing data and queries from OpenSearch to Elasticsearch.\r\n- [x] Monitor and benchmark performance post-migration to ensure query times meet expectations.\r\n\r\nThis plan aims to enhance the search experience by leveraging the capabilities of Elasticsearch, which has demonstrated superior performance compared to OpenSearch in our initial assessments. The goal is to achieve a more responsive system that can handle user queries efficiently.\n"
+}

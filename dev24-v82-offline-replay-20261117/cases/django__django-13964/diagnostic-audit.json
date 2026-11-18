@@ -1,0 +1,60 @@
+{
+  "policy": "locator-diagnostic-calibration-v8.2",
+  "raw_packet": {
+    "answer": "已读到的事实（附文件:行号）\n- django/db/models/fields/related_descriptors.py:203-268：`ForwardManyToOneDescriptor.__set__` 在赋值时对 `self.field.related_fields` 逐对执行 `setattr(instance, lh_field.attname, getattr(value, rh_field.attname))`（第256-257行），即把父对象当时的 `rh_field.attname` 值拷贝到子对象的 `product_id`；随后只做缓存设置（第261行），不再回读父对象。\n- django/db/models/fields/related_descriptors.py:236-252：`value is None` 分支只清空本地字段，与本题无关。\n- django/db/models/fields/related.py:649-668：`get_foreign_related_value` 委托 `get_instance_value_for_fields`；后者对 `field.primary_key` 为真的字段特殊处理，返回 `instance.pk`（第660-666行），否则返回 `getattr(instance, field.attname)`（第667行）。\n\n推断\n- 待验证假设：`django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__` 在赋值瞬间把 `Product()` 的空 `sku`（空串）快照进 `Order.product_id`，之后 `order.product.sku = \"foo\"` 与 `save()` 都不会回写该快照，故 `product_id` 保持空串。\n- 待验证假设：`django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields` 的 `instance.pk` 分支与 `attname` 分支在“先赋值后设主键”场景下取值时机不同，是问题描述中“auto 与非 auto 主键处理差异”的可能来源；但 `__set__` 第257行用的是 `rh_field.attname` 而非 `get_foreign_related_value`，两条路径是否在保存阶段被再次调用尚未核验。\n- 待验证假设：修复方向可能是在保存子对象时用 `get_foreign_related_value` 重新解析关联值，而非依赖赋值时的快照。\n\n未核验点\n- 未读 `Model.save`/`_save_table` 及 `Model._prepare_related_fields_for_save` 等保存期代码，无法确认保存时是否重算 `product_id`。\n- 未读 `ForwardManyToOneDescriptor.__get__` 与 `related_fields` 的构造（`ForeignObject.related_fields`），未确认 `rh_field` 具体指向。\n- 未运行任何测试或复现脚本，未做行为验证。\n\n最小验证：`python -m pytest tests/many_to_one/tests.py -q -k \"primary_key\"`（或写一个断言 `Order.objects.filter(product_id=\"\").exists() is False` 的复现用例）。",
+    "entities": [
+      "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__",
+      "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields",
+      "django/db/models/fields/related.py:ForeignObject.get_foreign_related_value"
+    ],
+    "files": [
+      "django/db/models/fields/related_descriptors.py",
+      "django/db/models/fields/related.py"
+    ]
+  },
+  "violations": [],
+  "violation_count": 0,
+  "rule_counts": {
+    "R1": 0,
+    "R2": 0,
+    "R3": 0,
+    "R4": 0
+  },
+  "fallback": false,
+  "validator_error": null,
+  "disclosures": [],
+  "disclosure_count": 0,
+  "disclosure_attached": false,
+  "original_body_preserved": true,
+  "delivered_full_line_ranges": [
+    [
+      "django/db/models/fields/related.py",
+      640,
+      680
+    ],
+    [
+      "django/db/models/fields/related_descriptors.py",
+      203,
+      268
+    ]
+  ],
+  "pending_read_pages": {},
+  "entity_body_complete": {
+    "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__": true,
+    "django/db/models/fields/related.py:ForeignObject.get_instance_value_for_fields": true,
+    "django/db/models/fields/related.py:ForeignObject.get_foreign_related_value": true
+  },
+  "entity_def_spans": {
+    "django/db/models/fields/related_descriptors.py:ForwardManyToOneDescriptor.__set__": [
+      [
+        203,
+        267
+      ]
+    ]
+  },
+  "evidence_mode": "recorded_C_logs",
+  "unknown_span_entities": [],
+  "call_chain_complete": false,
+  "behavior_verified": false,
+  "quality_measured": false
+}

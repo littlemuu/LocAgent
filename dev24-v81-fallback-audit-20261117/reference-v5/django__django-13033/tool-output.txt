@@ -1,0 +1,125 @@
+B TOOL 1: search_text
+ARGS: {"offset": 0, "query": "def find_ordering_name"}
+django/db/models/sql/compiler.py:715:     def find_ordering_name(self, name, opts, alias=None, default_order='ASC',
+
+B TOOL 2: search_text
+ARGS: {"offset": 0, "query": "def get_ordering"}
+django/contrib/admin/options.py:341:     def get_ordering(self, request):
+django/contrib/admin/views/main.py:273:     def get_ordering_field(self, field_name):
+django/contrib/admin/views/main.py:297:     def get_ordering(self, request, queryset):
+django/contrib/admin/views/main.py:402:     def get_ordering_field_columns(self):
+django/forms/formsets.py:271:     def get_ordering_widget(cls):
+django/views/generic/dates.py:311:     def get_ordering(self):
+django/views/generic/list.py:50:     def get_ordering(self):
+tests/admin_ordering/models.py:35:     def get_ordering(self, request):
+tests/forms_tests/tests/test_formsets.py:601:             def get_ordering_widget(self):
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 790, "path": "django/db/models/sql/compiler.py", "start_line": 700}
+700:         opts = self.query.get_meta()
+701: 
+702:         for name in self.query.distinct_fields:
+703:             parts = name.split(LOOKUP_SEP)
+704:             _, targets, alias, joins, path, _, transform_function = self._setup_joins(parts, opts, None)
+705:             targets, alias, _ = self.query.trim_joins(targets, joins, path)
+706:             for target in targets:
+707:                 if name in self.query.annotation_select:
+708:                     result.append(name)
+709:                 else:
+710:                     r, p = self.compile(transform_function(target, alias))
+711:                     result.append(r)
+712:                     params.append(p)
+713:         return result, params
+714: 
+715:     def find_ordering_name(self, name, opts, alias=None, default_order='ASC',
+716:                            already_seen=None):
+717:         """
+718:         Return the table alias (the name might be ambiguous, the alias will
+719:         not be) and column name for ordering by the given 'name' parameter.
+720:         The 'name' is of the form 'field1__field2__...__fieldN'.
+721:         """
+722:         name, order = get_order_dir(name, default_order)
+723:         descending = order == 'DESC'
+724:         pieces = name.split(LOOKUP_SEP)
+725:         field, targets, alias, joins, path, opts, transform_function = self._setup_joins(pieces, opts, alias)
+726: 
+727:         # If we get to this point and the field is a relation to another model,
+728:         # append the default ordering for that model unless it is the pk
+729:         # shortcut or the attribute name of the field that is specified.
+730:         if field.is_relation and opts.ordering and getattr(field, 'attname', None) != name and name != 'pk':
+731:             # Firstly, avoid infinite loops.
+732:             already_seen = already_seen or set()
+733:             join_tuple = tuple(getattr(self.query.alias_map[j], 'join_cols', None) for j in joins)
+734:             if join_tuple in already_seen:
+735:                 raise FieldError('Infinite loop caused by ordering.')
+736:             already_seen.add(join_tuple)
+737: 
+738:             results = []
+739:             for item in opts.ordering:
+740:                 if hasattr(item, 'resolve_expression') and not isinstance(item, OrderBy):
+741:                     item = item.desc() if descending else item.asc()
+742:                 if isinstance(item, OrderBy):
+743:                     results.append((item, False))
+744:                     continue
+745:                 results.extend(self.find_ordering_name(item, opts, alias,
+746:                                                        order, already_seen))
+747:             return results
+748:         targets, alias, _ = self.query.trim_joins(targets, joins, path)
+749:         return [(OrderBy(transform_function(t, alias), descending=descending), False) for t in targets]
+750: 
+751:     def _setup_joins(self, pieces, opts, alias):
+752:         """
+753:         Helper method for get_order_by() and get_distinct().
+754: 
+755:         get_ordering() and get_distinct() must produce same target columns on
+756:         same input, as the prefixes of get_ordering() and get_distinct() must
+757:         match. Executing SQL where this is not true is an error.
+758:         """
+759:         alias = alias or self.query.get_initial_alias()
+760:         field, targets, opts, joins, path, transform_function = self.query.setup_joins(pieces, opts, alias)
+761:         alias = joins[-1]
+762:         return field, targets, alias, joins, path, opts, transform_function
+763: 
+764:     def get_from_clause(self):
+765:         """
+766:         Return a list of strings that are joined together to go after the
+767:         "FROM" part of the query, as well as a list any extra parameters that
+
+
+B TOOL 4: search_text
+ARGS: {"offset": 0, "query": "def get_order_dir"}
+django/db/models/sql/query.py:2302: def get_order_dir(field, default='ASC'):
+
+B TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 2320, "path": "django/db/models/sql/query.py", "start_line": 2295}
+2295:         # to do currently.
+2296:         return (
+2297:             connections[DEFAULT_DB_ALIAS].features.interprets_empty_strings_as_nulls and
+2298:             field.empty_strings_allowed
+2299:         ) or field.null
+2300: 
+2301: 
+2302: def get_order_dir(field, default='ASC'):
+2303:     """
+2304:     Return the field name and direction for an order specification. For
+2305:     example, '-foo' is returned as ('foo', 'DESC').
+2306: 
+2307:     The 'default' param is used to indicate which way no prefix (or a '+'
+2308:     prefix) should sort. The '-' prefix always sorts the opposite way.
+2309:     """
+2310:     dirn = ORDER_DIR[default]
+2311:     if field[0] == '-':
+2312:         return field[1:], dirn[1]
+2313:     return field, dirn[0]
+2314: 
+2315: 
+2316: def add_to_dict(data, key, value):
+2317:     """
+2318:     Add "value" to the set of values for "key", whether or not "key" already
+2319:     exists.
+2320:     """
+
+
+B TOOL 6: search_text
+ARGS: {"offset": 0, "query": "def get_order_by"}
+django/db/models/sql/compiler.py:271:     def get_order_by(self):

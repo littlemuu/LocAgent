@@ -1,0 +1,6 @@
+{
+  "instance_id": "Lightning-AI__pytorch-lightning-20403",
+  "repo": "Lightning-AI/pytorch-lightning",
+  "base_commit": "20d19d2f5728f7049272f2db77a9748ff4cf5ccd",
+  "problem_statement": "Support restoring callbacks' status when predicting\n### Description & Motivation\n\nI implemented EMA using Callback. However, when predicting, the callback's weight isn't loaded back \n\n### Pitch\n\nremove the condition at: https://github.com/Lightning-AI/pytorch-lightning/blob/f5d82504da252a255df268bd2bb99bf3f2886d27/src/lightning/pytorch/trainer/connectors/checkpoint_connector.py#L400\n\n### Alternatives\n\n_No response_\n\n### Additional context\n\n_No response_\n\ncc @borda\n"
+}

@@ -1,0 +1,244 @@
+B TOOL 1: search_text
+ARGS: {"offset": 0, "query": "set_visible"}
+examples/axes_grid1/parasite_simple2.py:37: ax_pm.axis["top"].label.set_visible(True)
+examples/axes_grid1/parasite_simple2.py:38: ax_pm.axis["right"].major_ticklabels.set_visible(False)
+examples/axes_grid1/simple_axisline4.py:20: ax2.axis["right"].major_ticklabels.set_visible(False)
+examples/axes_grid1/simple_axisline4.py:21: ax2.axis["top"].major_ticklabels.set_visible(True)
+examples/axisartist/axis_direction.py:17:     ax.axis[:].set_visible(False)
+examples/axisartist/demo_axis_direction.py:59:     axis.label.set_visible(True)
+examples/axisartist/demo_axis_direction.py:67:     axis.label.set_visible(True)
+examples/axisartist/demo_axisline_style.py:27:     ax.axis[direction].set_visible(True)
+examples/axisartist/demo_axisline_style.py:31:     ax.axis[direction].set_visible(False)
+examples/axisartist/demo_curvelinear_grid.py:81:     ax1.axis["right"].major_ticklabels.set_visible(True)
+examples/axisartist/demo_curvelinear_grid.py:82:     ax1.axis["top"].major_ticklabels.set_visible(True)
+examples/axisartist/demo_floating_axes.py:124:     ax1.axis["bottom"].set_visible(False)
+examples/axisartist/demo_floating_axis.py:52:     axis.label.set_visible(True)
+examples/axisartist/demo_parasite_axes.py:32: host.axis["right"].set_visible(False)
+examples/axisartist/demo_parasite_axes.py:34: par1.axis["right"].set_visible(True)
+examples/axisartist/demo_parasite_axes.py:35: par1.axis["right"].major_ticklabels.set_visible(True)
+examples/axisartist/demo_parasite_axes.py:36: par1.axis["right"].label.set_visible(True)
+examples/axisartist/demo_ticklabel_direction.py:40: ax.axis["right"].label.set_visible(True)
+examples/axisartist/simple_axis_direction01.py:17: ax1.axis["right"].label.set_visible(True)
+examples/axisartist/simple_axis_pad.py:48:     ax1.axis[:].set_visible(False)
+examples/axisartist/simple_axis_pad.py:59:     axis.label.set_visible(True)
+examples/axisartist/simple_axis_pad.py:67:     axis.label.set_visible(True)
+examples/axisartist/simple_axisartist1.py:34: ax0.axis["bottom", "top", "right"].set_visible(False)
+examples/axisartist/simple_axisartist1.py:41: ax1.axis["xzero"].set_visible(True)
+examples/axisartist/simple_axisartist1.py:44: ax1.axis["bottom", "top", "right"].set_visible(False)
+examples/axisartist/simple_axisline.py:17: ax.axis["right"].set_visible(False)
+examples/axisartist/simple_axisline.py:18: ax.axis["top"].set_visible(False)
+examples/axisartist/simple_axisline.py:21: ax.axis["xzero"].set_visible(True)
+examples/axisartist/simple_axisline3.py:14: ax.axis["right"].set_visible(False)
+examples/axisartist/simple_axisline3.py:15: ax.axis["top"].set_visible(False)
+examples/color/named_colors.py:54:     ax.yaxis.set_visible(False)
+examples/color/named_colors.py:55:     ax.xaxis.set_visible(False)
+examples/event_handling/data_browser.py:84:         self.selected.set_visible(True)
+examples/event_handling/keypress_demo.py:26:         xl.set_visible(not visible)
+examples/event_handling/legend_picking.py:44:     origline.set_visible(visible)
+examples/event_handling/path_editor.py:125:             self.line.set_visible(self.showverts)
+examples/event_handling/poly_editor.py:105:         self.line.set_visible(vis)  # don't use the poly visibility state
+examples/event_handling/poly_editor.py:149:             self.line.set_visible(self.showverts)
+examples/event_handling/pong_sgskip.py:135:         ax.xaxis.set_visible(False)
+examples/event_handling/pong_sgskip.py:137:         ax.yaxis.set_visible(False)
+examples/event_handling/pong_sgskip.py:295:             self.i.set_visible(not self.i.get_visible())
+examples/images_contours_and_fields/image_annotated_heatmap.py:149:     ax.spines[:].set_visible(False)
+examples/images_contours_and_fields/image_masked.py:54:     ticklabel.set_visible(False)
+examples/lines_bars_and_markers/fill_between_alpha.py:36:     label.set_visible(False)
+examples/lines_bars_and_markers/horizontal_barchart_distribution.py:51:     ax.xaxis.set_visible(False)
+examples/lines_bars_and_m
+
+B TOOL 2: locagent_retrieve
+ARGS: {"offset": 0, "query": "Axes3D.draw"}
+Ranked source previews; omitted code is NOT shown. Offsets paginate previews only. Use read_file with each path and line range for complete source.
+#1 lib/mpl_toolkits/mplot3d/axes3d.py:Axes3D.draw [exact_qualified_name]
+path=lib/mpl_toolkits/mplot3d/axes3d.py; lines=389-444; implementation_start=390; read_file(path="lib/mpl_toolkits/mplot3d/axes3d.py", start_line=389, end_line=444)
+389:     def draw(self, renderer):
+390:         self._unstale_viewLim()
+391: 
+392:         # draw the background patch
+393:         self.patch.draw(renderer)
+394:         self._frameon = False
+395: 
+396:         # first, set the aspect
+397:         # this is duplicated from `axes._base._AxesBase.draw`
+398:         # but must be called before any of the artist are drawn as
+399:         # it adjusts the view limits and the size of the bounding box
+400:         # of the Axes
+401:         locator = self.get_axes_locator()
+402:         if locator:
+403:             pos = locator(self, renderer)
+404:             self.apply_aspect(pos)
+405:         else:
+... lines 406-440 omitted ...
+441:                 axis.draw(renderer)
+442: 
+443:         # Then rest
+444:         super().draw(renderer)
+Preview incomplete; omitted/overlapping lines remain available via read_file.
+
+
+
+B TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": 445, "path": "lib/mpl_toolkits/mplot3d/axes3d.py", "start_line": 389}
+389:     def draw(self, renderer):
+390:         self._unstale_viewLim()
+391: 
+392:         # draw the background patch
+393:         self.patch.draw(renderer)
+394:         self._frameon = False
+395: 
+396:         # first, set the aspect
+397:         # this is duplicated from `axes._base._AxesBase.draw`
+398:         # but must be called before any of the artist are drawn as
+399:         # it adjusts the view limits and the size of the bounding box
+400:         # of the Axes
+401:         locator = self.get_axes_locator()
+402:         if locator:
+403:             pos = locator(self, renderer)
+404:             self.apply_aspect(pos)
+405:         else:
+406:             self.apply_aspect()
+407: 
+408:         # add the projection matrix to the renderer
+409:         self.M = self.get_proj()
+410: 
+411:         collections_and_patches = (
+412:             artist for artist in self._children
+413:             if isinstance(artist, (mcoll.Collection, mpatches.Patch))
+414:             and artist.get_visible())
+415:         if self.computed_zorder:
+416:             # Calculate projection of collections and patches and zorder
+417:             # them. Make sure they are drawn above the grids.
+418:             zorder_offset = max(axis.get_zorder()
+419:                                 for axis in self._axis_map.values()) + 1
+420:             collection_zorder = patch_zorder = zorder_offset
+421: 
+422:             for artist in sorted(collections_and_patches,
+423:                                  key=lambda artist: artist.do_3d_projection(),
+424:                                  reverse=True):
+425:                 if isinstance(artist, mcoll.Collection):
+426:                     artist.zorder = collection_zorder
+427:                     collection_zorder += 1
+428:                 elif isinstance(artist, mpatches.Patch):
+429:                     artist.zorder = patch_zorder
+430:                     patch_zorder += 1
+431:         else:
+432:             for artist in collections_and_patches:
+433:                 artist.do_3d_projection()
+434: 
+435:         if self._axis3don:
+436:             # Draw panes first
+437:             for axis in self._axis_map.values():
+438:                 axis.draw_pane(renderer)
+439:             # Then axes
+440:             for axis in self._axis_map.values():
+441:                 axis.draw(renderer)
+442: 
+443:         # Then rest
+444:         super().draw(renderer)
+445: 
+
+
+B TOOL 4: search_text
+ARGS: {"offset": 0, "query": "def draw(self, renderer)"}
+examples/misc/demo_agg_filter.py:146:     def draw(self, renderer):
+examples/specialty_plots/skewt.py:28:     def draw(self, renderer):
+examples/text_labels_and_annotations/angle_annotation.py:176:     def draw(self, renderer):
+examples/text_labels_and_annotations/line_with_text.py:46:     def draw(self, renderer):
+examples/widgets/menu.py:68:     def draw(self, renderer):
+lib/matplotlib/artist.py:948:     def draw(self, renderer):
+lib/matplotlib/axes/_base.py:3018:     def draw(self, renderer):
+lib/matplotlib/axis.py:298:     def draw(self, renderer):
+lib/matplotlib/collections.py:349:     def draw(self, renderer):
+lib/matplotlib/collections.py:977:     def draw(self, renderer):
+lib/matplotlib/collections.py:1342:     def draw(self, renderer):
+lib/matplotlib/collections.py:1780:     def draw(self, renderer):
+lib/matplotlib/collections.py:1886:     def draw(self, renderer):
+lib/matplotlib/collections.py:2150:     def draw(self, renderer):
+lib/matplotlib/colorbar.py:213:     def draw(self, renderer):
+lib/matplotlib/figure.py:2141:     def draw(self, renderer):
+lib/matplotlib/figure.py:2897:     def draw(self, renderer):
+lib/matplotlib/legend.py:616:     def draw(self, renderer):
+lib/matplotlib/lines.py:726:     def draw(self, renderer):
+lib/matplotlib/lines.py:1451:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:356:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:542:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:664:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:811:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:901:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:1097:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:1253:     def draw(self, renderer):
+lib/matplotlib/offsetbox.py:1471:     def draw(self, renderer):
+lib/matplotlib/patches.py:585:     def draw(self, renderer):
+lib/matplotlib/patches.py:664:     def draw(self, renderer):
+lib/matplotlib/patches.py:1973:     def draw(self, renderer):
+lib/matplotlib/patches.py:4427:     def draw(self, renderer):
+lib/matplotlib/patches.py:4688:     def draw(self, renderer):
+lib/matplotlib/projections/polar.py:917:     def draw(self, renderer):
+lib/matplotlib/quiver.py:367:     def draw(self, renderer):
+lib/matplotlib/quiver.py:552:     def draw(self, renderer):
+lib/matplotlib/spines.py:284:     def draw(self, renderer):
+lib/matplotlib/table.py:141:     def draw(self, renderer):
+lib/matplotlib/table.py:396:     def draw(self, renderer):
+lib/matplotlib/tests/test_skew.py:22:     def draw(self, renderer):
+lib/matplotlib/text.py:675:     def draw(self, renderer):
+lib/matplotlib/text.py:1978:     def draw(self, renderer):
+lib/mpl_toolkits/axes_grid1/inset_locator.py:68:     def draw(self, renderer):
+lib/mpl_toolkits/axes_grid1/parasite_axes.py:122:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:175:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:235:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:358:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:495:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:589:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axis_artist.py:996:     def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axisline_style.py:54:         def draw(self, renderer):
+lib/mpl_toolkits/axisartist/axisline_style.py:91:       def draw(self, renderer):
+lib/mpl_toolkits/mplot3d/art3d.py:135:     def draw(self, renderer):
+lib/mpl_toolkits/mplot3d/art3d.py:213:     def draw(self, renderer):
+lib/mpl_toolkits/mplot3d/art3d.py:517:     def draw(self, renderer):
+lib/mpl_toolkits/mplot3d/axes3d.py:389:     def draw(self, renderer):
+lib/mpl_toolkits/mplot3d/axis3d.py:299:     def draw(self, renderer):
+
+B TOOL 5: read_file
+ARGS: {"cursor": null, "end_line": 3040, "path": "lib/matplotlib/axes/_base.py", "start_line": 3018}
+3018:     def draw(self, renderer):
+3019:         # docstring inherited
+3020:         if renderer is None:
+3021:             raise RuntimeError('No renderer defined')
+3022:         if not self.get_visible():
+3023:             return
+3024:         self._unstale_viewLim()
+3025: 
+3026:         renderer.open_group('axes', gid=self.get_gid())
+3027: 
+3028:         # prevent triggering call backs during the draw process
+3029:         self._stale = True
+3030: 
+3031:         # loop over self and child Axes...
+3032:         locator = self.get_axes_locator()
+3033:         if locator:
+3034:             pos = locator(self, renderer)
+3035:             self.apply_aspect(pos)
+3036:         else:
+3037:             self.apply_aspect()
+3038: 
+3039:         artists = self.get_children()
+3040:         artists.remove(self.patch)
+
+
+B TOOL 6: read_file
+ARGS: {"cursor": null, "end_line": 960, "path": "lib/matplotlib/artist.py", "start_line": 948}
+948:     def draw(self, renderer):
+949:         """
+950:         Draw the Artist (and its children) using the given renderer.
+951: 
+952:         This has no effect if the artist is not visible (`.Artist.get_visible`
+953:         returns False).
+954: 
+955:         Parameters
+956:         ----------
+957:         renderer : `.RendererBase` subclass.
+958: 
+959:         Notes
+960:         -----
+

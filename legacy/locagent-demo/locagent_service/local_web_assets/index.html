@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LocAgent · 找到你要的代码</title>
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="brand" href="/#new" aria-label="LocAgent，新问题"><span class="logo" aria-hidden="true">L</span><strong>LocAgent</strong><span>代码定位</span></a><button id="configure-key" type="button" class="button secondary" aria-expanded="false" aria-controls="key-setup">配置 API Key</button><span id="health" class="badge">正在连接…</span></div></header>
+<main>
+  <div class="intro"><p class="eyebrow">少一点翻找，多一点理解</p><h1>想找哪段代码？</h1><p class="lead">贴上仓库链接，说说你想了解什么。</p></div>
+  <section id="key-setup" class="card" hidden aria-labelledby="key-title">
+    <div class="section-head"><h2 id="key-title" tabindex="-1">在本机终端配置 API Key</h2><button id="close-key-setup" type="button" class="button text-button">收起</button></div>
+    <p id="key-status" class="meta" role="status">正在读取配置状态…</p>
+    <p>密钥不要贴到网页或聊天中。浏览器不会直接打开终端，请按以下步骤操作：</p>
+    <ol>
+      <li>先确认没有任务正在准备或运行，再回到启动此服务的终端按 Ctrl-C 停止。不要停止其他端口的服务。</li>
+      <li>如果尚未配置供应商，使用 DeepSeek 时，在项目文件夹复制 <strong>provider.deepseek.reference.json</strong> 为 <strong>provider.local.json</strong>。参考值来自 11 月 7 日旧配置，不能视作当前价格或付费授权。先核实官方当前模型、上下文和账户价格，选择自己的预算，更新字段及 <strong>pricing_confirmation</strong>（替换 REPLACE 开头的整段文字为核实日期与来源）。这个文件不填密钥；未核实的模板无法启动。其他供应商请使用 <strong>locagent_service/local_provider.example.json</strong>。</li>
+      <li>在同一个项目终端粘贴下面的命令，或在 Finder 中双击项目里的 <strong>configure-api-key.command</strong>（默认端口 8765，其他端口请用下方命令）。</li>
+      <li>终端会显示接收方地址。核实后输入 API Key 并回车，输入时不会显示字符；直接回车或 Ctrl-C 可取消。</li>
+      <li>看到服务地址后刷新此页面。配置或更换供应商后，请重新免费准备任务并确认新的费用计划。</li>
+    </ol>
+    <pre id="key-command">./start-local-web.command --prompt-api-key --enable-paid-run</pre>
+    <button id="copy-key-command" type="button" class="button secondary">复制启动命令</button><p id="key-copy-status" class="hint" role="status"></p>
+    <p class="notice">密钥仅留在本次服务及明确授权的模型请求进程中，不保存到文件、浏览器或 shell 历史。重启需重新输入。启用入口不会调用模型，仍需逐题确认付费；实际调用时密钥会作为认证信息发送给你核实的供应商。不要在不信任的共享电脑上使用。</p>
+  </section>
+  <div class="layout">
+    <section class="card input-card" aria-labelledby="input-title">
+      <h2 id="input-title">告诉我你在找什么</h2>
+      <form id="task-form">
+        <div id="real-input">
+          <label for="repository">GitHub 仓库链接</label><input id="repository" type="url" placeholder="https://github.com/owner/repository" required maxlength="250" autocomplete="off" spellcheck="false" aria-describedby="repo-help">
+          <p id="repo-help" class="hint">目前支持公开的 Python 仓库。</p>
+          <label for="issue">你的问题</label><textarea id="issue" maxlength="8000" required placeholder="例如：这段代码在哪里检查签名是否过期？"></textarea>
+        </div>
+        <p class="hint source-note" id="source-note">先免费读取仓库，确认费用后才会调用 AI。</p>
+        <button id="submit" class="button primary" type="submit" disabled>准备分析 · 免费</button>
+        <details class="form-options"><summary>其他选项</summary>
+          <label for="ref">指定版本（可选）</label><input id="ref" placeholder="默认分支，也可填写版本号或 commit" maxlength="200" autocomplete="off" spellcheck="false">
+          <label for="source">分析方式</label><select id="source"><option value="prepare">分析我的仓库</option><option value="demo">先看一个免费示例</option></select>
+        </details>
+      </form>
+    </section>
+    <div class="output-column">
+      <section class="card status-card" aria-labelledby="status-heading">
+        <div class="section-head"><h2 id="status-heading">分析进度</h2><span id="status" class="badge" role="status">等待开始</span></div>
+        <div id="empty" class="empty"><div><span class="empty-symbol" aria-hidden="true">⌕</span><h3>答案会出现在这里</h3><p>找到相关文件与函数，<br>再带你回到对应的源码。</p></div></div>
+        <div id="job-status" hidden>
+          <div id="status-title" class="status-title"></div><p id="status-detail" class="meta"></p>
+          <div class="actions"><button id="refresh" type="button" class="button secondary">查看最新状态</button><button id="new-task" type="button" class="button text-button">换个问题</button></div>
+          <details class="quiet-details"><summary>任务信息</summary><div id="task-id" class="task-id"></div><a id="permalink" href="/">保存这个任务链接 ↗</a><p class="hint">刷新或重新打开只查看进度，不会再次调用 AI。</p></details>
+        </div>
+        <div id="error" class="error" role="alert" hidden><p id="error-message"></p><details id="error-details" hidden><summary>查看技术详情</summary><pre id="technical-error"></pre></details></div>
+      </section>
+      <section id="usage-card" class="card" hidden aria-labelledby="usage-heading">
+        <h2 id="usage-heading">模型调用 · Token 与费用</h2>
+        <p id="usage-summary" class="usage-summary" role="status"></p>
+        <div id="usage-calls"></div><p id="usage-note" class="hint"></p>
+      </section>
+      <section id="result-card" class="card" hidden aria-labelledby="result-heading">
+        <div class="section-head"><h2 id="result-heading">找到的代码</h2><span id="result-count" class="result-count"></span></div>
+        <p id="result-note" class="meta"></p><div id="locations"></div>
+        <section class="process" aria-labelledby="process-heading"><h2 id="process-heading">查找过程 · 一步步看</h2><p id="process-summary" class="meta"></p><p id="process-note" class="hint"></p><div id="process-steps"></div><p class="hint">只读取历史记录，不会重新调用模型。已筛除常见凭据与邮箱等信息，但自动筛选不能保证覆盖所有私人内容，请勿直接公开分享。</p></section>
+        <details class="quiet-details"><summary>查看 JSON 技术详情</summary><p class="hint">保留已筛选的可见回复与工具记录；不展示原始提示词、隐藏推理或原始 HTTP 数据。本机原文件未修改。</p><details><summary>查找记录 JSON</summary><pre id="trace"></pre></details><details><summary>结果摘要 JSON</summary><pre id="raw-result"></pre></details></details>
+      </section>
+      <details id="plan-card" class="card plan-card" hidden>
+        <summary id="plan-summary">确认费用后开始</summary>
+        <div class="budget"><span>本题费用上限</span><strong id="budget-value"></strong><p id="budget-note"></p></div>
+        <dl id="plan" class="plan-grid"></dl>
+        <p id="price-summary" class="price-summary"></p>
+        <p class="notice warning">开始后会将你的问题、相关源码、查找过程和对话记录发送给上述服务。超时或断线也可能产生费用，系统不会自动重试。</p>
+        <details class="quiet-details"><summary>费用计算与版本详情</summary><dl id="plan-details" class="plan-grid"></dl><p class="hint">每次请求前会预留足够预算，结算后释放剩余部分。预留金额不是实际账单；余额不足会停止，不会提高本题上限。</p><details><summary>完整服务配置</summary><pre id="plan-provider"></pre></details></details>
+        <div id="approval"><label class="check"><input type="checkbox" id="consent"><span>我已核实以上服务、模型、价格与费用上限，同意发送所列数据并执行本次分析。</span></label><button id="run" type="button" class="button primary" disabled>确认并开始付费分析</button></div>
+        <p id="run-note" class="hint"></p>
+      </details>
+    </div>
+  </div>
+  <section class="utilities" aria-label="辅助功能">
+    <details><summary>找回以前的任务</summary><label for="restore-id">任务编号</label><div class="restore"><input id="restore-id" maxlength="32" placeholder="粘贴保存的任务编号" autocomplete="off" spellcheck="false"><button id="restore" type="button" class="button secondary">查看</button></div><p class="hint">只读取历史结果，不会重新运行。</p></details>
+    <details><summary>服务设置</summary><p id="configuration" class="meta">正在读取服务状态…</p><p class="hint">密钥由本机服务保管，不会在网页中显示或保存。</p><details><summary>查看服务配置</summary><pre id="provider">尚未配置</pre></details></details>
+  </section>
+  <footer>只在这台电脑使用 · 不运行或修改仓库代码</footer>
+</main>
+</body></html>

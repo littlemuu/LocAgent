@@ -1,0 +1,6 @@
+{
+  "instance_id": "Qiskit__qiskit-13141",
+  "repo": "Qiskit/qiskit",
+  "base_commit": "90e92a46643c72a21c5852299243213907453c21",
+  "problem_statement": "Port `UnitarySynthesis` to Rust\nThis issue tracks porting the `UnitarySynthesis` pass to rust as part of the #12208 epic. This pass in particular will still always require a fairly large python component, as the unitary synthesis plugin interface necessitates a Python execution mode. But when the a plugin is not specified we shouldn't need to use python at all. The other option is we can call Python from rust to pass a unitary array to the plugins and then operate exclusively from rust otherwise as well.\n"
+}

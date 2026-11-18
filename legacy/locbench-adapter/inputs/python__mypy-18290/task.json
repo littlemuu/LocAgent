@@ -1,0 +1,6 @@
+{
+  "instance_id": "python__mypy-18290",
+  "repo": "python/mypy",
+  "base_commit": "46c7ec7ed25de55452783ee7d45718c01018c764",
+  "problem_statement": "(🐞) Wrong column number for \"Invalid location for ParamSpec\"\n```py\r\nfrom typing import List, ParamSpec\r\n\r\nP = ParamSpec('P')\r\n\r\ndef foo(x: List[P]) -> None: ...\r\n```\r\n```\r\ntest.py:5:13: error: Invalid location for ParamSpec \"P\"  [misc]\r\ntest.py:5:18: note: You can use ParamSpec as the first argument to Callable, e.g., 'Callable[P, int]'\r\nFound 2 errors in 1 file (checked 1 source file)\r\n```\r\n\r\nColumn 13 is the `L` in `List`. The error and the note don't match up.\r\n\r\nNotice that the error and the note specify different column numbers.\r\n\r\nAn internal error with the correct column number is generated, but is removed as a duplicate.\n"
+}

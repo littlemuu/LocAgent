@@ -1,0 +1,71 @@
+{
+  "B_coding_and_evaluation_seconds": 2679.2933983802795,
+  "B_locator_seconds": 624.2875504493713,
+  "B_total_seconds": 3303.580948829651,
+  "C_live_requests": 0,
+  "C_resolve_rate": "未运行",
+  "account_or_cloud_queried": false,
+  "historical_AB_shared_overhead_seconds": 1641.4075450897217,
+  "max_requests_unchanged": 1056,
+  "measured_B": {
+    "coding_cost": {
+      "input_tokens": 4229714,
+      "metered_cny": 1.0798164000000001,
+      "output_tokens": 73866,
+      "requests": 434,
+      "upper_cny": 9.050355999999999
+    },
+    "localization_cost": {
+      "input_tokens": 401268,
+      "metered_cny": 0.39551608,
+      "output_tokens": 23195,
+      "requests": 93,
+      "upper_cny": 0.988096
+    },
+    "total_cost": {
+      "input_tokens": 4630982,
+      "metered_cny": 1.47533248,
+      "output_tokens": 97061,
+      "requests": 527,
+      "upper_cny": 10.038452
+    }
+  },
+  "method": "sum 24 individual B rows; no A/B rerun",
+  "same_usage_all_peak_cache_miss_reference_cny": 10.038452,
+  "scenarios": [
+    {
+      "assumption": "B task timing only; no allocated shared image/cleanup overhead",
+      "cloud_cny_at_historical_quote": 3.7532350224203532,
+      "minutes": 55.05968248049418,
+      "seconds": 3303.580948829651,
+      "total_cny_same_API_mix": 5.228567502420353
+    },
+    {
+      "assumption": "half historical A+B shared overhead allocated to C",
+      "cloud_cny_at_historical_quote": 4.685645697339376,
+      "minutes": 68.73807868957519,
+      "seconds": 4124.284721374512,
+      "total_cny_same_API_mix": 6.160978177339375
+    },
+    {
+      "assumption": "all historical shared overhead allocated to C",
+      "cloud_cny_at_historical_quote": 5.6180563722583985,
+      "minutes": 82.4164748986562,
+      "seconds": 4944.988493919373,
+      "total_cny_same_API_mix": 7.093388852258398
+    }
+  ],
+  "source": "/Users/xiaomu/Projects/LocAgent-OpenHands/dev24-completion-20261117-v5/delivery/summary.json",
+  "source_sha256": "cab28a40474b9e9940e7af2265b3f3529b42c34d5a0b3bae8ca9345465a5ed55",
+  "status": "未运行",
+  "unknowns": [
+    "C coding trajectories",
+    "prompt/output token changes",
+    "cache hits and time bands",
+    "image cache/download speed",
+    "host boot/setup",
+    "network traffic",
+    "stopped disk charges"
+  ],
+  "warning": "Historical prices only; not current quote or bill, not a guaranteed upper bound for changed C token usage."
+}

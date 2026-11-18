@@ -1,0 +1,6 @@
+{
+  "instance_id": "huggingface__diffusers-10185",
+  "repo": "huggingface/diffusers",
+  "base_commit": "43534a8d1fd405fd0d1e74f991ab97f743bd3e59",
+  "problem_statement": "Potential bug in repaint?\nhttps://github.com/huggingface/diffusers/blob/dac623b59f52c58383a39207d5147aa34e0047cd/src/diffusers/schedulers/scheduling_repaint.py#L322\r\n\r\nAccording to line5 of algorithm 1 in the paper, the second part in line 322 should remove the `**0.5`?\r\nthanks!\n"
+}

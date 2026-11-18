@@ -1,0 +1,297 @@
+TOOL 1: search_text
+ARGS: {"offset": 0, "query": "class RST"}
+META: {"next_offset": null}
+astropy/io/ascii/rst.py:35: class RST(FixedWidth):
+
+TOOL 2: search_text
+ARGS: {"offset": 0, "query": "header_rows"}
+META: {"next_offset": null}
+astropy/io/ascii/fixedwidth.py:97:         header_rows = getattr(self, "header_rows", ["name"])
+astropy/io/ascii/fixedwidth.py:163:             line = self.get_line(lines, start_line + header_rows.index("name"))
+astropy/io/ascii/fixedwidth.py:168:         for ii, attr in enumerate(header_rows):
+astropy/io/ascii/fixedwidth.py:262:         default_header_rows = [] if self.header.start_line is None else ["name"]
+astropy/io/ascii/fixedwidth.py:263:         header_rows = getattr(self, "header_rows", default_header_rows)
+astropy/io/ascii/fixedwidth.py:273:         for col_attr in header_rows:
+astropy/io/ascii/fixedwidth.py:345:         header_rows=None,
+astropy/io/ascii/fixedwidth.py:347:         if header_rows is None:
+astropy/io/ascii/fixedwidth.py:348:             header_rows = ["name"]
+astropy/io/ascii/fixedwidth.py:354:         self.header.header_rows = header_rows
+astropy/io/ascii/fixedwidth.py:355:         self.data.header_rows = header_rows
+astropy/io/ascii/fixedwidth.py:357:             self.data.start_line = len(header_rows)
+astropy/io/ascii/fixedwidth.py:411:             header_rows=[],
+astropy/io/ascii/fixedwidth.py:477:         header_rows=None,
+astropy/io/ascii/fixedwidth.py:484:             delimiter_pad=delimiter_pad, bookend=bookend, header_rows=header_rows
+astropy/io/ascii/fixedwidth.py:487:             position_line = len(self.header.header_rows)
+astropy/io/ascii/tests/test_fixedwidth.py:564: def test_fixed_width_header_rows():
+astropy/io/ascii/tests/test_fixedwidth.py:575:     header_rows = ["dtype", "name", "unit", "format", "description"]
+astropy/io/ascii/tests/test_fixedwidth.py:576:     dat = ascii.read(tbl, format="fixed_width", delimiter="|", header_rows=header_rows)
+astropy/io/ascii/tests/test_fixedwidth.py:578:     ascii.write(dat, out, format="fixed_width", delimiter="|", header_rows=header_rows)
+astropy/io/ascii/tests/test_fixedwidth.py:582: def test_fixed_width_two_line_header_rows():
+astropy/io/ascii/tests/test_fixedwidth.py:594:     header_rows = ["dtype", "unit", "format", "description", "name"]
+astropy/io/ascii/tests/test_fixedwidth.py:595:     dat = ascii.read(tbl, format="fixed_width_two_line", header_rows=header_rows)
+astropy/io/ascii/tests/test_fixedwidth.py:597:     ascii.write(dat, out, format="fixed_width_two_line", header_rows=header_rows)
+astropy/io/ascii/tests/test_fixedwidth.py:601: def test_fixed_width_no_header_header_rows():
+astropy/io/ascii/tests/test_fixedwidth.py:603:     with pytest.raises(TypeError, match=r"unexpected keyword argument 'header_rows'"):
+astropy/io/ascii/tests/test_fixedwidth.py:604:         ascii.read(tbl, format="fixed_width_no_header", header_rows=["unit"])
+
+TOOL 3: read_file
+ARGS: {"cursor": null, "end_line": null, "path": "astropy/io/ascii/rst.py", "start_line": null}
+META: {"end_column": 20, "end_line": 66, "next_cursor": null, "start_column": 0, "start_line": 1, "total_lines": 66}
+1: # Licensed under a 3-clause BSD style license
+2: """
+3: :Author: Simon Gibbons (simongibbons@gmail.com)
+4: """
+5: 
+6: 
+7: from .core import DefaultSplitter
+8: from .fixedwidth import (
+9:     FixedWidth,
+10:     FixedWidthData,
+11:     FixedWidthHeader,
+12:     FixedWidthTwoLineDataSplitter,
+13: )
+14: 
+15: 
+16: class SimpleRSTHeader(FixedWidthHeader):
+17:     position_line = 0
+18:     start_line = 1
+19:     splitter_class = DefaultSplitter
+20:     position_char = "="
+21: 
+22:     def get_fixedwidth_params(self, line):
+23:         vals, starts, ends = super().get_fixedwidth_params(line)
+24:         # The right hand column can be unbounded
+25:         ends[-1] = None
+26:         return vals, starts, ends
+27: 
+28: 
+29: class SimpleRSTData(FixedWidthData):
+30:     start_line = 3
+31:     end_line = -1
+32:     splitter_class = FixedWidthTwoLineDataSplitter
+33: 
+34: 
+35: class RST(FixedWidth):
+36:     """reStructuredText simple format table.
+37: 
+38:     See: https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#simple-tables
+39: 
+40:     Example::
+41: 
+42:         ==== ===== ======
+43:         Col1  Col2  Col3
+44:         ==== ===== ======
+45:           1    2.3  Hello
+46:           2    4.5  Worlds
+47:         ==== ===== ======
+48: 
+49:     Currently there is no support for reading tables which utilize continuation lines,
+50:     or for ones which define column spans through the use of an additional
+51:     line of dashes in the header.
+52: 
+53:     """
+54: 
+55:     _format_name = "rst"
+56:     _description = "reStructuredText simple table"
+57:     data_class = SimpleRSTData
+58:     header_class = SimpleRSTHeader
+59: 
+60:     def __init__(self):
+61:         super().__init__(delimiter_pad=None, bookend=False)
+62: 
+63:     def write(self, lines):
+64:         lines = super().write(lines)
+65:         lines = [lines[1]] + lines + [lines[1]]
+66:         return lines
+
+
+TOOL 4: read_file
+ARGS: {"cursor": null, "end_line": 420, "path": "astropy/io/ascii/fixedwidth.py", "start_line": 240}
+META: {"end_column": 21, "end_line": 344, "next_cursor": "rf1_d1cb829c4b349783ef6fd96c224df486d6aeba83c1d65bdb6186ec06f8c1300c", "start_column": 0, "start_line": 240, "total_lines": 490}
+240:                 ends = [x + 1 for x in self.col_ends]
+241:                 starts = [0] + ends[:-1]  # Assume each col starts where the last ended
+242:             vals = [line[start:end].strip() for start, end in zip(starts, ends)]
+243: 
+244:         return vals, starts, ends
+245: 
+246:     def write(self, lines):
+247:         # Header line not written until data are formatted.  Until then it is
+248:         # not known how wide each column will be for fixed width.
+249:         pass
+250: 
+251: 
+252: class FixedWidthData(basic.BasicData):
+253:     """
+254:     Base table data reader.
+255:     """
+256: 
+257:     splitter_class = FixedWidthSplitter
+258:     """ Splitter class for splitting data lines into columns """
+259:     start_line = None
+260: 
+261:     def write(self, lines):
+262:         default_header_rows = [] if self.header.start_line is None else ["name"]
+263:         header_rows = getattr(self, "header_rows", default_header_rows)
+264:         # First part is getting the widths of each column.
+265:         # List (rows) of list (column values) for data lines
+266:         vals_list = []
+267:         col_str_iters = self.str_vals()
+268:         for vals in zip(*col_str_iters):
+269:             vals_list.append(vals)
+270: 
+271:         # List (rows) of list (columns values) for header lines.
+272:         hdrs_list = []
+273:         for col_attr in header_rows:
+274:             vals = [
+275:                 "" if (val := getattr(col.info, col_attr)) is None else str(val)
+276:                 for col in self.cols
+277:             ]
+278:             hdrs_list.append(vals)
+279: 
+280:         # Widths for data columns
+281:         widths = [
+282:             max(len(vals[i_col]) for vals in vals_list)
+283:             for i_col in range(len(self.cols))
+284:         ]
+285:         # Incorporate widths for header columns (if there are any)
+286:         if hdrs_list:
+287:             for i_col in range(len(self.cols)):
+288:                 widths[i_col] = max(
+289:                     widths[i_col], max(len(vals[i_col]) for vals in hdrs_list)
+290:                 )
+291: 
+292:         # Now collect formatted header and data lines into the output lines
+293:         for vals in hdrs_list:
+294:             lines.append(self.splitter.join(vals, widths))
+295: 
+296:         if self.header.position_line is not None:
+297:             vals = [self.header.position_char * width for width in widths]
+298:             lines.append(self.splitter.join(vals, widths))
+299: 
+300:         for vals in vals_list:
+301:             lines.append(self.splitter.join(vals, widths))
+302: 
+303:         return lines
+304: 
+305: 
+306: class FixedWidth(basic.Basic):
+307:     """Fixed width table with single header line defining column names and positions.
+308: 
+309:     Examples::
+310: 
+311:       # Bar delimiter in header and data
+312: 
+313:       |  Col1 |   Col2      |  Col3 |
+314:       |  1.2  | hello there |     3 |
+315:       |  2.4  | many words  |     7 |
+316: 
+317:       # Bar delimiter in header only
+318: 
+319:       Col1 |   Col2      | Col3
+320:       1.2    hello there    3
+321:       2.4    many words     7
+322: 
+323:       # No delimiter with column positions specified as input
+324: 
+325:       Col1       Col2Col3
+326:        1.2hello there   3
+327:        2.4many words    7
+328: 
+329:     See the :ref:`astropy:fixed_width_gallery` for specific usage examples.
+330: 
+331:     """
+332: 
+333:     _format_name = "fixed_width"
+334:     _description = "Fixed width"
+335: 
+336:     header_class = FixedWidthHeader
+337:     data_class = FixedWidthData
+338: 
+339:     def __init__(
+340:         self,
+341:         col_starts=None,
+342:         col_ends=None,
+343:         delimiter_pad=" ",
+344:         bookend=True,
+
+
+TOOL 5: read_file
+ARGS: {"cursor": "rf1_d1cb829c4b349783ef6fd96c224df486d6aeba83c1d65bdb6186ec06f8c1300c", "end_line": null, "path": "astropy/io/ascii/fixedwidth.py", "start_line": null}
+META: {"end_column": 11, "end_line": 420, "next_cursor": null, "start_column": 0, "start_line": 345, "total_lines": 490}
+345:         header_rows=None,
+346:     ):
+347:         if header_rows is None:
+348:             header_rows = ["name"]
+349:         super().__init__()
+350:         self.data.splitter.delimiter_pad = delimiter_pad
+351:         self.data.splitter.bookend = bookend
+352:         self.header.col_starts = col_starts
+353:         self.header.col_ends = col_ends
+354:         self.header.header_rows = header_rows
+355:         self.data.header_rows = header_rows
+356:         if self.data.start_line is None:
+357:             self.data.start_line = len(header_rows)
+358: 
+359: 
+360: class FixedWidthNoHeaderHeader(FixedWidthHeader):
+361:     """Header reader for fixed with tables with no header line"""
+362: 
+363:     start_line = None
+364: 
+365: 
+366: class FixedWidthNoHeaderData(FixedWidthData):
+367:     """Data reader for fixed width tables with no header line"""
+368: 
+369:     start_line = 0
+370: 
+371: 
+372: class FixedWidthNoHeader(FixedWidth):
+373:     """Fixed width table which has no header line.
+374: 
+375:     When reading, column names are either input (``names`` keyword) or
+376:     auto-generated.  Column positions are determined either by input
+377:     (``col_starts`` and ``col_stops`` keywords) or by splitting the first data
+378:     line.  In the latter case a ``delimiter`` is required to split the data
+379:     line.
+380: 
+381:     Examples::
+382: 
+383:       # Bar delimiter in header and data
+384: 
+385:       |  1.2  | hello there |     3 |
+386:       |  2.4  | many words  |     7 |
+387: 
+388:       # Compact table having no delimiter and column positions specified as input
+389: 
+390:       1.2hello there3
+391:       2.4many words 7
+392: 
+393:     This class is just a convenience wrapper around the ``FixedWidth`` reader
+394:     but with ``header_start=None`` and ``data_start=0``.
+395: 
+396:     See the :ref:`astropy:fixed_width_gallery` for specific usage examples.
+397: 
+398:     """
+399: 
+400:     _format_name = "fixed_width_no_header"
+401:     _description = "Fixed width with no header"
+402:     header_class = FixedWidthNoHeaderHeader
+403:     data_class = FixedWidthNoHeaderData
+404: 
+405:     def __init__(self, col_starts=None, col_ends=None, delimiter_pad=" ", bookend=True):
+406:         super().__init__(
+407:             col_starts,
+408:             col_ends,
+409:             delimiter_pad=delimiter_pad,
+410:             bookend=bookend,
+411:             header_rows=[],
+412:         )
+413: 
+414: 
+415: class FixedWidthTwoLineHeader(FixedWidthHeader):
+416:     """Header reader for fixed width tables splitting on whitespace.
+417: 
+418:     For fixed width tables with several header lines, there is typically
+419:     a white-space delimited format line, so splitting on white space is
+420:     needed.
+

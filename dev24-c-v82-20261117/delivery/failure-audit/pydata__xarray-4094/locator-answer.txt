@@ -1,0 +1,17 @@
+已读到的事实（附文件:行号）
+- xarray/core/dataarray.py:1953-1967：to_unstacked_dataset 取 self.indexes[dim]，要求是 pd.MultiIndex，否则抛 ValueError；随后用 idx._get_level_number(level)、idx.levels[level_number]、idx.names[level_number] 得到 variables/variable_dim，再对每个 k 执行 self.sel({variable_dim: k}).squeeze(drop=True) 存入 data_dict，最后 return Dataset(data_dict)。
+- xarray/core/dataarray.py:1901-1951：docstring 声明该方法为 Dataset.to_stacked_array 的逆操作，示例中 b 为单维变量 (x)，且示例断言 data.identical(roundtripped) 为 True。
+- xarray/core/dataset.py:3443-3472：to_stacked_array 计算 stacking_dims = 非 sample_dims 的维度；对每个变量校验包含 sample_dims；ensure_stackable 用 assign_coords({variable_dim: val.name})、对缺失的 stacking dim 赋 None、expand_dims 后 stack({new_dim: (variable_dim,) + stacking_dims})；再对 self.data_vars 逐个 ensure_stackable 并 xr.concat(dim=new_dim)。
+- xarray/core/dataset.py:3475-3483：随后把 MultiIndex 各 level 用 self[level.name].dtype 做 astype 并 set_levels，写回 data_array[new_dim]。
+
+推断
+- 待验证假设：xarray/core/dataarray.py:DataArray.to_unstacked_dataset 中 self.sel({variable_dim: k}).squeeze(drop=True) 在变量只有 sample_dims 时，squeeze 后仍保留 new_dim 上的标量坐标（含 MultiIndex 的 level 值），使各 data_dict 成员携带取值不同的 'y' 坐标，Dataset(data_dict) 合并时报 conflicting values for variable 'y'。
+- 待验证假设：修复方向是在构造 data_dict 前对每个切片 drop 掉 new_dim 相关坐标（如 drop_vars(dim) 或 reset_index 后丢弃），使单维变量不再携带冲突坐标。
+- 待验证假设：xarray/core/dataset.py:Dataset.to_stacked_array 的 expand_dims/stack 路径对单维变量产生 nan 填充的 level 值，与上述坐标残留共同作用，但仅凭静态阅读无法区分主因。
+
+未核验点
+- 未读 Dataset.__init__/merge 的冲突判定实现，无法确认冲突变量具体来自哪个坐标。
+- 未读 squeeze、sel、drop_vars 的实现，未验证标量坐标是否真的残留。
+- 未运行任何复现脚本或测试，未验证修复后 roundtrip 是否 identical。
+
+最小验证：`python -c "import numpy as np, xarray as xr; a=xr.DataArray(np.arange(3),coords=[('x',[0,1,2])]); d=xr.Dataset({'a':a,'b':a}); s=d.to_stacked_array('y',sample_dims=['x']); print(s.to_unstacked_dataset('y'))"`

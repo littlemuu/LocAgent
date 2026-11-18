@@ -1,0 +1,12 @@
+{
+  "approved": true,
+  "user_instruction": "取消API预算门槛，跑完再停",
+  "api_budget_cny": null,
+  "v82_binding": "031e6a4265add240659f2900d33b75659e13f0b356b35b764fd9df618c835db7",
+  "repetitions": 1,
+  "coding_requests": 40,
+  "automatic_retries": 0,
+  "concurrency": 1,
+  "holdout": false,
+  "created_at": 1794917733.210544
+}
